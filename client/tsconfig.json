@@ -1,0 +1,33 @@
+{
+  "include": ["src", "src/custom.d.ts"],
+  "exclude": ["node_modules", "../server/public"],
+  "compilerOptions": {
+    "target": "es5", // 'es3', 'es5', 'es2015', 'es2016', 'es2017','es2018', 'esnext' 가능
+    "module": "commonjs", //무슨 import 문법 쓸건지 'commonjs', 'amd', 'es2015', 'esnext'
+    "allowJs": true, // js 파일들 ts에서 import해서 쓸 수 있는지
+    "checkJs": true, // 일반 js 파일에서도 에러체크 여부
+    "jsx": "react-jsx", // tsx 파일을 jsx로 어떻게 컴파일할 것인지 'preserve', 'react-native', 'react'
+    "declaration": true, //컴파일시 .d.ts 파일도 자동으로 함께생성 (현재쓰는 모든 타입이 정의된 파일)
+    //    "outFile": "./", //모든 ts파일을 js파일 하나로 컴파일해줌 (module이 none, amd, system일 때만 가능)
+    "outDir": "../server/build/public", //js파일 아웃풋 경로바꾸기
+    "rootDir": "./", //루트경로 바꾸기 (js 파일 아웃풋 경로에 영향줌)
+    "removeComments": true, //컴파일시 주석제거
+    "sourceMap": true, // webpack 디버깅시 오류 코드 위치 추적
+    "moduleResolution": "node",
+
+    "strict": true, //strict 관련, noimplicit 어쩌구 관련 모드 전부 켜기
+    "noImplicitAny": false, //any타입 금지 여부
+    "strictNullChecks": false, //null, undefined 타입에 이상한 짓 할시 에러내기
+    "strictFunctionTypes": true, //함수파라미터 타입체크 강하게
+    "strictPropertyInitialization": false, //class constructor 작성시 타입체크 강하게
+    "noImplicitThis": false, //this 키워드가 any 타입일 경우 에러내기
+    "alwaysStrict": true, //자바스크립트 "use strict" 모드 켜기
+    "esModuleInterop": true, // true로 설정 해놓으면 export default가 없는 라이브러리도 * as 를 사용하지 않고 불러올 수 있습니다.
+
+    "noUnusedLocals": false, //쓰지않는 지역변수 있으면 에러내기
+    "noUnusedParameters": false, //쓰지않는 파라미터 있으면 에러내기
+    "noImplicitReturns": true, //함수에서 return 빼먹으면 에러내기
+    "noFallthroughCasesInSwitch": true, //switch문 이상하면 에러내기
+    "skipLibCheck": true // Skip type checking all .d.ts files.
+  }
+}
