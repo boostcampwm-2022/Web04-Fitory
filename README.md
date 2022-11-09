@@ -1,13 +1,6 @@
-<style>
-.container {
-    display: flex;
-    justify-content: space-around;
-}
-</style>
-
 <div align=center><h1>📚 STACKS</h1></div>
 
-<div class="container">
+<div class="container" style="display:flex;justify-content: space-around;">
     <div class="common" align=center>
         <h3>Common</h3>
         <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" width="100" height="auto"><br/>
