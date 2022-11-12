@@ -22,6 +22,7 @@
     "@stylelint/postcss-css-in-js": "^0.38.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
