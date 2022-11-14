@@ -6,7 +6,8 @@
     "dev": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "watch": "webpack --config webpack.dev.js --watch",
-    "test:coverage": "jest --watchAll=false --coverage"
+    "test:coverage": "jest --watchAll=false --coverage",
+    "cypress:open": "cypress open"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
@@ -30,6 +31,7 @@
     "babel-jest": "^29.3.1",
     "babel-loader": "^9.1.0",
     "core-js": "^3.25.1",
+    "cypress": "^11.0.1",
     "dotenv-webpack": "^8.0.1",
     "eslint": "8.22.0",
     "eslint-plugin-prettier": "^4.2.1",
