@@ -1,16 +1,13 @@
 {
   "name": "client",
-  "version": "1.0.0",
+  "packageManager": "yarn@3.2.4",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --open --config webpack.dev.js",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "watch": "webpack --config webpack.dev.js --watch",
     "lint:css": "stylelint --fix --ignore-path .gitignore,node_modules '**/*.tsx'"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@babel/plugin-proposal-class-properties": "^7.18.6",

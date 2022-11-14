@@ -71,3 +71,6 @@ dist
 
 # prettier
 # .prettierrc
+
+# yarn berry
+.yarn
