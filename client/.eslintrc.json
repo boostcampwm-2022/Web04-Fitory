@@ -3,15 +3,24 @@
     "browser": true,
     "es6": true
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "simple-import-sort"],
+  "plugins": ["react", "@typescript-eslint", "simple-import-sort", "react-hooks", "prettier"],
   "rules": {
+    "@typescript-eslint/no-unused-vars": "warn",
+    "no-console": "warn", // console 출력은 디버깅 목적으로만.
+    "react-hooks/exhaustive-deps": "warn",
     "simple-import-sort/imports": [
       "error",
       {
