@@ -1,6 +1,5 @@
 {
   "include": ["src"],
-  "exclude": [".yarn"],
 
   "compilerOptions": {
     /* 기본 옵션 */
