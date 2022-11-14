@@ -1,6 +1,5 @@
 {
   "include": ["src"],
-  "exclude": ["node_modules"],
 
   "compilerOptions": {
     /* 기본 옵션 */
@@ -36,6 +35,36 @@
 
     /* 고급 옵션 */
     "skipLibCheck": true, // 선언 파일 유형 검사 스킵
-    "forceConsistentCasingInFileNames": true // 동일한 파일에 대한 일관되지 않은 참조 비허용
+    "forceConsistentCasingInFileNames": true, // 동일한 파일에 대한 일관되지 않은 참조 비허용
+
+    /* Nest.js 추가 항목 */
+    "outDir": "./dist", // 출력 구조를 디렉토리로 리다이렉트
+    "emitDecoratorMetadata": true, // @decorator 소스에 데코레이터 선언에 대한 설계-타입 메타 데이터를 내보냄
+    "experimentalDecorators": true, // ES 데코레이터에 대한 실험적인 지원을 사용하도록 활성화
+    "allowSyntheticDefaultImports": true, // default export가 없는 모듈에서 default imports를 허용. 코드 방출에는 영향을 주지 않으며, 타입 검사만 수행
+    "incremental": true
   }
 }
+
+/* Nest.js 기본 tsconfig 설정 */
+//{
+//  "compilerOptions": {
+//    "module": "commonjs",
+//    "declaration": true,
+//    "removeComments": true,
+//    "emitDecoratorMetadata": true,
+//    "experimentalDecorators": true,
+//    "allowSyntheticDefaultImports": true,
+//    "target": "es2017",
+//    "sourceMap": true,
+//    "outDir": "./dist",
+//    "baseUrl": "./",
+//    "incremental": true,
+//    "skipLibCheck": true,
+//    "strictNullChecks": false,
+//    "noImplicitAny": false,
+//    "strictBindCallApply": false,
+//    "forceConsistentCasingInFileNames": false,
+//    "noFallthroughCasesInSwitch": false
+//  }
+//}
