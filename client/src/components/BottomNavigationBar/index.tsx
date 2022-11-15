@@ -8,18 +8,18 @@ import * as s from "./style";
 export default function BottomNavigationBar() {
   return (
     <s.Wrapper>
-      <s.NavigationButton>
+      <s.LinkButton to="/" className={({ isActive }) => (isActive ? "active" : "inactive")}>
         <img src={homeIcon} alt="메인 화면 이동 아이콘" />
-      </s.NavigationButton>
-      <s.NavigationButton>
+      </s.LinkButton>
+      <s.LinkButton to="/statics" className={({ isActive }) => (isActive ? "active" : "inactive")}>
         <img src={staticsIcon} alt="통계 화면 이동 아이콘" />
-      </s.NavigationButton>
-      <s.NavigationButton>
+      </s.LinkButton>
+      <s.LinkButton to="/search" className={({ isActive }) => (isActive ? "active" : "inactive")}>
         <img src={searchIcon} alt="검색 화면 이동 아이콘" />
-      </s.NavigationButton>
-      <s.NavigationButton>
+      </s.LinkButton>
+      <s.LinkButton to="/profile" className={({ isActive }) => (isActive ? "active" : "inactive")}>
         <img src={profileIcon} alt="프로필 화면 이동 아이콘" />
-      </s.NavigationButton>
+      </s.LinkButton>
     </s.Wrapper>
   );
 }

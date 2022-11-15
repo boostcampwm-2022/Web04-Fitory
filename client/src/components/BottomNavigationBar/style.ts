@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const Wrapper = styled.nav`
   position: fixed;
@@ -13,15 +14,15 @@ export const Wrapper = styled.nav`
   border-radius: 20px 20px 0px 0px;
 `;
 
-export const NavigationButton = styled.button`
+export const LinkButton = styled(NavLink)`
   text-align: center;
   width: 25%;
 
   background-color: transparent;
   border: none;
+  filter: ${({ theme }) => theme.COLORS.FILTER_GRAY};
 
-  filter: ${(props) =>
-    props
-      ? "invert(52%) sepia(17%) saturate(1814%) hue-rotate(190deg) brightness(103%) contrast(96%)"
-      : "invert(79%) sepia(1%) saturate(0%) hue-rotate(95deg) brightness(97%) contrast(95%)"};
+  &.active {
+    filter: ${({ theme }) => theme.COLORS.FILTER_BLUE};
+  }
 `;
