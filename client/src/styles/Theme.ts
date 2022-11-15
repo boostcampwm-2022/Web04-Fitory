@@ -14,8 +14,21 @@ const COLORS = {
   RED: "#FF5858",
 } as const;
 
+const FONT_SIZE = {
+  EXTRA_SMALL: '1.2rem',
+  SMALL: '1.4rem',
+  MEDIUM: '1.6rem',
+  LARGE: '1.8rem'
+} as const;
+
+const FONT_WEIGHT = {
+  BOLD: 700
+} as const;
+
 const theme = {
   COLORS,
+  FONT_SIZE,
+  FONT_WEIGHT
 };
 
 export default theme;
