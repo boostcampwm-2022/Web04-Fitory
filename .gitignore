@@ -2,8 +2,10 @@
 logs
 *.log
 npm-debug.log*
+pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
 
 # Runtime data
 pids
@@ -60,17 +62,35 @@ typings/
 # next.js build output
 .next
 
-# JetBrain
-.idea
-
-# Mac OS
+# OS
 .DS_Store
 
-# ts -> js
-dist
+# compiled output
+/dist
+/node_modules
 
 # prettier
-# .prettierrc
+.prettierrc
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # yarn berry
 */.yarn/*
