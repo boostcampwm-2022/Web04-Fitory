@@ -14,6 +14,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "project": ["client/tsconfig.json"],
     "ecmaFeatures": {
       "jsx": true
     },
@@ -21,5 +22,9 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
-  "rules": {}
+  "rules": {
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "react/function-component-definition": "off"
+  }
 }
