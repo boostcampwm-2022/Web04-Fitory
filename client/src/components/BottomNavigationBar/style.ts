@@ -12,6 +12,8 @@ export const Wrapper = styled.nav`
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   border: 1px solid #f5f5f5;
   border-radius: 20px 20px 0px 0px;
+
+  align-items: center;
 `;
 
 export const LinkButton = styled(NavLink)`
