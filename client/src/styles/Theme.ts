@@ -25,10 +25,13 @@ const FONT_WEIGHT = {
   BOLD: 700,
 } as const;
 
+const MAX_WIDTH = "767px";
+
 const theme = {
   COLORS,
   FONT_SIZE,
   FONT_WEIGHT,
+  MAX_WIDTH,
 };
 
 export default theme;
