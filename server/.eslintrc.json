@@ -1,43 +1,28 @@
 {
   "env": {
-    "es6": true,
+    "es2021": true,
     "node": true,
     "jest": true
   },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
-  "overrides": [],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "airbnb/base",
+    "airbnb-typescript",
+    "plugin:prettier/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "tsconfig.json",
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "simple-import-sort", "prettier"],
+  "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/no-unused-vars": "warn",
-    "no-console": "warn",
-    "simple-import-sort/imports": [
-      "error",
-      {
-        "groups": [
-          // Side effect imports.
-          ["^\\u0000"],
-          // Parent imports. Put `..` last.
-          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-          // Other relative imports. Put same-folder imports and `.` last.
-          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"]
-        ]
-      }
-    ],
-    "simple-import-sort/exports": "error"
+    "react/jsx-filename-extension": [0],
+    "import/extensions": "off"
   },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
-  },
+
   "ignorePatterns": [".eslintrc.json"]
 }
 
