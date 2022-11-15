@@ -1,5 +1,3 @@
-public
 package.json
-*/.yarn
-*/yarn.lock
-*/.pnp.*
+package-lock.json
+node_modules
