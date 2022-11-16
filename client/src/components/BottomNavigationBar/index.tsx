@@ -5,7 +5,7 @@ import searchIcon from "@public/icons/btn_search.svg";
 import profileIcon from "@public/icons/btn_profile.svg";
 import * as s from "./style";
 
-export default function BottomNavigationBar() {
+const BottomNavigationBar = () => {
   return (
     <s.Wrapper>
       <s.LinkButton to="/" className={({ isActive }) => (isActive ? "active" : "inactive")}>
@@ -22,4 +22,6 @@ export default function BottomNavigationBar() {
       </s.LinkButton>
     </s.Wrapper>
   );
-}
+};
+
+export default BottomNavigationBar;
