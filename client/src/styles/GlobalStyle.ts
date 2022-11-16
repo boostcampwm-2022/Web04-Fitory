@@ -23,6 +23,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root {
+    display: flex;
+    flex-direction: column;
     background-color: ${theme.COLORS.ASH_WHITE}
   }
 
