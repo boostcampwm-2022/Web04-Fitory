@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import theme from "./Theme";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -19,6 +20,10 @@ const GlobalStyle = createGlobalStyle`
   body, #root {
     width: 100%;
     height: 100%;
+  }
+
+  #root {
+    background-color: ${theme.COLORS.ASH_WHITE}
   }
 
   button {

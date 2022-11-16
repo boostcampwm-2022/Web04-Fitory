@@ -15,7 +15,7 @@ export const Content = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  max-width: ${({ theme }) => theme.MAX_WIDTH};
+  max-width: ${({ theme }) => theme.MAX_WIDTH.default};
   font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
 `;
 
