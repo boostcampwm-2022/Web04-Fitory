@@ -12,4 +12,13 @@ const Template: Story<TopNavigationBarProps> = (args: TopNavigationBarProps) => 
 );
 
 export const Root = Template.bind({});
-Root.args = { title: "Fitory" };
+Root.args = { isRoot: true };
+
+export const Root2 = Template.bind({});
+Root2.args = { isRoot: true, rightItem: <button type="button">버튼</button> };
+
+export const Depth = Template.bind({});
+Depth.args = { title: "제목", isRoot: false };
+
+export const Depth2 = Template.bind({});
+Depth2.args = { title: "제목", isRoot: false, rightItem: <button type="button">버튼</button> };

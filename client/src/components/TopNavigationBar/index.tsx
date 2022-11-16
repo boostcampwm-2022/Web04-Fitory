@@ -1,19 +1,22 @@
 import React from "react";
+import logoSrc from "@public/icons/logo.svg";
 import * as s from "./style";
+import BackButton from "../BackButton";
 
 export interface TopNavigationBarProps {
-  title: string;
+  isRoot: boolean;
+  title?: string;
   rightItem?: JSX.Element;
 }
 
-const TopNavigationBar = ({ title, rightItem }: TopNavigationBarProps) => {
+const TopNavigationBar = ({ isRoot, title, rightItem }: TopNavigationBarProps) => {
   return (
     <s.Wrapper>
-      <s.ContentWrapper>
-        <div>뒤로가기 버튼</div>
-        {title}
-        {rightItem}
-      </s.ContentWrapper>
+      <s.Content>
+        <s.LeftItem>{!isRoot && <BackButton />}</s.LeftItem>
+        <s.Title>{isRoot ? <img src={logoSrc} alt="로고" /> : <h1>{title}</h1>}</s.Title>
+        <s.RightItem>{rightItem}</s.RightItem>
+      </s.Content>
     </s.Wrapper>
   );
 };
