@@ -20,6 +20,13 @@ module.exports = {
   webpackFinal: async (config) => {
     config.resolve.alias["@public"] = path.resolve(__dirname, "../public/");
     config.resolve.alias["@src"] = path.resolve(__dirname, "../src/");
+    config.resolve.alias["@components"] = path.resolve(__dirname, "../src/components");
+    config.resolve.alias["@pages"] = path.resolve(__dirname, "../src/pages");
+    config.resolve.alias["@hooks"] = path.resolve(__dirname, "../src/hooks");
+    config.resolve.alias["@canvas"] = path.resolve(__dirname, "../src/canvas");
+    config.resolve.alias["@styles"] = path.resolve(__dirname, "../src/styles");
+    config.resolve.alias["@constants"] = path.resolve(__dirname, "../src/constants");
+    config.resolve.alias["@api"] = path.resolve(__dirname, "../src/api");
     return config;
   },
 };
