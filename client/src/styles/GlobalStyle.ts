@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import theme from "./Theme";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -19,6 +20,12 @@ const GlobalStyle = createGlobalStyle`
   body, #root {
     width: 100%;
     height: 100%;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    background-color: ${theme.COLORS.ASH_WHITE}
   }
 
   button {

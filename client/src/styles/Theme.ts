@@ -29,7 +29,10 @@ const FONT_WEIGHT = {
   BOLD: 700,
 } as const;
 
-const MAX_WIDTH = "767px";
+const MAX_WIDTH = {
+  default: "767px",
+  mobile: "480px",
+};
 
 const theme = {
   COLORS,
