@@ -5,7 +5,6 @@ export const Wrapper = styled.div`
   height: 60px;
   display: flex;
   justify-content: center;
-  box-shadow: rgb(0 0 0 / 20%) 2px 4px 12px;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 
