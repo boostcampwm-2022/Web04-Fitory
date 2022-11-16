@@ -1,8 +1,8 @@
 import React from "react";
-import homeIcon from "@public/icon/homeIcon.svg";
-import staticsIcon from "@public/icon/staticsIcon.svg";
-import searchIcon from "@public/icon/searchIcon.svg";
-import profileIcon from "@public/icon/profileIcon.svg";
+import homeIcon from "@public/icons/btn_home.svg";
+import staticsIcon from "@public/icons/btn_statics.svg";
+import searchIcon from "@public/icons/btn_search.svg";
+import profileIcon from "@public/icons/btn_profile.svg";
 import * as s from "./style";
 
 export default function BottomNavigationBar() {
