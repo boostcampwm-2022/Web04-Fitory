@@ -20,7 +20,9 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "react/jsx-filename-extension": [0],
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
+    "class-methods-use-this": "off"
   },
 
   "ignorePatterns": [".eslintrc.json"]
