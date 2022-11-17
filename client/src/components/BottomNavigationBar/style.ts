@@ -4,14 +4,15 @@ import { NavLink } from "react-router-dom";
 export const Wrapper = styled.div`
   width: 100%;
   height: 60px;
-  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   justify-content: center;
+  align-items: center;
 
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   border: 1px solid #f5f5f5;
   border-radius: 20px 20px 0px 0px;
-
-  align-items: center;
 `;
 
 export const Content = styled.nav`
