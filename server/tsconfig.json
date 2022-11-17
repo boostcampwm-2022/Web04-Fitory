@@ -3,7 +3,7 @@
 
   "compilerOptions": {
     /* 기본 옵션 */
-    "target": "es5", // es5 버전 자바스크립트로 컴파일
+    "target": "es6", // es6 버전 자바스크립트로 컴파일
     "module": "commonjs",
     "declaration": true, // 컴파일시 .d.ts 파일도 자동으로 함께생성 (현재쓰는 모든 타입이 정의된 파일)
     "declarationMap": true, // '.d.ts'파일에 대한 소스 맵 생성
@@ -14,7 +14,7 @@
     /* 엄격한 유형 검사 옵션 */
     "strict": true, // 모든 엄격한 유형 검사 옵션 활성화
     "noImplicitAny": true, // 'any' 유형으로 표현식 및 선언 사용 시 오류 발생
-    "strictNullChecks": true, // 엄격한 null 검사 사용
+    "strictNullChecks": false, // 엄격한 null 검사 사용
     "strictFunctionTypes": true, // 엄격한 함수 유형 검사 사용
     "strictBindCallApply": true, // 엄격한 'bind', 'call', 'apply' 함수 메서드 사용
     "strictPropertyInitialization": false, // 클래스에서 속성 초기화 엄격 검사 사용
@@ -22,8 +22,8 @@
     "alwaysStrict": true, // 엄격모드에서 구문 분석 후, 각 소스 파일에 "use strict" 코드를 출력
 
     /* 추가 검사 옵션 */
-    "noUnusedLocals": true, // 사용되지 않은 지역 변수가 있으면 오류 발생
-    "noUnusedParameters": true, // 사용되지 않은 매개변수가 있을 경우 오류 발생
+    "noUnusedLocals": false, // 사용되지 않은 지역 변수가 있으면 오류 발생
+    "noUnusedParameters": false, // 사용되지 않은 매개변수가 있을 경우 오류 발생
     "noImplicitReturns": true, // 함수가 값을 반환하지 않을 경우 오류 발생
     "noFallthroughCasesInSwitch": true, // switch 문 오류 유형에 대한 오류 발생
 
