@@ -17,7 +17,7 @@
     "strictNullChecks": true, // 엄격한 null 검사 사용
     "strictFunctionTypes": true, // 엄격한 함수 유형 검사 사용
     "strictBindCallApply": true, // 엄격한 'bind', 'call', 'apply' 함수 메서드 사용
-    "strictPropertyInitialization": true, // 클래스에서 속성 초기화 엄격 검사 사용
+    "strictPropertyInitialization": false, // 클래스에서 속성 초기화 엄격 검사 사용
     "noImplicitThis": true, // 'any'유형으로 'this' 표현식 사용 시 오류 발생
     "alwaysStrict": true, // 엄격모드에서 구문 분석 후, 각 소스 파일에 "use strict" 코드를 출력
 
