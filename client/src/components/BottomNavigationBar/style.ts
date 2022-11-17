@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   bottom: 0;
   left: 0;
   justify-content: center;
-  align-items: center;
 
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   border: 1px solid #f5f5f5;
@@ -16,6 +15,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.nav`
+  margin: 0 auto;
   width: 100%;
   height: 100%;
   padding: 0 20px;
@@ -26,9 +26,7 @@ export const Content = styled.nav`
 `;
 
 export const LinkButton = styled(NavLink)`
-  text-align: center;
   width: 25%;
-
   background-color: transparent;
   border: none;
   filter: ${({ theme }) => theme.COLORS.FILTER_GRAY};

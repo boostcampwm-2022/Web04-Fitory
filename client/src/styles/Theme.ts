@@ -4,6 +4,7 @@ const COLORS = {
 
   DEEP_BLUE: "#102361",
   LIGHT_BLUE: "#698AFA",
+  HOVER_BLUE: "#577af2",
 
   WHITE: "#FFFFFF",
   ASH_WHITE: "#F5F5F5",
