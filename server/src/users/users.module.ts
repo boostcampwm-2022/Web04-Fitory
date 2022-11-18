@@ -9,5 +9,4 @@ import { User } from "./entities/user.entity";
   controllers: [UsersController],
   providers: [UsersService],
 })
-// eslint-disable-next-line import/prefer-default-export
 export class UsersModule {}

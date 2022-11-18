@@ -30,12 +30,12 @@ export class User {
   @Column()
   tier!: number;
 
-  @Column()
-  followerCnt!: number;
+  @Column({ name: "follower_count" })
+  followerCount!: number;
 
-  @Column()
-  followingCnt!: number;
+  @Column({ name: "following_count" })
+  followingCount!: number;
 
-  @Column()
+  @Column({ name: "volume_sum" })
   volumeSum!: number;
 }
