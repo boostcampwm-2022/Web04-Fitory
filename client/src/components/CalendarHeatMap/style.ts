@@ -32,5 +32,5 @@ export const HeatItem = styled.rect`
   stroke-width: ${HEAT_ITEM_STROKE_WIDTH};
   stroke: ${({ theme }) => theme.COLORS.WHITE};
   fill: ${({ isEmpty, theme }: { isEmpty: boolean; theme: typeof Theme }) =>
-    isEmpty ? theme.COLORS.WHITE : theme.COLORS.LIGHT_GRAY};
+    isEmpty ? theme.COLORS.WHITE : theme.COLORS.ASH_WHITE};
 `;
