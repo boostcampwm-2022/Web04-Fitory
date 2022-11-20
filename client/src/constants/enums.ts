@@ -1,8 +1,3 @@
-export enum HeatItemDistance {
-  DX = 2,
-  DY = 2,
-}
-
 export enum FormatDay {
   "일",
   "월",
@@ -27,4 +22,15 @@ export enum FormatMonth {
   "10월",
   "11월",
   "12월",
+}
+
+export enum HeatItemDistance {
+  DX = 2,
+  DY = 2,
+}
+
+export enum ExerciseState {
+  EXERCISE = "exercise",
+  REST = "rest",
+  IDLE = "idle",
 }
