@@ -5,25 +5,25 @@ import {
   HEAT_ITEM_RADIUS,
   HEAT_ITEM_DISTANCE,
 } from "@constants/consts";
-import { FormatMonth } from "@constants/enums";
+import { FormatMonth, ExerciseState } from "@constants/enums";
 import getCalendarHeatMapArray from "@utils/getCalendarHeatMapArray";
+import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import * as s from "./style";
 
 interface HeatItemProps {
-  month: number;
-  day: number;
+  exerciseState: ExerciseState;
   x: number;
   y: number;
 }
 
-const HeatItem = ({ month, day, x, y }: HeatItemProps) => {
+const HeatItem = ({ exerciseState, x, y }: HeatItemProps) => {
   return (
     <s.HeatItem
       x={`${x}`}
       y={`${y}`}
       rx={HEAT_ITEM_RADIUS}
       ry={HEAT_ITEM_RADIUS}
-      isEmpty={Boolean(!day)}
+      exerciseState={exerciseState}
     />
   );
 };
@@ -31,6 +31,12 @@ const HeatItem = ({ month, day, x, y }: HeatItemProps) => {
 const CalendarHeatMap = () => {
   const year = new Date().getFullYear();
   const heatMapArray = getCalendarHeatMapArray(year);
+  const exerciseStateList = getExerciseStateForOneYear(year, [
+    "220103",
+    "220104",
+    "220107",
+    "220111",
+  ]);
 
   const isNeedMonthLabel = (i: number) => {
     return !i || heatMapArray[i - 1][0].month < heatMapArray[i][0].month;
@@ -53,14 +59,15 @@ const CalendarHeatMap = () => {
                 </text>
               )}
               {/* Heat Map */}
-              {week.map(({ month, day }, y) => (
-                <HeatItem
-                  month={month}
-                  day={day}
-                  x={x * HEAT_ITEM_SIZE}
-                  y={(y + HEAT_ITEM_DISTANCE) * HEAT_ITEM_SIZE}
-                />
-              ))}
+              {week.map(({ month, day }, y) => {
+                return (
+                  <HeatItem
+                    exerciseState={exerciseStateList[month - 1][day - 1]}
+                    x={x * HEAT_ITEM_SIZE}
+                    y={(y + HEAT_ITEM_DISTANCE) * HEAT_ITEM_SIZE}
+                  />
+                );
+              })}
             </>
           ))}
         </svg>

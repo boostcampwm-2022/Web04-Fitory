@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Theme from "@styles/Theme";
 import { HEAT_ITEM_SIZE } from "@constants/consts";
+import { ExerciseState } from "@constants/enums";
 
 const HEAT_ITEM_STROKE_WIDTH = 2.5;
 
@@ -31,6 +32,16 @@ export const HeatItem = styled.rect`
   height: ${HEAT_ITEM_SIZE}px;
   stroke-width: ${HEAT_ITEM_STROKE_WIDTH};
   stroke: ${({ theme }) => theme.COLORS.WHITE};
-  fill: ${({ isEmpty, theme }: { isEmpty: boolean; theme: typeof Theme }) =>
-    isEmpty ? theme.COLORS.WHITE : theme.COLORS.ASH_WHITE};
+  fill: ${({ exerciseState, theme }: { exerciseState: ExerciseState; theme: typeof Theme }) => {
+    switch (exerciseState) {
+      case ExerciseState.EXERCISE:
+        return theme.COLORS.LIGHT_BLUE;
+      case ExerciseState.REST:
+        return theme.COLORS.LIGHT_PURPLE;
+      case ExerciseState.IDLE:
+        return theme.COLORS.ASH_WHITE;
+      default:
+        return theme.COLORS.WHITE;
+    }
+  }};
 `;
