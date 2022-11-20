@@ -6,7 +6,11 @@ interface MainContainerProps {
 }
 
 const MainContainer = ({ children }: MainContainerProps) => {
-  return <s.Wrapper>{children}</s.Wrapper>;
+  return (
+    <s.Background>
+      <s.Wrapper>{children}</s.Wrapper>
+    </s.Background>
+  );
 };
 
 export default MainContainer;
