@@ -1,5 +1,6 @@
 import React, { LegacyRef, useRef, useState } from "react";
 import defaultProfileImage from "@public/images/img_default_profile.svg";
+import editableProfileImage from "@public/images/img_editable_profile.svg";
 import * as s from "./style";
 
 const ProfileImageContainer = ({ isModified }: { isModified: boolean }) => {
@@ -15,8 +16,10 @@ const ProfileImageContainer = ({ isModified }: { isModified: boolean }) => {
   };
   return (
     <s.Wrapper>
+      <s.ImageContainer src={image} />
       <s.ImageContainer
-        src={image}
+        src={editableProfileImage}
+        hidden={isModified}
         onClick={() => {
           imgRef.current?.click();
         }}
@@ -25,7 +28,7 @@ const ProfileImageContainer = ({ isModified }: { isModified: boolean }) => {
         disabled={isModified}
         type="file"
         style={{ display: "none" }}
-        accept="image/jpg, image/png, image/jpeg"
+        accept="image/*"
         name="profile_img"
         onChange={onChange}
         ref={imgRef as LegacyRef<HTMLInputElement>}

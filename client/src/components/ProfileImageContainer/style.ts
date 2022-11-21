@@ -9,5 +9,12 @@ export const ImageContainer = styled.img`
   width: 100%;
 
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
+
+export const ContainerBox = styled.div`
+  width: 100%;
+  position: relative;
 `;
