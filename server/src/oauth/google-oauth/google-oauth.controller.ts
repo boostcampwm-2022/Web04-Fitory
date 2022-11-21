@@ -1,31 +1,30 @@
-import { Controller, Get, Inject, Req, UseGuards } from "@nestjs/common";
+import { Controller, Get, Inject, Req, Res, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
+import { Response } from "express";
 import { GoogleOauthService } from "./google-oauth.service";
-import { GoogleOAuthGuard } from "./utils/google.guards";
-import { RequestType } from "../../types/request.type";
+import { RequestWithUser } from "../../types/request";
 
 @Controller("api/oauth/google")
 export class GoogleOauthController {
   constructor(@Inject("AUTH_SERVICE") private readonly googleOauthService: GoogleOauthService) {}
 
   @Get()
-  @UseGuards(GoogleOAuthGuard)
+  @UseGuards(AuthGuard("google"))
   googleOAuth() {
     // redirect google login page
     return { msg: "Google Authentication" };
   }
 
   @Get("callback")
-  @UseGuards(GoogleOAuthGuard)
-  googleOAuthCallback(@Req() request: RequestType) {
-    return this.googleOauthService.googleLogin(request);
-  }
+  @UseGuards(AuthGuard("google"))
+  async googleOAuthCallback(@Req() req: RequestWithUser, @Res() res: Response) {
+    const token = await this.googleOauthService.signIn(req.user);
 
-  @Get("status")
-  user(@Req() request: RequestType) {
-    console.log(request.user);
-    if (request.user) {
-      return { msg: "Authenticated" };
-    }
-    return { msg: "Not Authenticated" };
+    res.cookie("access_token", token, {
+      sameSite: true,
+      secure: false,
+    });
+
+    return res.send(req.user);
   }
 }

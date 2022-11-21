@@ -2,7 +2,9 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { PassportSerializer } from "@nestjs/passport";
 import { User } from "src/users/entities/user.entity";
+import { VerifyCallback } from "passport-google-oauth20";
 import { GoogleOauthService } from "../google-oauth.service";
+import { JwtPayload } from "../../../types/jwt";
 
 @Injectable()
 export class SessionSerializer extends PassportSerializer {
@@ -10,13 +12,13 @@ export class SessionSerializer extends PassportSerializer {
     super();
   }
 
-  serializeUser(user: User, done: Function) {
+  serializeUser(user: User, done: VerifyCallback) {
     console.log("Serializer User");
     done(null, user);
   }
 
-  async deserializeUser(payload: any, done: Function) {
-    const user = await this.googleOauthService.findUser(payload.id);
+  async deserializeUser(payload: JwtPayload, done: VerifyCallback) {
+    const user = await this.googleOauthService.findUserById(payload.sub);
     console.log("Deserialize User");
     console.log(user);
     return user ? done(null, user) : done(null, null);

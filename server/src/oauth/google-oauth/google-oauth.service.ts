@@ -1,38 +1,59 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { GoogleUserInfoType } from "../../types/user.type";
-import { RequestType } from "../../types/request.type";
 import { User } from "src/users/entities/user.entity";
+import { JwtService } from "@nestjs/jwt";
+import { JwtPayload } from "../../types/jwt";
+import { GoogleUserDto } from "./dto/google-user.dto";
 
 @Injectable()
 export class GoogleOauthService {
-  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private jwtService: JwtService,
+  ) {}
 
-  async validateUser(googleUserInfo: GoogleUserInfoType) {
-    console.log("GoogleOauthService");
-    console.log(googleUserInfo);
-    const user = await this.userRepository.findOneBy({ email: googleUserInfo.email });
-    console.log(user);
-    if (user) return user;
-    console.log("User not found. Creating...");
-    const newUser = this.userRepository.create(googleUserInfo);
-    return this.userRepository.save(newUser);
+  generateJwt(payload: JwtPayload) {
+    return this.jwtService.sign(payload);
   }
 
-  async findUser(id: number) {
-    const user = await this.userRepository.findOneBy({ id });
-    return user;
-  }
-
-  googleLogin(request: RequestType) {
-    if (!request.user) {
-      return "No user from google";
+  async signIn(user: GoogleUserDto) {
+    if (!user) {
+      throw new BadRequestException("Unauthenticated");
     }
 
-    return {
-      message: "User information from google",
-      user: request.user,
-    };
+    const userExists = await this.findUserById(user.userId);
+
+    if (!userExists) {
+      return this.registerUser(user);
+    }
+
+    return this.generateJwt({
+      sub: userExists.userId,
+    });
+  }
+
+  async registerUser(user: GoogleUserDto) {
+    try {
+      const newUser = this.userRepository.create(user);
+
+      await this.userRepository.save(newUser);
+
+      return this.generateJwt({
+        sub: newUser.userId,
+      });
+    } catch {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async findUserById(userId: string) {
+    const user = await this.userRepository.findOneBy({ userId });
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
   }
 }

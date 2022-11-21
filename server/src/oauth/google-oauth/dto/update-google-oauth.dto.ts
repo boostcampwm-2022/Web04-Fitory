@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateGoogleOauthDto } from './create-google-oauth.dto';
+import { PartialType } from "@nestjs/mapped-types";
+import { GoogleUserDto } from "./google-user.dto";
 
-export class UpdateGoogleOauthDto extends PartialType(CreateGoogleOauthDto) {}
+export class UpdateGoogleOauthDto extends PartialType(GoogleUserDto) {}
