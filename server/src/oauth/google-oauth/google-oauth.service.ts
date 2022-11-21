@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "../../typeorm/entities/User";
 import { GoogleUserInfoType } from "../../types/user.type";
 import { RequestType } from "../../types/request.type";
+import { User } from "src/users/entities/user.entity";
 
 @Injectable()
 export class GoogleOauthService {

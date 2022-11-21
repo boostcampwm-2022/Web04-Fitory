@@ -20,6 +20,7 @@ module.exports = {
   webpackFinal: async (config) => {
     config.resolve.alias["@public"] = path.resolve(__dirname, "../public/");
     config.resolve.alias["@src"] = path.resolve(__dirname, "../src/");
+    config.resolve.alias["@utils"] = path.resolve(__dirname, "../src/utils/");
     config.resolve.alias["@components"] = path.resolve(__dirname, "../src/components");
     config.resolve.alias["@pages"] = path.resolve(__dirname, "../src/pages");
     config.resolve.alias["@hooks"] = path.resolve(__dirname, "../src/hooks");
