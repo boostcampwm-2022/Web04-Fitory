@@ -8,48 +8,34 @@ export class User {
   @Column({ length: 45 })
   name!: string;
 
-  @Column()
+  @Column({ nullable: true })
   age!: number;
 
-  @Column()
+  @Column({ nullable: true })
   gender!: number;
 
-  @Column()
+  @Column({ nullable: true })
   height!: number;
 
-  @Column()
+  @Column({ nullable: true })
   weight!: number;
 
-  @Column({ length: 180 })
+  @Column({ nullable: true, length: 180 })
   introduce!: string;
 
   // TODO: 이미지 컬럼은 일단 보류
   // @Column({ name: "", length: 0 })
   // profileImage!: string;
 
-  @Column()
+  @Column({ nullable: true })
   tier!: number;
 
-  @Column({ name: "follower_count" })
+  @Column({ nullable: true, name: "follower_count" })
   followerCount!: number;
 
-  @Column({ name: "following_count" })
+  @Column({ nullable: true, name: "following_count" })
   followingCount!: number;
 
-  @Column({ name: "volume_sum" })
+  @Column({ nullable: true, name: "volume_sum" })
   volumeSum!: number;
-
-  //! temp
-
-  @Column({ length: 180 })
-  email!: string;
-
-  @Column({ length: 180 })
-  profileImage!: string;
-
-  @Column({ length: 180 })
-  accessToken!: string;
-
-  @Column({ length: 180 })
-  refreshToken!: string;
 }
