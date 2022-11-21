@@ -19,4 +19,15 @@ export class SbdRecordsController {
     return this.recordsService.findEverySBDRecord(userId);
   }
 
+  @Get("best")
+  @ApiOperation({
+    summary: "해당 사용자의 SBD 최고 기록을 반환",
+  })
+  @ApiQuery({
+    name: "userId",
+    type: "number",
+  })
+  getBestSBDRecord(@Query("userId") userId: number) {
+    return this.recordsService.findBestSBDRecord(userId);
+  }
 }
