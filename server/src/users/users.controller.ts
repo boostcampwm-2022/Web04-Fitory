@@ -1,12 +1,12 @@
+import { Controller, Get, Query } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { Controller, Get } from "@nestjs/common";
 
 @Controller("users")
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Get()
-  async findAll() {
-    return this.usersService.findAll();
+  @Get("get")
+  async getUserInfo(@Query("id") id: number) {
+    return this.usersService.getUserInfo(id);
   }
 }
