@@ -41,3 +41,12 @@ export enum ExerciseState {
   REST = "rest",
   IDLE = "idle",
 }
+
+export enum Tier {
+  BRONZE = "BRONZE",
+  SILVER = "SILVER",
+  GOLD = "GOLD",
+  PLATINUM = "PLATINUM",
+  DIAMOND = "DIAMOND",
+  CHAMPION = "CHAMPION",
+}
