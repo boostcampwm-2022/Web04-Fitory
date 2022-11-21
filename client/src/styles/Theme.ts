@@ -31,8 +31,17 @@ const FONT_WEIGHT = {
 } as const;
 
 const MAX_WIDTH = {
-  default: "767px",
-  mobile: "480px",
+  DEFAULT: "767px",
+  MOBILE: "480px",
+};
+
+const TIER_COLOR = {
+  BRONZE: "#ad5600",
+  SILVER: "#435f7a",
+  GOLD: "#ec9a00",
+  PLATINUM: "#27e2a4",
+  DIAMOND: "#00b4fc",
+  CHAMPION: "#ff0062",
 };
 
 const theme = {
@@ -40,6 +49,7 @@ const theme = {
   FONT_SIZE,
   FONT_WEIGHT,
   MAX_WIDTH,
+  TIER_COLOR,
 };
 
 export default theme;
