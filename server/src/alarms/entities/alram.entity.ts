@@ -6,6 +6,9 @@ export class Alarm {
   @PrimaryGeneratedColumn()
   id!: number;
 
+  @Column({ name: "receiver_user_id" })
+  receiverUserId!: number;
+
   @Column({ name: "sender_user_id" })
   senderUserId!: number;
 
@@ -19,7 +22,7 @@ export class Alarm {
   check!: boolean;
 
   // FK
-  @ManyToOne(() => User)
-  @JoinColumn({ name: "user_id" })
-  user!: User;
+  // @ManyToOne(() => User)
+  // @JoinColumn({ name: "user_id" })
+  // user!: User;
 }
