@@ -4,13 +4,14 @@ import MainContainer from "@components/MainContainer";
 
 interface PageTemplateProps {
   isRoot: boolean;
+  topNavRightItem?: JSX.Element;
   children: React.ReactNode;
 }
 
-const PageTemplate = ({ isRoot, children }: PageTemplateProps) => {
+const PageTemplate = ({ isRoot, topNavRightItem, children }: PageTemplateProps) => {
   return (
     <>
-      <TopNavigationBar isRoot={isRoot} />
+      <TopNavigationBar isRoot={isRoot} rightItem={topNavRightItem} />
       <MainContainer>{children}</MainContainer>
     </>
   );
