@@ -18,4 +18,20 @@ export class ExercisesController {
   getEveryExerciseDate(@Query("userId") userId: number) {
     return this.exercisesService.findEveryExerciseDate(userId);
   }
+
+  @Get("singleMonth")
+  @ApiOperation({
+    summary: "해당 사용자가 해당 월에 운동한 기록들을 반환",
+  })
+  @ApiQuery({
+    name: "month",
+    type: "number",
+  })
+  @ApiQuery({
+    name: "userId",
+    type: "number",
+  })
+  getExerciseHistoryOfMonth(@Query("month") month: number, @Query("userId") userId: number) {
+    return this.exercisesService.findExerciseHistoryOfMonth(month, userId);
+  }
 }

@@ -18,4 +18,12 @@ export class ExercisesService {
     });
     return new EveryDateDto(exerciseRows);
   }
+
+  async findExerciseHistoryOfMonth(month: number, userId: number) {
+    const exerciseHistory = await this.exerciseRepository.findBy({
+      user: { id: Equal(userId) },
+      date: Like(`__${month.toString().padStart(2, "0")}__`),
+    });
+    return new HistoryOfMonthDto(exerciseHistory);
+  }
 }
