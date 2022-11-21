@@ -6,6 +6,9 @@ export class Routine {
   @PrimaryGeneratedColumn()
   id!: number;
 
+  @Column({ name: "uuid", length: 45 })
+  uuid!: string;
+
   @Column({ name: "routine_name", length: 45 })
   routineName!: string;
 
