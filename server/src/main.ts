@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import session from "express-session";
 import passport from "passport";
 import { AppModule } from "./app.module";
@@ -21,6 +22,14 @@ async function bootstrap() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
+
+  const swaggerDocumentBuilder = new DocumentBuilder()
+    .setTitle("Fitory's API Docs")
+    .setDescription("Fitory API description")
+    .setVersion("1.0")
+    .build();
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerDocumentBuilder);
+  SwaggerModule.setup("api", app, swaggerDocument);
 
   await app.listen(PORT as string);
 }
