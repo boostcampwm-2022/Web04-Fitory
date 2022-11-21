@@ -2,29 +2,28 @@ import { Module } from "@nestjs/common";
 import { APP_FILTER } from "@nestjs/core";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import * as dotenv from "dotenv";
+import { AlarmsModule } from "./alarms/alarms.module";
+import { typeormConfig } from "./config/typeorm.config";
 import { HttpExceptionFilter } from "./exception/HttpExceptionFilter";
+import { ExercisesModule } from "./exercises/exercises.module";
+import { FollowsModule } from "./follows/follows.module";
 import { GoogleOauthModule } from "./oauth/google-oauth/google-oauth.module";
-import { UserModule } from "./user/user.module";
-import { User } from "./typeorm/entities/User";
-import { MYSQL_DB, MYSQL_HOST, MYSQL_PASSWORD, MYSQL_USER } from "./utils/env";
-
-dotenv.config();
+import { RoutinesModule } from "./routines/routines.module";
+import { SbdRecordsModule } from "./sbd_records/sbd_records.module";
+import { SbdStatisticsModule } from "./sbd_statistics/sbd_statistics.module";
+import { UsersModule } from "./users/users.module";
 
 @Module({
   imports: [
     GoogleOauthModule,
-    UserModule,
-    TypeOrmModule.forRoot({
-      type: "mysql",
-      host: MYSQL_HOST,
-      port: 3306,
-      username: MYSQL_USER,
-      password: MYSQL_PASSWORD,
-      database: MYSQL_DB,
-      entities: [User],
-      synchronize: true,
-    }),
+    UsersModule,
+    RoutinesModule,
+    ExercisesModule,
+    AlarmsModule,
+    SbdRecordsModule,
+    SbdStatisticsModule,
+    FollowsModule,
+    TypeOrmModule.forRoot(typeormConfig),
     PassportModule.register({ session: true }),
   ],
 

@@ -1,8 +1,8 @@
 /* eslint-disable-next-line @typescript-eslint/ban-types */
 import { Inject, Injectable } from "@nestjs/common";
 import { PassportSerializer } from "@nestjs/passport";
+import { User } from "src/users/entities/user.entity";
 import { GoogleOauthService } from "../google-oauth.service";
-import { User } from "../../../typeorm/entities/User";
 
 @Injectable()
 export class SessionSerializer extends PassportSerializer {

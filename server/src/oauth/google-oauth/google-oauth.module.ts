@@ -4,7 +4,7 @@ import { GoogleOauthController } from "./google-oauth.controller";
 import { GoogleStrategy } from "./utils/google.strategy";
 import { GoogleOauthService } from "./google-oauth.service";
 import { SessionSerializer } from "./utils/google.serializer";
-import { User } from "../../typeorm/entities/User";
+import { User } from "src/users/entities/user.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
