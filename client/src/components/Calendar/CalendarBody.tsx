@@ -53,7 +53,6 @@ const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
                   exerciseState={exerciseStateList[month][currentDay]}
                   day={day}
                   today={today}
-                  index={index}
                 />
               );
             })}

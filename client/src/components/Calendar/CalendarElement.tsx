@@ -7,20 +7,15 @@ interface CalendarElementProps {
   exerciseState: ExerciseState;
   day: dayjs.Dayjs;
   today: dayjs.Dayjs;
-  index: number;
 }
 
-const CalendarElement = ({ exerciseState, day, today, index }: CalendarElementProps) => {
+const CalendarElement = ({ exerciseState, day, today }: CalendarElementProps) => {
   let dayType = null;
 
   if (dayjs().format("YYYYMMDD") === day.format("YYYYMMDD")) {
     dayType = "today";
   } else if (day.format("MM") !== today.format("MM")) {
     dayType = "otherDays";
-  } else if (index === 6) {
-    dayType = "saturday";
-  } else if (index === 0) {
-    dayType = "sunday";
   } else {
     dayType = "others";
   }
