@@ -13,10 +13,10 @@ export class UsersController {
     summary: "해당 사용자의 모든 정보를 반환",
   })
   @ApiQuery({
-    name: "id",
+    name: "userId",
     type: "number",
   })
-  async getUserInfo(@Query("id") userId: number) {
+  async getUserInfo(@Query("userId") userId: number) {
     return this.usersService.getUserInfo(userId);
   }
 
@@ -34,17 +34,5 @@ export class UsersController {
   })
   async registerUser(@Body() userInfo: UsersInfoDto) {
     return this.usersService.registerUser(userInfo);
-  }
-
-  @Get("recentRecord")
-  @ApiOperation({
-    summary: "해당 사용자의 3대 챌린지 기록 반환",
-  })
-  @ApiQuery({
-    name: "id",
-    type: "number",
-  })
-  async getRecentRecordTime(@Query("id") userId: number) {
-    return this.usersService.getRecentRecordTime(userId);
   }
 }

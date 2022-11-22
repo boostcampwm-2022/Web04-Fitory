@@ -2,23 +2,18 @@ import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
+import { GoogleUserDto } from "../oauth/google-oauth/dto/google-user.dto";
 import { UsersInfoDto } from "./dto/users-info.dto";
-import { SBD_record } from "../sbd_records/entities/sbd_record.entity";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    @InjectRepository(SBD_record)
-    private recordsRepository: Repository<SBD_record>,
   ) {}
 
   async getUserInfo(userId: number) {
-    const user = await this.userRepository
-      .createQueryBuilder("user")
-      .where("user.id = :userId", { userId })
-      .getOne();
+    const user = await this.userRepository.findOneBy({ id: userId });
 
     if (!user) {
       return "No user find";
@@ -27,12 +22,10 @@ export class UsersService {
   }
 
   async findEveryUserName() {
-    const userList = await this.userRepository
-      .createQueryBuilder("user")
-      .select("user.name")
-      .getMany();
-
-    return { userList };
+    const userList = await this.userRepository.find();
+    return {
+      nameList: userList.map((row) => row.name),
+    };
   }
 
   async registerUser(userInfo: UsersInfoDto) {
@@ -50,29 +43,12 @@ export class UsersService {
   }
 
   async findUserById(oauthId: string) {
-    const user = await this.userRepository
-      .createQueryBuilder("user")
-      .where("user.oauthId = :oauthId", { oauthId })
-      .getOne();
+    const user = await this.userRepository.findOneBy({ oauthId });
 
     if (!user) {
       return null;
     }
 
     return user;
-  }
-
-  async getRecentRecordTime(userId: number) {
-    // new Date().getTime();
-    const record = await this.recordsRepository
-      .createQueryBuilder("record")
-      .where("record.user_id = :userId", { userId })
-      .select("record.timeStamp")
-      .orderBy("record.timeStamp")
-      .getMany();
-
-    const recentRecord = record[record.length - 1];
-
-    return { recentRecord };
   }
 }
