@@ -29,7 +29,7 @@ const CalendarElement = ({
   }
   return (
     <s.DayContainer dayType={dayType}>
-      <s.DayLabel exerciseState={exerciseState}>{day.format("D")}</s.DayLabel>
+      <s.DayLabel>{day.format("D")}</s.DayLabel>
       {exerciseState === ExerciseState.EXERCISE ? <s.CompleteDot /> : <div />}
     </s.DayContainer>
   );

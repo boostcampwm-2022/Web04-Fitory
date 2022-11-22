@@ -1,9 +1,10 @@
 import React from "react";
 import CalendarElement from "@components/Calendar/CalendarElement";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
+import dayjs from "dayjs";
 import * as s from "./style";
 
-const CalendarBody = ({ date }) => {
+const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
   const today = date;
   const exerciseStateList = getExerciseStateForOneYear(today.year(), [
     "220103",
@@ -25,13 +26,13 @@ const CalendarBody = ({ date }) => {
     today.clone().endOf("month").week() === 1 ? 53 : today.clone().endOf("month").week();
 
   const calendarArr = () => {
-    let days = [];
-    for (let week = firstWeek; week <= lastWeek; week++) {
+    let days: any[] = [];
+    for (let week = firstWeek; week <= lastWeek; week += 1) {
       days = days.concat(
         <tr key={week}>
           {Array(7)
             .fill(0)
-            .map((data, index) => {
+            .map((_, index) => {
               const day = today
                 .clone()
                 .startOf("year")
@@ -39,11 +40,11 @@ const CalendarBody = ({ date }) => {
                 .startOf("week")
                 .add(index, "day");
               const month = day.month();
-              const d = day.date() - 1;
+              const currentDay = day.date() - 1;
 
               return (
                 <CalendarElement
-                  exerciseState={exerciseStateList[month][d]}
+                  exerciseState={exerciseStateList[month][currentDay]}
                   day={day}
                   today={today}
                   index={index}

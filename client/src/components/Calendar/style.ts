@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Theme from "@styles/Theme";
-import { DayTypes, ExerciseState } from "@constants/enums";
+import { DayTypes } from "@constants/enums";
 
 // index
 export const Wrapper = styled.div`
@@ -80,11 +80,6 @@ export const DayLabel = styled.div`
   height: 2.5rem;
   line-height: 2.5rem;
   margin: auto;
-  border-radius: ${({ exerciseState }) => {
-    if (exerciseState === ExerciseState.EXERCISE) {
-      return "50%";
-    }
-  }};
 `;
 
 export const CompleteDot = styled.div`

@@ -7,7 +7,7 @@ import * as s from "./style";
 
 const Calendar = () => {
   dayjs.extend(weekOfYear);
-  const [date, setDate] = useState(dayjs());
+  const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
 
   return (
     <s.Wrapper>
