@@ -8,6 +8,7 @@ import {
 import { FormatMonth, ExerciseState } from "@constants/enums";
 import getCalendarHeatMapArray from "@utils/getCalendarHeatMapArray";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
+import Paper from "@components/design/Paper";
 import * as s from "./style";
 
 interface HeatItemProps {
@@ -43,36 +44,36 @@ const CalendarHeatMap = () => {
   };
 
   return (
-    <s.Wrapper>
-      <s.Year>{year}</s.Year>
-      <s.HeatMap>
-        <svg
-          width={HEAT_ITEM_SIZE * heatMapArray.length}
-          height={HEAT_ITEM_SIZE * (HEAT_ITEM_DISTANCE + NUMBER_OF_DAYS)}
-        >
-          {heatMapArray.map((week, x) => (
-            <>
-              {/* Month Label */}
-              {isNeedMonthLabel(x) && (
-                <text x={x * HEAT_ITEM_SIZE} y={`${HEAT_ITEM_SIZE}`}>
-                  {FormatMonth[week[0].month]}
-                </text>
-              )}
-              {/* Heat Map */}
-              {week.map(({ month, day }, y) => {
-                return (
+    <Paper style={{ width: "100%" }}>
+      <s.Wrapper>
+        <s.Year>{year}</s.Year>
+        <s.HeatMap>
+          <svg
+            width={HEAT_ITEM_SIZE * heatMapArray.length}
+            height={HEAT_ITEM_SIZE * (HEAT_ITEM_DISTANCE + NUMBER_OF_DAYS)}
+          >
+            {heatMapArray.map((week, x) => (
+              <>
+                {/* Month Label */}
+                {isNeedMonthLabel(x) && (
+                  <text x={x * HEAT_ITEM_SIZE} y={`${HEAT_ITEM_SIZE}`}>
+                    {FormatMonth[week[0].month]}
+                  </text>
+                )}
+                {/* Heat Map */}
+                {week.map(({ month, day }, y) => (
                   <HeatItem
                     exerciseState={exerciseStateList[month - 1][day - 1]}
                     x={x * HEAT_ITEM_SIZE}
                     y={(y + HEAT_ITEM_DISTANCE) * HEAT_ITEM_SIZE}
                   />
-                );
-              })}
-            </>
-          ))}
-        </svg>
-      </s.HeatMap>
-    </s.Wrapper>
+                ))}
+              </>
+            ))}
+          </svg>
+        </s.HeatMap>
+      </s.Wrapper>
+    </Paper>
   );
 };
 

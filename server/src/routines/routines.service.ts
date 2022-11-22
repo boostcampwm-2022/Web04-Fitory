@@ -1,7 +1,8 @@
+import { RoutineList } from "./dto/routine-list.dto";
 import { Routine } from "./entities/routine.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Equal, Repository } from "typeorm";
 
 @Injectable()
 export class RoutinesService {
@@ -10,7 +11,11 @@ export class RoutinesService {
     private routinesRepository: Repository<Routine>,
   ) {}
 
-  async findAll(): Promise<Routine[]> {
-    return await this.routinesRepository.find();
+  async findEveryRoutine(userId: number) {
+    const routineList = await this.routinesRepository
+      .createQueryBuilder("routine")
+      .where("routine.user_id = :userId", { userId })
+      .getMany();
+    return new RoutineList(routineList);
   }
 }

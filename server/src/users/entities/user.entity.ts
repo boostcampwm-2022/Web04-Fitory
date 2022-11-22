@@ -8,7 +8,7 @@ export class User {
   @Column({ name: "oauth_id" })
   oauthId!: string;
 
-  @Column({ length: 45 })
+  @Column({ nullable: true, length: 45 })
   name!: string;
 
   @Column({ nullable: true })

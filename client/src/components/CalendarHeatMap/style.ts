@@ -8,9 +8,7 @@ const HEAT_ITEM_STROKE_WIDTH = 2.5;
 export const Wrapper = styled.div`
   width: 100%;
   padding: 30px 40px;
-  border-radius: 40px;
   color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
-  background-color: ${({ theme }) => theme.COLORS.WHITE};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
 `;
 
