@@ -1,20 +1,17 @@
-import { Controller, Get, Query } from "@nestjs/common";
-import { ApiOperation, ApiQuery } from "@nestjs/swagger";
 import { UsersService } from "./users.service";
+import { Controller, Get } from "@nestjs/common";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 
-@Controller("users")
+@Controller("api/users")
+@ApiTags("USER API")
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Get("get")
+  @Get("nameList")
   @ApiOperation({
-    summary: "해당 사용자의 모든 정보를 반환",
+    summary: "모든 사용자들의 이름을 반환",
   })
-  @ApiQuery({
-    name: "id",
-    type: "number",
-  })
-  async getUserInfo(@Query("id") id: number) {
-    return this.usersService.getUserInfo(id);
+  async getEveryUserName() {
+    return this.usersService.findEveryUserName();
   }
 }

@@ -1,3 +1,10 @@
+export enum RoutePath {
+  HOME = "/",
+  STATICS = "/statics",
+  SEARCH = "/search",
+  PROFILE = "/profile",
+}
+
 export enum FormatDay {
   "일",
   "월",

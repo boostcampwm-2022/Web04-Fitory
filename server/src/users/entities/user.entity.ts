@@ -5,7 +5,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ length: 45 })
+  @Column({ nullable: true, length: 45 })
   name!: string;
 
   @Column({ nullable: true })
@@ -38,4 +38,18 @@ export class User {
 
   @Column({ nullable: true, name: "volume_sum" })
   volumeSum!: number;
+
+  //! temp
+
+  @Column({ nullable: true, length: 180 })
+  email!: string;
+
+  @Column({ nullable: true, length: 180 })
+  profileImage!: string;
+
+  @Column({ nullable: true, length: 180 })
+  accessToken!: string;
+
+  @Column({ nullable: true, length: 180 })
+  refreshToken!: string;
 }
