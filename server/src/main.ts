@@ -1,5 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
 import { AppModule } from "./app.module";
@@ -15,16 +16,9 @@ async function bootstrap() {
     credentials: true,
   });
 
-  app.use(
-    session({
-      secret: process.env.ACCESS_TOKEN_SECRETKEY as string,
-      saveUninitialized: false,
-      resave: false,
-      cookie: { secure: false },
-    }),
-  );
+  app.use(cookieParser());
+
   app.use(passport.initialize());
-  app.use(passport.session());
 
   const swaggerDocumentBuilder = new DocumentBuilder()
     .setTitle("Fitory's API Docs")
