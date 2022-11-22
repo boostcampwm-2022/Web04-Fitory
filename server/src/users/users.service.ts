@@ -16,4 +16,11 @@ export class UsersService {
       nameList: userList.map((row) => row.name),
     };
   }
+  
+  async findEveryUserName() {
+    const userList = await this.usersRepository.find();
+    return {
+      nameList: userList.map((row) => row.name),
+    };
+  }
 }
