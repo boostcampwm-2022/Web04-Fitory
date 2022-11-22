@@ -19,6 +19,8 @@ const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
     "220116",
     "220117",
     "220118",
+    "221121",
+    "221122",
   ]);
 
   const firstWeek = today.clone().startOf("month").week();

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Theme from "@styles/Theme";
-import { DayTypes } from "@constants/enums";
+import { DayTypes, ExerciseState } from "@constants/enums";
 
 // index
 export const Wrapper = styled.div`
@@ -47,6 +47,19 @@ export const MonthMoveButton = styled.button`
   border: none;
 `;
 
+export const DatesContainer = styled.div`
+  margin: 0.8rem 0;
+  width: 100%;
+  display: flex;
+  text-align: center;
+  font-size: ${({ theme }) => {
+    return theme.FONT_SIZE.EXTRA_SMALL;
+  }};
+`;
+export const DayNameContainer = styled.div`
+  width: calc((100vw - 40px) / 7);
+`;
+
 // Body
 export const CalendarBody = styled.table`
   width: 100%;
@@ -61,36 +74,32 @@ export const DayContainer = styled.td`
   height: calc((100vw - 40px) / 7);
   vertical-align: middle;
   color: ${({ dayType, theme }: { dayType: any; theme: typeof Theme }) => {
-    switch (dayType) {
-      case DayTypes.OTHER_DAYS:
-        return theme.COLORS.LIGHT_GRAY;
-      case DayTypes.SATURDAY:
-        return theme.COLORS.LIGHT_BLUE;
-      case DayTypes.SUNDAY:
-        return theme.COLORS.RED;
-      default:
-        return theme.COLORS.DEEP_BLUE;
+    if (dayType === DayTypes.OTHER_DAYS) {
+      return theme.COLORS.LIGHT_GRAY;
     }
+    if (dayType === DayTypes.TODAY) {
+      return theme.COLORS.WHITE;
+    }
+    return theme.COLORS.DEEP_BLUE;
   }};
-
-  background-color: ${({ dayType, theme }: { dayType: any; theme: typeof Theme }) => {
-    return dayType === DayTypes.TODAY ? theme.COLORS.LIGHT_PURPLE : "transparent";
-  }}};
 `;
 
 export const DayLabel = styled.div`
   width: 2.5rem;
-  height: 2.5rem;
   line-height: 2.5rem;
   margin: auto;
+  border-radius: 50%;
+  background-color: ${({ dayType, theme }: { dayType: any; theme: typeof Theme }) => {
+    return dayType === DayTypes.TODAY ? theme.COLORS.LIGHT_BLUE : "transparent";
+  }};
 `;
 
 export const CompleteDot = styled.div`
-  margin: 0 auto;
+  margin: 0.5rem auto;
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background-color: ${({ theme }) => {
-    return theme.COLORS.LIGHT_PURPLE;
-  }};
+  background-color: ${({ state, theme }: { state: any; theme: typeof Theme }) => {
+    return state === ExerciseState.EXERCISE ? theme.COLORS.LIGHT_PURPLE : "transparent";
+  }}};
 `;

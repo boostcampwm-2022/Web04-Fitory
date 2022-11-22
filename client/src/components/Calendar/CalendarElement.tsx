@@ -1,6 +1,5 @@
 import React from "react";
 import dayjs from "dayjs";
-import { ExerciseState } from "@constants/enums";
 import * as s from "./style";
 
 const CalendarElement = ({
@@ -29,8 +28,8 @@ const CalendarElement = ({
   }
   return (
     <s.DayContainer dayType={dayType}>
-      <s.DayLabel>{day.format("D")}</s.DayLabel>
-      {exerciseState === ExerciseState.EXERCISE ? <s.CompleteDot /> : <div />}
+      <s.DayLabel dayType={dayType}>{day.format("D")}</s.DayLabel>
+      <s.CompleteDot state={exerciseState} />
     </s.DayContainer>
   );
 };
