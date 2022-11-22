@@ -39,17 +39,4 @@ export class User {
   @Column({ nullable: true, name: "volume_sum" })
   volumeSum!: number;
 
-  //! temp
-
-  @Column({ nullable: true, length: 180 })
-  email!: string;
-
-  @Column({ nullable: true, length: 180 })
-  profileImage!: string;
-
-  @Column({ nullable: true, length: 180 })
-  accessToken!: string;
-
-  @Column({ nullable: true, length: 180 })
-  refreshToken!: string;
 }
