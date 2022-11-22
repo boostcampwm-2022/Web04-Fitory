@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import UserInfoSummary from "@components/UserInfoSummary";
 import CalendarHeatMap from "@components/CalendarHeatMap";
-import arrowRightSrc from "@public/icons/btn_arrow_right.svg";
+import arrowRightSrc from "@public/icons/mark_arrow_right.svg";
 import { RoutePath } from "@constants/enums";
 import * as s from "./style";
 

@@ -31,7 +31,7 @@ const UserInfoSummary = () => {
               <s.RecordResult>2.3t</s.RecordResult>
             </s.RecordInfo>
             <s.RecordInfo>
-              <p>총 운동 횟수</p>
+              <p>운동 횟수</p>
               <s.RecordResult>142</s.RecordResult>
             </s.RecordInfo>
           </s.RecordInfoWrapper>
