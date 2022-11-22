@@ -3,7 +3,7 @@ import { Meta } from "@storybook/react";
 import Calendar from "../components/Calendar";
 
 export default {
-  title: "components/CalendarHeatMap",
+  title: "components/Calendar",
   component: Calendar,
 } as Meta;
 
