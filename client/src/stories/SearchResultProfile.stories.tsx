@@ -21,8 +21,7 @@ NameAndMessageUser.args = { userName: "최시운", userMessage: "내 꿈은 3대
 
 export const fullInputUser = Template.bind({});
 fullInputUser.args = {
-  profileImgUrl:
-    "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  profileImgUrl: "https://www.freedigitalphotos.net/images/img/homepage/87357.jpg",
   userName: "최시운",
   userMessage: "내 꿈은 3대 1200",
 };
