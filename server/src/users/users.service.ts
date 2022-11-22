@@ -10,7 +10,10 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async findAll(): Promise<User[]> {
-    return await this.usersRepository.find();
+  async findEveryUserName() {
+    const userList = await this.usersRepository.find();
+    return {
+      nameList: userList.map((row) => row.name),
+    };
   }
 }
