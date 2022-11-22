@@ -1,9 +1,12 @@
-import { Exercise } from "../entities/exercise.entity";
-
 export class EveryDateDto {
-  dateList!: string[];
+  dateList: string[] = [];
 
-  constructor(dateObject: Exercise[]) {
-    this.dateList = dateObject.map((object) => object.date);
+  constructor(dateObject: { date: string }[]) {
+    dateObject.map((item) => {
+      this.dateList.push(item.date);
+    });
+    this.dateList.sort((a, b) => {
+      return Number(a) - Number(b);
+    });
   }
 }

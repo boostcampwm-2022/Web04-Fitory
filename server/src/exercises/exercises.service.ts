@@ -13,9 +13,11 @@ export class ExercisesService {
   ) {}
 
   async findEveryExerciseDate(userId: number) {
-    const exerciseRows = await this.exerciseRepository.findBy({
-      user: { id: Equal(userId) },
-    });
+    const exerciseRows = await this.exerciseRepository
+      .createQueryBuilder("exercise")
+      .select("exercise.date")
+      .where("exercise.user_id = :userId", { userId })
+      .getMany();
     return new EveryDateDto(exerciseRows);
   }
 
