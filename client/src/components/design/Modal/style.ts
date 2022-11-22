@@ -23,10 +23,10 @@ export const Window = styled.div`
   display: flex;
   flex-direction: column;
   align-items: baseline;
-  max-width: ${({ theme }) => theme.MAX_WIDTH.default};
+  max-width: ${({ theme }) => theme.MAX_WIDTH.DEFAULT};
   background-color: ${({ theme }) => theme.COLORS.WHITE};
 
-  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.mobile}) {
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
     padding: 30px;
     padding-bottom: 70px;
   }
