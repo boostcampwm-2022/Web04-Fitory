@@ -1,18 +1,16 @@
 import React from "react";
 import dayjs from "dayjs";
+import { ExerciseState } from "@constants/enums";
 import * as s from "./style";
 
-const CalendarElement = ({
-  exerciseState,
-  day,
-  today,
-  index,
-}: {
-  exerciseState: any;
-  day: any;
-  today: any;
+interface CalendarElementProps {
+  exerciseState: ExerciseState;
+  day: dayjs.Dayjs;
+  today: dayjs.Dayjs;
   index: number;
-}) => {
+}
+
+const CalendarElement = ({ exerciseState, day, today, index }: CalendarElementProps) => {
   let dayType = null;
 
   if (dayjs().format("YYYYMMDD") === day.format("YYYYMMDD")) {

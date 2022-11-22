@@ -1,15 +1,15 @@
 import React from "react";
 import prevMonthButton from "@public/icons/btn_arrow_left.svg";
 import nextMonthButton from "@public/icons/btn_arrow_right.svg";
+import dayjs from "dayjs";
 import * as s from "./style";
 
 interface CalendarHeaderProps {
-  date: any;
-  setDate: any;
+  date: dayjs.Dayjs;
+  setDate: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
 }
 
-const CalendarHeader = (props: CalendarHeaderProps) => {
-  const { date, setDate } = props;
+const CalendarHeader = ({ date, setDate }: CalendarHeaderProps) => {
   return (
     <div>
       <s.HeaderContainer>

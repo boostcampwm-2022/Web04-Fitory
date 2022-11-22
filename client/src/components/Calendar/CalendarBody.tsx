@@ -2,6 +2,8 @@ import React from "react";
 import CalendarElement from "@components/Calendar/CalendarElement";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import dayjs from "dayjs";
+import { NUMBER_OF_DAYS } from "@constants/consts";
+import { DateTypes } from "@constants/enums";
 import * as s from "./style";
 
 const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
@@ -23,24 +25,26 @@ const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
     "221122",
   ]);
 
-  const firstWeek = today.clone().startOf("month").week();
+  const firstWeek = today.clone().startOf(DateTypes.MONTH).week();
   const lastWeek =
-    today.clone().endOf("month").week() === 1 ? 53 : today.clone().endOf("month").week();
+    today.clone().endOf(DateTypes.MONTH).week() === 1
+      ? 53
+      : today.clone().endOf(DateTypes.MONTH).week();
 
   const calendarArr = () => {
     let days: any[] = [];
     for (let week = firstWeek; week <= lastWeek; week += 1) {
       days = days.concat(
         <tr key={week}>
-          {Array(7)
+          {Array(NUMBER_OF_DAYS)
             .fill(0)
             .map((_, index) => {
               const day = today
                 .clone()
-                .startOf("year")
+                .startOf(DateTypes.YEAR)
                 .week(week)
-                .startOf("week")
-                .add(index, "day");
+                .startOf(DateTypes.WEEK)
+                .add(index, DateTypes.DAY);
               const month = day.month();
               const currentDay = day.date() - 1;
 

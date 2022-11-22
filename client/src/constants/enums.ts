@@ -41,3 +41,10 @@ export enum DayTypes {
   SATURDAY = "saturday",
   SUNDAY = "sunday",
 }
+
+export enum DateTypes {
+  YEAR = "year",
+  MONTH = "month",
+  WEEK = "week",
+  DAY = "day",
+}
