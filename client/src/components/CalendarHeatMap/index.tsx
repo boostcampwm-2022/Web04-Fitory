@@ -53,22 +53,27 @@ const CalendarHeatMap = () => {
             height={HEAT_ITEM_SIZE * (HEAT_ITEM_DISTANCE + NUMBER_OF_DAYS)}
           >
             {heatMapArray.map((week, x) => (
-              <>
+              <React.Fragment key={`${week[0].month}-${week[0].day}`}>
                 {/* Month Label */}
                 {isNeedMonthLabel(x) && (
-                  <text x={x * HEAT_ITEM_SIZE} y={`${HEAT_ITEM_SIZE}`}>
+                  <text
+                    key={FormatMonth[week[0].month]}
+                    x={x * HEAT_ITEM_SIZE}
+                    y={`${HEAT_ITEM_SIZE}`}
+                  >
                     {FormatMonth[week[0].month]}
                   </text>
                 )}
                 {/* Heat Map */}
                 {week.map(({ month, day }, y) => (
                   <HeatItem
+                    key={day ? `${month}-${day}` : `empty${y}`}
                     exerciseState={exerciseStateList[month - 1][day - 1]}
                     x={x * HEAT_ITEM_SIZE}
                     y={(y + HEAT_ITEM_DISTANCE) * HEAT_ITEM_SIZE}
                   />
                 ))}
-              </>
+              </React.Fragment>
             ))}
           </svg>
         </s.HeatMap>

@@ -1,6 +1,7 @@
 import React from "react";
 import TopNavigationBar from "@components/TopNavigationBar";
 import MainContainer from "@components/MainContainer";
+import BottomNavigationBar from "@components/BottomNavigationBar";
 
 interface PageTemplateProps {
   isRoot: boolean;
@@ -13,6 +14,7 @@ const PageTemplate = ({ isRoot, topNavRightItem, children }: PageTemplateProps) 
     <>
       <TopNavigationBar isRoot={isRoot} rightItem={topNavRightItem} />
       <MainContainer>{children}</MainContainer>
+      <BottomNavigationBar />
     </>
   );
 };

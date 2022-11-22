@@ -42,6 +42,15 @@ export enum ExerciseState {
   IDLE = "idle",
 }
 
+export enum Tier {
+  BRONZE = "BRONZE",
+  SILVER = "SILVER",
+  GOLD = "GOLD",
+  PLATINUM = "PLATINUM",
+  DIAMOND = "DIAMOND",
+  CHAMPION = "CHAMPION",
+}
+
 export enum DayTypes {
   TODAY = "today",
   OTHER_DAYS = "otherDays",

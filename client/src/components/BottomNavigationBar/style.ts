@@ -21,7 +21,7 @@ export const Content = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: ${({ theme }) => theme.MAX_WIDTH.default};
+  max-width: ${({ theme }) => theme.MAX_WIDTH.DEFAULT};
 `;
 
 export const LinkButton = styled(NavLink)`
