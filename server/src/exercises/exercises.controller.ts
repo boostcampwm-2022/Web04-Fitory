@@ -34,4 +34,16 @@ export class ExercisesController {
   getExerciseHistoryOfMonth(@Query("month") month: number, @Query("userId") userId: number) {
     return this.exercisesService.findExerciseHistoryOfMonth(month, userId);
   }
+
+  @Get("profile")
+  @ApiOperation({
+    summary: "홈 페이지의 프로필에 필요한, 해당 사용자의 총 볼륨, 운동 일수를 반환",
+  })
+  @ApiQuery({
+    name: "userId",
+    type: "number",
+  })
+  getInfoForProfile(@Query("userId") userId: number) {
+    return this.exercisesService.getProfileData(userId);
+  }
 }
