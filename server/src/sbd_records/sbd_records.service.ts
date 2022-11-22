@@ -13,25 +13,25 @@ export class SbdRecordsService {
   ) {}
 
   async findEverySBDRecord(userId: number) {
-    let recordList = await this.recordsRepository.findBy({
-      user: { id: Equal(userId) },
-    });
-    recordList = recordList.sort((a, b) => {
-      return Number(a.date) - Number(b.date);
-    });
+    const recordList = await this.recordsRepository
+      .createQueryBuilder("SBD_record")
+      .where("SBD_record.user_id = :userId", { userId })
+      .orderBy("CAST(SBD_record.date AS SIGNED)", "ASC")
+      .getMany();
     return new EveryRecordDto(recordList);
   }
 
   async findBestSBDRecord(userId: number) {
-    let recordList = await this.recordsRepository.findBy({
-      user: { id: Equal(userId) },
-    });
-    if (recordList.length === 0) {
-      return { response: "User Not Exist" };
+    const recordList = await this.recordsRepository
+      .createQueryBuilder("SBD_record")
+      .where("SBD_record.user_id = :userId", { userId })
+      .orderBy("SBD_record.SBD_sum", "DESC")
+      .getOne();
+    if (!recordList) {
+      return {
+        response: "User Not Exist",
+      };
     }
-    recordList = recordList.sort((a, b) => {
-      return Number(b.SBD_sum) - Number(a.SBD_sum);
-    });
-    return new BestRecordDto(recordList[0]);
+    return new BestRecordDto(recordList);
   }
 }
