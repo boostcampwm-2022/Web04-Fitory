@@ -4,7 +4,6 @@ import { DayTypes } from "@constants/enums";
 
 // index
 export const Wrapper = styled.div`
-  border: 1px solid;
   border-radius: 20px;
   text-align: center;
   padding: 20px;
