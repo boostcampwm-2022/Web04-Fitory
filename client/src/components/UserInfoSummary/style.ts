@@ -29,8 +29,12 @@ export const UserName = styled.h3`
 `;
 
 export const RecordInfoWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: repeat(4, 1fr);
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 
 export const RecordInfo = styled.div`
