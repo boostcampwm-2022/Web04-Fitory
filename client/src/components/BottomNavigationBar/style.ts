@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   bottom: 0;
   left: 0;
   justify-content: center;
+  position: fixed;
 
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   border: 1px solid #f5f5f5;
