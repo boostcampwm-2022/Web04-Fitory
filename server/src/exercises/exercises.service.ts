@@ -26,4 +26,34 @@ export class ExercisesService {
     });
     return new HistoryOfMonthDto(exerciseHistory);
   }
+
+  async getTotalVolume(userId: number) {
+    const exerciseList = await this.exerciseRepository
+      .createQueryBuilder("exercise")
+      .select("exercise.exerciseString")
+      .where("exercise.user_id = :userId", { userId })
+      .getMany();
+    let totalVolume: number = 0;
+    exerciseList.map((element) => {
+      element.exerciseString.split("|").map((item) => {
+        const [kg, _, check] = item.split("/");
+        totalVolume += Number(check) * Number(kg);
+      });
+    });
+    return totalVolume;
+  }
+
+  async getTotalExerciseDate(userId: number) {
+    return await this.exerciseRepository
+      .createQueryBuilder("exercise")
+      .select("exercise.date")
+      .where("exercise.user_id = :userId", { userId })
+      .getCount();
+  }
+
+  async getProfileData(userId: number) {
+    const totalVolume = await this.getTotalVolume(userId);
+    const totalExerciseDate = await this.getTotalExerciseDate(userId);
+    return { totalVolume, totalExerciseDate };
+  }
 }
