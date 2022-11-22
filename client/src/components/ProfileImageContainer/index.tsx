@@ -16,14 +16,16 @@ const ProfileImageContainer = ({ isModified }: { isModified: boolean }) => {
   };
   return (
     <s.Wrapper>
-      <s.ImageContainer src={image} />
-      <s.ImageContainer
-        src={editableProfileImage}
-        hidden={isModified}
-        onClick={() => {
-          imgRef.current?.click();
-        }}
-      />
+      <s.ContainerBox>
+        <s.editImageContainer src={image} />
+        <s.ImageContainer
+          src={editableProfileImage}
+          hidden={isModified}
+          onClick={() => {
+            imgRef.current?.click();
+          }}
+        />
+      </s.ContainerBox>
       <input
         disabled={isModified}
         type="file"

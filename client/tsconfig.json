@@ -40,6 +40,7 @@
       "@utils/*": ["src/utils/*"],
       "@hooks/*": ["src/hooks/*"],
       "@pages/*": ["src/pages/*"],
+      "@stores/*": ["src/stores/*"],
       "@styles/*": ["src/styles/*"],
       "@public/*": ["public/*"]
     },
