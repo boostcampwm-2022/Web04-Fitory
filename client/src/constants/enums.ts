@@ -3,6 +3,8 @@ export enum RoutePath {
   STATICS = "/statics",
   SEARCH = "/search",
   PROFILE = "/profile",
+  CHALLENGE = "/challenge",
+  RECORD = "/record",
 }
 
 export enum FormatDay {
