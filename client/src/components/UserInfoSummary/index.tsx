@@ -8,7 +8,7 @@ const UserInfoSummary = () => {
    * isChallenge flag를 이용한 기록 여부 제어 방식은 임시입니다.
    * 후에 사용자 정보 API 연동 시 변동됩니다.
    */
-  const isChallenge = false;
+  const isChallenge = true;
 
   return (
     <Paper style={{ width: "100%" }}>
