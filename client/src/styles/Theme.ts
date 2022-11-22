@@ -28,6 +28,7 @@ const FONT_SIZE = {
 } as const;
 
 const FONT_WEIGHT = {
+  DEFAULT: 400,
   BOLD: 700,
 } as const;
 

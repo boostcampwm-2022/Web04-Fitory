@@ -51,5 +51,10 @@ export const RecordResult = styled.h2`
 `;
 
 export const Tier = styled(RecordResult)`
-  color: ${({ tier, theme }: { tier: _Tier; theme: typeof Theme }) => theme.TIER_COLOR[tier]};
+  color: ${({ tier, theme }: { tier: _Tier | null; theme: typeof Theme }) =>
+    tier && theme.TIER_COLOR[tier]};
+`;
+
+export const ChallengeRequestText = styled.p`
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.DEFAULT};
 `;
