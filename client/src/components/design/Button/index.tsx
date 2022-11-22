@@ -5,11 +5,12 @@ export interface ButtonProps {
   title: string;
   full?: boolean;
   small?: boolean;
+  onClick?: () => void;
 }
 
-const Button = ({ title, full, small }: ButtonProps) => {
+const Button = ({ title, full, small, onClick }: ButtonProps) => {
   return (
-    <s.Button type="button" full={full || false} small={small || false}>
+    <s.Button type="button" full={full || false} small={small || false} onClick={onClick}>
       {title}
     </s.Button>
   );
