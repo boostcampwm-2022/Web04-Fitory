@@ -29,7 +29,9 @@ export class GoogleOauthController {
 
     res.cookie("access_token", token, {
       sameSite: true,
-      secure: false,
+      secure: false, // 배포시에는 true로 바꿔야됨
+      httpOnly: true,
+      maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
     });
 
     return res.send(req.user);
