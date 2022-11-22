@@ -34,4 +34,12 @@ export class GoogleOauthController {
 
     return res.send(req.user);
   }
+
+  @Get("logout")
+  @ApiOperation({
+    summary: "구글 로그아웃, access_token 제거",
+  })
+  googleOAuthLogout(@Res() res: Response) {
+    return res.clearCookie("access_token").send("logout success");
+  }
 }
