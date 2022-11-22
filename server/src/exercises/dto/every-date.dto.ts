@@ -5,8 +5,5 @@ export class EveryDateDto {
     dateObject.map((item) => {
       this.dateList.push(item.date);
     });
-    this.dateList.sort((a, b) => {
-      return Number(a) - Number(b);
-    });
   }
 }

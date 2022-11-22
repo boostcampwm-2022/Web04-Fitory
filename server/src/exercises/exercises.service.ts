@@ -17,6 +17,7 @@ export class ExercisesService {
       .createQueryBuilder("exercise")
       .select("exercise.date")
       .where("exercise.user_id = :userId", { userId })
+      .orderBy("CAST (exercise.date AS SIGNED)", "ASC")
       .getMany();
     return new EveryDateDto(exerciseRows);
   }
