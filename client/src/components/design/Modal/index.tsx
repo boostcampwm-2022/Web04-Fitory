@@ -1,5 +1,6 @@
 import React from "react";
 import cancelSrc from "@public/icons/btn_cancel.svg";
+import modalStore from "@stores/modalStore";
 import * as s from "./style";
 
 export interface ModalProps {
@@ -7,10 +8,12 @@ export interface ModalProps {
 }
 
 const Modal = ({ children }: ModalProps) => {
+  const { isShowModal, closeModal } = modalStore((state) => state);
+
   return (
-    <s.Overlay>
+    <s.Overlay isShow={isShowModal} onClick={closeModal}>
       <s.Window>
-        <s.CloseButton>
+        <s.CloseButton onClick={closeModal}>
           <img src={cancelSrc} alt="모달 닫기 버튼" />
         </s.CloseButton>
         {children}

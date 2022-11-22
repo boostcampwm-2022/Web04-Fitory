@@ -7,8 +7,8 @@ export const Overlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  display: flex;
   justify-content: center;
+  display: ${({ isShow }: { isShow: boolean }) => (isShow ? "flex" : "none")};
 `;
 
 export const Window = styled.div`
@@ -23,12 +23,23 @@ export const Window = styled.div`
   display: flex;
   flex-direction: column;
   align-items: baseline;
-  transition: all 0.3s cubic-bezier(0, 0, 0.5, 1) 0s;
   max-width: ${({ theme }) => theme.MAX_WIDTH.default};
   background-color: ${({ theme }) => theme.COLORS.WHITE};
-  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.mobile}) {
     padding: 30px;
     padding-bottom: 70px;
+  }
+
+  animation: moveUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+
+  @keyframes moveUp {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
   }
 `;
 
