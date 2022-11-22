@@ -13,12 +13,11 @@ export class SbdRecordsService {
   ) {}
 
   async findEverySBDRecord(userId: number) {
-    let recordList = await this.recordsRepository.findBy({
-      user: { id: Equal(userId) },
-    });
-    recordList = recordList.sort((a, b) => {
-      return Number(a.date) - Number(b.date);
-    });
+    const recordList = await this.recordsRepository
+      .createQueryBuilder("SBD_record")
+      .where("SBD_record.user_id = :userId", { userId })
+      .orderBy("CAST(SBD_record.date AS SIGNED)", "ASC")
+      .getMany();
     return new EveryRecordDto(recordList);
   }
 
