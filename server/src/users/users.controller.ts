@@ -1,10 +1,12 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { ApiOperation, ApiQuery } from "@nestjs/swagger";
+import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { UsersService } from "./users.service";
 
-@Controller("users")
+@Controller("api/users")
+@ApiTags("USER API")
 export class UsersController {
   constructor(private usersService: UsersService) {}
+
 
   @Get("get")
   @ApiOperation({
@@ -16,5 +18,13 @@ export class UsersController {
   })
   async getUserInfo(@Query("id") id: number) {
     return this.usersService.getUserInfo(id);
+  }
+
+  @Get("nameList")
+  @ApiOperation({
+    summary: "모든 사용자들의 이름을 반환",
+  })
+  async getEveryUserName() {
+    return this.usersService.findEveryUserName();
   }
 }

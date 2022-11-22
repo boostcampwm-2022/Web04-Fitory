@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 export const Wrapper = styled.div`
   width: 100%;
   height: 60px;
-  position: fixed;
   bottom: 0;
   left: 0;
   justify-content: center;

@@ -1,18 +1,17 @@
 import React from "react";
-import { BrowserRouter, Routes } from "react-router-dom";
-import GlobalStyle from "src/styles/GlobalStyle";
-import TopNavigationBar from "@components/TopNavigationBar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import GlobalStyle from "@styles/GlobalStyle";
+import { RoutePath } from "@constants/enums";
 import BottomNavigationBar from "@components/BottomNavigationBar";
-import MainContainer from "@components/MainContainer";
+import HomePage from "@pages/HomePage";
 
 const App = () => {
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <TopNavigationBar isRoot />
-      <MainContainer>
-        <Routes />
-      </MainContainer>
+      <Routes>
+        <Route path={RoutePath.HOME} element={<HomePage />} />
+      </Routes>
       <BottomNavigationBar />
     </BrowserRouter>
   );

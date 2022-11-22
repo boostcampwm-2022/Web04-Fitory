@@ -18,4 +18,11 @@ export class UsersService {
     }
     return user;
   }
+  
+  async findEveryUserName() {
+    const userList = await this.usersRepository.find();
+    return {
+      nameList: userList.map((row) => row.name),
+    };
+  }
 }
