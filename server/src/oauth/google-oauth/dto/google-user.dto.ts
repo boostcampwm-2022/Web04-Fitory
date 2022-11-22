@@ -1,5 +1,5 @@
 export class GoogleUserDto {
-  readonly userId: string;
+  readonly oauthId: string;
 
   readonly name: string;
 }

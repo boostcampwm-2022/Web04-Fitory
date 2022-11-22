@@ -5,8 +5,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ name: "user_id" })
-  userId!: string;
+  @Column({ name: "oauth_id" })
+  oauthId!: string;
 
   @Column({ length: 45 })
   name!: string;

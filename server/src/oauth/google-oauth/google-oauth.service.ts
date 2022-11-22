@@ -22,14 +22,14 @@ export class GoogleOauthService {
       throw new BadRequestException("Unauthenticated");
     }
 
-    const userExists = await this.findUserById(user.userId);
+    const userExists = await this.findUserById(user.oauthId);
 
     if (!userExists) {
       return this.registerUser(user);
     }
 
     return this.generateJwt({
-      sub: userExists.userId,
+      sub: userExists.oauthId,
     });
   }
 
@@ -40,15 +40,15 @@ export class GoogleOauthService {
       await this.userRepository.save(newUser);
 
       return this.generateJwt({
-        sub: newUser.userId,
+        sub: newUser.oauthId,
       });
     } catch {
       throw new InternalServerErrorException();
     }
   }
 
-  async findUserById(userId: string) {
-    const user = await this.userRepository.findOneBy({ userId });
+  async findUserById(oauthId: string) {
+    const user = await this.userRepository.findOneBy({ oauthId });
 
     if (!user) {
       return null;
