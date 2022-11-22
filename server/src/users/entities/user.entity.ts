@@ -5,7 +5,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ name: "oauth_id" })
+  @Column({ name: "oauth_id", type: "bigint" })
   oauthId!: string;
 
   @Column({ nullable: true, length: 45 })
