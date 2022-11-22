@@ -16,6 +16,6 @@ export const typeormConfig: TypeOrmModuleOptions = {
   password: DB_PWD,
   database: DB_NAME,
   entities: [User, Routine, Exercise, Alarm, SBD_record, SBD_statistics, Follow],
-  synchronize: true,
+  synchronize: false,
   logging: true,
 };

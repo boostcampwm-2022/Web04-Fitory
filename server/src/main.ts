@@ -1,5 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
 import { AppModule } from "./app.module";
@@ -10,18 +11,14 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
 
-  app.use(
-    session({
-      secret: process.env.ACCESS_TOKEN_SECRETKEY as string,
-      saveUninitialized: false,
-      resave: false,
-      cookie: {
-        maxAge: 60000,
-      },
-    }),
-  );
+  app.enableCors({
+    origin: ["http://localhost:8080"],
+    credentials: true,
+  });
+
+  app.use(cookieParser());
+
   app.use(passport.initialize());
-  app.use(passport.session());
 
   const swaggerDocumentBuilder = new DocumentBuilder()
     .setTitle("Fitory's API Docs")

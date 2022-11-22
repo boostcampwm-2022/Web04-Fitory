@@ -7,7 +7,7 @@ export default {
   title: "components/BottomNavigationBar",
   component: BottomNavigationBar,
   decorators: [
-    (Story) => (
+    (Story: any) => (
       <MemoryRouter>
         <Story />
       </MemoryRouter>
