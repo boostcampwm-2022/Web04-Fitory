@@ -22,6 +22,10 @@ export const HeaderContainer = styled.div`
   justify-content: center;
   width: 100%;
   padding: 20px;
+
+  img {
+    filter: ${({ theme }) => theme.COLORS.FILTER_GRAY};
+  }
 `;
 
 export const DateContainer = styled.div`

@@ -34,3 +34,10 @@ export enum ExerciseState {
   REST = "rest",
   IDLE = "idle",
 }
+
+export enum DayTypes {
+  TODAY = "today",
+  OTHER_DAYS = "otherDays",
+  SATURDAY = "saturday",
+  SUNDAY = "sunday",
+}
