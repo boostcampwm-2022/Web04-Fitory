@@ -6,9 +6,6 @@ export class Routine {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ name: "uuid", length: 45 })
-  uuid!: string;
-
   @Column({ name: "routine_name", length: 45 })
   routineName!: string;
 
@@ -20,6 +17,6 @@ export class Routine {
 
   // FK
   @ManyToOne(() => User)
-  @JoinColumn({ name: "user_id" })
+  @JoinColumn({ name: "user_id", referencedColumnName: "id" })
   user!: User;
 }

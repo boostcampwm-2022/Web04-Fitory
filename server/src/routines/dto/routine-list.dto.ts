@@ -1,18 +1,15 @@
 import { Routine } from "./../entities/routine.entity";
 
 export class RoutineList {
-  routineList: any = [];
+  routineNameList: any = [];
 
   constructor(routineObject: Routine[]) {
-    this.routineList = routineObject
+    routineObject
       .reduce((acc, cur) => {
-        return acc.find((item) => item.uuid === cur.uuid) ? acc : [...acc, cur];
+        return acc.find((item) => item.routineName === cur.routineName) ? acc : [...acc, cur];
       }, [])
       .map((routine) => {
-        return {
-          uuid: routine.uuid,
-          routineName: routine.routineName,
-        };
+        this.routineNameList.push(routine.routineName);
       });
   }
 }

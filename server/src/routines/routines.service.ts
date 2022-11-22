@@ -12,10 +12,10 @@ export class RoutinesService {
   ) {}
 
   async findEveryRoutine(userId: number) {
-    const routineList = await this.routinesRepository.findBy({
-      user: { id: Equal(userId) },
-    });
+    const routineList = await this.routinesRepository
+      .createQueryBuilder("routine")
+      .where("routine.user_id = :userId", { userId })
+      .getMany();
     return new RoutineList(routineList);
-    // return routineList;
   }
 }
