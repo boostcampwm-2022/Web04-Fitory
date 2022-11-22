@@ -11,9 +11,10 @@ export class AlarmsService {
   ) {}
 
   async countUnreadAlarm(userId: number) {
-    const alarmCount = await this.alarmRepository.count({
-      where: [{ receiverUserId: userId }, { check: true }],
-    });
+    const alarmCount = await this.alarmRepository
+      .createQueryBuilder("alarm")
+      .where("alarm.receiver_user_id = :userId", { userId })
+      .getCount();
     return { alarmCount };
   }
 }

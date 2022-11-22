@@ -20,9 +20,4 @@ export class Alarm {
 
   @Column({ name: "check" })
   check!: boolean;
-
-  // FK
-  // @ManyToOne(() => User)
-  // @JoinColumn({ name: "user_id" })
-  // user!: User;
 }
