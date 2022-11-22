@@ -85,11 +85,14 @@ export const DayLabel = styled.div`
       return "50%";
     }
   }};
+`;
 
-  border: ${({ exerciseState, theme }) => {
-    if (exerciseState === ExerciseState.EXERCISE) {
-      return `2px solid ${theme.COLORS.LIGHT_BLUE}`;
-    }
-    return "transparent";
+export const CompleteDot = styled.div`
+  margin: 0 auto;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: ${({ theme }) => {
+    return theme.COLORS.LIGHT_PURPLE;
   }};
 `;
