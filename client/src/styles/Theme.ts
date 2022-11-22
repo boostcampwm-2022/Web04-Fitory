@@ -17,6 +17,8 @@ const COLORS = {
   FILTER_GRAY: "invert(79%) sepia(1%) saturate(0%) hue-rotate(95deg) brightness(97%) contrast(95%)",
   FILTER_BLUE:
     "invert(52%) sepia(17%) saturate(1814%) hue-rotate(190deg) brightness(103%) contrast(96%)",
+  FILTER_DEEP_BLUE:
+    "invert(9%) sepia(40%) saturate(5984%) hue-rotate(222deg) brightness(89%) contrast(93%)",
 } as const;
 
 const FONT_SIZE = {
