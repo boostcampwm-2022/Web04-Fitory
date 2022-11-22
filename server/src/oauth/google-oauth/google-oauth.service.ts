@@ -35,12 +35,12 @@ export class GoogleOauthService {
 
   async registerUser(user: GoogleUserDto) {
     try {
-      const newUser = this.userRepository.create(user);
-
-      await this.userRepository.save(newUser);
+      // const newUser = this.userRepository.create(user);
+      //
+      // await this.userRepository.save(newUser);
 
       return this.generateJwt({
-        sub: newUser.oauthId,
+        sub: user.oauthId,
       });
     } catch {
       throw new InternalServerErrorException();
