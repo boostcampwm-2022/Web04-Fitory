@@ -1,9 +1,8 @@
 import { routineConverter } from "./converter/routines.converter";
-import { RoutineList } from "./dto/routine-list.dto";
 import { Routine } from "./entities/routine.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Equal, Repository } from "typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class RoutinesService {
