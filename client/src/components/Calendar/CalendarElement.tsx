@@ -17,7 +17,7 @@ const CalendarElement = ({ exerciseState, day, today }: CalendarElementProps) =>
   } else if (day.format("MM") !== today.format("MM")) {
     dayType = DayTypes.OTHER_DAYS;
   } else {
-    dayType = DayTypes.OTHER_DAYS;
+    dayType = DayTypes.THIS_DAYS;
   }
   return (
     <s.DayContainer dayType={dayType}>
