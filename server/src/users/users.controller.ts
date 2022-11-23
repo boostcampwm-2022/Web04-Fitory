@@ -35,4 +35,16 @@ export class UsersController {
   async registerUser(@Body() userInfo: UsersInfoDto) {
     return this.usersService.registerUser(userInfo);
   }
+
+  @Get("recentRecord")
+  @ApiOperation({
+    summary: "해당 사용자의 3대 챌린지 기록 반환",
+  })
+  @ApiQuery({
+    name: "userId",
+    type: "number",
+  })
+  async getRecentRecordTime(@Query("userId") userId: number) {
+    return this.usersService.getRecentRecordTime(userId);
+  }
 }

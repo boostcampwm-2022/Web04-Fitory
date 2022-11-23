@@ -32,7 +32,7 @@ const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
       : today.clone().endOf(DateTypes.MONTH).week();
 
   const calendarArr = () => {
-    let days: any[] = [];
+    let days: JSX.Element[] = [];
     for (let week = firstWeek; week <= lastWeek; week += 1) {
       days = days.concat(
         <tr key={week}>
@@ -50,6 +50,7 @@ const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
 
               return (
                 <CalendarElement
+                  key={`${month}${currentDay}`}
                   exerciseState={exerciseStateList[month][currentDay]}
                   day={day}
                   today={today}
@@ -64,7 +65,7 @@ const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
 
   return (
     <s.CalendarBody>
-      <tr>{calendarArr()}</tr>
+      <tbody>{calendarArr()}</tbody>
     </s.CalendarBody>
   );
 };
