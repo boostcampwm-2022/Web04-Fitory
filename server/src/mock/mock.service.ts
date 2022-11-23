@@ -25,7 +25,7 @@ export class MockService {
     const csvFile = fs.readFileSync("src/mock/open-powerlifting-fillna.csv", "utf8");
     const csvSplit = csvFile.toString().split("\n");
 
-    for (let i = 0; i <= n; i += 1) {
+    for (let i = 0; i < n; i += 1) {
       const csvData = csvSplit[i].split(",");
       console.log(csvData);
       const name = faker.name.lastName() + faker.name.firstName();
