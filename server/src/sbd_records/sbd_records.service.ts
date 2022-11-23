@@ -42,10 +42,8 @@ export class SbdRecordsService {
       .where("record.user_id = :userId", { userId })
       .select("record.time_stamp")
       .orderBy("record.time_stamp", "DESC")
-      .getRawMany();
+      .getRawOne();
 
-    const recentRecord = record[0];
-
-    return { recentRecord };
+    return { record };
   }
 }
