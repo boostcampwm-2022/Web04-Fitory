@@ -68,11 +68,11 @@ export class UsersService {
     const record = await this.recordsRepository
       .createQueryBuilder("record")
       .where("record.user_id = :userId", { userId })
-      .select("record.timeStamp")
-      .orderBy("record.timeStamp")
-      .getMany();
+      .select("record.time_stamp")
+      .orderBy("record.time_stamp", "DESC")
+      .getRawMany();
 
-    const recentRecord = record[record.length - 1];
+    const recentRecord = record[0];
 
     return { recentRecord };
   }
