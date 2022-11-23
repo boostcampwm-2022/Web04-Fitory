@@ -12,6 +12,7 @@ import { RoutinesModule } from "./routines/routines.module";
 import { SbdRecordsModule } from "./sbd_records/sbd_records.module";
 import { SbdStatisticsModule } from "./sbd_statistics/sbd_statistics.module";
 import { UsersModule } from "./users/users.module";
+import { MockModule } from "./mock/mock.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UsersModule } from "./users/users.module";
     SbdRecordsModule,
     SbdStatisticsModule,
     FollowsModule,
+    MockModule,
     TypeOrmModule.forRoot(typeormConfig),
     PassportModule.register({ session: true }),
   ],
