@@ -21,6 +21,9 @@ export class SBD_record {
   @Column({ name: "date", length: 45 })
   date!: string;
 
+  @Column({ name: "time_stamp", type: "bigint" })
+  timeStamp!: string;
+
   @Column({ name: "user_weight" })
   userWeight!: number;
 

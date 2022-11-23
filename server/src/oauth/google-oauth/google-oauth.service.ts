@@ -35,10 +35,6 @@ export class GoogleOauthService {
 
   async registerUser(user: GoogleUserDto) {
     try {
-      // const newUser = this.userRepository.create(user);
-      //
-      // await this.userRepository.save(newUser);
-
       return this.generateJwt({
         sub: user.oauthId,
       });
@@ -48,7 +44,10 @@ export class GoogleOauthService {
   }
 
   async findUserById(oauthId: string) {
-    const user = await this.userRepository.findOneBy({ oauthId });
+    const user = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.oauth_id = :oauthId", { oauthId })
+      .getOne();
 
     if (!user) {
       return null;
