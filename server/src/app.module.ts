@@ -4,7 +4,7 @@ import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AlarmsModule } from "./alarms/alarms.module";
 import { typeormConfig } from "./config/typeorm.config";
-import { HttpExceptionFilter } from "./exception/HttpExceptionFilter";
+import { HttpExceptionFilter } from "./exception/http-exception.filter";
 import { ExercisesModule } from "./exercises/exercises.module";
 import { FollowsModule } from "./follows/follows.module";
 import { GoogleOauthModule } from "./oauth/google-oauth/google-oauth.module";
