@@ -1,9 +1,9 @@
-import { BestRecordDto } from "./dto/best-record.dto";
-import { EveryRecordDto } from "./dto/every-record.dto";
-import { Equal, Repository } from "typeorm";
-import { SBD_record } from "./entities/sbd_record.entity";
+import { Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { BestRecordDto } from "./dto/best-record.dto";
+import { EveryRecordDto } from "./dto/every-record.dto";
+import { SBD_record } from "./entities/sbd_record.entity";
 
 @Injectable()
 export class SbdRecordsService {
@@ -33,5 +33,19 @@ export class SbdRecordsService {
       };
     }
     return new BestRecordDto(recordList);
+  }
+
+  async getRecentRecordTime(userId: number) {
+    // new Date().getTime() / 1000;
+    const record = await this.recordsRepository
+      .createQueryBuilder("record")
+      .where("record.user_id = :userId", { userId })
+      .select("record.time_stamp")
+      .orderBy("record.time_stamp", "DESC")
+      .getRawMany();
+
+    const recentRecord = record[0];
+
+    return { recentRecord };
   }
 }
