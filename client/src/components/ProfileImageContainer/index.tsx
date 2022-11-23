@@ -11,7 +11,7 @@ export interface ProfileImageContainerProps {
 const ProfileImageContainer = ({ isModified, profileImgUrl }: ProfileImageContainerProps) => {
   const [image, setImage] = useState<string>(profileImgUrl || defaultProfileImage);
   const imgRef = useRef<HTMLInputElement>(null);
-  const onChange = () => {
+  const handleChange = () => {
     const fileReader = new FileReader();
     const file = imgRef.current?.files as FileList;
     fileReader.readAsDataURL(file[0]);
@@ -39,7 +39,7 @@ const ProfileImageContainer = ({ isModified, profileImgUrl }: ProfileImageContai
         style={{ display: "none" }}
         accept="image/*"
         name="profile_img"
-        onChange={onChange}
+        onChange={handleChange}
         ref={imgRef as LegacyRef<HTMLInputElement>}
       />
     </s.Wrapper>
