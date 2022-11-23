@@ -50,6 +50,7 @@ const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
 
               return (
                 <CalendarElement
+                  key={`${month}${currentDay}`}
                   exerciseState={exerciseStateList[month][currentDay]}
                   day={day}
                   today={today}
@@ -62,7 +63,11 @@ const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
     return days;
   };
 
-  return <s.CalendarBody>{calendarArr()}</s.CalendarBody>;
+  return (
+    <s.CalendarBody>
+      <tbody>{calendarArr()}</tbody>
+    </s.CalendarBody>
+  );
 };
 
 export default CalendarBody;
