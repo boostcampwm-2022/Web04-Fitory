@@ -1,9 +1,8 @@
-import { HistoryOfMonthDto } from "./dto/history-of-month.dto";
+import { exerciseConverter } from "./converter/exercise.converter";
 import { Exercise } from "./entities/exercise.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { EveryDateDto } from "./dto/every-date.dto";
 
 @Injectable()
 export class ExercisesService {
@@ -19,7 +18,12 @@ export class ExercisesService {
       .where("exercise.user_id = :userId", { userId })
       .orderBy("CAST (exercise.date AS SIGNED)", "ASC")
       .getMany();
-    return new EveryDateDto(exerciseRows);
+    return {
+      ok: true,
+      response: {
+        dateList: exerciseConverter.dateList(exerciseRows),
+      },
+    };
   }
 
   async findExerciseHistoryOfMonth(month: number, userId: number) {
@@ -28,7 +32,24 @@ export class ExercisesService {
       .where("exercise.user_id = :userId", { userId })
       .andWhere("exercise.date like :date", { date: `__${month.toString().padStart(2, "0")}__` })
       .getMany();
-    return new HistoryOfMonthDto(exerciseHistory);
+    return {
+      ok: true,
+      response: {
+        dateList: exerciseConverter.historyOfMonth(exerciseHistory),
+      },
+    };
+  }
+
+  async getProfileData(userId: number) {
+    const totalVolume = await this.getTotalVolume(userId);
+    const totalExerciseDate = await this.getTotalExerciseDate(userId);
+    return {
+      ok: true,
+      response: {
+        totalVolume,
+        totalExerciseDate,
+      },
+    };
   }
 
   async getTotalVolume(userId: number) {
@@ -37,14 +58,7 @@ export class ExercisesService {
       .select("exercise.exerciseString")
       .where("exercise.user_id = :userId", { userId })
       .getMany();
-    let totalVolume: number = 0;
-    exerciseList.map((element) => {
-      element.exerciseString.split("|").map((item) => {
-        const [kg, _, check] = item.split("/");
-        totalVolume += Number(check) * Number(kg);
-      });
-    });
-    return totalVolume;
+    return exerciseConverter.totalVolume(exerciseList);
   }
 
   async getTotalExerciseDate(userId: number) {
@@ -53,11 +67,5 @@ export class ExercisesService {
       .select("exercise.date")
       .where("exercise.user_id = :userId", { userId })
       .getCount();
-  }
-
-  async getProfileData(userId: number) {
-    const totalVolume = await this.getTotalVolume(userId);
-    const totalExerciseDate = await this.getTotalExerciseDate(userId);
-    return { totalVolume, totalExerciseDate };
   }
 }
