@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 export const Background = styled.div`
   width: 100%;
-  height: 100%;
+  height: 0px;
+  flex-grow: 1;
+  overflow-y: auto;
 `;
-
 export const Wrapper = styled.div`
   margin: auto;
   padding: 20px;

@@ -5,6 +5,7 @@ export enum RoutePath {
   PROFILE = "/profile",
   CHALLENGE = "/challenge",
   RECORD = "/record",
+  LOGIN = "/login",
 }
 
 export enum FormatDay {
