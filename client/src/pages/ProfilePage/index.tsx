@@ -9,7 +9,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (!isLogin) {
-      navigate(RoutePath.LOGIN);
+      navigate(RoutePath.LOGIN, { replace: true });
     }
   }, [isLogin, navigate]);
 
