@@ -64,7 +64,7 @@ export class UsersService {
   }
 
   async getRecentRecordTime(userId: number) {
-    // new Date().getTime();
+    // new Date().getTime() / 1000;
     const record = await this.recordsRepository
       .createQueryBuilder("record")
       .where("record.user_id = :userId", { userId })
