@@ -2,7 +2,6 @@ import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { GoogleUserDto } from "../oauth/google-oauth/dto/google-user.dto";
 import { UsersInfoDto } from "./dto/users-info.dto";
 import { SBD_record } from "../sbd_records/entities/sbd_record.entity";
 
