@@ -72,7 +72,7 @@ export const CalendarBody = styled.table`
 // Element
 export const DayContainer = styled.td`
   vertical-align: middle;
-  color: ${({ dayType, theme }: { dayType: string; theme: typeof Theme }) => {
+  color: ${({ dayType, theme }: { dayType: DayTypes; theme: typeof Theme }) => {
     if (dayType === DayTypes.OTHER_DAYS) {
       return theme.COLORS.LIGHT_GRAY;
     }
@@ -88,7 +88,7 @@ export const DayLabel = styled.div`
   line-height: 2.5rem;
   margin: auto;
   border-radius: 50%;
-  background-color: ${({ dayType, theme }: { dayType: string; theme: typeof Theme }) => {
+  background-color: ${({ dayType, theme }: { dayType: DayTypes; theme: typeof Theme }) => {
     return dayType === DayTypes.TODAY ? theme.COLORS.LIGHT_BLUE : "transparent";
   }};
 `;
@@ -100,5 +100,5 @@ export const CompleteDot = styled.div`
   border-radius: 50%;
   background-color: ${({ state, theme }: { state: ExerciseState; theme: typeof Theme }) => {
     return state === ExerciseState.EXERCISE ? theme.COLORS.LIGHT_PURPLE : "transparent";
-  }}};
+  }};
 `;
