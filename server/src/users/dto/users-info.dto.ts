@@ -1,6 +1,5 @@
 import { IsNumber, IsString } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
-import { isBigInt } from "@nestjs/swagger/dist/plugin/utils/ast-utils";
 
 export class UsersInfoDto {
   @IsString()
@@ -8,7 +7,7 @@ export class UsersInfoDto {
 
   @ApiProperty({
     description: "유저의 고유 OAuth ID",
-    type: isBigInt,
+    type: BigInt,
   })
   @IsString()
   oauthId: string;
