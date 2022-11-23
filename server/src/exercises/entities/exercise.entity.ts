@@ -16,7 +16,7 @@ export class Exercise {
   date!: string;
 
   // FK
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { nullable: false })
   @JoinColumn({ name: "user_id" })
   user!: User;
 }
