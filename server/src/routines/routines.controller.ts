@@ -1,6 +1,8 @@
 import { RoutinesService } from "./routines.service";
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { isValidUserId } from "src/validation/validation";
+import { Exception } from "src/exception/exceptions";
 
 @Controller("api/routines")
 @ApiTags("ROUTINE API")
@@ -16,6 +18,7 @@ export class RoutinesController {
     type: "number",
   })
   async findAll(@Query("userId") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.routinesService.findEveryRoutine(userId);
   }
 }

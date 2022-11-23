@@ -1,8 +1,10 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { Exception } from "src/exception/exceptions";
+import { isValidUserId } from "src/validation/validation";
 import { AlarmsService } from "./alarms.service";
 
-@Controller("alarms")
+@Controller("api/alarms")
 @ApiTags("ALARM API")
 export class AlarmsController {
   constructor(private readonly alarmService: AlarmsService) {}
@@ -16,6 +18,7 @@ export class AlarmsController {
     type: "number",
   })
   getUnreadAlarmCount(@Query("userId") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.alarmService.countUnreadAlarm(userId);
   }
 }

@@ -1,5 +1,7 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { Exception } from "src/exception/exceptions";
+import { isValidUserId } from "src/validation/validation";
 import { SbdRecordsService } from "./sbd_records.service";
 
 @Controller("api/record")
@@ -16,6 +18,7 @@ export class SbdRecordsController {
     type: "number",
   })
   getEverySBDRecord(@Query("userId") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.recordsService.findEverySBDRecord(userId);
   }
 
@@ -28,6 +31,7 @@ export class SbdRecordsController {
     type: "number",
   })
   getBestSBDRecord(@Query("userId") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.recordsService.findBestSBDRecord(userId);
   }
 }

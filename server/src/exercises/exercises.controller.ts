@@ -1,6 +1,8 @@
+import { Exception } from "./../exception/exceptions";
 import { ExercisesService } from "./exercises.service";
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { isValidMonth, isValidUserId } from "src/validation/validation";
 
 @Controller("api/exercise")
 @ApiTags("EXERCISE API")
@@ -16,6 +18,7 @@ export class ExercisesController {
     type: "number",
   })
   getEveryExerciseDate(@Query("userId") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.exercisesService.findEveryExerciseDate(userId);
   }
 
@@ -32,6 +35,8 @@ export class ExercisesController {
     type: "number",
   })
   getExerciseHistoryOfMonth(@Query("month") month: number, @Query("userId") userId: number) {
+    if (!isValidMonth(month)) throw new Exception().invalidMonthError();
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.exercisesService.findExerciseHistoryOfMonth(month, userId);
   }
 
@@ -44,6 +49,7 @@ export class ExercisesController {
     type: "number",
   })
   getInfoForProfile(@Query("userId") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.exercisesService.getProfileData(userId);
   }
 }
