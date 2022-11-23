@@ -5,7 +5,7 @@ import * as s from "./style";
 export interface SearchResultUserProfileProps {
   profileImgUrl?: string;
   userName: string;
-  userMessage?: string;
+  userMessage: string;
 }
 
 const SearchResultUserProfile = ({
@@ -21,7 +21,7 @@ const SearchResultUserProfile = ({
         </s.ProfileImgContainer>
         <s.UserInfoContainer>
           <s.UserNameContainer>{userName}</s.UserNameContainer>
-          <s.UserMessageContainer>
+          <s.UserMessageContainer userMessage={userMessage}>
             {userMessage || "등록된 자기소개가 없습니다."}
           </s.UserMessageContainer>
         </s.UserInfoContainer>
