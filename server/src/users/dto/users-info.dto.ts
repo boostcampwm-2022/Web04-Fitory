@@ -30,7 +30,7 @@ export class UsersInfoDto {
 
   @ApiProperty({
     description: "유저 성별",
-    type: Boolean,
+    type: Number,
   })
   @IsNumber()
   gender: number;
