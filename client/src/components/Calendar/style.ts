@@ -72,6 +72,7 @@ export const CalendarBody = styled.table`
 // Element
 export const DayContainer = styled.td`
   vertical-align: middle;
+  height: 5rem;
   color: ${({ dayType, theme }: { dayType: string; theme: typeof Theme }) => {
     if (dayType === DayTypes.OTHER_DAYS) {
       return theme.COLORS.LIGHT_GRAY;
