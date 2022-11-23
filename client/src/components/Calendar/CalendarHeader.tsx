@@ -11,7 +11,7 @@ interface CalendarHeaderProps {
 
 const CalendarHeader = ({ date, setDate }: CalendarHeaderProps) => {
   return (
-    <div>
+    <>
       <s.HeaderContainer>
         <s.MonthMoveButton onClick={() => setDate(date.clone().subtract(1, "month"))}>
           <img src={prevMonthButton} alt="이전 달로 이동" />
@@ -35,7 +35,7 @@ const CalendarHeader = ({ date, setDate }: CalendarHeaderProps) => {
         <s.DayNameContainer>F</s.DayNameContainer>
         <s.DayNameContainer>S</s.DayNameContainer>
       </s.DatesContainer>
-    </div>
+    </>
   );
 };
 

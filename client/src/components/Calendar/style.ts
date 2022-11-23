@@ -4,6 +4,7 @@ import { DayTypes, ExerciseState } from "@constants/enums";
 
 // index
 export const Wrapper = styled.div`
+  width: 100%;
   border-radius: 20px;
   text-align: center;
   padding: 20px;
@@ -64,16 +65,14 @@ export const DayNameContainer = styled.div`
 export const CalendarBody = styled.table`
   width: 100%;
   font-size: ${({ theme }) => {
-    return theme.FONT_SIZE.MEDIUM;
+    return theme.FONT_SIZE.EXTRA_SMALL;
   }};
 `;
 
 // Element
 export const DayContainer = styled.td`
-  width: calc((100vw - 40px) / 7);
-  height: calc((100vw - 40px) / 7);
   vertical-align: middle;
-  color: ${({ dayType, theme }: { dayType: any; theme: typeof Theme }) => {
+  color: ${({ dayType, theme }: { dayType: string; theme: typeof Theme }) => {
     if (dayType === DayTypes.OTHER_DAYS) {
       return theme.COLORS.LIGHT_GRAY;
     }
@@ -89,7 +88,7 @@ export const DayLabel = styled.div`
   line-height: 2.5rem;
   margin: auto;
   border-radius: 50%;
-  background-color: ${({ dayType, theme }: { dayType: any; theme: typeof Theme }) => {
+  background-color: ${({ dayType, theme }: { dayType: string; theme: typeof Theme }) => {
     return dayType === DayTypes.TODAY ? theme.COLORS.LIGHT_BLUE : "transparent";
   }};
 `;
@@ -99,7 +98,7 @@ export const CompleteDot = styled.div`
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background-color: ${({ state, theme }: { state: any; theme: typeof Theme }) => {
+  background-color: ${({ state, theme }: { state: ExerciseState; theme: typeof Theme }) => {
     return state === ExerciseState.EXERCISE ? theme.COLORS.LIGHT_PURPLE : "transparent";
   }}};
 `;
