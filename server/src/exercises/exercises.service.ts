@@ -41,8 +41,8 @@ export class ExercisesService {
     let totalVolume: number = 0;
     exerciseList.map((element) => {
       element.exerciseString.split("|").map((item) => {
-        const [kg, _, check] = item.split("/");
-        totalVolume += Number(check) * Number(kg);
+        const [kg, count, check] = item.split("/");
+        totalVolume += Number(check) * Number(kg) * Number(count);
       });
     });
     return totalVolume;

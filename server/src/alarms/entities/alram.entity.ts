@@ -6,18 +6,20 @@ export class Alarm {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ name: "receiver_user_id" })
-  receiverUserId!: number;
-
   @Column({ name: "sender_user_id" })
   senderUserId!: number;
 
   @Column({ name: "alarm_type" })
   alarmType!: number;
 
-  @Column({ name: "date", length: 45 })
-  date!: string;
+  @Column({ name: "minute_stamp" })
+  minuteStamp!: number;
 
   @Column({ name: "check" })
   check!: boolean;
+
+  // FK
+  @ManyToOne(() => User, { nullable: false })
+  @JoinColumn({ name: "user_id", referencedColumnName: "id" })
+  user!: User;
 }
