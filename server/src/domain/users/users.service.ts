@@ -32,7 +32,7 @@ export class UsersService {
   async getEveryUserProfile() {
     const userProfileList = await this.userRepository
       .createQueryBuilder("user")
-      .select(["user.name", "user.introduce", "user.profile_image"])
+      .select(["user.id", "user.name", "user.introduce", "user.profile_image"])
       .getRawMany();
 
     return HttpResponse.success({
