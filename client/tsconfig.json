@@ -1,0 +1,53 @@
+{
+  "include": ["src"],
+  "exclude": ["node_modules"],
+
+  "compilerOptions": {
+    /* 기본 옵션 */
+    "target": "es5", // es5 버전 자바스크립트로 컴파일
+    "lib": ["dom", "dom.Iterable", "esnext"], // 특정 기능에 대한 문법(타입)을 추가
+    "module": "esnext", // import 및 최신 자바스크립트 문법 사용
+    "jsx": "react", // JSX 코드가 React.createElement() 함수의 호출로 변환
+    "declaration": true, // 컴파일시 .d.ts 파일도 자동으로 함께생성 (현재쓰는 모든 타입이 정의된 파일)
+    "declarationMap": true, // '.d.ts'파일에 대한 소스 맵 생성
+    "sourceMap": true, // 소스맵 '.map' 파일 생성  (webpack 디버깅시 오류 코드 위치 추적)
+    "removeComments": true, // 컴파일시 주석제거
+    "isolatedModules": true, // 각 파일을 별도 모듈로 변환
+
+    /* 엄격한 유형 검사 옵션 */
+    "strict": true, // 모든 엄격한 유형 검사 옵션 활성화
+    "noImplicitAny": true, // 'any' 유형으로 표현식 및 선언 사용 시 오류 발생
+    "strictNullChecks": true, // 엄격한 null 검사 사용
+    "strictFunctionTypes": true, // 엄격한 함수 유형 검사 사용
+    "strictBindCallApply": true, // 엄격한 'bind', 'call', 'apply' 함수 메서드 사용
+    "strictPropertyInitialization": true, // 클래스에서 속성 초기화 엄격 검사 사용
+    "noImplicitThis": true, // 'any'유형으로 'this' 표현식 사용 시 오류 발생
+    "alwaysStrict": true, // 엄격모드에서 구문 분석 후, 각 소스 파일에 "use strict" 코드를 출력
+
+    /* 추가 검사 옵션 */
+    "noUnusedLocals": true, // 사용되지 않은 지역 변수가 있으면 오류 발생
+    "noUnusedParameters": true, // 사용되지 않은 매개변수가 있을 경우 오류 발생
+    "noImplicitReturns": true, // 함수가 값을 반환하지 않을 경우 오류 발생
+    "noFallthroughCasesInSwitch": true, // switch 문 오류 유형에 대한 오류 발생
+
+    /* 모듈 분석 옵션 */
+    "moduleResolution": "node", // 'node' (Node.js) 방법으로 모듈 분석
+    "baseUrl": "./", // 모듈이 기본적으로 위치한 디렉토리 설정
+    "paths": {
+      "@api/*": ["src/api/*"],
+      "@components/*": ["src/components/*"],
+      "@constants/*": ["src/constants/*"],
+      "@utils/*": ["src/utils/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@pages/*": ["src/pages/*"],
+      "@stores/*": ["src/stores/*"],
+      "@styles/*": ["src/styles/*"],
+      "@public/*": ["public/*"]
+    },
+    "esModuleInterop": true, // 모든 import에 대한  CommonJS와 ES 모듈 간의 상호 운용성을 설정
+
+    /* 고급 옵션 */
+    "skipLibCheck": true, // 선언 파일 유형 검사 스킵
+    "forceConsistentCasingInFileNames": true // 동일한 파일에 대한 일관되지 않은 참조 비허용
+  }
+}
