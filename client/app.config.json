@@ -4,7 +4,7 @@
       "name": "react-app",
       "script": "npx",
       "interpreter": "none",
-      "args": "serve -s build -p 3000"
+      "args": "serve -s dist -p 3000"
     }
   ]
 }
