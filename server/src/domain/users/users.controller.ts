@@ -2,8 +2,8 @@ import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { UsersService } from "./users.service";
 import { UsersInfoDto } from "./dto/users-info.dto";
-import { isValidUserId } from "src/validation/validation";
-import { Exception } from "src/exception/exceptions";
+import { isValidUserId } from "@validation/validation";
+import { Exception } from "@exception/exceptions";
 
 @Controller("api/users")
 @ApiTags("USER API")

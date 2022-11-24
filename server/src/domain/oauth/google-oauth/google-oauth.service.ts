@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "src/domain/users/entities/user.entity";
 import { JwtService } from "@nestjs/jwt";
-import { JwtPayload } from "../../../types/jwt";
+import { JwtPayload } from "@type/jwt";
 import { GoogleUserDto } from "./dto/google-user.dto";
 
 @Injectable()

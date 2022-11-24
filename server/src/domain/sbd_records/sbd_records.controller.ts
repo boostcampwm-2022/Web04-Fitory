@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { Exception } from "src/exception/exceptions";
-import { isValidUserId } from "src/validation/validation";
+import { Exception } from "@exception/exceptions";
+import { isValidUserId } from "@validation/validation";
 import { SbdRecordsService } from "./sbd_records.service";
 
 @Controller("api/record")

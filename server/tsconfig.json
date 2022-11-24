@@ -30,7 +30,20 @@
     /* 모듈 분석 옵션 */
     "moduleResolution": "node", // 'node' (Node.js) 방법으로 모듈 분석
     "baseUrl": "./", // 모듈이 기본적으로 위치한 디렉토리 설정
-    "paths": {},
+    "paths": {
+      "@env": ["src/utils/env"],
+      "@exception/*": ["src/exception/*"],
+      "@validation/*": ["src/validation/*"],
+      "@type/*": ["src/types/*"],
+      "@alarm/*": ["src/domain/alarms/*"],
+      "@exercise/*": ["src/domain/exercises/*"],
+      "@follow/*": ["src/domain/follows/*"],
+      "@oauth/*": ["src/domain/oauth/*"],
+      "@routine/*": ["src/domain/routines/*"],
+      "@record/*": ["src/domain/sbd_records/*"],
+      "@statistics/*": ["src/domain/sbd_statistics/*"],
+      "@user/*": ["src/domain/users/*"]
+    },
     "esModuleInterop": true, // 모든 import에 대한  CommonJS와 ES 모듈 간의 상호 운용성을 설정
 
     /* 고급 옵션 */

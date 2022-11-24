@@ -1,4 +1,4 @@
-import { recordItem } from "src/types/domain";
+import { recordItem } from "@type/domain";
 import { SBD_record } from "../entities/sbd_record.entity";
 
 export const recordConverter = {

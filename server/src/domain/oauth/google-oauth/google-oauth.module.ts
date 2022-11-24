@@ -6,7 +6,7 @@ import { GoogleOauthController } from "./google-oauth.controller";
 import { GoogleStrategy } from "./utils/google.strategy";
 import { GoogleOauthService } from "./google-oauth.service";
 import { JwtStrategy } from "../jwt/jwt.strategy";
-import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY } from "../../../utils/env";
+import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY } from "@env";
 
 @Module({
   imports: [

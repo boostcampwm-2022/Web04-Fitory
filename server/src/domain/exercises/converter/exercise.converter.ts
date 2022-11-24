@@ -1,4 +1,4 @@
-import { exerciseSet } from "src/types/domain";
+import { exerciseSet } from "@type/domain";
 import { Exercise } from "../entities/exercise.entity";
 
 export const exerciseConverter = {

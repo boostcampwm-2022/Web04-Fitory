@@ -1,12 +1,11 @@
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
-import session from "express-session";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { AppModule } from "./app.module";
-import { HttpExceptionFilter } from "./exception/http-exception.filter";
-import { PORT } from "./utils/env";
+import { HttpExceptionFilter } from "@exception/http-exception.filter";
+import { PORT } from "@env";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

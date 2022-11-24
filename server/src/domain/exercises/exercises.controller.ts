@@ -1,8 +1,8 @@
-import { Exception } from "../../exception/exceptions";
+import { Exception } from "@exception/exceptions";
 import { ExercisesService } from "./exercises.service";
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { isValidMonth, isValidUserId } from "src/validation/validation";
+import { isValidMonth, isValidUserId } from "@validation/validation";
 
 @Controller("api/exercise")
 @ApiTags("EXERCISE API")

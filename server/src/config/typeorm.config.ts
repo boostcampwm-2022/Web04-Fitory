@@ -1,12 +1,12 @@
-import { Follow } from "../domain/follows/entities/follow.entity";
-import { SBD_statistics } from "../domain/sbd_statistics/entities/sbd_statistics.entity";
-import { SBD_record } from "../domain/sbd_records/entities/sbd_record.entity";
-import { Alarm } from "../domain/alarms/entities/alram.entity";
-import { Exercise } from "../domain/exercises/entities/exercise.entity";
-import { Routine } from "../domain/routines/entities/routine.entity";
-import { User } from "../domain/users/entities/user.entity";
+import { Follow } from "@follow/entities/follow.entity";
+import { SBD_statistics } from "@statistics/entities/sbd_statistics.entity";
+import { SBD_record } from "@record/entities/sbd_record.entity";
+import { Alarm } from "@alarm/entities/alram.entity";
+import { Exercise } from "@exercise/entities/exercise.entity";
+import { Routine } from "@routine/entities/routine.entity";
+import { User } from "@user/entities/user.entity";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { DB_HOST, DB_PORT, DB_USER, DB_PWD, DB_NAME } from "../utils/env";
+import { DB_HOST, DB_PORT, DB_USER, DB_PWD, DB_NAME } from "@env";
 
 export const typeormConfig: TypeOrmModuleOptions = {
   type: "mysql",
@@ -16,6 +16,6 @@ export const typeormConfig: TypeOrmModuleOptions = {
   password: DB_PWD,
   database: DB_NAME,
   entities: [User, Routine, Exercise, Alarm, SBD_record, SBD_statistics, Follow],
-  synchronize: false,
+  synchronize: true,
   logging: true,
 };

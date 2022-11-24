@@ -3,7 +3,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { Response } from "express";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { GoogleOauthService } from "./google-oauth.service";
-import { RequestWithUser } from "../../../types/request";
+import { RequestWithUser } from "@type/request";
 
 @Controller("api/oauth/google")
 @ApiTags("OAUTH API")

@@ -1,8 +1,8 @@
 import { RoutinesService } from "./routines.service";
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { isValidUserId } from "src/validation/validation";
-import { Exception } from "src/exception/exceptions";
+import { isValidUserId } from "@validation/validation";
+import { Exception } from "@exception/exceptions";
 
 @Controller("api/routines")
 @ApiTags("ROUTINE API")
