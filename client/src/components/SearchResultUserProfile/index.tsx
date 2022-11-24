@@ -22,7 +22,7 @@ const SearchResultUserProfile = ({
         <s.UserInfoContainer>
           <s.UserNameContainer>{userName}</s.UserNameContainer>
           <s.UserMessageContainer userMessage={userMessage}>
-            {userMessage || "등록된 자기소개가 없습니다."}
+            {userMessage || "―"}
           </s.UserMessageContainer>
         </s.UserInfoContainer>
       </s.ProfileContainer>

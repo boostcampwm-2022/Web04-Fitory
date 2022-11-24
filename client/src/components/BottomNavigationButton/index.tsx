@@ -10,7 +10,7 @@ export interface BottomNavigationButtonProps {
 const BottomNavigationButton = ({ path, iconImageUrl, title }: BottomNavigationButtonProps) => {
   return (
     <s.LinkButton
-      to={path}
+      to={`${path}`}
       className={({ isActive }) => (isActive ? "active" : "inactive")}
       replace
     >

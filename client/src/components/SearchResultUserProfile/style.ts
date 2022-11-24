@@ -17,7 +17,8 @@ export const ProfileImgContainer = styled.div`
 `;
 
 export const UserInfoContainer = styled.div`
-  margin-left: 3vw;
+  margin-left: 2vw;
+  width: 70%;
 `;
 
 export const UserNameContainer = styled.div`
@@ -27,9 +28,15 @@ export const UserNameContainer = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-export const UserMessageContainer = styled.div`
+export const UserMessageContainer = styled.p`
+  width: 100%;
   color: ${({ userMessage, theme }: { userMessage: string | undefined; theme: typeof Theme }) => {
-    return userMessage ? theme.COLORS.DEEP_GRAY : theme.COLORS.PLACEHOLDER_GRAY;
+    return userMessage ? theme.COLORS.LIGHT_GRAY : theme.COLORS.PLACEHOLDER_GRAY;
   }};
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
+  text-align: left;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

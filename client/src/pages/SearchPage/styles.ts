@@ -59,4 +59,5 @@ export const SearchResultContainer = styled.div`
 export const UserProfile = styled.div`
   padding: 5px 0;
   height: 10%;
+  margin-bottom: 10px;
 `;
