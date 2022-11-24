@@ -2,8 +2,8 @@ import { Controller, Get, Inject, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Response } from "express";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { GoogleOauthService } from "./google-oauth.service";
 import { RequestWithUser } from "@type/request";
+import { GoogleOauthService } from "./google-oauth.service";
 
 @Controller("api/oauth/google")
 @ApiTags("OAUTH API")
@@ -30,7 +30,7 @@ export class GoogleOauthController {
 
     res.cookie("access_token", token, {
       sameSite: true,
-      secure: false, // 배포시에는 true로 바꿔야됨
+      secure: true, // 배포시에는 true로 바꿔야됨
       httpOnly: true,
       maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
     });
