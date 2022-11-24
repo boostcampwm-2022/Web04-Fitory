@@ -4,14 +4,14 @@ import { faker } from "@faker-js/faker";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import dayjs from "dayjs";
-import { OpenDataType } from "../types/openDataStatistics";
-import { User } from "../users/entities/user.entity";
-import { SBD_record } from "../sbd_records/entities/sbd_record.entity";
-import { SBD_statistics } from "../sbd_statistics/entities/sbd_statistics.entity";
-import { Routine } from "../routines/entities/routine.entity";
-import { Follow } from "../follows/entities/follow.entity";
-import { Exercise } from "../exercises/entities/exercise.entity";
-import { Alarm } from "../alarms/entities/alram.entity";
+import { OpenDataType } from "@type/openDataStatistics";
+import { User } from "@user/entities/user.entity";
+import { SBD_statistics } from "@statistics/entities/sbd_statistics.entity";
+import { Routine } from "@routine/entities/routine.entity";
+import { SBD_record } from "@record/entities/sbd_record.entity";
+import { Follow } from "@follow/entities/follow.entity";
+import { Exercise } from "@exercise/entities/exercise.entity";
+import { Alarm } from "@alarm/entities/alram.entity";
 
 faker.locale = "ko";
 
@@ -38,8 +38,9 @@ export class MockService {
     const data: OpenDataType[] = [];
 
     let fileName;
-    if (file === "fillna") fileName = "src/mock/open-powerlifting-fillna.csv";
-    else if (file === "sampling") fileName = "src/mock/open-powerlifting-sampling.csv";
+
+    if (file === "fillna") fileName = "src/domain/mock/open-powerlifting-fillna.csv";
+    else if (file === "sampling") fileName = "src/domain/mock/open-powerlifting-sampling.csv";
     const csvFile = fs.readFileSync(fileName, "utf8");
     const csvSplits = csvFile.toString().split("\n");
 
@@ -223,7 +224,7 @@ export class MockService {
               min: 0,
               max: 1,
             })}`,
-            date: dayjs(faker.date.recent(90).toString()).format("YYMMDD"),
+            date: dayjs(faker.date.recent(180).toString()).format("YYMMDD"),
           })
           .execute();
       }),

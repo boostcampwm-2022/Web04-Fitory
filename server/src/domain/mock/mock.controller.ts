@@ -37,7 +37,7 @@ export class MockController {
 
     await this.mockService.mockRoutine();
 
-    const exerciseNum = Array.from(Array(60).keys()); // 각 유저가 최근 3개월 이내의 무작위 날짜로 3세트 짜리 운동을 60개 기록
+    const exerciseNum = Array.from(Array(100).keys()); // 각 유저가 최근 6개월 이내의 무작위 날짜로 3세트 짜리 운동을 100개 기록
     await Promise.all(
       exerciseNum.map(() => {
         return this.mockService.mockExercise();
