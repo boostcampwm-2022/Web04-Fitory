@@ -22,10 +22,13 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
 
+  body {
+    background-color: ${theme.COLORS.ASH_WHITE}
+  }
+
   #root {
     display: flex;
     flex-direction: column;
-    background-color: ${theme.COLORS.ASH_WHITE}
   }
 
   button {

@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  position: fixed;
+  z-index: 1;
   width: 100%;
-  height: 60px;
+  height: ${({ theme }) => theme.NAVBAR_HEIGHT}px;
   display: flex;
   justify-content: center;
   background-color: ${({ theme }) => theme.COLORS.WHITE};

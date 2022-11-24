@@ -5,6 +5,7 @@ import UserInfoSummary from "@components/UserInfoSummary";
 import CalendarHeatMap from "@components/CalendarHeatMap";
 import arrowRightSrc from "@public/icons/mark_arrow_right.svg";
 import { RoutePath } from "@constants/enums";
+import Calendar from "@components/Calendar";
 import * as s from "./style";
 
 const HomePage = () => {
@@ -19,7 +20,7 @@ const HomePage = () => {
           <img src={arrowRightSrc} alt="3대 챌린지 도전하기 버튼" />
         </s.ChallengeButton>
         <CalendarHeatMap />
-        {/* 운동 기록 캘린더 */}
+        <Calendar />
         <s.RecordButton type="button" onClick={() => navigate(RoutePath.RECORD)}>
           운동 기록하기
         </s.RecordButton>

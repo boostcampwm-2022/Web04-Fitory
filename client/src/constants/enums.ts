@@ -57,8 +57,7 @@ export enum Tier {
 export enum DayTypes {
   TODAY = "today",
   OTHER_DAYS = "otherDays",
-  SATURDAY = "saturday",
-  SUNDAY = "sunday",
+  THIS_DAYS = "thisDays",
 }
 
 export enum DateTypes {
