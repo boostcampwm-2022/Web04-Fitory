@@ -1,118 +1,84 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "@pages/PageTemplate";
-import styled from "styled-components";
 import searchIcon from "@public/icons/btn_search.svg";
-import Theme from "@styles/Theme";
 import SearchResultUserProfile from "@components/SearchResultUserProfile";
+import axios from "axios";
+import * as s from "./styles";
 
 interface userProps {
-  id: number;
+  id?: number;
   name: string;
-  introduce: string;
+  introduce?: string;
 }
 const SearchPage = () => {
-  const mockData = [
-    { id: 1, name: "최시운", introduce: "하이" },
-    { id: 2, name: "최지원", introduce: "난 아니야" },
-  ];
-
+  const [userList, setUserList] = useState<userProps[]>([]);
   const [text, setText] = useState<string>("");
-  const [isText, setIsText] = useState(false);
+  const [store, setStore] = useState<userProps[]>([]);
 
-  // Zustand 대체 코드
-  const [store, setStore] = useState([]);
-  // 목데이터 유틸 함수 (tmp)
   const searchEvent = (word: string) => {
-    const tmp = mockData.filter((user: { name: string; introduce: string }) =>
-      user.name.includes(word),
-    );
-    setStore(tmp);
-    return mockData.filter((user: { name: string; introduce: string }) => user.name.includes(word));
+    const searchResult: userProps[] = userList.filter((user: userProps) => {
+      return user.name.includes(word);
+    });
+    setStore(searchResult);
+    return userList.filter((user: userProps) => user.name.includes(word));
   };
 
-  const dispatchResetStore = () => {
+  const resetStore = () => {
     setStore([]);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
-    const textLength: number = e.target.value.length;
-    if (textLength > 0) return setIsText(true);
-    return setIsText(false);
   };
 
   useEffect(() => {
+    const url = `${process.env.SERVER_BASE_URL}${process.env.GET_USERLIST_API}`;
+    const getUserList = async () => {
+      await axios.get(url).then((response) => {
+        setUserList(response.data.userList);
+      });
+    };
+    getUserList();
+  }, []);
+
+  useEffect(() => {
     const debounce = setTimeout(() => {
-      if (isText) searchEvent(text);
-      else dispatchResetStore();
+      if (text.length !== 0) searchEvent(text);
+      else resetStore();
     }, 200);
     return () => {
-      console.log("clear");
       clearTimeout(debounce);
     };
   }, [text]);
 
-  const t = () => {
-    return store.map((user: object) => {
+  const drawUserList = () => {
+    return store.map((user: userProps) => {
       return (
-        <SearchResultUserProfile key={user.id} userName={user.name} userMessage={user.introduce} />
+        <s.UserProfile key={user.id}>
+          <SearchResultUserProfile userName={user.name} userMessage={user?.introduce} />
+        </s.UserProfile>
       );
     });
   };
 
   return (
     <PageTemplate isRoot={false}>
-      <SearchContainer isText={isText}>
-        <UserSearchBarContainer>
-          <SearchBar
+      <s.SearchContainer isText={text.length !== 0}>
+        <s.UserSearchBarContainer>
+          <s.SearchBar
             type="text"
             onChange={handleChange}
-            isText={isText}
+            isText={text.length !== 0}
             placeholder="검색어를 입력하세요."
           />
           <img src={searchIcon} alt="검색 아이콘" />
-        </UserSearchBarContainer>
-        <SearchResultContainer>{t()}</SearchResultContainer>
-      </SearchContainer>
+        </s.UserSearchBarContainer>
+        <s.SearchResultContainer isText={text.length !== 0}>
+          {drawUserList()}
+        </s.SearchResultContainer>
+      </s.SearchContainer>
     </PageTemplate>
   );
 };
 
 export default SearchPage;
-
-const SearchContainer = styled.div`
-  border-radius: 20px;
-  background-color: ${({ theme }) => theme.COLORS.WHITE};
-  width: 100%;
-  height: ${({ isText }: { isText: boolean }) => {
-    return isText ? "70vh" : "50px";
-  }};
-  padding: 0.5rem 5vw;
-  transition: 0.25s all;
-`;
-
-const UserSearchBarContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const SearchBar = styled.input`
-  width: 100%;
-  height: 40px;
-  background-color: transparent;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: ${({ theme, isText }: { theme: typeof Theme; isText: boolean }) => {
-    return isText ? `1px solid ${theme.COLORS.LIGHT_GRAY}` : "none";
-  }};
-`;
-
-const SearchResultContainer = styled.div`
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  transition: 1s all;
-`;
