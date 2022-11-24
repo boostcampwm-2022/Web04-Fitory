@@ -2,6 +2,8 @@ import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { UsersService } from "./users.service";
 import { UsersInfoDto } from "./dto/users-info.dto";
+import { isValidUserId } from "src/validation/validation";
+import { Exception } from "src/exception/exceptions";
 
 @Controller("api/users")
 @ApiTags("USER API")
@@ -45,6 +47,7 @@ export class UsersController {
     type: "number",
   })
   async getRecentRecordTime(@Query("userId") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.usersService.getRecentRecordTime(userId);
   }
 }

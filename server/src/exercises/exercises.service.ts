@@ -19,6 +19,7 @@ export class ExercisesService {
       .where("exercise.user_id = :userId", { userId })
       .orderBy("CAST (exercise.date AS SIGNED)", "ASC")
       .getMany();
+    if (!exerciseRows) console.log(exerciseRows);
     return new EveryDateDto(exerciseRows);
   }
 
