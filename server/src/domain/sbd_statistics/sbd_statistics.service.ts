@@ -1,3 +1,4 @@
+import { HttpResponse } from "@converter/response.converter";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -11,9 +12,6 @@ export class SbdStatisticsService {
   ) {}
 
   getEverySBDData() {
-    return {
-      ok: true,
-      response: {},
-    };
+    return HttpResponse.success({});
   }
 }
