@@ -18,7 +18,7 @@ export class RoutinesController {
     name: "userId",
     type: "number",
   })
-  async findAll(@Query("userId") userId: number) {
+  findAll(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.routinesService.findEveryRoutine(userId);
   }
@@ -45,7 +45,7 @@ export class RoutinesController {
   @ApiOperation({
     summary: "❌ 미구현) 해당 루틴을 저장",
   })
-  async registerUser(@Body() routineData: SingleRoutineoDto) {
+  registerUser(@Body() routineData: SingleRoutineoDto) {
     return this.routinesService.saveSingleRoutine(routineData);
   }
 }
