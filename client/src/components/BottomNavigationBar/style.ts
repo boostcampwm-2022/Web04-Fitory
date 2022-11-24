@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 export const Wrapper = styled.div`
+  position: fixed;
+  z-index: 1;
   width: 100%;
-  height: 60px;
+  height: ${({ theme }) => theme.NAVBAR_HEIGHT}px;
   bottom: 0;
   left: 0;
   justify-content: center;
