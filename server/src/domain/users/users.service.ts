@@ -29,14 +29,14 @@ export class UsersService {
     });
   }
 
-  async findEveryUserName() {
-    const userNameList = await this.userRepository
+  async getEveryUserProfile() {
+    const userProfileList = await this.userRepository
       .createQueryBuilder("user")
-      .select("user.name")
-      .getMany();
+      .select(["user.name", "user.introduce", "user.profile_image"])
+      .getRawMany();
 
     return HttpResponse.success({
-      userNameList,
+      userProfileList,
     });
   }
 
