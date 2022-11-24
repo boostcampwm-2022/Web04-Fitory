@@ -67,7 +67,19 @@ export class MockService {
 
   async mockUsers(num: number[]) {
     return Promise.all(
-      num.map(() => {
+      num.map(async (id: number) => {
+        const following = await this.followRepository
+          .createQueryBuilder()
+          .where("follower_id = :id", { id })
+          .select("follower_id")
+          .getRawMany();
+
+        const follower = await this.followRepository
+          .createQueryBuilder()
+          .where("followed_id = :id", { id })
+          .select("followed_id")
+          .getRawMany();
+
         return this.userRepository
           .createQueryBuilder()
           .insert()
@@ -81,8 +93,8 @@ export class MockService {
             introduce: faker.lorem.sentence(),
             volumeSum: faker.datatype.number({ min: 0, max: 100000 }),
             tier: faker.datatype.number({ min: 0, max: 6 }),
-            followerCount: faker.datatype.number({ min: 0, max: 1000 }),
-            followingCount: faker.datatype.number({ min: 0, max: 1000 }),
+            followerCount: follower.length,
+            followingCount: following.length,
             oauthId: faker.datatype.number({ min: 0, max: 999999999 }).toString(),
             profileImage: "http://default.image",
           })
@@ -98,7 +110,7 @@ export class MockService {
       allUserId.map(async (id: { user_id: number }) => {
         const weight = await this.userRepository
           .createQueryBuilder()
-          .where("user_id = :n", { n: id })
+          .where("user_id = :id", { id })
           .select("weight")
           .getOne();
         const squat = faker.datatype.number({ min: 20, max: 300 });
@@ -170,19 +182,16 @@ export class MockService {
     );
   }
 
-  async mockFollow() {
-    const allUserId = await this.userRepository.createQueryBuilder().select("user_id").getRawMany();
-
-    return Promise.all(
-      allUserId.map(async (id: { user_id: number }) => {
-        return this.followRepository
-          .createQueryBuilder()
-          .insert()
-          .into(Follow)
-          .values({})
-          .execute();
-      }),
-    );
+  async mockFollow(userNums: number[]) {
+    return this.followRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Follow)
+      .values({
+        followedId: faker.helpers.arrayElement(userNums),
+        followerId: faker.helpers.arrayElement(userNums),
+      })
+      .execute();
   }
 
   async mockExercise() {
@@ -214,7 +223,7 @@ export class MockService {
               min: 0,
               max: 1,
             })}`,
-            date: dayjs(faker.date.recent(365).toString()).format("YYMMDD"),
+            date: dayjs(faker.date.recent(90).toString()).format("YYMMDD"),
           })
           .execute();
       }),
