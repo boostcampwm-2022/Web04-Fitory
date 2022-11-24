@@ -35,6 +35,7 @@
       "@exception/*": ["src/exception/*"],
       "@validation/*": ["src/validation/*"],
       "@type/*": ["src/types/*"],
+      "@converter/*": ["src/converter/*"],
       "@alarm/*": ["src/domain/alarms/*"],
       "@exercise/*": ["src/domain/exercises/*"],
       "@follow/*": ["src/domain/follows/*"],
