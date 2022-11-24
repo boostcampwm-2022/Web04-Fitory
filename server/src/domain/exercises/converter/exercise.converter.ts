@@ -5,7 +5,9 @@ export const exerciseConverter = {
   dateList: (dateObject: { date: string }[]) => {
     const result: string[] = [];
     dateObject.map((item) => {
-      result.push(item.date);
+      if (!result.includes(item.date)) {
+        result.push(item.date);
+      }
     });
     return result;
   },

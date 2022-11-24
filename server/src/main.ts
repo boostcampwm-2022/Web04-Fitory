@@ -10,7 +10,7 @@ import { initDatabase } from "./utils/initDB";
 
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
-  initDatabase();
+  // initDatabase();
 
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
