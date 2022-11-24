@@ -4,6 +4,7 @@ import { Routine } from "./entities/routine.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { SingleRoutineoDto } from "./dto/single-routine.dto";
 
 @Injectable()
 export class RoutinesService {
@@ -24,5 +25,10 @@ export class RoutinesService {
 
   async getSingleRoutine(userId: number, routineName: string) {
     return HttpResponse.success({});
+  }
+
+  async saveSingleRoutine(singleRoutine: SingleRoutineoDto) {
+    try {
+    } catch (error) {}
   }
 }

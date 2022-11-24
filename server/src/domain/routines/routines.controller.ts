@@ -1,5 +1,6 @@
+import { SingleRoutineoDto } from "./dto/single-routine.dto";
 import { RoutinesService } from "./routines.service";
-import { Controller, Get, Query } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
@@ -38,5 +39,13 @@ export class RoutinesController {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     // routineName에 대해 검증 추가 필요
     return this.routinesService.getSingleRoutine(userId, routineName);
+  }
+
+  @Post("save")
+  @ApiOperation({
+    summary: "❌ 미구현) 해당 루틴을 저장",
+  })
+  async registerUser(@Body() routineData: SingleRoutineoDto) {
+    return this.routinesService.saveSingleRoutine(routineData);
   }
 }
