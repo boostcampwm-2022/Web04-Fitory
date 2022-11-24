@@ -21,4 +21,8 @@ export class RoutinesService {
       routineList: routineConverter.routineNameList(routineList),
     });
   }
+
+  async getSingleRoutine(userId: number, routineName: string) {
+    return HttpResponse.success({});
+  }
 }
