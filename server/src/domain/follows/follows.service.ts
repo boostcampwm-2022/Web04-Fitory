@@ -14,4 +14,8 @@ export class FollowsService {
   async getFollowingUserList(userId: number) {
     return HttpResponse.success({});
   }
+
+  async getFollowerUserList(userId: number) {
+    return HttpResponse.success({});
+  }
 }

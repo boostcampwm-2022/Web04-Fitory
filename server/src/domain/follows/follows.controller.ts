@@ -21,4 +21,17 @@ export class FollowsController {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.followService.getFollowingUserList(userId);
   }
+
+  @Get("follower")
+  @ApiOperation({
+    summary: "❌ 미구현) 해당 사용자를 팔로우 하는 사용자들의 프로필 요약을 반환",
+  })
+  @ApiQuery({
+    name: "userId",
+    type: "number",
+  })
+  getFollowerUserList(@Query("userId") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    return this.followService.getFollowerUserList(userId);
+  }
 }
