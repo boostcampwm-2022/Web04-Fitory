@@ -1,3 +1,4 @@
+import { HttpResponse } from "@converter/response.converter";
 import { routineConverter } from "./converter/routines.converter";
 import { Routine } from "./entities/routine.entity";
 import { Injectable } from "@nestjs/common";
@@ -16,11 +17,8 @@ export class RoutinesService {
       .createQueryBuilder("routine")
       .where("routine.user_id = :userId", { userId })
       .getMany();
-    return {
-      ok: true,
-      response: {
-        routineList: routineConverter.routineNameList(routineList),
-      },
-    };
+    return HttpResponse.success({
+      routineList: routineConverter.routineNameList(routineList),
+    });
   }
 }
