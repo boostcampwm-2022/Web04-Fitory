@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "@styles/GlobalStyle";
 import { RoutePath } from "@constants/enums";
 import HomePage from "@pages/HomePage";
+import SearchPage from "@pages/SearchPage";
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <GlobalStyle />
       <Routes>
         <Route path={RoutePath.HOME} element={<HomePage />} />
+        <Route path={RoutePath.SEARCH} element={<SearchPage />} />
       </Routes>
     </BrowserRouter>
   );
