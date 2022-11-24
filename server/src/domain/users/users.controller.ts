@@ -18,16 +18,16 @@ export class UsersController {
     name: "id",
     type: "number",
   })
-  async getUserInfo(@Query("id") userId: number) {
+  getUserInfo(@Query("id") userId: number) {
     return this.usersService.getUserInfo(userId);
   }
 
-  @Get("nameList")
+  @Get("profile/list")
   @ApiOperation({
-    summary: "모든 사용자들의 이름을 반환",
+    summary: "모든 사용자들의 프로필 요약 데이터를 반환",
   })
   getEveryUserName() {
-    return this.usersService.findEveryUserName();
+    return this.usersService.getEveryUserProfile();
   }
 
   @Post("register")
