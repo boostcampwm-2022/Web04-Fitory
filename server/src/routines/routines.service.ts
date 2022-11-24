@@ -1,8 +1,8 @@
-import { RoutineList } from "./dto/routine-list.dto";
+import { routineConverter } from "./converter/routines.converter";
 import { Routine } from "./entities/routine.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Equal, Repository } from "typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class RoutinesService {
@@ -16,6 +16,11 @@ export class RoutinesService {
       .createQueryBuilder("routine")
       .where("routine.user_id = :userId", { userId })
       .getMany();
-    return new RoutineList(routineList);
+    return {
+      ok: true,
+      response: {
+        routineList: routineConverter.routineNameList(routineList),
+      },
+    };
   }
 }
