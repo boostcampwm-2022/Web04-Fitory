@@ -4,8 +4,8 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { AppModule } from "./app.module";
-import { HttpExceptionFilter } from "./exception/http-exception.filter";
-import { PORT } from "./utils/env";
+import { HttpExceptionFilter } from "@exception/http-exception.filter";
+import { PORT } from "@env";
 import { initDatabase } from "./utils/initDB";
 
 async function bootstrap() {
