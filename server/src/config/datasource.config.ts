@@ -5,10 +5,10 @@ import { Alarm } from "@alarm/entities/alram.entity";
 import { Exercise } from "@exercise/entities/exercise.entity";
 import { Routine } from "@routine/entities/routine.entity";
 import { User } from "@user/entities/user.entity";
-import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { DB_HOST, DB_PORT, DB_USER, DB_PWD, DB_NAME } from "@env";
+import { DB_HOST, DB_PORT, DB_USER, DB_PWD, DB_NAME } from "../utils/env";
+import { DataSource } from "typeorm";
 
-export const typeormConfig: TypeOrmModuleOptions = {
+export const AppDataSource = new DataSource({
   type: "mysql",
   host: DB_HOST,
   port: Number(DB_PORT),
@@ -16,6 +16,4 @@ export const typeormConfig: TypeOrmModuleOptions = {
   password: DB_PWD,
   database: DB_NAME,
   entities: [User, Routine, Exercise, Alarm, SBD_record, SBD_statistics, Follow],
-  synchronize: true,
-  logging: true,
-};
+});
