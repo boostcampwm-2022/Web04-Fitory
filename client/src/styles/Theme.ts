@@ -48,12 +48,15 @@ const TIER_COLOR = {
   CHAMPION: "#ff0062",
 } as const;
 
+const NAVBAR_HEIGHT = 60;
+
 const theme = {
   COLORS,
   FONT_SIZE,
   FONT_WEIGHT,
   MAX_WIDTH,
   TIER_COLOR,
+  NAVBAR_HEIGHT,
 } as const;
 
 export default theme;

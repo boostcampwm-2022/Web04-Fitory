@@ -19,10 +19,11 @@ const CalendarElement = ({ exerciseState, day, today }: CalendarElementProps) =>
   } else {
     dayType = DayTypes.THIS_DAYS;
   }
+
   return (
     <s.DayContainer dayType={dayType}>
       <s.DayLabel dayType={dayType}>{day.format("D")}</s.DayLabel>
-      <s.CompleteDot state={exerciseState} />
+      <s.CompleteDot state={exerciseState} dayType={dayType} />
     </s.DayContainer>
   );
 };

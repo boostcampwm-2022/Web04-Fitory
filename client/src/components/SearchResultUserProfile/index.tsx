@@ -5,7 +5,7 @@ import * as s from "./style";
 export interface SearchResultUserProfileProps {
   profileImgUrl?: string;
   userName: string;
-  userMessage: string;
+  userMessage?: string;
 }
 
 const SearchResultUserProfile = ({
