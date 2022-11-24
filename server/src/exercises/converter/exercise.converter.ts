@@ -1,6 +1,6 @@
 import { Exercise } from "../entities/exercise.entity";
 
-interface exerciseSet {
+export interface exerciseSet {
   index: number;
   kg: number;
   count: number;
@@ -32,6 +32,7 @@ export const exerciseConverter = {
         set: set,
       });
     });
+    return historyObject;
   },
 
   totalVolume: (exerciseList: Exercise[]) => {
