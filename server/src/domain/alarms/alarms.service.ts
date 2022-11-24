@@ -1,3 +1,4 @@
+import { HttpResponse } from "@converter/response.converter";
 import { Alarm } from "./entities/alram.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -15,6 +16,12 @@ export class AlarmsService {
       .createQueryBuilder("alarm")
       .where("alarm.user_id = :userId", { userId })
       .getCount();
-    return { alarmCount };
+    return HttpResponse.success({
+      alarmCount,
+    });
+  }
+
+  async getAlarmList(userId: number) {
+    return HttpResponse.success({});
   }
 }

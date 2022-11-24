@@ -1,3 +1,4 @@
+import { HttpResponse } from "@converter/response.converter";
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -23,16 +24,20 @@ export class UsersService {
     if (!user) {
       return "No user find";
     }
-    return user;
+    return HttpResponse.success({
+      user,
+    });
   }
 
   async findEveryUserName() {
-    const userList = await this.userRepository
+    const userNameList = await this.userRepository
       .createQueryBuilder("user")
       .select("user.name")
       .getMany();
 
-    return { userList };
+    return HttpResponse.success({
+      userNameList,
+    });
   }
 
   async registerUser(userInfo: UsersInfoDto) {
@@ -73,6 +78,12 @@ export class UsersService {
 
     const recentRecord = record[0];
 
-    return { recentRecord };
+    return HttpResponse.success({
+      recentRecord,
+    });
+  }
+
+  async getRecommandUserList(userId: number) {
+    return HttpResponse.success({});
   }
 }

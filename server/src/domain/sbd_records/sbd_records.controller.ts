@@ -1,4 +1,5 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { SingleSBDDataDto } from "./dto/single_sbd_data.dto";
+import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Exception } from "@exception/exceptions";
 import { isValidUserId } from "@validation/validation";
@@ -44,7 +45,15 @@ export class SbdRecordsController {
     name: "id",
     type: "number",
   })
-  async getRecentRecordTime(@Query("id") userId: number) {
+  getRecentRecordTime(@Query("id") userId: number) {
     return this.recordsService.getRecentRecordTime(userId);
+  }
+
+  @Post("submit")
+  @ApiOperation({
+    summary: "❌ 미구현) 해당 사용자의 SBD 측정 기록을 DB에 저장",
+  })
+  registerUser(@Body() sbdData: SingleSBDDataDto) {
+    return this.recordsService.submitSingleSBDRecord(sbdData);
   }
 }

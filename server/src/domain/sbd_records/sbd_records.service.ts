@@ -1,3 +1,5 @@
+import { SingleSBDDataDto } from "./dto/single_sbd_data.dto";
+import { HttpResponse } from "@converter/response.converter";
 import { recordConverter } from "./converter/sbd_records.converter";
 import { Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
@@ -17,12 +19,9 @@ export class SbdRecordsService {
       .where("SBD_record.user_id = :userId", { userId })
       .orderBy("CAST(SBD_record.date AS SIGNED)", "ASC")
       .getMany();
-    return {
-      ok: true,
-      response: {
-        recordList: recordConverter.everyRecord(recordList),
-      },
-    };
+    return HttpResponse.success({
+      recordList: recordConverter.everyRecord(recordList),
+    });
   }
 
   async findBestSBDRecord(userId: number) {
@@ -33,12 +32,9 @@ export class SbdRecordsService {
       .getOne();
     let bestRecord = {};
     if (recordList) bestRecord = recordConverter.bestRecord(recordList);
-    return {
-      ok: true,
-      response: {
-        bestRecord,
-      },
-    };
+    return HttpResponse.success({
+      bestRecord,
+    });
   }
 
   async getRecentRecordTime(userId: number) {
@@ -50,11 +46,13 @@ export class SbdRecordsService {
       .getRawOne();
     let secondStamp = 0;
     if (record) secondStamp = record.second_stamp;
-    return {
-      ok: true,
-      response: {
-        secondStamp,
-      },
-    };
+    return HttpResponse.success({
+      secondStamp,
+    });
+  }
+
+  async submitSingleSBDRecord(sbdData: SingleSBDDataDto) {
+    try {
+    } catch (error) {}
   }
 }

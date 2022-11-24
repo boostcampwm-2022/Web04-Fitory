@@ -50,4 +50,17 @@ export class UsersController {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.usersService.getRecentRecordTime(userId);
   }
+
+  @Get("recommand/list")
+  @ApiOperation({
+    summary: "❌ 미구현) 해당 사용자와 유사한 추천 사용자 리스트를 반환",
+  })
+  @ApiQuery({
+    name: "userId",
+    type: "number",
+  })
+  getRecommandUserList(@Query("userId") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    return this.usersService.getRecommandUserList(userId);
+  }
 }
