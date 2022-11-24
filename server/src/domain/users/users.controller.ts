@@ -26,7 +26,7 @@ export class UsersController {
   @ApiOperation({
     summary: "모든 사용자들의 이름을 반환",
   })
-  async getEveryUserName() {
+  getEveryUserName() {
     return this.usersService.findEveryUserName();
   }
 
@@ -34,7 +34,7 @@ export class UsersController {
   @ApiOperation({
     summary: "사용자 정보 user 테이블에 등록",
   })
-  async registerUser(@Body() userInfo: UsersInfoDto) {
+  registerUser(@Body() userInfo: UsersInfoDto) {
     return this.usersService.registerUser(userInfo);
   }
 
@@ -46,7 +46,7 @@ export class UsersController {
     name: "userId",
     type: "number",
   })
-  async getRecentRecordTime(@Query("userId") userId: number) {
+  getRecentRecordTime(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.usersService.getRecentRecordTime(userId);
   }
