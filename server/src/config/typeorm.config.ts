@@ -1,10 +1,10 @@
-import { Follow } from "./../follows/entities/follow.entity";
-import { SBD_statistics } from "./../sbd_statistics/entities/sbd_statistics.entity";
-import { SBD_record } from "./../sbd_records/entities/sbd_record.entity";
-import { Alarm } from "./../alarms/entities/alram.entity";
-import { Exercise } from "./../exercises/entities/exercise.entity";
-import { Routine } from "./../routines/entities/routine.entity";
-import { User } from "./../users/entities/user.entity";
+import { Follow } from "../domain/follows/entities/follow.entity";
+import { SBD_statistics } from "../domain/sbd_statistics/entities/sbd_statistics.entity";
+import { SBD_record } from "../domain/sbd_records/entities/sbd_record.entity";
+import { Alarm } from "../domain/alarms/entities/alram.entity";
+import { Exercise } from "../domain/exercises/entities/exercise.entity";
+import { Routine } from "../domain/routines/entities/routine.entity";
+import { User } from "../domain/users/entities/user.entity";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { DB_HOST, DB_PORT, DB_USER, DB_PWD, DB_NAME } from "../utils/env";
 

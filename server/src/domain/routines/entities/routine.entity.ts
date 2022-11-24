@@ -1,10 +1,13 @@
-import { User } from "src/users/entities/user.entity";
+import { User } from "src/domain/users/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: "exercise" })
-export class Exercise {
+@Entity({ name: "routine" })
+export class Routine {
   @PrimaryGeneratedColumn()
   id!: number;
+
+  @Column({ name: "routine_name", length: 45 })
+  routineName!: string;
 
   @Column({ name: "exercise_name", length: 45 })
   exerciseName!: string;
@@ -12,11 +15,8 @@ export class Exercise {
   @Column({ name: "exercise_string", length: 135 })
   exerciseString!: string;
 
-  @Column({ name: "date", length: 45 })
-  date!: string;
-
   // FK
   @ManyToOne(() => User, { nullable: false })
-  @JoinColumn({ name: "user_id" })
+  @JoinColumn({ name: "user_id", referencedColumnName: "id" })
   user!: User;
 }

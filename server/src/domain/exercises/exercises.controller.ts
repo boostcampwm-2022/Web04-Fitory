@@ -1,4 +1,4 @@
-import { Exception } from "./../exception/exceptions";
+import { Exception } from "../../exception/exceptions";
 import { ExercisesService } from "./exercises.service";
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";

@@ -2,16 +2,16 @@ import { Module } from "@nestjs/common";
 import { APP_FILTER } from "@nestjs/core";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { AlarmsModule } from "./alarms/alarms.module";
+import { AlarmsModule } from "./domain/alarms/alarms.module";
 import { typeormConfig } from "./config/typeorm.config";
 import { HttpExceptionFilter } from "./exception/http-exception.filter";
-import { ExercisesModule } from "./exercises/exercises.module";
-import { FollowsModule } from "./follows/follows.module";
-import { GoogleOauthModule } from "./oauth/google-oauth/google-oauth.module";
-import { RoutinesModule } from "./routines/routines.module";
-import { SbdRecordsModule } from "./sbd_records/sbd_records.module";
-import { SbdStatisticsModule } from "./sbd_statistics/sbd_statistics.module";
-import { UsersModule } from "./users/users.module";
+import { ExercisesModule } from "./domain/exercises/exercises.module";
+import { FollowsModule } from "./domain/follows/follows.module";
+import { GoogleOauthModule } from "./domain/oauth/google-oauth/google-oauth.module";
+import { RoutinesModule } from "./domain/routines/routines.module";
+import { SbdRecordsModule } from "./domain/sbd_records/sbd_records.module";
+import { SbdStatisticsModule } from "./domain/sbd_statistics/sbd_statistics.module";
+import { UsersModule } from "./domain/users/users.module";
 
 @Module({
   imports: [

@@ -5,8 +5,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Request } from "express";
 import { User } from "../../users/entities/user.entity";
-import { ACCESS_TOKEN_SECRETKEY } from "../../utils/env";
-import { JwtPayload } from "../../types/jwt";
+import { ACCESS_TOKEN_SECRETKEY } from "../../../utils/env";
+import { JwtPayload } from "../../../types/jwt";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
