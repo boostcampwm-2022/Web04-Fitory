@@ -2,13 +2,16 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "user" })
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: "user_id" })
   id!: number;
 
   @Column({ name: "oauth_id", type: "bigint" })
   oauthId!: string;
 
-  @Column({ nullable: true, length: 45 })
+  @Column({ name: "profile_image", length: 180 })
+  profileImage!: string;
+
+  @Column({ length: 45 })
   name!: string;
 
   @Column({ nullable: true })
@@ -25,10 +28,6 @@ export class User {
 
   @Column({ nullable: true, length: 180 })
   introduce!: string;
-
-  // TODO: 이미지 컬럼은 일단 보류
-  // @Column({ name: "", length: 0 })
-  // profileImage!: string;
 
   @Column({ nullable: true })
   tier!: number;

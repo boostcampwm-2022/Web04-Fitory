@@ -16,7 +16,7 @@ export class Routine {
   exerciseString!: string;
 
   // FK
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { nullable: false })
   @JoinColumn({ name: "user_id", referencedColumnName: "id" })
   user!: User;
 }

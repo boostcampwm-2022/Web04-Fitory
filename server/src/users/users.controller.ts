@@ -41,10 +41,10 @@ export class UsersController {
     summary: "해당 사용자의 3대 챌린지 기록 반환",
   })
   @ApiQuery({
-    name: "id",
+    name: "userId",
     type: "number",
   })
-  async getRecentRecordTime(@Query("id") userId: number) {
+  async getRecentRecordTime(@Query("userId") userId: number) {
     return this.usersService.getRecentRecordTime(userId);
   }
 }
