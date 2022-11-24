@@ -1,11 +1,5 @@
+import { exerciseSet } from "src/types/domain";
 import { Exercise } from "../entities/exercise.entity";
-
-export interface exerciseSet {
-  index: number;
-  kg: number;
-  count: number;
-  check: number;
-}
 
 export const exerciseConverter = {
   dateList: (dateObject: { date: string }[]) => {

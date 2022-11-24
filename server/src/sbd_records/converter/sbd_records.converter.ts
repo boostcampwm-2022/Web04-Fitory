@@ -1,13 +1,5 @@
+import { recordItem } from "src/types/domain";
 import { SBD_record } from "../entities/sbd_record.entity";
-
-export interface recordItem {
-  squat: number;
-  deadlift: number;
-  benchpress: number;
-  SBD_sum: number;
-  date: string;
-  userWeight: number;
-}
 
 export const recordConverter = {
   everyRecord: (recordList: SBD_record[]) => {
