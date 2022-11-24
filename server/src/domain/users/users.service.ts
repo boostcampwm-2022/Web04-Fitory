@@ -82,4 +82,8 @@ export class UsersService {
       recentRecord,
     });
   }
+
+  async getRecommandUserList(userId: number) {
+    return HttpResponse.success({});
+  }
 }
