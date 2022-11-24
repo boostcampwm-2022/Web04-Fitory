@@ -2,7 +2,7 @@ import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
 import passport from "passport";
-import { ValidationPipe } from "@nestjs/common";
+import { Post, ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
 import { PORT } from "@env";
 import { AppModule } from "./app.module";
@@ -17,6 +17,7 @@ async function bootstrap() {
 
   app.enableCors({
     origin: ["http://localhost:8080", "https://fitory.ga", "http://localhost:3000"],
+    methods: ["GET", "POST"],
     credentials: true,
   });
 
