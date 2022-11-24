@@ -1,14 +1,17 @@
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
-import session from "express-session";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { AppModule } from "./app.module";
 import { HttpExceptionFilter } from "./exception/http-exception.filter";
 import { PORT } from "./utils/env";
+import { initDatabase } from "./utils/initDB";
 
 async function bootstrap() {
+  // typeorm.config.ts의 synchronize: true 설정해야 동작
+  initDatabase();
+
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
 
