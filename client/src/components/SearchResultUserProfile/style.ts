@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Theme from "@styles/Theme";
 
 export const Wrapper = styled.div`
-  height: 10vh;
+  height: 100%;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 
@@ -10,16 +10,14 @@ export const ProfileContainer = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 0 1rem;
 `;
 
 export const ProfileImgContainer = styled.div`
-  width: 8vh;
-  height: 8vh;
+  height: 100%;
 `;
 
 export const UserInfoContainer = styled.div`
-  margin-left: 3vh;
+  margin-left: 3vw;
 `;
 
 export const UserNameContainer = styled.div`
@@ -30,7 +28,7 @@ export const UserNameContainer = styled.div`
 `;
 
 export const UserMessageContainer = styled.div`
-  color: ${({ userMessage, theme }: { userMessage: string; theme: typeof Theme }) => {
+  color: ${({ userMessage, theme }: { userMessage: string | undefined; theme: typeof Theme }) => {
     return userMessage ? theme.COLORS.DEEP_GRAY : theme.COLORS.PLACEHOLDER_GRAY;
   }};
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
