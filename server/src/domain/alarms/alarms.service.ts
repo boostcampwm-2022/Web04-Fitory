@@ -20,4 +20,8 @@ export class AlarmsService {
       alarmCount,
     });
   }
+
+  async getAlarmList(userId: number) {
+    return HttpResponse.success({});
+  }
 }
