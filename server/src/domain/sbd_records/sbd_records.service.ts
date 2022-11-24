@@ -1,3 +1,4 @@
+import { SingleSBDDataDto } from "./dto/single_sbd_data.dto";
 import { HttpResponse } from "@converter/response.converter";
 import { recordConverter } from "./converter/sbd_records.converter";
 import { Repository } from "typeorm";
@@ -48,5 +49,10 @@ export class SbdRecordsService {
     return HttpResponse.success({
       secondStamp,
     });
+  }
+
+  async submitSingleSBDRecord(sbdData: SingleSBDDataDto) {
+    try {
+    } catch (error) {}
   }
 }
