@@ -6,9 +6,9 @@ import axios from "axios";
 import * as s from "./styles";
 
 interface userProps {
-  id?: number;
-  name: string;
-  introduce?: string;
+  user_user_id?: number;
+  user_name: string;
+  user_introduce?: string;
 }
 const SearchPage = () => {
   const [userList, setUserList] = useState<userProps[]>([]);
@@ -17,10 +17,10 @@ const SearchPage = () => {
 
   const searchEvent = (word: string) => {
     const searchResult: userProps[] = userList.filter((user: userProps) => {
-      return user.name.includes(word);
+      return user.user_name.includes(word);
     });
     setStore(searchResult);
-    return userList.filter((user: userProps) => user.name.includes(word));
+    return userList.filter((user: userProps) => user.user_name.includes(word));
   };
 
   const resetStore = () => {
@@ -35,7 +35,7 @@ const SearchPage = () => {
     const url = `${process.env.SERVER_BASE_URL}${process.env.GET_USERLIST_API}`;
     const getUserList = async () => {
       await axios.get(url).then((response) => {
-        setUserList(response.data.userList);
+        setUserList(response.data.response.userProfileList);
       });
     };
     getUserList();
@@ -54,8 +54,8 @@ const SearchPage = () => {
   const drawUserList = () => {
     return store.map((user: userProps) => {
       return (
-        <s.UserProfile key={user.id}>
-          <SearchResultUserProfile userName={user.name} userMessage={user?.introduce} />
+        <s.UserProfile key={user.user_user_id}>
+          <SearchResultUserProfile userName={user.user_name} userMessage={user?.user_introduce} />
         </s.UserProfile>
       );
     });
