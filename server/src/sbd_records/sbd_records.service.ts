@@ -1,10 +1,7 @@
-import { Exception } from "src/exception/exceptions";
 import { recordConverter } from "./converter/sbd_records.converter";
 import { Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { BestRecordDto } from "./dto/best-record.dto";
-import { EveryRecordDto } from "./dto/every-record.dto";
 import { SBD_record } from "./entities/sbd_record.entity";
 
 @Injectable()
