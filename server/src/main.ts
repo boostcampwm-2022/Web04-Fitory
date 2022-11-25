@@ -16,11 +16,9 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
 
   app.enableCors({
-    origin: ["http://localhost:8080", "https://www.fitory.ga", "http://localhost:3000"],
+    origin: ["https://www.fitory.ga", "https://fitory.ga"],
     methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["access-control-allow-origin", "X-Requested-With", "Content-Type", "Accept"],
     credentials: true,
-    optionsSuccessStatus: 204,
   });
 
   app.use(cookieParser());
