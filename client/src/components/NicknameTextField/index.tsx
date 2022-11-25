@@ -2,11 +2,12 @@ import React, { ChangeEvent } from "react";
 import useInputFocus from "@hooks/useInputFocus";
 import { UserName } from "@constants/enums";
 import { NICKNAME_REGEX } from "@constants/consts";
+import * as UserType from "src/types/user";
 import * as s from "./style";
 
 interface NicknameTextFieldProps {
-  nickname: string;
-  setNickname: (name: string) => void;
+  nickname: UserType.UserName;
+  setNickname: (name: UserType.UserName) => void;
 }
 
 const NicknameTextField = ({ nickname, setNickname }: NicknameTextFieldProps) => {

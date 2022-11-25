@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { RoutePath, Gender, UserName, UserAge, UserHeight, UserWeight } from "@constants/enums";
+import { RoutePath, Gender } from "@constants/enums";
 import PageTemplate from "@pages/PageTemplate";
 import NicknameTextField from "@components/NicknameTextField";
 import AgeGenderInputSet from "@components/AgeGenderInputSet";
 import BodyInfoInputSet from "@components/BodyInfoInputSet";
-import { JoinUserInfo } from "src/types/user";
+import UserValidation from "@utils/UserValidation";
+import * as UserType from "src/types/user";
 import * as s from "./style";
 
 const JoinPage = () => {
   const navigete = useNavigate();
   const [step, setStep] = useState(0);
-  const [userInfo, setUserInfo] = useState<JoinUserInfo>({
+  const [userInfo, setUserInfo] = useState<UserType.JoinUserInfo>({
     name: "",
     age: 0,
     gender: Gender.MALE,
@@ -30,51 +31,39 @@ const JoinPage = () => {
     setStep(step + 1);
   };
 
-  const checkNicknameValidation = () => {
-    const { name } = userInfo;
-    return name.length >= UserName.MIN && name.length <= UserName.MAX;
-  };
-
-  const checkAgeGenderValidation = () => {
-    const { age, gender } = userInfo;
-    return (
-      age >= UserAge.MIN &&
-      age <= UserAge.MAX &&
-      (gender === Gender.MALE || gender === Gender.FEMALE)
-    );
-  };
-
-  const checkBodyInfoValidation = () => {
-    const { height, weight } = userInfo;
-    return (
-      height >= UserHeight.MIN &&
-      height <= UserHeight.MAX &&
-      weight >= UserWeight.MIN &&
-      weight <= UserWeight.MAX
-    );
-  };
-
-  const setNickname = (name: string) => {
+  const setNickname = (name: UserType.UserName) => {
     setUserInfo({ ...userInfo, name });
   };
 
-  const setAgeGender = ({ age, gender }: { age: number; gender: Gender }) => {
+  const setAgeGender = ({
+    age,
+    gender,
+  }: {
+    age: UserType.UserAge;
+    gender: UserType.UserGender;
+  }) => {
     setUserInfo({ ...userInfo, age, gender });
   };
 
-  const setBodyInfo = ({ height, weight }: { height: number; weight: number }) => {
+  const setBodyInfo = ({
+    height,
+    weight,
+  }: {
+    height: UserType.UserHeight;
+    weight: UserType.UserWeight;
+  }) => {
     setUserInfo({ ...userInfo, height, weight });
   };
 
   const joinProcess = [
     {
       title: "닉네임을 입력하세요.",
-      checkValidation: checkNicknameValidation,
+      checkValidation: () => UserValidation.checkNicknameValidation(userInfo.name),
       component: <NicknameTextField nickname={userInfo.name} setNickname={setNickname} />,
     },
     {
       title: "나이, 성별을 입력하세요.",
-      checkValidation: checkAgeGenderValidation,
+      checkValidation: () => UserValidation.checkAgeGenderValidation({ ...userInfo }),
       component: (
         <AgeGenderInputSet
           age={userInfo.age}
@@ -85,7 +74,7 @@ const JoinPage = () => {
     },
     {
       title: "키, 체중을 입력하세요.",
-      checkValidation: checkBodyInfoValidation,
+      checkValidation: () => UserValidation.checkBodyInfoValidation({ ...userInfo }),
       component: (
         <BodyInfoInputSet
           height={userInfo.height}

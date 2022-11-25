@@ -2,6 +2,7 @@ import React, { ChangeEvent } from "react";
 import useInputFocus from "@hooks/useInputFocus";
 import { UserHeight, UserWeight } from "@constants/enums";
 import { NUMBER_REGEX } from "@constants/consts";
+import * as UserType from "src/types/user";
 import * as s from "./style";
 
 enum BodyInfo {
@@ -10,9 +11,15 @@ enum BodyInfo {
 }
 
 interface BodyInfoInputSetProps {
-  height: number;
-  weight: number;
-  setBodyInfo: ({ height, weight }: { height: number; weight: number }) => void;
+  height: UserType.UserHeight;
+  weight: UserType.UserWeight;
+  setBodyInfo: ({
+    height,
+    weight,
+  }: {
+    height: UserType.UserHeight;
+    weight: UserType.UserWeight;
+  }) => void;
 }
 
 const BodyInfoInputSet = ({ height, weight, setBodyInfo }: BodyInfoInputSetProps) => {

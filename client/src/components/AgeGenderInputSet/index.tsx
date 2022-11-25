@@ -4,12 +4,13 @@ import { Gender, UserAge } from "@constants/enums";
 import { NUMBER_REGEX } from "@constants/consts";
 import maleSymbolSrc from "@public/images/maleSymbol.png";
 import femaleSymbolSrc from "@public/images/femaleSymbol.png";
+import * as UserType from "src/types/user";
 import * as s from "./style";
 
 interface AgeGenderInputSetProps {
-  age: number;
-  gender: Gender;
-  setAgeGender: ({ age, gender }: { age: number; gender: Gender }) => void;
+  age: UserType.UserAge;
+  gender: UserType.UserGender;
+  setAgeGender: ({ age, gender }: { age: UserType.UserAge; gender: UserType.UserGender }) => void;
 }
 
 const AgeGenderInputSet = ({ age, gender, setAgeGender }: AgeGenderInputSetProps) => {
