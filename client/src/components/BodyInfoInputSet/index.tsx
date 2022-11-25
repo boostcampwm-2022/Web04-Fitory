@@ -1,30 +1,35 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 import useInputFocus from "@hooks/useInputFocus";
+import { UserHeight, UserWeight } from "@constants/enums";
 import * as s from "./style";
 
 enum BodyInfo {
   HEIGHT = "height",
-  WIDTH = "width",
+  WEIGHT = "weight",
 }
 
-const BodyInfoInputSet = () => {
+interface BodyInfoInputSetProps {
+  height: number;
+  weight: number;
+  setBodyInfo: ({ height, weight }: { height: number; weight: number }) => void;
+}
+
+const BodyInfoInputSet = ({ height, weight, setBodyInfo }: BodyInfoInputSetProps) => {
   const heightTextFieldRef = useInputFocus();
-  const [bodyInfo, setBodyInfo] = useState({ height: "", weight: "" });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const stringValue = e.target.value.match(/\d+/);
     const numberValue = stringValue ? +stringValue[0] : 0;
 
-    if (numberValue.toString().length > 3) {
-      return;
-    }
-
     if (e.target.name === BodyInfo.HEIGHT) {
-      setBodyInfo({ ...bodyInfo, height: `${numberValue}` });
+      if (numberValue <= UserHeight.MAX) {
+        setBodyInfo({ height: numberValue, weight });
+      }
       return;
     }
-
-    setBodyInfo({ ...bodyInfo, weight: `${numberValue}` });
+    if (numberValue <= UserWeight.MAX) {
+      setBodyInfo({ height, weight: numberValue });
+    }
   };
 
   return (
@@ -32,15 +37,15 @@ const BodyInfoInputSet = () => {
       <s.Label>키 (cm)</s.Label>
       <s.TextField
         name={BodyInfo.HEIGHT}
-        value={bodyInfo.height}
+        value={height || ""}
         placeholder="0"
         onChange={(e) => handleChange(e)}
         ref={heightTextFieldRef}
       />
       <s.Label>체중 (kg)</s.Label>
       <s.TextField
-        name={BodyInfo.WIDTH}
-        value={bodyInfo.weight}
+        name={BodyInfo.WEIGHT}
+        value={weight || ""}
         placeholder="0"
         onChange={(e) => handleChange(e)}
       />

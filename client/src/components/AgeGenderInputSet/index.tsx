@@ -1,24 +1,26 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 import useInputFocus from "@hooks/useInputFocus";
-import { Gender } from "@constants/enums";
+import { Gender, UserAge } from "@constants/enums";
 import maleSymbolSrc from "@public/images/maleSymbol.png";
 import femaleSymbolSrc from "@public/images/femaleSymbol.png";
 import * as s from "./style";
 
-const AgeGenderInputSet = () => {
+interface AgeGenderInputSetProps {
+  age: number;
+  gender: Gender;
+  setAgeGender: ({ age, gender }: { age: number; gender: Gender }) => void;
+}
+
+const AgeGenderInputSet = ({ age, gender, setAgeGender }: AgeGenderInputSetProps) => {
   const ageTextFieldRef = useInputFocus();
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState(Gender.MALE);
 
   const handleChangeAge = (e: ChangeEvent<HTMLInputElement>) => {
     const stringValue = e.target.value.match(/\d+/);
     const numberValue = stringValue ? +stringValue[0] : 0;
-
-    if (numberValue > 120) {
+    if (numberValue > UserAge.MAX) {
       return;
     }
-
-    setAge(numberValue ? numberValue.toString() : "");
+    setAgeGender({ age: numberValue, gender });
   };
 
   return (
@@ -27,23 +29,21 @@ const AgeGenderInputSet = () => {
       <s.AgeTextField
         type="number"
         placeholder="0"
-        value={age}
+        value={age || ""}
         ref={ageTextFieldRef}
         onChange={(e) => handleChangeAge(e)}
       />
       <s.Label>성별</s.Label>
       <s.GenderWrapper>
         <s.GenderSelectButton
-          name={Gender.MALE}
           isActive={Gender.MALE === gender}
-          onClick={() => setGender(Gender.MALE)}
+          onClick={() => setAgeGender({ age, gender: Gender.MALE })}
         >
           <img src={maleSymbolSrc} alt="남성 버튼" />
         </s.GenderSelectButton>
         <s.GenderSelectButton
-          name={Gender.FEMALE}
           isActive={Gender.FEMALE === gender}
-          onClick={() => setGender(Gender.FEMALE)}
+          onClick={() => setAgeGender({ age, gender: Gender.FEMALE })}
         >
           <img src={femaleSymbolSrc} alt="여성 버튼" />
         </s.GenderSelectButton>

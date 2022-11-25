@@ -1,16 +1,21 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 import useInputFocus from "@hooks/useInputFocus";
+import { UserName } from "@constants/enums";
 import * as s from "./style";
 
-const NicknameTextField = () => {
+interface NicknameTextFieldProps {
+  nickname: string;
+  setNickname: (name: string) => void;
+}
+
+const NicknameTextField = ({ nickname, setNickname }: NicknameTextFieldProps) => {
   const textFieldRef = useInputFocus();
-  const [nickname, setNickname] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value.match(/^[a-zA-Zㄱ-힣0-9]*$/)) {
       return;
     }
-    if (e.target.value.length > 12) {
+    if (e.target.value.length > UserName.MAX) {
       return;
     }
     setNickname(e.target.value);
