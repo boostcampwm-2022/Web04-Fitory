@@ -67,3 +67,8 @@ export enum DateTypes {
   WEEK = "week",
   DAY = "day",
 }
+
+export enum Gender {
+  MALE = "male",
+  FEMALE = "female",
+}
