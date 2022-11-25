@@ -27,6 +27,7 @@ const FONT_SIZE = {
   SMALL: "1.4rem",
   MEDIUM: "1.6rem",
   LARGE: "1.8rem",
+  EXTRA_LARGE: "2.4rem",
 } as const;
 
 const FONT_WEIGHT = {
