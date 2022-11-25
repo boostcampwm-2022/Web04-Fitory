@@ -31,7 +31,7 @@ const FONT_SIZE = {
 
 const FONT_WEIGHT = {
   DEFAULT: 400,
-  BOLD: 700,
+  BOLD: 600,
 } as const;
 
 const MAX_WIDTH = {

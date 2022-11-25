@@ -52,6 +52,9 @@ export const RecordInfo = styled.div`
 export const RecordResult = styled.h2`
   color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
   font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
+  }
 `;
 
 export const Tier = styled(RecordResult)`

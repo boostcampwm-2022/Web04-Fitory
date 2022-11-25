@@ -3,7 +3,8 @@ import challengeSrc from "@public/images/btn_challenge.jpeg";
 
 export const Wrapper = styled.div`
   gap: 20px;
-  padding-bottom: 60px;
+  padding: 20px;
+  padding-bottom: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
