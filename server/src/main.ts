@@ -18,7 +18,9 @@ async function bootstrap() {
   app.enableCors({
     origin: ["http://localhost:8080", "https://www.fitory.ga", "http://localhost:3000"],
     methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["access-control-allow-origin", "X-Requested-With", "Content-Type", "Accept"],
     credentials: true,
+    optionsSuccessStatus: 204,
   });
 
   app.use(cookieParser());
