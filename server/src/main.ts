@@ -16,7 +16,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
 
   app.enableCors({
-    origin: ["http://localhost:8080", "https://fitory.ga", "http://localhost:3000"],
+    origin: ["http://localhost:8080", "https://www.fitory.ga", "http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true,
   });
