@@ -2,8 +2,12 @@ import React from "react";
 import arrowLeftSrc from "@public/icons/btn_arrow_left.svg";
 import * as s from "./style";
 
-const BackButton = () => {
+const BackButton = ({ onClick }: { onClick?: () => void }) => {
   const handleOnClick = () => {
+    if (onClick) {
+      onClick();
+      return;
+    }
     window.history.back();
   };
 
