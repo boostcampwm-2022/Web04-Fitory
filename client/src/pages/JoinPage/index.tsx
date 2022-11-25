@@ -1,29 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { RoutePath } from "@constants/enums";
 import PageTemplate from "@pages/PageTemplate";
-import useInputFocus from "@hooks/useInputFocus";
+import NicknameTextField from "@components/NicknameTextField";
+import AgeGenderInputSet from "@components/AgeGenderInputSet";
+import BodyInfoInputSet from "@components/BodyInfoInputSet";
 import * as s from "./style";
 
-const NicknameTextField = () => {
-  const TextFieldRef = useInputFocus();
-
-  return (
-    <>
-      <s.TextField ref={TextFieldRef} placeholder="닉네임" />
-      <s.Label>영문, 한글, 숫자 2~10자 이내</s.Label>
-    </>
-  );
-};
+const joinProcess = [
+  { title: "닉네임을 입력하세요.", component: <NicknameTextField /> },
+  { title: "나이, 성별을 입력하세요.", component: <AgeGenderInputSet /> },
+  { title: "키, 체중을 입력하세요.", component: <BodyInfoInputSet /> },
+];
 
 const JoinPage = () => {
+  const navigete = useNavigate();
+  const [step, setStep] = useState(0);
+
+  const handleClickBackButton = () => {
+    setStep(step - 1);
+  };
+
+  const handleClickNextButton = () => {
+    if (step === 2) {
+      navigete(RoutePath.PROFILE, { replace: true });
+    }
+    setStep(step + 1);
+  };
+
   return (
-    <PageTemplate isRoot={false} disableBottomNavBar>
+    <PageTemplate
+      isRoot={false}
+      onClickBackButton={step ? handleClickBackButton : undefined}
+      disableBottomNavBar
+    >
       <s.Wrapper>
-        <s.Title>닉네임을 입력하세요.</s.Title>
+        <s.Title>{joinProcess[step].title}</s.Title>
         <s.ContentWrapper>
-          <s.TextFieldWrapper>
-            <NicknameTextField />
-          </s.TextFieldWrapper>
-          <s.Button>다음</s.Button>
+          <s.TextFieldWrapper>{joinProcess[step].component}</s.TextFieldWrapper>
+          <s.NextButton onClick={handleClickNextButton}>
+            {joinProcess.length - 1 === step ? "완료" : "다음"}
+          </s.NextButton>
         </s.ContentWrapper>
       </s.Wrapper>
     </PageTemplate>

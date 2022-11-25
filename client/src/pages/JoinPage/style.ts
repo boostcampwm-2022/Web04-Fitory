@@ -23,35 +23,14 @@ export const ContentWrapper = styled.div`
 `;
 
 export const TextFieldWrapper = styled.div`
-  height: 100%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-export const TextField = styled.input`
-  width: 100%;
-  padding: 15px 20px;
-  border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.COLORS.LIGHT_GRAY};
-  caret-color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
-  font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
-  &:focus {
-    outline-color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
-  }
-  &::placeholder {
-    color: ${({ theme }) => theme.COLORS.PLACEHOLDER_GRAY};
-  }
-`;
-
-export const Label = styled.p`
-  margin-top: 30px;
-  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
-  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
-`;
-
-export const Button = styled.button`
+export const NextButton = styled.button`
   width: 100%;
   padding: 20px;
   border-radius: 10px;

@@ -8,6 +8,7 @@ interface PageTemplateProps {
   title?: string;
   disableBottomNavBar?: boolean;
   topNavRightItem?: JSX.Element;
+  onClickBackButton?: () => void;
   children: React.ReactNode;
 }
 
@@ -16,11 +17,17 @@ const PageTemplate = ({
   title,
   topNavRightItem,
   disableBottomNavBar,
+  onClickBackButton,
   children,
 }: PageTemplateProps) => {
   return (
     <>
-      <TopNavigationBar title={title} isRoot={isRoot} rightItem={topNavRightItem} />
+      <TopNavigationBar
+        title={title}
+        isRoot={isRoot}
+        rightItem={topNavRightItem}
+        onClickBackButton={onClickBackButton}
+      />
       <MainContainer disableBottomNavBar={disableBottomNavBar}>{children}</MainContainer>
       {!disableBottomNavBar && <BottomNavigationBar />}
     </>
