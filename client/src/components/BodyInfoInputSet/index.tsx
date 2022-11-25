@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from "react";
 import useInputFocus from "@hooks/useInputFocus";
 import { UserHeight, UserWeight } from "@constants/enums";
+import { NUMBER_REGEX } from "@constants/consts";
 import * as s from "./style";
 
 enum BodyInfo {
@@ -18,7 +19,7 @@ const BodyInfoInputSet = ({ height, weight, setBodyInfo }: BodyInfoInputSetProps
   const heightTextFieldRef = useInputFocus();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const stringValue = e.target.value.match(/\d+/);
+    const stringValue = e.target.value.match(NUMBER_REGEX);
     const numberValue = stringValue ? +stringValue[0] : 0;
 
     if (e.target.name === BodyInfo.HEIGHT) {

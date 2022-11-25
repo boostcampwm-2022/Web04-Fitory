@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from "react";
 import useInputFocus from "@hooks/useInputFocus";
 import { UserName } from "@constants/enums";
+import { NICKNAME_REGEX } from "@constants/consts";
 import * as s from "./style";
 
 interface NicknameTextFieldProps {
@@ -12,7 +13,7 @@ const NicknameTextField = ({ nickname, setNickname }: NicknameTextFieldProps) =>
   const textFieldRef = useInputFocus();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value.match(/^[a-zA-Zㄱ-힣0-9]*$/)) {
+    if (!e.target.value.match(NICKNAME_REGEX)) {
       return;
     }
     if (e.target.value.length > UserName.MAX) {

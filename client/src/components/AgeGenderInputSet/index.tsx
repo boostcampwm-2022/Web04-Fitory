@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from "react";
 import useInputFocus from "@hooks/useInputFocus";
 import { Gender, UserAge } from "@constants/enums";
+import { NUMBER_REGEX } from "@constants/consts";
 import maleSymbolSrc from "@public/images/maleSymbol.png";
 import femaleSymbolSrc from "@public/images/femaleSymbol.png";
 import * as s from "./style";
@@ -15,7 +16,7 @@ const AgeGenderInputSet = ({ age, gender, setAgeGender }: AgeGenderInputSetProps
   const ageTextFieldRef = useInputFocus();
 
   const handleChangeAge = (e: ChangeEvent<HTMLInputElement>) => {
-    const stringValue = e.target.value.match(/\d+/);
+    const stringValue = e.target.value.match(NUMBER_REGEX);
     const numberValue = stringValue ? +stringValue[0] : 0;
     if (numberValue > UserAge.MAX) {
       return;
