@@ -69,6 +69,6 @@ export enum DateTypes {
 }
 
 export enum Gender {
-  MALE = "male",
-  FEMALE = "female",
+  MALE = 0,
+  FEMALE = 1,
 }
