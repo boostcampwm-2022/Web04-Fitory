@@ -34,9 +34,15 @@ const SearchPage = () => {
   useEffect(() => {
     const url = `${process.env.SERVER_BASE_URL}${process.env.GET_USERLIST_API}`;
     const getUserList = async () => {
-      await axios.get(url, { withCredentials: true }).then((response) => {
-        setUserList(response.data.response.userProfileList);
-      });
+      await axios
+        .get(url, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setUserList(response.data.response.userProfileList);
+        });
     };
     getUserList();
   }, []);
