@@ -23,6 +23,7 @@ export const Year = styled.h3`
 export const HeatMap = styled.div`
   width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
   text {
     fill: ${({ theme }) => theme.COLORS.DEEP_GRAY};
   }
