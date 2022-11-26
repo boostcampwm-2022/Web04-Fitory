@@ -7,6 +7,7 @@ export enum RoutePath {
   RECORD = "/record",
   LOGIN = "/login",
   JOIN = "/join",
+  NOTIFICATION = "/notification",
 }
 
 export enum FormatDay {
