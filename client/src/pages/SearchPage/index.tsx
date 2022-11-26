@@ -62,7 +62,7 @@ const SearchPage = () => {
   };
 
   return (
-    <PageTemplate isRoot={false}>
+    <PageTemplate isRoot>
       <s.SearchContainer isText={text.length !== 0}>
         <s.UserSearchBarContainer>
           <s.SearchBar
