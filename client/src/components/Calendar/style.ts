@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
     return theme.FONT_WEIGHT.BOLD;
   }};
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    padding: 30px;
+    padding: 20px;
   }
 `;
 
@@ -107,7 +107,7 @@ export const DayLabel = styled.div`
 
 export const CompleteDot = styled.div`
   position: relative;
-  top: -11px;
+  top: -10px;
   margin: 0 auto;
   width: 0.5rem;
   height: 0.5rem;
