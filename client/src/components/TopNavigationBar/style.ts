@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
   width: 100%;
   height: 100%;
-  padding: 0 20px;
+  padding: 0 30px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
@@ -26,6 +26,7 @@ export const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
 `;
 

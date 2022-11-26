@@ -93,3 +93,8 @@ export enum UserWeight {
   MIN = 1,
   MAX = 300,
 }
+
+export enum NotificationState {
+  EXERCISE = 1,
+  FOLLOW = 2,
+}
