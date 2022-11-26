@@ -8,23 +8,19 @@ import * as s from "./styles";
 
 const SearchPage = () => {
   const [userList, setUserList] = useState<User[]>([]);
-  const [text, setText] = useState<string>("");
-  const [store, setStore] = useState<User[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchedUser, setSearchedUser] = useState<User[]>([]);
 
   const searchEvent = (word: string) => {
     const searchResult: User[] = userList.filter((user: User) => {
       return user.user_name.includes(word);
     });
-    setStore(searchResult);
+    setSearchedUser(searchResult);
     return userList.filter((user: User) => user.user_name.includes(word));
   };
 
-  const resetStore = () => {
-    setStore([]);
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+    setSearchValue(e.target.value);
   };
 
   useEffect(() => {
@@ -40,16 +36,16 @@ const SearchPage = () => {
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      if (text.length !== 0) searchEvent(text);
-      else resetStore();
+      if (searchValue.length !== 0) searchEvent(searchValue);
+      else setSearchedUser([]);
     }, 200);
     return () => {
       clearTimeout(debounce);
     };
-  }, [text]);
+  }, [searchValue]);
 
   const drawUserList = () => {
-    return store.map((user: User) => {
+    return searchedUser.map((user: User) => {
       return (
         <s.UserProfile key={user.user_user_id}>
           <SearchResultUserProfile userName={user.user_name} userMessage={user?.user_introduce} />
@@ -60,17 +56,17 @@ const SearchPage = () => {
 
   return (
     <PageTemplate isRoot>
-      <s.SearchContainer isText={text.length !== 0}>
+      <s.SearchContainer isText={searchValue.length !== 0}>
         <s.UserSearchBarContainer>
           <s.SearchBar
-            type="text"
+            type="searchValue"
             onChange={handleChange}
-            isText={text.length !== 0}
+            isText={searchValue.length !== 0}
             placeholder="검색어를 입력하세요."
           />
           <img src={searchIcon} alt="검색 아이콘" />
         </s.UserSearchBarContainer>
-        <s.SearchResultContainer isText={text.length !== 0}>
+        <s.SearchResultContainer isText={searchValue.length !== 0}>
           {drawUserList()}
         </s.SearchResultContainer>
       </s.SearchContainer>
