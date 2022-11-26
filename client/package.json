@@ -16,7 +16,9 @@
   },
   "dependencies": {
     "@storybook/react": "^6.5.13",
+    "axios": "^1.2.0",
     "dayjs": "^1.11.6",
+    "dotenv": "^16.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.1",
