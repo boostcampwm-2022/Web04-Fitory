@@ -27,7 +27,7 @@ export const ChallengeButton = styled(Button)`
 
   background: url(${challengeSrc}) no-repeat center;
   background-size: cover;
-  filter: saturate(0.5);
+  filter: saturate(0.3);
 
   &:hover {
     box-shadow: rgb(0 0 0 / 20%) 2px 4px 12px;
