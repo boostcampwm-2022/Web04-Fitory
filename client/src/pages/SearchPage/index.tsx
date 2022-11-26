@@ -3,22 +3,21 @@ import PageTemplate from "@pages/PageTemplate";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchResultUserProfile from "@components/SearchResultUserProfile";
 import axios from "axios";
-import { User } from "@type/user";
+import { SearchedUserInfo } from "src/types/user";
 import * as s from "./styles";
 
 const SearchPage = () => {
-  const [userList, setUserList] = useState<User[]>([]);
+  const [userList, setUserList] = useState<SearchedUserInfo[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
-  const [searchedUser, setSearchedUser] = useState<User[]>([]);
+  const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>([]);
 
   const searchEvent = (word: string) => {
-    const searchResult: User[] = userList.filter((user: User) => {
+    const searchResult: SearchedUserInfo[] = userList.filter((user: SearchedUserInfo) => {
       return user.user_name.includes(word);
     });
     setSearchedUser(searchResult);
-    return userList.filter((user: User) => user.user_name.includes(word));
+    return userList.filter((user: SearchedUserInfo) => user.user_name.includes(word));
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
@@ -27,7 +26,6 @@ const SearchPage = () => {
     const url = `${process.env.SERVER_BASE_URL}${process.env.GET_USERLIST_API}`;
     const getUserList = async () => {
       await axios.get(url).then((response) => {
-        console.log(response.data.response);
         setUserList(response.data.response.userProfileList);
       });
     };
@@ -45,7 +43,7 @@ const SearchPage = () => {
   }, [searchValue]);
 
   const drawUserList = () => {
-    return searchedUser.map((user: User) => {
+    return searchedUser.map((user: SearchedUserInfo) => {
       return (
         <s.UserProfile key={user.user_user_id}>
           <SearchResultUserProfile userName={user.user_name} userMessage={user?.user_introduce} />

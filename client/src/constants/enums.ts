@@ -5,6 +5,8 @@ export enum RoutePath {
   PROFILE = "/profile",
   CHALLENGE = "/challenge",
   RECORD = "/record",
+  LOGIN = "/login",
+  JOIN = "/join",
 }
 
 export enum FormatDay {
@@ -64,4 +66,29 @@ export enum DateTypes {
   MONTH = "month",
   WEEK = "week",
   DAY = "day",
+}
+
+export enum Gender {
+  MALE = 0,
+  FEMALE = 1,
+}
+
+export enum UserName {
+  MIN = 2,
+  MAX = 12,
+}
+
+export enum UserAge {
+  MIN = 1,
+  MAX = 120,
+}
+
+export enum UserHeight {
+  MIN = 1,
+  MAX = 300,
+}
+
+export enum UserWeight {
+  MIN = 1,
+  MAX = 300,
 }
