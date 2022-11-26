@@ -42,7 +42,7 @@
       "@pages/*": ["src/pages/*"],
       "@stores/*": ["src/stores/*"],
       "@styles/*": ["src/styles/*"],
-      "@public/*": ["public/*"],
+      "@public/*": ["public/*"]
     },
     "esModuleInterop": true, // 모든 import에 대한  CommonJS와 ES 모듈 간의 상호 운용성을 설정
 
