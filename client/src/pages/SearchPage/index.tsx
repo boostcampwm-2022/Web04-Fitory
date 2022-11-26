@@ -3,24 +3,20 @@ import PageTemplate from "@pages/PageTemplate";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchResultUserProfile from "@components/SearchResultUserProfile";
 import axios from "axios";
+import { User } from "@type/user";
 import * as s from "./styles";
 
-interface userProps {
-  id?: number;
-  name: string;
-  introduce?: string;
-}
 const SearchPage = () => {
-  const [userList, setUserList] = useState<userProps[]>([]);
+  const [userList, setUserList] = useState<User[]>([]);
   const [text, setText] = useState<string>("");
-  const [store, setStore] = useState<userProps[]>([]);
+  const [store, setStore] = useState<User[]>([]);
 
   const searchEvent = (word: string) => {
-    const searchResult: userProps[] = userList.filter((user: userProps) => {
-      return user.name.includes(word);
+    const searchResult: User[] = userList.filter((user: User) => {
+      return user.user_name.includes(word);
     });
     setStore(searchResult);
-    return userList.filter((user: userProps) => user.name.includes(word));
+    return userList.filter((user: User) => user.user_name.includes(word));
   };
 
   const resetStore = () => {
@@ -35,7 +31,8 @@ const SearchPage = () => {
     const url = `${process.env.SERVER_BASE_URL}${process.env.GET_USERLIST_API}`;
     const getUserList = async () => {
       await axios.get(url).then((response) => {
-        setUserList(response.data.userList);
+        console.log(response.data.response);
+        setUserList(response.data.response.userProfileList);
       });
     };
     getUserList();
@@ -52,17 +49,17 @@ const SearchPage = () => {
   }, [text]);
 
   const drawUserList = () => {
-    return store.map((user: userProps) => {
+    return store.map((user: User) => {
       return (
-        <s.UserProfile key={user.id}>
-          <SearchResultUserProfile userName={user.name} userMessage={user?.introduce} />
+        <s.UserProfile key={user.user_user_id}>
+          <SearchResultUserProfile userName={user.user_name} userMessage={user?.user_introduce} />
         </s.UserProfile>
       );
     });
   };
 
   return (
-    <PageTemplate isRoot={false}>
+    <PageTemplate isRoot>
       <s.SearchContainer isText={text.length !== 0}>
         <s.UserSearchBarContainer>
           <s.SearchBar
