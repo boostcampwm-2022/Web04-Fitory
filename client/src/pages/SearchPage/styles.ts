@@ -13,7 +13,7 @@ export const SearchContainer = styled.div`
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   width: 100%;
   height: ${({ isText }: { isText: boolean }) => {
-    return isText ? "70vh" : "60px";
+    return isText ? "600px" : "60px";
   }};
   padding: 1.3rem 5vw;
   transition: 0.35s linear;
