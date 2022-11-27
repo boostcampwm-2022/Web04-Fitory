@@ -1,8 +1,7 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import PageTemplate from "@pages/PageTemplate";
-import Paper from "@components/design/Paper";
+import ChallengeItem from "@components/ChallengeItem";
 import { Powerlifting } from "@constants/enums";
-import { NUMBER_REGEX } from "@constants/consts";
 import squatSrc from "@public/images/img_squat.jpg";
 import benchpressSrc from "@public/images/img_benchpress.jpg";
 import deadliftSrc from "@public/images/img_deadlift.jpg";
@@ -15,32 +14,6 @@ interface SBDWeightState {
   benchpress: number;
   deadlift: number;
 }
-
-interface ChallengeItemProps {
-  name: Powerlifting;
-  imageSrc: string;
-  weight: number;
-  setWeight: (weight: number) => void;
-}
-
-const ChallengeItem = ({ name, imageSrc, weight, setWeight }: ChallengeItemProps) => {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const stringValue = e.target.value.match(NUMBER_REGEX);
-    const numberValue = stringValue ? +stringValue[0] : 0;
-    setWeight(numberValue);
-  };
-
-  return (
-    <Paper>
-      <s.PowerliftingName>{name}</s.PowerliftingName>
-      <s.PowerliftingImage src={imageSrc} alt={`${name}이미지`} />
-      <s.TextFieldWrapper>
-        <s.TextField placeholder="0" value={weight || ""} onChange={handleChange} />
-        <span>kg/1RM</span>
-      </s.TextFieldWrapper>
-    </Paper>
-  );
-};
 
 // 현재 시간에 10초를 더한 시간을 버튼 활성화 시간으로 테스트
 const targetTime = new Date();
