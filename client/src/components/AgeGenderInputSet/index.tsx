@@ -29,7 +29,6 @@ const AgeGenderInputSet = ({ age, gender, setAgeGender }: AgeGenderInputSetProps
     <s.Wrapper>
       <s.Label>나이</s.Label>
       <s.AgeTextField
-        type="number"
         placeholder="0"
         value={age || ""}
         ref={ageTextFieldRef}

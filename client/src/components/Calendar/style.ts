@@ -121,9 +121,12 @@ export const CompleteDot = styled.div`
     dayType: DayTypes;
     theme: typeof Theme;
   }) => {
-    if (dayType === DayTypes.TODAY) {
-      return theme.COLORS.WHITE;
+    if (state === ExerciseState.EXERCISE) {
+      if (dayType === DayTypes.TODAY) {
+        return theme.COLORS.WHITE;
+      }
+      return theme.COLORS.LIGHT_PURPLE;
     }
-    return state === ExerciseState.EXERCISE ? theme.COLORS.LIGHT_PURPLE : "transparent";
+    return undefined;
   }};
 `;

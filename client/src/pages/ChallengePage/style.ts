@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { DefaultTextField, DefaultButton } from "@styles/components";
 
 export const Wrapper = styled.div`
-  padding: 20px 0;
+  padding: 20px 0 50px 0;
   gap: 30px;
   display: flex;
   flex-direction: column;
@@ -61,4 +61,5 @@ export const TextField = styled(DefaultTextField)`
 
 export const SubmitButton = styled(DefaultButton)`
   width: 80%;
+  padding: 15px;
 `;
