@@ -1,6 +1,6 @@
 /**
  * 현재 시간에서 목표 시간이 되기까지 남은 시간을 반환한다.
- * @param targetTime 목표 시간(초 단위)
+ * @param targetTime 목표 시간
  */
 const calculateRemainingTime = (targetTime: Date) => {
   const timeDifference = +targetTime - +new Date();
