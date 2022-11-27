@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    padding: 30px 40px;
+    padding: 30px;
   }
 `;
 

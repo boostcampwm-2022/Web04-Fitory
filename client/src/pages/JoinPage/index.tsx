@@ -86,11 +86,7 @@ const JoinPage = () => {
   ];
 
   return (
-    <PageTemplate
-      isRoot={false}
-      onClickBackButton={step ? handleClickBackButton : undefined}
-      disableBottomNavBar
-    >
+    <PageTemplate isRoot={false} onClickBackButton={step ? handleClickBackButton : undefined}>
       <s.Wrapper>
         <s.Title>{joinProcess[step].title}</s.Title>
         <s.ContentWrapper>

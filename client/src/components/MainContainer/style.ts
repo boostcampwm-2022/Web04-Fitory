@@ -11,8 +11,7 @@ export const Wrapper = styled.div`
   height: 100%;
   max-width: ${({ theme }) => theme.MAX_WIDTH.DEFAULT};
   padding: ${({ theme }) => theme.NAVBAR_HEIGHT}px 0;
-  ${({ disableBottomNavBar }: { disableBottomNavBar: boolean }) =>
-    disableBottomNavBar && `padding-bottom: 0;`}
+  ${({ isRoot }: { isRoot: boolean }) => !isRoot && `padding-bottom: 0;`}
   & > * {
     width: 100%;
     height: 100%;

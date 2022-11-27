@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -21,18 +20,7 @@ export const Content = styled.nav`
   height: 100%;
   padding: 0 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   max-width: ${({ theme }) => theme.MAX_WIDTH.DEFAULT};
-`;
-
-export const LinkButton = styled(NavLink)`
-  width: 25%;
-  background-color: transparent;
-  border: none;
-  filter: ${({ theme }) => theme.COLORS.FILTER_GRAY};
-
-  &.active {
-    filter: ${({ theme }) => theme.COLORS.FILTER_BLUE};
-  }
 `;

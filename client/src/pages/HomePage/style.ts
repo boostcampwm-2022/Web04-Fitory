@@ -21,14 +21,13 @@ export const Button = styled.button`
 
 export const ChallengeButton = styled(Button)`
   width: 95%;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   background: url(${challengeSrc}) no-repeat center;
   background-size: cover;
-  filter: saturate(0.5);
-
+  filter: saturate(0.3);
   &:hover {
     box-shadow: rgb(0 0 0 / 20%) 2px 4px 12px;
     transform: scale3d(1.01, 1.01, 1.01);

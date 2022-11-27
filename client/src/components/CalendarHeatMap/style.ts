@@ -10,6 +10,9 @@ export const Wrapper = styled.div`
   padding: 30px 40px;
   color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    padding: 30px;
+  }
 `;
 
 export const Year = styled.h3`
@@ -20,6 +23,7 @@ export const Year = styled.h3`
 export const HeatMap = styled.div`
   width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
   text {
     fill: ${({ theme }) => theme.COLORS.DEEP_GRAY};
   }

@@ -6,7 +6,6 @@ import BottomNavigationBar from "@components/BottomNavigationBar";
 interface PageTemplateProps {
   isRoot: boolean;
   title?: string;
-  disableBottomNavBar?: boolean;
   topNavRightItem?: JSX.Element;
   onClickBackButton?: () => void;
   children: React.ReactNode;
@@ -16,7 +15,6 @@ const PageTemplate = ({
   isRoot,
   title,
   topNavRightItem,
-  disableBottomNavBar,
   onClickBackButton,
   children,
 }: PageTemplateProps) => {
@@ -28,8 +26,8 @@ const PageTemplate = ({
         rightItem={topNavRightItem}
         onClickBackButton={onClickBackButton}
       />
-      <MainContainer disableBottomNavBar={disableBottomNavBar}>{children}</MainContainer>
-      {!disableBottomNavBar && <BottomNavigationBar />}
+      <MainContainer isRoot={isRoot}>{children}</MainContainer>
+      {isRoot && <BottomNavigationBar />}
     </>
   );
 };
