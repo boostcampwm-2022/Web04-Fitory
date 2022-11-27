@@ -1,7 +1,6 @@
 import React from "react";
 import PageTemplate from "@pages/PageTemplate";
 import Paper from "@components/design/Paper";
-import Button from "@components/design/Button";
 import { Powerlifting } from "@constants/enums";
 import squatSrc from "@public/images/img_squat.jpg";
 import benchpressSrc from "@public/images/img_benchpress.jpg";
@@ -39,7 +38,7 @@ const ChallengePage = () => {
         {PowerliftingInfo.map(({ name, imageSrc }) => (
           <ChallengeItem powerliftingName={name} powerliftingImageSrc={imageSrc} />
         ))}
-        <Button title="제출하기" full />
+        <s.SubmitButton>제출하기</s.SubmitButton>
       </s.Wrapper>
     </PageTemplate>
   );

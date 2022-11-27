@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Theme from "@styles/Theme";
+import { DefaultButton } from "@styles/components";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -31,18 +31,8 @@ export const TextFieldWrapper = styled.div`
   align-items: center;
 `;
 
-export const NextButton = styled.button`
+export const NextButton = styled(DefaultButton)`
   width: 100%;
   padding: 20px;
   border-radius: 10px;
-  color: ${({ theme }) => theme.COLORS.WHITE};
-  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
-  ${({ disabled, theme }: { disabled: boolean; theme: typeof Theme }) => `
-    background-color: ${disabled ? theme.COLORS.LIGHT_GRAY : theme.COLORS.LIGHT_BLUE};
-    cursor: ${disabled ? "default" : "pointer"};
-    &:hover {
-      background-color: ${!disabled && theme.COLORS.HOVER_BLUE};
-    }
-  `};
 `;
