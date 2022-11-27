@@ -6,6 +6,8 @@ import { NUMBER_REGEX } from "@constants/consts";
 import squatSrc from "@public/images/img_squat.jpg";
 import benchpressSrc from "@public/images/img_benchpress.jpg";
 import deadliftSrc from "@public/images/img_deadlift.jpg";
+import useTimeCount from "@hooks/useTimeCount";
+import addZeroPaddingToNumber from "@utils/addZeroPaddingToNumber";
 import * as s from "./style";
 
 interface SBDWeightState {
@@ -40,7 +42,12 @@ const ChallengeItem = ({ name, imageSrc, weight, setWeight }: ChallengeItemProps
   );
 };
 
+// 현재 시간에 10초를 더한 시간을 버튼 활성화 시간으로 테스트
+const targetTime = new Date();
+targetTime.setSeconds(targetTime.getSeconds() + 10);
+
 const ChallengePage = () => {
+  const remaingingTime = useTimeCount(targetTime);
   const [SBDWeight, setSBDWeight] = useState<SBDWeightState>({
     squat: 0,
     benchpress: 0,
@@ -69,7 +76,7 @@ const ChallengePage = () => {
   ];
 
   const checkSBDWeightValidation = () => {
-    if (SBDWeight.squat && SBDWeight.benchpress && SBDWeight.deadlift) {
+    if (!remaingingTime && SBDWeight.squat && SBDWeight.benchpress && SBDWeight.deadlift) {
       return true;
     }
     return false;
@@ -87,7 +94,17 @@ const ChallengePage = () => {
             setWeight={setWeight}
           />
         ))}
-        <s.SubmitButton disabled={!checkSBDWeightValidation()}>제출하기</s.SubmitButton>
+        <s.SubmitButton disabled={!checkSBDWeightValidation()}>
+          {remaingingTime ? (
+            <>
+              <span>{addZeroPaddingToNumber(remaingingTime.hours)} : </span>
+              <span>{addZeroPaddingToNumber(remaingingTime.minutes)} : </span>
+              <span>{addZeroPaddingToNumber(remaingingTime.seconds)}</span>
+            </>
+          ) : (
+            "제출하기"
+          )}
+        </s.SubmitButton>
       </s.Wrapper>
     </PageTemplate>
   );
