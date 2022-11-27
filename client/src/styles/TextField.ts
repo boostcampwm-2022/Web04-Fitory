@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+export const DefaultTextField = styled.input`
+  width: 100%;
+  border: none;
+  caret-color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
+  &:focus {
+    outline: none;
+  }
+`;
+
 export const OutlinedTextField = styled.input`
   width: 100%;
   padding: 15px 20px;
