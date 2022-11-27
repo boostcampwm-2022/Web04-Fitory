@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { OutlinedTextField } from "@styles/components";
+import { OutlinedTextField } from "@styles/Components";
 
 export const Wrapper = styled.div`
   gap: 10px;

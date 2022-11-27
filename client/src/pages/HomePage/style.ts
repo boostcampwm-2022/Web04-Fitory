@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import challengeSrc from "@public/images/btn_challenge.jpeg";
-import { DefaultButton } from "@styles/components";
+import { DefaultButton } from "@styles/Components";
 
 export const Wrapper = styled.div`
   gap: 20px;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DefaultTextField, DefaultButton } from "@styles/components";
+import { DefaultTextField, DefaultButton } from "@styles/Components";
 
 export const Wrapper = styled.div`
   padding: 20px 0 50px 0;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { OutlinedTextField } from "@styles/components";
+import { OutlinedTextField } from "@styles/Components";
 
 export const TextFieldWrapper = styled.div`
   display: flex;

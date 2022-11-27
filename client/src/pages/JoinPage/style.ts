@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DefaultButton } from "@styles/components";
+import { DefaultButton } from "@styles/Components";
 
 export const Wrapper = styled.div`
   width: 100%;

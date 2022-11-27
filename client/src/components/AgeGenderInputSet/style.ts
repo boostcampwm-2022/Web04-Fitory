@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { OutlinedTextField } from "@styles/components";
+import { OutlinedTextField } from "@styles/Components";
 import Theme from "@styles/Theme";
 
 export const Wrapper = styled.div`
