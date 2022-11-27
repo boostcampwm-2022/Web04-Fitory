@@ -3,7 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import GlobalStyle from "@styles/GlobalStyle";
 import { RoutePath } from "@constants/enums";
+
 import HomePage from "@pages/HomePage";
+import ChallengePage from "@pages/ChallengePage";
 import ProfilePage from "@pages/ProfilePage";
 import LoginPage from "@pages/LoginPage";
 import JoinPage from "@pages/JoinPage";
@@ -17,11 +19,16 @@ const App = () => {
       <GlobalStyle />
       <GoogleOAuthProvider clientId={googleClientId}>
         <Routes>
+          {/* Home */}
           <Route path={RoutePath.HOME} element={<HomePage />} />
+          <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
+          {/* Search */}
+          <Route path={RoutePath.SEARCH} element={<SearchPage />} />
+          {/* Profile */}
           <Route path={RoutePath.PROFILE} element={<ProfilePage />} />
           <Route path={RoutePath.LOGIN} element={<LoginPage />} />
-          <Route path={RoutePath.SEARCH} element={<SearchPage />} />
           <Route path={RoutePath.JOIN} element={<JoinPage />} />
+          <Route path={RoutePath.SEARCH} element={<SearchPage />} />
         </Routes>
       </GoogleOAuthProvider>
     </BrowserRouter>
