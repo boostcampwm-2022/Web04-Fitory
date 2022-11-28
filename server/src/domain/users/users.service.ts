@@ -2,9 +2,9 @@ import { HttpResponse } from "@converter/response.converter";
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { SBD_record } from "@record/entities/sbd_record.entity";
 import { User } from "./entities/user.entity";
 import { UsersInfoDto } from "./dto/users-info.dto";
-import { SBD_record } from "@record/entities/sbd_record.entity";
 
 @Injectable()
 export class UsersService {
@@ -83,7 +83,8 @@ export class UsersService {
     const recommendWeight = await this.userRepository
       .createQueryBuilder("user")
       .where(`user.weight BETWEEN ${weight.user_weight - 5} AND ${weight.user_weight + 5}`)
-      .select("user.user_id")
+      .select("user.name")
+      .addSelect("user.profile_image")
       .orderBy("rand()")
       .take(5)
       .getRawMany();
@@ -91,7 +92,8 @@ export class UsersService {
     const recommendAge = await this.userRepository
       .createQueryBuilder("user")
       .where(`user.age BETWEEN ${age.user_age - 1} AND ${age.user_age + 1}`)
-      .select("user.user_id")
+      .select("user.name")
+      .addSelect("user.profile_image")
       .orderBy("rand()")
       .take(5)
       .getRawMany();
