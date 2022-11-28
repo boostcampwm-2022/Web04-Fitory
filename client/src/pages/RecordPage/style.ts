@@ -86,13 +86,13 @@ export const ExerciseIncreaseButton = styled(DefaultButton)`
 export const SaveButtonWrapper = styled.div`
   margin: auto;
   margin-top: 80px;
-  width: 410px;
+  width: 460px;
   gap: 30px;
   display: flex;
   justify-content: space-around;
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    width: 100%;
-    gap: 10px;
+    width: 95%;
+    gap: 20px;
   }
 `;
 
