@@ -3,18 +3,19 @@ import { DefaultButton } from "@styles/Components";
 
 export const Wrapper = styled.div`
   width: 100%;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    padding: 40px 25px;
+  }
 `;
 
 export const RoutineWrapper = styled.div`
-  padding: 25px 50px;
   width: 100%;
+  padding-bottom: 20px;
   height: fit-content;
-  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    padding: 25px 5px;
-  }
 `;
 
 export const RoutineButton = styled.button`
@@ -24,7 +25,7 @@ export const RoutineButton = styled.button`
 
 export const ExerciseListWrapper = styled.div`
   width: 100%;
-  padding: 40px 25px;
+  padding-top: 40px;
   gap: 40px;
   display: flex;
   flex-direction: column;
@@ -59,7 +60,6 @@ export const ExersiceDecreaseButton = styled.button`
 `;
 
 export const ExerciseIncreaseButton = styled(DefaultButton)`
-  margin-top: 30px;
   padding: 10px 30px;
   border-radius: 30px;
   gap: 10px;
@@ -67,9 +67,40 @@ export const ExerciseIncreaseButton = styled(DefaultButton)`
   align-items: center;
   color: ${({ theme }) => theme.COLORS.WHITE};
   background-color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
-  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
   &:hover {
     background-color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
     filter: saturate(0.5) !important;
   }
+  & > span {
+    padding-top: 2px;
+  }
+`;
+
+export const SaveButtonWrapper = styled.div`
+  margin: auto;
+  margin-top: 80px;
+  width: 410px;
+  gap: 30px;
+  display: flex;
+  justify-content: space-around;
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    width: 100%;
+    gap: 10px;
+  }
+`;
+
+export const RoutineSaveButton = styled(DefaultButton)`
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 7px;
+  background-color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
+  &:hover {
+    background-color: #7c7d84;
+  }
+`;
+
+export const ExerciseSaveButton = styled(DefaultButton)`
+  flex-grow: 1;
+  border-radius: 7px;
 `;

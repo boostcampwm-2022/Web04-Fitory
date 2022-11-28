@@ -3,13 +3,16 @@ import PageTemplate from "@pages/PageTemplate";
 import RoutineScroller from "@components/RoutineScroller";
 import ExersiceInputSet from "@components/ExerciseInputSet";
 import { MdDeleteForever } from "react-icons/md";
+import { AiOutlinePlus } from "react-icons/ai";
 import * as s from "./style";
 
 const RecordPage = () => {
   const [exersiceCount, setExersiceCount] = useState<number>(1);
+
   const handleClickExerciseIncreaseButton = () => {
     setExersiceCount(exersiceCount + 1);
   };
+
   const handleClickExerciseDecreaseButton = () => {
     if (exersiceCount > 1) {
       setExersiceCount(exersiceCount - 1);
@@ -39,9 +42,14 @@ const RecordPage = () => {
             </s.ExersiceItem>
           ))}
           <s.ExerciseIncreaseButton onClick={handleClickExerciseIncreaseButton}>
-            <span>＋</span>운동 추가
+            <AiOutlinePlus size={20} />
+            <span>운동 추가</span>
           </s.ExerciseIncreaseButton>
         </s.ExerciseListWrapper>
+        <s.SaveButtonWrapper>
+          <s.RoutineSaveButton>루틴 저장</s.RoutineSaveButton>
+          <s.ExerciseSaveButton>운동 완료</s.ExerciseSaveButton>
+        </s.SaveButtonWrapper>
       </s.Wrapper>
     </PageTemplate>
   );
