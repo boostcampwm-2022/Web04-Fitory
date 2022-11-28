@@ -24,7 +24,7 @@ export class AlarmsController {
 
   @Get("list")
   @ApiOperation({
-    summary: "❌ 미구현) 해당 사용자가 받은 알림 리스트를 반환",
+    summary: "해당 사용자가 받은 알림 상세 정보 리스트를 반환",
   })
   @ApiQuery({
     name: "userId",
