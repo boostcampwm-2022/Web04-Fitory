@@ -32,7 +32,7 @@ export class RoutinesService {
       .where("routine.routine_name = :routineName", { routineName })
       .getMany();
 
-    if (routine) {
+    if (routine.length) {
       return HttpResponse.success({ routine });
     }
     throw new Exception().routineNotFound();
