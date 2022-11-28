@@ -51,7 +51,7 @@ export class SbdRecordsController {
 
   @Post("submit")
   @ApiOperation({
-    summary: "❌ 미구현) 해당 사용자의 SBD 측정 기록을 DB에 저장",
+    summary: "해당 사용자의 SBD 측정 기록을 DB에 저장",
   })
   registerUser(@Body() sbdData: SingleSBDDataDto) {
     return this.recordsService.submitSingleSBDRecord(sbdData);
