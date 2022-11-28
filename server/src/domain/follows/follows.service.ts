@@ -43,6 +43,30 @@ export class FollowsService {
   }
 
   async getFollowerUserList(userId: number) {
-    return HttpResponse.success({});
+    const followerObject = await this.followRepository
+      .createQueryBuilder("follow")
+      .select("follow.followed_id", "followed_id")
+      .where("follow.follower_id = :userId", { userId })
+      .getRawMany();
+    const followerUserProfileList = await Promise.all(
+      followerObject.map(async (item) => {
+        const following = await this.userRepository
+          .createQueryBuilder("user")
+          .select("user.name", "name")
+          .addSelect("user.profile_image", "profile_image")
+          .addSelect("user.introduce", "introduce")
+          .where("user.id = :userId", { userId: item.followed_id })
+          .getRawOne();
+        return {
+          userId: item.followed_id,
+          userName: following.name,
+          profileImage: following.profile_image,
+          introduce: following.introduce,
+        };
+      }),
+    );
+    return HttpResponse.success({
+      followerUserProfileList,
+    });
   }
 }

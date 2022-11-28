@@ -24,7 +24,7 @@ export class FollowsController {
 
   @Get("follower")
   @ApiOperation({
-    summary: "❌ 미구현) 해당 사용자를 팔로우 하는 사용자들의 프로필 요약을 반환",
+    summary: "해당 사용자를 팔로우 하는 사용자들의 프로필 요약을 반환",
   })
   @ApiQuery({
     name: "userId",
