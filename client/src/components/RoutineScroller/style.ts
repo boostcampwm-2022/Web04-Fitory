@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  padding-top: 20px;
+  width: 400px;
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    width: 100%;
+  }
 `;
 
 export const Label = styled.p`
-  padding-left: 20px;
   color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
   & > span {

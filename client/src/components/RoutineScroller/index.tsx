@@ -1,12 +1,15 @@
 import React from "react";
 import Paper from "@components/design/Paper";
 import CardsScroller from "@components/design/CardsScroller";
+import { UserName } from "src/types/user";
 import * as s from "./style";
 
-const RoutineScroller = () => {
-  const userName = "대구사나이김동규";
-  const routineList = ["등", "가슴", "어께", "하체"];
+interface RoutineScrollerProps {
+  userName: UserName;
+  routineList: string[];
+}
 
+const RoutineScroller = ({ userName, routineList }: RoutineScrollerProps) => {
   return (
     <s.Wrapper>
       <s.Label>
