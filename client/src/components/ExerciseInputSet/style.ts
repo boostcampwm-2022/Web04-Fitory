@@ -6,19 +6,16 @@ const TextField = styled(DefaultTextField)`
 `;
 
 export const Wrapper = styled.div`
-  width: fit-content;
+  width: 100%;
   gap: 30px;
   display: flex;
   flex-direction: column;
 `;
 
 export const ExerciseNameTextField = styled(OutlinedTextField)`
-  width: 400px;
+  width: 100%;
   padding: 10px;
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
-  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    width: 100%;
-  }
 `;
 
 export const Label = styled.p`
@@ -34,19 +31,18 @@ export const SetLabel = styled(Label)`
 `;
 
 export const ExerciseContentWrapper = styled.div`
-  width: 400px;
+  width: 100%;
   gap: 40px;
   display: flex;
   justify-content: space-around;
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    width: 100%;
     gap: 10px;
   }
 `;
 
 export const SetCounterWrapper = styled.div`
   width: 120px;
-  padding-bottom: 7px;
+  gap: 4px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -57,12 +53,16 @@ export const SetCounter = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
   & > button {
     width: 30px;
+    height: 30px;
     padding: 5px;
     border-radius: 5px;
-    font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
     color: ${({ theme }) => theme.COLORS.WHITE};
     background-color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
     & > img {

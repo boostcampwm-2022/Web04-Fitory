@@ -45,7 +45,7 @@ const ExersiceInputSet = () => {
             </button>
             <span>{exersiceSetCount}</span>
             <button type="button" onClick={() => handleClickSetCountButton(true)}>
-              ＋
+              +
             </button>
           </s.SetCounter>
         </s.SetCounterWrapper>

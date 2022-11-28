@@ -1,10 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  width: 400px;
-  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    width: 100%;
-  }
+  width: 100%;
 `;
 
 export const Label = styled.p`
