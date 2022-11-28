@@ -19,7 +19,7 @@
     <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
     <h4>Front-End</h4>
     <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
-    <img src="https://img.shields.io/badge/zustand-6E4021?style=for-the-badge&logo=recoil&logoColor=black">
+    <img src="https://img.shields.io/badge/zustand-E4753E?style=for-the-badge&logo=recoil&logoColor=black">
     <img src="https://img.shields.io/badge/Storybook-09B3AF?style=for-the-badge&logo=storybook&logoColor=white">
     <img src="https://img.shields.io/badge/styled%20components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
     <img src="https://img.shields.io/badge/webpack-8DD6F9?style=for-the-badge&logo=webpack&logoColor=black">
