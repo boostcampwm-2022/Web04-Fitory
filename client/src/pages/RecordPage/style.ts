@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   overflow-x: hidden;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    padding: 40px 25px;
+    padding: 30px 15px;
   }
 `;
 
@@ -37,8 +37,11 @@ export const ExerciseListWrapper = styled.div`
 `;
 
 export const ExersiceItem = styled.div`
-  width: 400px;
+  width: 480px;
+  padding: 20px;
   margin-bottom: 20px;
+  border-radius: 20px;
+  border: 1px solid ${({ theme }) => theme.COLORS.LIGHT_GRAY};
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
     width: 100%;
   }
