@@ -42,6 +42,7 @@ export const ExersiceItem = styled.div`
   margin-bottom: 20px;
   border-radius: 20px;
   border: 1px solid ${({ theme }) => theme.COLORS.LIGHT_GRAY};
+  color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
     width: 100%;
   }
