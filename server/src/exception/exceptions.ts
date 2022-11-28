@@ -11,4 +11,9 @@ export class Exception {
     const response = HttpResponse.failed(HttpStatus.BAD_REQUEST, "Invalid Month");
     return new BadRequestException(response);
   }
+
+  invalidSubmit(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.BAD_REQUEST, "Invalid Property Submit");
+    return new BadRequestException(response);
+  }
 }

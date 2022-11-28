@@ -1,3 +1,4 @@
+import { Exception } from "@exception/exceptions";
 import { SingleSBDDataDto } from "./dto/single_sbd_data.dto";
 import { HttpResponse } from "@converter/response.converter";
 import { recordConverter } from "./converter/sbd_records.converter";
@@ -61,14 +62,17 @@ export class SbdRecordsService {
         .where("user.user_id = :userId", { userId: sbdData.userId })
         .getOne();
       const recordObject = this.recordsRepository.create(sbdData);
-      return await this.recordsRepository.save({
+      await this.recordsRepository.save({
         ...recordObject,
         SBD_sum: sbdData.squat + sbdData.benchpress + sbdData.deadlift,
         userWeight: userObject.weight,
         user: userObject,
       });
+      return HttpResponse.success({
+        message: "Record Submit Success",
+      });
     } catch (error) {
-      throw new Error("Record Submit Error");
+      throw new Exception().invalidSubmit();
     }
   }
 }
