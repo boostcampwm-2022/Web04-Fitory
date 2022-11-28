@@ -9,9 +9,12 @@ export const Wrapper = styled.div`
 `;
 
 export const RoutineWrapper = styled.div`
-  padding: 25px;
+  padding: 25px 50px;
   width: 100%;
   height: fit-content;
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    padding: 25px 5px;
+  }
 `;
 
 export const RoutineButton = styled.button`
@@ -38,6 +41,7 @@ export const ExersiceItem = styled.div`
 `;
 
 export const ExersiceHeader = styled.div`
+  padding: 0 10px;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
