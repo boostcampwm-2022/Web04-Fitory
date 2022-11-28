@@ -3,9 +3,9 @@ import Theme from "@styles/Theme";
 
 export const Wrapper = styled.div`
   gap: 20px;
-  display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;
 
 export const SearchContainer = styled.div`
@@ -13,10 +13,11 @@ export const SearchContainer = styled.div`
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   width: 100%;
   height: ${({ isText }: { isText: boolean }) => {
-    return isText ? "600px" : "60px";
+    return isText ? "800px" : "60px";
   }};
+  position: absolute;
   padding: 1.3rem 5vw;
-  transition: 0.35s linear;
+  transition: 0.25s linear;
 `;
 
 export const UserSearchBarContainer = styled.div`
@@ -60,4 +61,18 @@ export const UserProfile = styled.div`
   padding: 5px 0;
   height: 10%;
   margin-bottom: 10px;
+`;
+
+export const RecommendListContainer = styled.div`
+  padding-top: 100px;
+  height: 300px;
+  -ms-overflow-style: none;
+`;
+
+export const RecommendLabel = styled.p`
+  padding: 0 20px;
+  font-size: ${({ theme }) => {
+    return theme.FONT_SIZE.MEDIUM;
+  }};
+  color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
 `;
