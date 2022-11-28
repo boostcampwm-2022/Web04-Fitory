@@ -3,9 +3,12 @@ import { DefaultButton } from "@styles/Components";
 
 export const Wrapper = styled.div`
   width: 100%;
+  height: calc(100vh - ${({ theme }) => theme.NAVBAR_HEIGHT}px);
   padding: 50px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
     padding: 40px 25px;

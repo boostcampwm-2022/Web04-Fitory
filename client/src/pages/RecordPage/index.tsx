@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { MdDeleteForever } from "react-icons/md";
+import { AiOutlinePlus } from "react-icons/ai";
 import PageTemplate from "@pages/PageTemplate";
 import RoutineScroller from "@components/RoutineScroller";
 import ExersiceInputSet from "@components/ExerciseInputSet";
-import { MdDeleteForever } from "react-icons/md";
-import { AiOutlinePlus } from "react-icons/ai";
+import useScrollDown from "@hooks/useScrollDown";
 import * as s from "./style";
 
 const RecordPage = () => {
   const [exersiceCount, setExersiceCount] = useState<number>(1);
+  const scrollRef = useScrollDown();
 
   const handleClickExerciseIncreaseButton = () => {
     setExersiceCount(exersiceCount + 1);
@@ -21,7 +23,7 @@ const RecordPage = () => {
 
   return (
     <PageTemplate title="운동" isRoot={false}>
-      <s.Wrapper>
+      <s.Wrapper ref={scrollRef}>
         <s.RoutineWrapper>
           <RoutineScroller
             userName="대구사나이김동규"
