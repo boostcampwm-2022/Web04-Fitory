@@ -1,25 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
 import PageTemplate from "@pages/PageTemplate";
 import RoutineScroller from "@components/RoutineScroller";
 import ExersiceInputSet from "@components/ExerciseInputSet";
-import useScrollDown from "@hooks/useScrollDown";
 import * as s from "./style";
 
 const RecordPage = () => {
   const [exersiceCount, setExersiceCount] = useState<number>(1);
-  const scrollRef = useScrollDown();
+  const [prevExersiceCount, setPrevExersiceCount] = useState<number>(1);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleClickExerciseIncreaseButton = () => {
+    setPrevExersiceCount(exersiceCount);
     setExersiceCount(exersiceCount + 1);
   };
 
   const handleClickExerciseDecreaseButton = () => {
+    setPrevExersiceCount(exersiceCount);
     if (exersiceCount > 1) {
       setExersiceCount(exersiceCount - 1);
     }
   };
+
+  useEffect(() => {
+    if (prevExersiceCount >= exersiceCount) {
+      return;
+    }
+    const targetElement = scrollRef.current;
+    if (targetElement) {
+      targetElement.scrollTop = targetElement.scrollHeight;
+    }
+  }, [prevExersiceCount, exersiceCount]);
 
   return (
     <PageTemplate title="운동" isRoot={false}>
