@@ -3,6 +3,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { Response } from "express";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AccessTokenDto } from "@oauth/google-oauth/dto/access-token.dto";
+import { HttpResponse } from "@converter/response.converter";
 import { GoogleOauthService } from "./google-oauth.service";
 
 @Controller("api/oauth/google")
@@ -42,10 +43,10 @@ export class GoogleOauthController {
         maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
       });
 
-      return true;
+      return HttpResponse.success({ validate: true });
     }
 
-    return false;
+    return HttpResponse.success({ validate: false });
   }
 
   @Get("logout")
