@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpStatus, Inject, Post, Res, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Response } from "express";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
@@ -34,14 +34,18 @@ export class GoogleOauthController {
       name: userInfo.data.name,
     });
 
-    res.cookie("access_token", token, {
-      sameSite: true,
-      secure: false, // 배포시에는 true로 바꿔야됨
-      httpOnly: true,
-      maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
-    });
+    if (token) {
+      res.cookie("access_token", token, {
+        sameSite: true,
+        secure: false, // 배포시에는 true로 바꿔야됨
+        httpOnly: true,
+        maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
+      });
 
-    return res.send(userInfo.data.name);
+      return true;
+    }
+
+    return false;
   }
 
   @Get("logout")

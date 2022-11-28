@@ -25,9 +25,15 @@ export class GoogleOauthService {
       throw new BadRequestException("Unauthenticated");
     }
 
-    return this.generateJwt({
-      sub: user.oauthId,
-    });
+    const userExists = await this.findUserById(user.oauthId);
+
+    if (!userExists) {
+      return this.generateJwt({
+        sub: userExists.oauthId,
+      });
+    }
+
+    return null;
   }
 
   getUserInfo(accessToken: string) {
@@ -36,5 +42,18 @@ export class GoogleOauthService {
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`,
       ),
     );
+  }
+
+  async findUserById(oauthId: string) {
+    const user = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.oauth_id = :oauthId", { oauthId })
+      .getOne();
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
   }
 }
