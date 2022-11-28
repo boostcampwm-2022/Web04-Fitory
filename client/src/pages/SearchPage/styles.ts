@@ -76,3 +76,9 @@ export const RecommendLabel = styled.p`
   }};
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
 `;
+
+export const UserProfileImg = styled.img`
+  width: 100%;
+  height: 100%;
+  borderradius: 20px;
+`;
