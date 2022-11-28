@@ -92,3 +92,9 @@ export enum UserWeight {
   MIN = 1,
   MAX = 300,
 }
+
+export enum Powerlifting {
+  SQUAT = "스쿼트",
+  BENCH_PRESS = "벤치프레스",
+  DEADLIFT = "데드리프트",
+}

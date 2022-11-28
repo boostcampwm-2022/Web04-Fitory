@@ -1,5 +1,12 @@
 import { User } from "@user/entities/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity({ name: "SBD_record" })
 export class SBD_record {
@@ -21,8 +28,11 @@ export class SBD_record {
   @Column({ name: "date", length: 45 })
   date!: string;
 
-  @Column({ name: "second_stamp" })
-  secondStamp!: number;
+  @CreateDateColumn({
+    name: "time_stamp",
+    type: "timestamp",
+  })
+  timeStamp: Date;
 
   @Column({ name: "user_weight" })
   userWeight!: number;
