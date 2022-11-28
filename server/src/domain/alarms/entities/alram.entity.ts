@@ -1,5 +1,12 @@
 import { User } from "@user/entities/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity({ name: "alarm" })
 export class Alarm {
@@ -12,8 +19,11 @@ export class Alarm {
   @Column({ name: "alarm_type" })
   alarmType!: number;
 
-  @Column({ name: "minute_stamp" })
-  minuteStamp!: number;
+  @CreateDateColumn({
+    name: "time_stamp",
+    type: "timestamp",
+  })
+  timeStamp: Date;
 
   @Column({ name: "check" })
   check!: boolean;
