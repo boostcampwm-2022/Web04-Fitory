@@ -11,4 +11,9 @@ export class Exception {
     const response = HttpResponse.failed(HttpStatus.BAD_REQUEST, "Invalid Month");
     return new BadRequestException(response);
   }
+
+  routineNotFound(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.NOT_FOUND, "Routine Not Found");
+    return new BadRequestException(response);
+  }
 }
