@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://user-images.githubusercontent.com/70889358/204248146-6c8566a0-a84c-4690-a03e-416b3d8af100.png" width="60%"/>
+    <img src="https://user-images.githubusercontent.com/70889358/204248725-d39976f5-238b-4926-8aba-573f061a2141.png" width="100%"/>
     <h1 align="center">
     평준화된 운동 기준을 기록하다.
     </h1>    
