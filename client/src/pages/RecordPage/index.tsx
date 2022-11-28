@@ -7,6 +7,10 @@ import ExersiceInputSet from "@components/ExerciseInputSet";
 import * as s from "./style";
 
 const RecordPage = () => {
+  /**
+   * 임시로 운동 수를 상태로 제어함.
+   * TODO: 서버 API 연동 후 객체 형식으로 변경.
+   */
   const [exersiceCount, setExersiceCount] = useState<number>(1);
   const [prevExersiceCount, setPrevExersiceCount] = useState<number>(1);
   const scrollRef = useRef<HTMLDivElement>(null);
