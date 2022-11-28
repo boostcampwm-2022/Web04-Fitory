@@ -1,4 +1,4 @@
-import { IsNumber, IsString, Min } from "class-validator";
+import { IsNumber, IsString, Length, Min } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class SingleSBDDataDto {
@@ -39,5 +39,6 @@ export class SingleSBDDataDto {
     type: String,
   })
   @IsString()
+  @Length(6, 6)
   date: string;
 }
