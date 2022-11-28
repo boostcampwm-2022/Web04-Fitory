@@ -5,12 +5,15 @@ import { Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { SBD_record } from "./entities/sbd_record.entity";
+import { User } from "@user/entities/user.entity";
 
 @Injectable()
 export class SbdRecordsService {
   constructor(
     @InjectRepository(SBD_record)
     private recordsRepository: Repository<SBD_record>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {}
 
   async findEverySBDRecord(userId: number) {
@@ -53,6 +56,19 @@ export class SbdRecordsService {
 
   async submitSingleSBDRecord(sbdData: SingleSBDDataDto) {
     try {
-    } catch (error) {}
+      const userObject = await this.userRepository
+        .createQueryBuilder("user")
+        .where("user.user_id = :userId", { userId: sbdData.userId })
+        .getOne();
+      const recordObject = this.recordsRepository.create(sbdData);
+      return await this.recordsRepository.save({
+        ...recordObject,
+        SBD_sum: sbdData.squat + sbdData.benchpress + sbdData.deadlift,
+        userWeight: userObject.weight,
+        user: userObject,
+      });
+    } catch (error) {
+      throw new Error("Record Submit Error");
+    }
   }
 }

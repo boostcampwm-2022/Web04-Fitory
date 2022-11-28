@@ -24,7 +24,7 @@ export class SingleSBDDataDto {
   })
   @IsNumber()
   @Min(1)
-  bench: number;
+  benchpress: number;
 
   @ApiProperty({
     description: "데드 리프트 중량",
@@ -32,7 +32,7 @@ export class SingleSBDDataDto {
   })
   @IsNumber()
   @Min(1)
-  dead: number;
+  deadlift: number;
 
   @ApiProperty({
     description: "기록 제출 날짜",
