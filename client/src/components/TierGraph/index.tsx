@@ -20,12 +20,54 @@ const TierGraph = () => {
     { date: "220316", score: 215 },
     { date: "220318", score: 210 },
     { date: "220319", score: 210 },
+    { date: "220320", score: 1000 },
   ];
 
   const [labelInfo, setLabelInfo] = useState<string[]>([]);
   const [dataInfo, setDataInfo] = useState<number[]>([]);
 
+  const plugin = [
+    {
+      afterLayout: (chart: any) => {
+        const { ctx } = chart;
+        ctx.save();
+        const yAxis = chart.scales.y;
+        const gradient = ctx.createLinearGradient(0, yAxis.top, 0, yAxis.bottom);
+
+        const silverValueLine = yAxis.getPixelForValue(50);
+        const goldValueLine = yAxis.getPixelForValue(200);
+        const platinumValueLine = yAxis.getPixelForValue(500);
+
+        // Silver
+
+        const silverOffset = (1 / yAxis.bottom) * silverValueLine;
+        gradient.addColorStop(silverOffset, theme.TIER_COLOR.SILVER);
+        gradient.addColorStop(silverOffset, theme.TIER_COLOR.BRONZE);
+
+        // Gold
+        const goldOffset = (1 / yAxis.bottom) * goldValueLine;
+        gradient.addColorStop(goldOffset, theme.TIER_COLOR.GOLD);
+        gradient.addColorStop(goldOffset, theme.TIER_COLOR.SILVER);
+
+        // Platinum
+        const platinumOffset = (1 / yAxis.bottom) * platinumValueLine;
+        gradient.addColorStop(platinumOffset, theme.TIER_COLOR.PLATINUM);
+        gradient.addColorStop(platinumOffset, theme.TIER_COLOR.GOLD);
+
+        gradient.addColorStop(1, theme.TIER_COLOR.BRONZE);
+        chart.data.datasets[0].borderColor = gradient;
+        chart.data.datasets[0].pointBackgroundColor = gradient;
+        ctx.restore();
+      },
+    },
+  ];
+
   const options = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
     responsive: true,
     lineTension: 0,
     pointRadius: 5,
@@ -45,7 +87,7 @@ const TierGraph = () => {
           display: false,
         },
         min: 0,
-        max: 300,
+        max: 1500,
       },
     },
     options: {
@@ -58,10 +100,9 @@ const TierGraph = () => {
     labels: labelInfo,
     datasets: [
       {
+        fill: false,
         label: "SDB Score",
         data: dataInfo,
-        backgroundColor: theme.COLORS.LIGHT_BLUE,
-        borderColor: theme.COLORS.LIGHT_BLUE,
         tension: 0.3,
       },
     ],
@@ -80,7 +121,7 @@ const TierGraph = () => {
 
   return (
     <div>
-      <Chart options={options} type="line" data={graphData} />
+      <Chart plugins={plugin} options={options} type="line" data={graphData} />
     </div>
   );
 };
