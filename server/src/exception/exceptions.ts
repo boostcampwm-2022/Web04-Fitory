@@ -33,11 +33,6 @@ export class Exception {
     return new NotFoundException(response);
   }
 
-  fileUploadError(): HttpException {
-    const response = HttpResponse.failed(HttpStatus.BAD_REQUEST, "File Upload Failed");
-    return new BadRequestException(response);
-  }
-
   invalidFileType(): HttpException {
     const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid File Type");
     return new ForbiddenException(response);

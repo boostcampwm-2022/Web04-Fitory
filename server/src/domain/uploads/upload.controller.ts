@@ -1,9 +1,18 @@
 import { Exception } from "@exception/exceptions";
 import { HttpResponse } from "./../../converter/response.converter";
-import { Controller, Get, Post, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Query,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors,
+} from "@nestjs/common";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { multerOptions } from "./multer_options";
 import UploadService from "./upload.service";
+import { ApiQuery } from "@nestjs/swagger";
 
 @Controller("uploads")
 export default class UploadController {
@@ -11,15 +20,16 @@ export default class UploadController {
 
   @UseInterceptors(FilesInterceptor("images", null, multerOptions))
   @Post("/")
-  public uploadFiles(@UploadedFiles() files: File[]) {
-    try {
-      console.log(files);
-      // this.uploadService.uploadFiles(files);
-      return HttpResponse.success({
-        message: "File Upload Success",
-      });
-    } catch (error) {
-      throw new Exception().fileUploadError();
-    }
+  @ApiQuery({
+    name: "userId",
+    type: "number",
+  })
+  async uploadFiles(@UploadedFiles() files: File[], @Query("userId") userId: number) {
+    const file = await this.uploadService.uploadFiles(files, userId);
+    console.log(file);
+    return HttpResponse.success({
+      // message: "File Upload Success",
+      file: file,
+    });
   }
 }

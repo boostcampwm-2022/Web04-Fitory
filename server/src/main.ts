@@ -8,7 +8,7 @@ import { HttpExceptionFilter } from "@exception/http-exception.filter";
 import { PORT } from "@env";
 import { initDatabase } from "./utils/initDB";
 import express from "express";
-import { join } from "path";
+import path, { join } from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
 
 async function bootstrap() {
@@ -17,7 +17,7 @@ async function bootstrap() {
 
   const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
-  app.use("/public", express.static(join(__dirname, "../public")));
+  app.use("/public", express.static(path.join(__dirname, "../public")));
 
   app.enableCors({
     origin: ["http://localhost:8080"],
