@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { SBD_record } from "@record/entities/sbd_record.entity";
 import { User } from "./entities/user.entity";
 import { UsersInfoDto } from "./dto/users-info.dto";
+import { Exception } from "@exception/exceptions";
 
 @Injectable()
 export class UsersService {

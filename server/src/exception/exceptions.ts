@@ -1,5 +1,11 @@
 import { HttpResponse } from "@converter/response.converter";
-import { BadRequestException, HttpException, HttpStatus } from "@nestjs/common";
+import {
+  BadRequestException,
+  ForbiddenException,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+} from "@nestjs/common";
 
 export class Exception {
   invalidUserIdError(): HttpException {
@@ -10,6 +16,11 @@ export class Exception {
   invalidMonthError(): HttpException {
     const response = HttpResponse.failed(HttpStatus.BAD_REQUEST, "Invalid Month");
     return new BadRequestException(response);
+  }
+
+  invalidSubmit(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid Submit");
+    return new ForbiddenException(response);
   }
 
   routineNotFound(): HttpException {
