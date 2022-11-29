@@ -25,31 +25,20 @@ export class AlarmsService {
   }
 
   async getAlarmList(userId: number) {
-    const senderUserIdObject = await this.alarmRepository
+    const alarmObject = await this.alarmRepository
       .createQueryBuilder("alarm")
       .select("alarm.sender_user_id", "sender_user_id")
+      .addSelect("user.name", "name")
+      .addSelect("user.profile_image", "profile_image")
+      .addSelect("alarm.check", "check")
+      .addSelect("alarm.sender_user_id", "sender_user_id")
       .addSelect("alarm.alarm_type", "alarm_type")
       .addSelect("alarm.time_stamp", "time_stamp")
-      .addSelect("alarm.check", "check")
+      .innerJoin(User, "user", "user.user_id = alarm.sender_user_id")
       .where("alarm.user_id = :userId", { userId })
       .getRawMany();
-    const result = await Promise.all(
-      senderUserIdObject.map(async (item) => {
-        const userInfo = await this.usersRepository
-          .createQueryBuilder("user")
-          .select("user.name", "name")
-          .addSelect("user.profile_image", "profile_image")
-          .where("user.user_id = :senderUserId", { senderUserId: item.sender_user_id })
-          .getRawOne();
-        return {
-          ...item,
-          senderName: userInfo.name,
-          senderProfileImage: userInfo.profile_image,
-        };
-      }),
-    );
     return HttpResponse.success({
-      result,
+      alarmObject,
     });
   }
 }
