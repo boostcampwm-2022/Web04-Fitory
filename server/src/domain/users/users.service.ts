@@ -2,9 +2,9 @@ import { HttpResponse } from "@converter/response.converter";
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { SBD_record } from "@record/entities/sbd_record.entity";
 import { User } from "./entities/user.entity";
 import { UsersInfoDto } from "./dto/users-info.dto";
-import { SBD_record } from "@record/entities/sbd_record.entity";
 
 @Injectable()
 export class UsersService {
@@ -42,10 +42,6 @@ export class UsersService {
 
   async registerUser(userInfo: UsersInfoDto) {
     try {
-      const userExists = await this.findUserById(userInfo.oauthId);
-
-      if (userExists) return userExists;
-
       const newUser = this.userRepository.create(userInfo);
 
       return await this.userRepository.save(newUser);
@@ -54,10 +50,17 @@ export class UsersService {
     }
   }
 
-  async findUserById(oauthId: string) {
+  async checkUserName(name: string) {
+    const userExists = await this.findUserByName(name);
+
+    if (!userExists) throw new Exception().userNotFound();
+    return HttpResponse.success({ userExists: true });
+  }
+
+  async findUserByName(name: string) {
     const user = await this.userRepository
       .createQueryBuilder("user")
-      .where("user.oauthId = :oauthId", { oauthId })
+      .where("user.name = :name", { name })
       .getOne();
 
     if (!user) {
