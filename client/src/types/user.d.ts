@@ -6,6 +6,10 @@ export type UserWeight = number;
 export type UserId = number;
 export type UserIntroduce = string;
 
+export interface LoginResponse {
+  validate: boolean;
+}
+
 export interface JoinUserInfo {
   name: UserName;
   age: UserAge;
