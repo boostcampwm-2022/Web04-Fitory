@@ -1,5 +1,5 @@
 import { HttpResponse } from "@converter/response.converter";
-import { BadRequestException, HttpException, HttpStatus } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, NotFoundException } from "@nestjs/common";
 
 export class Exception {
   invalidUserIdError(): HttpException {
