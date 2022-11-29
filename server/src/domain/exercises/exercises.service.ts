@@ -70,10 +70,10 @@ export class ExercisesService {
         }),
       );
       return HttpResponse.success({
-        exerciseData,
+        message: "Exercise Submit Success",
       });
     } catch (error) {
-      throw new Error("myError");
+      throw new Exception().invalidSubmit();
     }
   }
 
