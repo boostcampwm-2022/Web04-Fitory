@@ -53,8 +53,8 @@ export class UsersService {
   async checkUserName(name: string) {
     const userExists = await this.findUserByName(name);
 
-    if (!userExists) return false;
-    return true;
+    if (!userExists) throw new Exception().userNotFound();
+    return HttpResponse.success({ userExists: true });
   }
 
   async findUserByName(name: string) {
