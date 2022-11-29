@@ -29,7 +29,7 @@ export const RoutineButton = styled.button`
 export const ExerciseListWrapper = styled.div`
   width: 100%;
   padding-top: 40px;
-  gap: 40px;
+  gap: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
