@@ -7,17 +7,26 @@ export type UserId = number;
 export type UserIntroduce = string;
 
 export interface LoginResponse {
-  oauthId: number;
+  id: number;
   validate: boolean;
 }
 
 export interface JoinUserInfo {
-  oauthId: number;
+  id: number;
   name: UserName;
   age: UserAge;
   gender: UserGender;
   height: UserHeight;
   weight: UserWeight;
+}
+
+export interface UserInfo extends JoinUserInfo {
+  profileImage: string;
+  introduce: string;
+  tier: number;
+  followerCount: number;
+  followingCount: number;
+  volumeSum: number;
 }
 
 export interface SearchedUserInfo {

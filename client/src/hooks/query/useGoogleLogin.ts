@@ -2,6 +2,7 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { RoutePath } from "@constants/enums";
 import UserAPI from "@api/UserAPI";
+import { authStorage } from "src/services/ClientStorage";
 
 const useGoogleLogin = () => {
   const navigate = useNavigate();
@@ -11,12 +12,13 @@ const useGoogleLogin = () => {
       return UserAPI.googleLogin(accessToken);
     },
     {
-      onSuccess: ({ oauthId, validate }) => {
-        console.log(oauthId, validate);
-        if (validate) {
+      onSuccess: ({ id, validate }) => {
+        if (!validate) {
+          navigate(RoutePath.JOIN, { state: { id } });
           return;
         }
-        navigate(RoutePath.JOIN, { state: { oauthId } });
+        authStorage.set(id);
+        navigate(RoutePath.HOME, { replace: true });
       },
     },
   );
