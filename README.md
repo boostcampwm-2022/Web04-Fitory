@@ -1,7 +1,7 @@
 <div align="center">
     <img src="https://user-images.githubusercontent.com/70889358/204248725-d39976f5-238b-4926-8aba-573f061a2141.png" width="100%"/>
     <h1 align="center">
-    평준화된 운동 기준을 기록하다.
+    평준화된 운동 기준을 기록하다
     </h1>    
     <img src="https://img.shields.io/github/issues/boostcampwm-2022/web04-fitory"/>
     <img src="https://img.shields.io/github/issues-closed/boostcampwm-2022/web04-fitory"/>
