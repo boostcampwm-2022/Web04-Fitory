@@ -7,13 +7,17 @@ import { AppModule } from "./app.module";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
 import { PORT } from "@env";
 import { initDatabase } from "./utils/initDB";
+import express from "express";
+import { join } from "path";
+import { NestExpressApplication } from "@nestjs/platform-express";
 
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
   // initDatabase();
 
-  const app = await NestFactory.create(AppModule);
+  const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
+  app.use("/public", express.static(join(__dirname, "../public")));
 
   app.enableCors({
     origin: ["http://localhost:8080"],

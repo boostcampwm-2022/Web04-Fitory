@@ -1,4 +1,3 @@
-
 import { Module } from "@nestjs/common";
 import { APP_FILTER } from "@nestjs/core";
 import { PassportModule } from "@nestjs/passport";
@@ -14,6 +13,7 @@ import { SbdRecordsModule } from "@record/sbd_records.module";
 import { SbdStatisticsModule } from "@statistics/sbd_statistics.module";
 import { UsersModule } from "@user/users.module";
 import { MockModule } from "@mock/mock.module";
+import { UploadModule } from "./domain/uploads/upload.module";
 
 @Module({
   imports: [
@@ -26,6 +26,7 @@ import { MockModule } from "@mock/mock.module";
     SbdStatisticsModule,
     FollowsModule,
     MockModule,
+    UploadModule,
     TypeOrmModule.forRoot(typeormConfig),
     PassportModule.register({ session: true }),
   ],
