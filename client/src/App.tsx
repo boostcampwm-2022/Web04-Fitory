@@ -11,6 +11,7 @@ import ProfilePage from "@pages/ProfilePage";
 import LoginPage from "@pages/LoginPage";
 import JoinPage from "@pages/JoinPage";
 import SearchPage from "@pages/SearchPage";
+import StaticsPage from "@pages/StaticsPage";
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID as string;
 
@@ -26,6 +27,8 @@ const App = () => {
           <Route path={RoutePath.RECORD} element={<RecordPage />} />
           {/* Search */}
           <Route path={RoutePath.SEARCH} element={<SearchPage />} />
+          {/* Statics */}
+          <Route path={RoutePath.STATICS} element={<StaticsPage />} />
           {/* Profile */}
           <Route path={RoutePath.PROFILE} element={<ProfilePage />} />
           <Route path={RoutePath.LOGIN} element={<LoginPage />} />
