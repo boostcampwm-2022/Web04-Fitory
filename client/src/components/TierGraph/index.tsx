@@ -12,6 +12,7 @@ interface MockDataType {
   date: string;
   score: number;
 }
+
 const backgroundColorArray: string[] = [];
 
 const TierGraph = () => {
@@ -24,6 +25,8 @@ const TierGraph = () => {
       {
         data: dataInfo,
         backgroundColor: backgroundColorArray,
+        borderColor: backgroundColorArray,
+        pointBorderColor: backgroundColorArray,
         fill: false,
         tension: 0,
         pointBorderWidth: 0,

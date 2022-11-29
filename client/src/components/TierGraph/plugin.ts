@@ -1,6 +1,7 @@
 import theme from "@styles/Theme";
+import { Chart } from "chart.js";
 
-const drawColorGraph = (chart: any) => {
+const drawColorGraph = (chart: Chart) => {
   const { ctx } = chart;
   ctx.save();
   const yAxis = chart.scales.y;
@@ -47,11 +48,11 @@ const drawTierLine = (chart: any) => {
   const { ctx } = chart;
   if (chart.options.horizontalLine) {
     for (let index = 0; index < chart.options.horizontalLine.length; index += 1) {
+      ctx.save();
       const line = chart.options.horizontalLine[index];
       const style = line.style ? line.style : theme.COLORS.LIGHT_BLUE;
       const yValue = line.y ? yAxis.getPixelForValue(line.y) : 0;
       ctx.lineWidth = 1;
-      line.text = line.text ? line.text : "";
       if (yValue) {
         ctx.beginPath();
         ctx.moveTo(35, yValue);
@@ -64,16 +65,17 @@ const drawTierLine = (chart: any) => {
         ctx.fillStyle = style;
         ctx.fillText(line.text, 35, yValue + ctx.lineWidth - 5);
       }
+      ctx.restore();
     }
   }
 };
 
 const plugin = [
   {
-    afterDatasetDraw: (chart: any) => {
+    afterDatasetDraw: (chart: Chart) => {
       drawTierLine(chart);
     },
-    afterLayout: (chart: any) => {
+    afterLayout: (chart: Chart) => {
       drawColorGraph(chart);
     },
   },
