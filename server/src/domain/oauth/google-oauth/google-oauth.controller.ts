@@ -1,52 +1,51 @@
-import { Body, Controller, Get, Inject, Post, Res, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { Response } from "express";
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Req,
+  Res,
+  UseInterceptors,
+} from "@nestjs/common";
+import { Response, Request } from "express";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { AccessTokenDto } from "@oauth/google-oauth/dto/access-token.dto";
 import { HttpResponse } from "@converter/response.converter";
+import { AccessTokenDto } from "@oauth/google-oauth/dto/access-token.dto";
+import { JwtService } from "@nestjs/jwt";
 import { GoogleOauthService } from "./google-oauth.service";
 
 @Controller("api/oauth/google")
+@UseInterceptors(ClassSerializerInterceptor)
 @ApiTags("OAUTH API")
 export class GoogleOauthController {
-  constructor(@Inject("AUTH_SERVICE") private readonly googleOauthService: GoogleOauthService) {}
+  constructor(
+    @Inject("AUTH_SERVICE") private readonly googleOauthService: GoogleOauthService,
+    private jwtService: JwtService,
+  ) {}
 
-  @Get()
-  @UseGuards(AuthGuard("google"))
+  @Post("register")
   @ApiOperation({
-    summary: "구글 로그인 페이지로 리다이렉트",
+    summary: "구글 로그인, 쿠키 생성 후 사용자에게 전송",
   })
-  googleOAuth() {
-    // redirect google login page
-    return { msg: "Google Authentication" };
-  }
+  async googleOAuthRegister(
+    @Body() accessToken: AccessTokenDto,
+    @Res() res: Response,
+    @Req() req: Request,
+  ) {
+    const data = await this.googleOauthService.register(accessToken.access_token);
 
-  @Post("validate")
-  @ApiOperation({
-    summary: "구글 로그인 callback, 쿠키 생성 후 사용자에게 전송",
-  })
-  async googleOAuthValidate(@Body() body: AccessTokenDto, @Res() res: Response) {
-    const { accessToken } = body;
+    const token = this.jwtService.sign({ sub: data.oauthId });
 
-    const userInfo = await this.googleOauthService.getUserInfo(accessToken);
-
-    const token = await this.googleOauthService.signIn({
-      oauthId: userInfo.data.sub,
-      name: userInfo.data.name,
+    res.cookie("access_token", token, {
+      sameSite: true,
+      secure: false, // 배포시에는 true로 바꿔야됨
+      httpOnly: true,
+      maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
     });
 
-    if (token) {
-      res.cookie("access_token", token, {
-        sameSite: true,
-        secure: false, // 배포시에는 true로 바꿔야됨
-        httpOnly: true,
-        maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
-      });
-
-      return HttpResponse.success({ validate: true });
-    }
-
-    return HttpResponse.success({ validate: false });
+    return HttpResponse.success(data);
   }
 
   @Get("logout")

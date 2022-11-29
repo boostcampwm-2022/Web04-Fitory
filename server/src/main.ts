@@ -3,9 +3,9 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
-import { AppModule } from "./app.module";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
 import { PORT } from "@env";
+import { AppModule } from "./app.module";
 import { initDatabase } from "./utils/initDB";
 
 async function bootstrap() {
@@ -16,7 +16,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
 
   app.enableCors({
-    origin: ["http://localhost:8080"],
+    origin: ["http://localhost:3000"],
     credentials: true,
   });
 
