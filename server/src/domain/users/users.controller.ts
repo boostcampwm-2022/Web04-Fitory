@@ -38,22 +38,9 @@ export class UsersController {
     return this.usersService.registerUser(userInfo);
   }
 
-  @Get("recentRecord")
-  @ApiOperation({
-    summary: "해당 사용자의 3대 챌린지 기록 반환",
-  })
-  @ApiQuery({
-    name: "userId",
-    type: "number",
-  })
-  getRecentRecordTime(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    return this.usersService.getRecentRecordTime(userId);
-  }
-
   @Get("recommand/list")
   @ApiOperation({
-    summary: "❌ 미구현) 해당 사용자와 유사한 추천 사용자 리스트를 반환",
+    summary: "해당 사용자와 유사한 추천 사용자 리스트를 반환",
   })
   @ApiQuery({
     name: "userId",
