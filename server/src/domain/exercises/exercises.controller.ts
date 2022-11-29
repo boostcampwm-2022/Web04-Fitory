@@ -1,8 +1,9 @@
 import { Exception } from "@exception/exceptions";
 import { ExercisesService } from "./exercises.service";
-import { Controller, Get, Query } from "@nestjs/common";
-import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { ApiBody, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidMonth, isValidUserId } from "@validation/validation";
+import { ExerciseDataDto } from "./dto/exercise.dto";
 
 @Controller("api/exercise")
 @ApiTags("EXERCISE API")
@@ -51,5 +52,14 @@ export class ExercisesController {
   getInfoForProfile(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.exercisesService.getProfileData(userId);
+  }
+
+  @Post("submit")
+  @ApiOperation({
+    summary: "해당 사용자가 제출한 운동 기록을 DB에 저장",
+  })
+  @ApiBody({ type: () => ExerciseDataDto })
+  submitExercise(@Body() exerciseData: ExerciseDataDto) {
+    return this.exercisesService.submitSingleSBDRecord(exerciseData);
   }
 }

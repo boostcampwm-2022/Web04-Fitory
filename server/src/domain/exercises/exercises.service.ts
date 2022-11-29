@@ -45,6 +45,12 @@ export class ExercisesService {
     });
   }
 
+  async submitSingleSBDRecord(exerciseData: unknown) {
+    return HttpResponse.success({
+      exerciseData,
+    });
+  }
+
   async getTotalVolume(userId: number) {
     const exerciseList = await this.exerciseRepository
       .createQueryBuilder("exercise")
