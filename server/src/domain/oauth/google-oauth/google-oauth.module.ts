@@ -3,7 +3,6 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "src/domain/users/entities/user.entity";
 import { JwtModule } from "@nestjs/jwt";
 import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY } from "@env";
-import { HttpModule } from "@nestjs/axios";
 import { GoogleOauthController } from "./google-oauth.controller";
 import { GoogleStrategy } from "./utils/google.strategy";
 import { GoogleOauthService } from "./google-oauth.service";
@@ -11,7 +10,6 @@ import { JwtStrategy } from "../jwt/jwt.strategy";
 
 @Module({
   imports: [
-    HttpModule,
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       secret: ACCESS_TOKEN_SECRETKEY,
@@ -20,7 +18,6 @@ import { JwtStrategy } from "../jwt/jwt.strategy";
   ],
   controllers: [GoogleOauthController],
   providers: [
-    GoogleStrategy,
     JwtStrategy,
     {
       provide: "AUTH_SERVICE",
