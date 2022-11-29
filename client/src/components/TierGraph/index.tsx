@@ -38,11 +38,11 @@ const TierGraph = () => {
   useEffect(() => {
     const dates: string[] = [];
     const scores: number[] = [];
-    mockData.reduce((acc: MockDataType, cur: MockDataType) => {
-      dates.push(cur.date);
-      scores.push(cur.score);
-      backgroundColorArray.push(judColors(cur.score));
-    }, []);
+    mockData.forEach((item: MockDataType) => {
+      dates.push(item.date);
+      scores.push(item.score);
+      backgroundColorArray.push(judColors(item.score));
+    });
     setLabelInfo(dates);
     setDataInfo(scores);
   }, []);
