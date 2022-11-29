@@ -2,9 +2,9 @@ import { HttpResponse } from "@converter/response.converter";
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { SBD_record } from "@record/entities/sbd_record.entity";
 import { User } from "./entities/user.entity";
 import { UsersInfoDto } from "./dto/users-info.dto";
-import { SBD_record } from "@record/entities/sbd_record.entity";
 
 @Injectable()
 export class UsersService {
@@ -42,10 +42,6 @@ export class UsersService {
 
   async registerUser(userInfo: UsersInfoDto) {
     try {
-      const userExists = await this.findUserById(userInfo.oauthId);
-
-      if (userExists) return userExists;
-
       const newUser = this.userRepository.create(userInfo);
 
       return await this.userRepository.save(newUser);
@@ -54,10 +50,17 @@ export class UsersService {
     }
   }
 
-  async findUserById(oauthId: string) {
+  async checkUserName(name: string) {
+    const userExists = await this.findUserByName(name);
+
+    if (!userExists) throw new Exception().userNotFound();
+    return HttpResponse.success({ userExists: true });
+  }
+
+  async findUserByName(name: string) {
     const user = await this.userRepository
       .createQueryBuilder("user")
-      .where("user.oauthId = :oauthId", { oauthId })
+      .where("user.name = :name", { name })
       .getOne();
 
     if (!user) {
@@ -67,23 +70,37 @@ export class UsersService {
     return user;
   }
 
-  async getRecentRecordTime(userId: number) {
-    // new Date().getTime() / 1000;
-    const record = await this.recordsRepository
-      .createQueryBuilder("record")
-      .where("record.user_id = :userId", { userId })
-      .select("record.second_stamp")
-      .orderBy("record.second_stamp", "DESC")
+  async getRecommandUserList(userId: number) {
+    const weight = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.user_id = :userId", { userId })
+      .select("user.weight")
+      .getRawOne();
+
+    const age = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.user_id = :userId", { userId })
+      .select("user.age")
+      .getRawOne();
+
+    const recommendWeight = await this.userRepository
+      .createQueryBuilder("user")
+      .where(`user.weight BETWEEN ${weight.user_weight - 5} AND ${weight.user_weight + 5}`)
+      .select("user.name")
+      .addSelect("user.profile_image")
+      .orderBy("rand()")
+      .take(5)
       .getRawMany();
 
-    const recentRecord = record[0];
+    const recommendAge = await this.userRepository
+      .createQueryBuilder("user")
+      .where(`user.age BETWEEN ${age.user_age - 1} AND ${age.user_age + 1}`)
+      .select("user.name")
+      .addSelect("user.profile_image")
+      .orderBy("rand()")
+      .take(5)
+      .getRawMany();
 
-    return HttpResponse.success({
-      recentRecord,
-    });
-  }
-
-  async getRecommandUserList(userId: number) {
-    return HttpResponse.success({});
+    return HttpResponse.success({ recommendWeight, recommendAge });
   }
 }

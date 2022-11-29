@@ -14,6 +14,11 @@ export class Exception {
 
   routineNotFound(): HttpException {
     const response = HttpResponse.failed(HttpStatus.NOT_FOUND, "Routine Not Found");
-    return new BadRequestException(response);
+    return new NotFoundException(response);
+  }
+
+  userNotFound(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.NOT_FOUND, "User Not Found");
+    return new NotFoundException(response);
   }
 }

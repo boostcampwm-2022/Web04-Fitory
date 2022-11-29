@@ -6,6 +6,7 @@ import { RoutePath } from "@constants/enums";
 
 import HomePage from "@pages/HomePage";
 import ChallengePage from "@pages/ChallengePage";
+import RecordPage from "@pages/RecordPage";
 import ProfilePage from "@pages/ProfilePage";
 import LoginPage from "@pages/LoginPage";
 import JoinPage from "@pages/JoinPage";
@@ -22,6 +23,7 @@ const App = () => {
           {/* Home */}
           <Route path={RoutePath.HOME} element={<HomePage />} />
           <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
+          <Route path={RoutePath.RECORD} element={<RecordPage />} />
           {/* Search */}
           <Route path={RoutePath.SEARCH} element={<SearchPage />} />
           {/* Profile */}
