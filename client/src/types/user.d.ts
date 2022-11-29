@@ -7,10 +7,12 @@ export type UserId = number;
 export type UserIntroduce = string;
 
 export interface LoginResponse {
+  oauthId: number;
   validate: boolean;
 }
 
 export interface JoinUserInfo {
+  oauthId: number;
   name: UserName;
   age: UserAge;
   gender: UserGender;

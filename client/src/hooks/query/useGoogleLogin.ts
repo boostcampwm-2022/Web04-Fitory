@@ -5,15 +5,18 @@ import UserAPI from "@api/UserAPI";
 
 const useGoogleLogin = () => {
   const navigate = useNavigate();
+
   const { mutate } = useMutation(
-    ({ accessToken }: { accessToken: string }) => UserAPI.googleLogin(accessToken),
+    ({ accessToken }: { accessToken: string }) => {
+      return UserAPI.googleLogin(accessToken);
+    },
     {
-      onSuccess: (isExistingUser) => {
-        console.log(isExistingUser);
-        if (isExistingUser) {
+      onSuccess: ({ oauthId, validate }) => {
+        console.log(oauthId, validate);
+        if (validate) {
           return;
         }
-        navigate(RoutePath.JOIN);
+        navigate(RoutePath.JOIN, { state: { oauthId } });
       },
     },
   );
