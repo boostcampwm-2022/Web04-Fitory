@@ -7,6 +7,8 @@
     <img src="https://img.shields.io/github/issues-closed/boostcampwm-2022/web04-fitory"/>
     <img src="https://img.shields.io/github/commit-activity/w/boostcampwm-2022/web04-fitory">
     <img src="https://img.shields.io/github/last-commit/boostcampwm-2022/web04-fitory">
+    <br>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fghttps%2F%2Fgithub.com%2Fboostcampwm-2022%2FWeb04-Fitoryithub.com%2Fgjbae1212%2Fhit-counter&count_bg=%23698AFA&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
     <br><br>
 </div>
 
