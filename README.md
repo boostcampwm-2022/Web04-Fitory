@@ -3,8 +3,11 @@
     <h1 align="center">
     평준화된 운동 기준을 기록하다
     </h1>    
-    <img src="https://img.shields.io/github/issues/boostcampwm-2022/web04-fitory"/>
-    <img src="https://img.shields.io/github/issues-closed/boostcampwm-2022/web04-fitory"/>
+    <img src="https://img.shields.io/github/issues-raw/boostcampwm-2022/web04-fitory?color=orange"/>
+    <img src="https://img.shields.io/github/issues-closed-raw/boostcampwm-2022/web04-fitory?color=orange"/>
+    <img src="https://img.shields.io/github/issues-pr-raw/boostcampwm-2022/Web04-Fitory?color=violet"/>
+    <img src="https://img.shields.io/github/issues-pr-closed-raw/boostcampwm-2022/web04-fitory?color=violet"/>
+    <br>
     <img src="https://img.shields.io/github/commit-activity/w/boostcampwm-2022/web04-fitory">
     <img src="https://img.shields.io/github/last-commit/boostcampwm-2022/web04-fitory">
     <br>
