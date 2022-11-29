@@ -27,6 +27,7 @@ export const Title = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+  color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
 `;
 
 export const LeftItem = styled.div`

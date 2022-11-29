@@ -33,7 +33,7 @@ export class MockController {
       }),
     );
 
-    await this.mockService.mockStatistics();
+    // await this.mockService.mockStatistics();
 
     await this.mockService.mockRoutine();
 

@@ -111,12 +111,13 @@ export class MockService {
       allUserId.map(async (id: { user_id: number }) => {
         const weight = await this.userRepository
           .createQueryBuilder()
-          .where("user_id = :id", { id })
           .select("weight")
+          .where("user_id = :id", { id })
           .getOne();
         const squat = faker.datatype.number({ min: 20, max: 300 });
         const deadlift = faker.datatype.number({ min: 20, max: 300 });
         const benchpress = faker.datatype.number({ min: 20, max: 300 });
+        const randomDateString = faker.date.recent(365).toString();
         return this.recordsRepository
           .createQueryBuilder()
           .insert()
@@ -128,10 +129,8 @@ export class MockService {
             deadlift,
             benchpress,
             SBD_sum: squat + deadlift + benchpress,
-            secondStamp: Number(
-              Math.floor(new Date(faker.date.recent(30).toString()).getTime() / 1000),
-            ),
-            date: dayjs(faker.date.recent(365).toString()).format("YYMMDD"),
+            timeStamp: dayjs(randomDateString).format("YYYY-MM-DD HH:mm:ss"),
+            date: dayjs(randomDateString).format("YYMMDD"),
           })
           .insert()
           .execute();
@@ -247,9 +246,7 @@ export class MockService {
             senderUserId: faker.helpers.arrayElement(userIdArray),
             alarmType: faker.datatype.number({ min: 0, max: 1 }),
             check: false,
-            minuteStamp: Number(
-              Math.floor(new Date(faker.date.recent(7).toString()).getTime() / 1000 / 60),
-            ),
+            timeStamp: dayjs(faker.date.recent(365).toString()).format("YYYY-MM-DD HH:mm:ss"),
           })
           .execute();
       }),
