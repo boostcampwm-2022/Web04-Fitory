@@ -1,9 +1,10 @@
-import { Controller, Get, Inject, Req, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Post, Res, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Response } from "express";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { AccessTokenDto } from "@oauth/google-oauth/dto/access-token.dto";
+import { HttpResponse } from "@converter/response.converter";
 import { GoogleOauthService } from "./google-oauth.service";
-import { RequestWithUser } from "@type/request";
 
 @Controller("api/oauth/google")
 @ApiTags("OAUTH API")
@@ -20,22 +21,32 @@ export class GoogleOauthController {
     return { msg: "Google Authentication" };
   }
 
-  @Get("callback")
-  @UseGuards(AuthGuard("google"))
+  @Post("validate")
   @ApiOperation({
     summary: "구글 로그인 callback, 쿠키 생성 후 사용자에게 전송",
   })
-  async googleOAuthCallback(@Req() req: RequestWithUser, @Res() res: Response) {
-    const token = await this.googleOauthService.signIn(req.user);
+  async googleOAuthValidate(@Body() body: AccessTokenDto, @Res() res: Response) {
+    const { accessToken } = body;
 
-    res.cookie("access_token", token, {
-      sameSite: true,
-      secure: false, // 배포시에는 true로 바꿔야됨
-      httpOnly: true,
-      maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
+    const userInfo = await this.googleOauthService.getUserInfo(accessToken);
+
+    const token = await this.googleOauthService.signIn({
+      oauthId: userInfo.data.sub,
+      name: userInfo.data.name,
     });
 
-    return res.send(req.user);
+    if (token) {
+      res.cookie("access_token", token, {
+        sameSite: true,
+        secure: false, // 배포시에는 true로 바꿔야됨
+        httpOnly: true,
+        maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
+      });
+
+      return HttpResponse.success({ validate: true });
+    }
+
+    return HttpResponse.success({ validate: false });
   }
 
   @Get("logout")
