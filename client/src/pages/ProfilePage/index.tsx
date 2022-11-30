@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import { RoutePath } from "@constants/enums";
-import { authStorage } from "src/services/ClientStorage";
+import { authCookie } from "src/services/Cookie";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!authStorage.get()) {
+    if (!authCookie.get()) {
       navigate(RoutePath.LOGIN, { replace: true });
     }
   }, [navigate]);

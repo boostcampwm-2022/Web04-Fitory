@@ -12,7 +12,6 @@ export interface LoginResponse {
 }
 
 export interface JoinUserInfo {
-  id: number;
   name: UserName;
   age: UserAge;
   gender: UserGender;

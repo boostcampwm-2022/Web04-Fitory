@@ -1,5 +1,5 @@
 import HttpClient from "src/services/HttpClient";
-import { LoginResponse, JoinUserInfo } from "src/types/user";
+import { LoginResponse, JoinUserInfo, UserInfo } from "src/types/user";
 
 const UserAPI = {
   googleLogin: async (accessToken: string) => {
@@ -14,6 +14,13 @@ const UserAPI = {
     const response = await HttpClient.post(path, userInfo);
 
     return response.ok;
+  },
+
+  getUser: async () => {
+    const path = process.env.GET_USER_API as string;
+    const response = await HttpClient.get(path);
+
+    return response.response as UserInfo;
   },
 };
 

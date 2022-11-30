@@ -14,10 +14,10 @@ const GoogleOAuthButton = () => {
   };
 
   useEffect(() => {
-    gapi.load("client:googleOAuth", () => {
+    gapi.load("client:auth", () => {
       gapi.client.init({ clientId: googleClientId, scope: "" });
     });
-  });
+  }, [googleClientId]);
 
   return (
     <GoogleLogin
