@@ -1,47 +1,28 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "src/domain/users/entities/user.entity";
-import { JwtService } from "@nestjs/jwt";
-import { JwtPayload } from "@type/jwt";
-import { firstValueFrom } from "rxjs";
-import { HttpService } from "@nestjs/axios";
-import { GoogleUserDto } from "./dto/google-user.dto";
+import { google, Auth } from "googleapis";
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@env";
 
 @Injectable()
 export class GoogleOauthService {
-  constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private jwtService: JwtService,
-    private readonly httpService: HttpService,
-  ) {}
+  oauthClient: Auth.OAuth2Client;
 
-  generateJwt(payload: JwtPayload) {
-    return this.jwtService.sign(payload);
+  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {
+    this.oauthClient = new google.auth.OAuth2(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
   }
 
-  async signIn(user: GoogleUserDto) {
+  async register(token: string) {
+    const tokenInfo = await this.oauthClient.getTokenInfo(token);
+    const oauthId = tokenInfo.sub.toString();
+    const user = await this.findUserById(oauthId);
+
     if (!user) {
-      throw new BadRequestException("Unauthenticated");
+      return { oauthId, register: true };
     }
 
-    const userExists = await this.findUserById(user.oauthId);
-
-    if (!userExists) {
-      return this.generateJwt({
-        sub: userExists.oauthId,
-      });
-    }
-
-    return null;
-  }
-
-  getUserInfo(accessToken: string) {
-    return firstValueFrom(
-      this.httpService.get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`,
-      ),
-    );
+    return { oauthId, register: false };
   }
 
   async findUserById(oauthId: string) {
@@ -53,7 +34,6 @@ export class GoogleOauthService {
     if (!user) {
       return null;
     }
-
     return user;
   }
 }
