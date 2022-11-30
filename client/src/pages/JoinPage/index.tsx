@@ -7,6 +7,7 @@ import AgeGenderInputSet from "@components/AgeGenderInputSet";
 import BodyInfoInputSet from "@components/BodyInfoInputSet";
 import UserValidation from "@utils/UserValidation";
 import useJoinUser from "@hooks/query/useJoinUser";
+import UserAPI from "@api/UserAPI";
 import * as UserType from "src/types/user";
 import * as s from "./style";
 
@@ -29,11 +30,20 @@ const JoinPage = () => {
     setStep(step - 1);
   };
 
-  const handleClickNextButton = () => {
+  const handleClickNextButton = async () => {
+    if (step === 0) {
+      const isExist = await UserAPI.checkExistUserName(userInfo.name);
+      if (isExist) {
+        alert("이미 존재하는 닉네임입니다.");
+        return;
+      }
+    }
+
     if (step === 2) {
       joinUser(userInfo);
       return;
     }
+
     setStep(step + 1);
   };
 
