@@ -26,10 +26,8 @@ export default class UploadController {
   })
   async uploadFiles(@UploadedFiles() files: File[], @Query("userId") userId: number) {
     const file = await this.uploadService.uploadFiles(files, userId);
-    console.log(file);
     return HttpResponse.success({
-      // message: "File Upload Success",
-      file: file,
+      message: "File Upload Success",
     });
   }
 }
