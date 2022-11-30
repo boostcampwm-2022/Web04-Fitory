@@ -41,16 +41,6 @@ export class UsersService {
     });
   }
 
-  async registerUser(userInfo: UsersInfoDto) {
-    try {
-      const newUser = this.userRepository.create(userInfo);
-
-      return await this.userRepository.save(newUser);
-    } catch {
-      throw new InternalServerErrorException();
-    }
-  }
-
   async checkUserName(name: string) {
     const userExists = await this.findUserByName(name);
 

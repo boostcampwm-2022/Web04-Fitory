@@ -30,14 +30,6 @@ export class UsersController {
     return this.usersService.getEveryUserProfile();
   }
 
-  @Post("register")
-  @ApiOperation({
-    summary: "사용자 정보 user 테이블에 등록",
-  })
-  registerUser(@Body() userInfo: UsersInfoDto) {
-    return this.usersService.registerUser(userInfo);
-  }
-
   @Get("recommand/list")
   @ApiOperation({
     summary: "해당 사용자와 유사한 추천 사용자 리스트를 반환",
