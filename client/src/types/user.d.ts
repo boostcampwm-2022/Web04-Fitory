@@ -7,8 +7,8 @@ export type UserId = number;
 export type UserIntroduce = string;
 
 export interface LoginResponse {
-  id: number;
-  validate: boolean;
+  userId: number | null;
+  needRegister: boolean;
 }
 
 export interface JoinUserInfo {

@@ -11,8 +11,8 @@ const useGoogleLogin = () => {
       return UserAPI.googleLogin(accessToken);
     },
     {
-      onSuccess: ({ validate }) => {
-        if (!validate) {
+      onSuccess: ({ needRegister }) => {
+        if (needRegister) {
           navigate(RoutePath.JOIN);
           return;
         }
