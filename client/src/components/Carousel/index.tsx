@@ -1,11 +1,9 @@
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import TierGraph from "@components/TierGraph";
-import styled from "styled-components";
-
-const CHART_NUM = 1;
+import * as s from "./style";
 
 const Carousel = () => {
-  const [isHistogram, setIsHistogram] = useState(true);
+  const [isHistogram, setIsHistogram] = useState<boolean>(true);
   const slideRef = useRef() as MutableRefObject<HTMLDivElement>;
 
   const movePrev = () => {
@@ -26,63 +24,25 @@ const Carousel = () => {
   }, [isHistogram]);
 
   return (
-    <Wrapper>
-      <Container>
-        <NavigationBar>
-          <NavigationButton onClick={movePrev}>통계</NavigationButton>
-          <NavigationButton onClick={moveNext}>티어 변동</NavigationButton>
-        </NavigationBar>
-        <StaticsContainer ref={slideRef}>
-          <ChartContainer />
-          <ChartContainer>
+    <s.Wrapper>
+      <s.Container>
+        <s.NavigationBar>
+          <s.NavigationButton isHistogram={isHistogram} onClick={movePrev}>
+            통계
+          </s.NavigationButton>
+          <s.NavigationButton isHistogram={isHistogram} onClick={moveNext}>
+            티어 변동
+          </s.NavigationButton>
+        </s.NavigationBar>
+        <s.StaticsContainer ref={slideRef}>
+          <s.ChartContainer>여기에 히스토그램을 넣어주세요.</s.ChartContainer>
+          <s.ChartContainer>
             <TierGraph />
-          </ChartContainer>
-        </StaticsContainer>
-      </Container>
-    </Wrapper>
+          </s.ChartContainer>
+        </s.StaticsContainer>
+      </s.Container>
+    </s.Wrapper>
   );
 };
-
-export const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: ${({ theme }) => theme.COLORS.WHITE};
-  text-align: center;
-  padding-top: 50px;
-`;
-
-export const Container = styled.div`
-  width: 100%;
-  height: 500px;
-  overflow: hidden;
-`;
-
-export const NavigationBar = styled.div`
-  padding: 10px;
-  display: flex;
-  width: 100%;
-
-  border-bottom: 1px solid ${({ theme }) => theme.COLORS.LIGHT_GRAY};
-  margin-bottom: 50px;
-`;
-
-export const NavigationButton = styled.button`
-  width: 50%;
-
-  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
-  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
-`;
-
-export const StaticsContainer = styled.div`
-  display: flex;
-  width: 200%;
-  text-align: center;
-  align-items: center;
-`;
-
-export const ChartContainer = styled.div`
-  width: 50%;
-`;
 
 export default Carousel;
