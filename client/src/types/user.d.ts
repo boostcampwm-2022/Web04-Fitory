@@ -11,6 +11,11 @@ export interface LoginResponse {
   needRegister: boolean;
 }
 
+export interface JoinResponse {
+  userId: UserId;
+  register: "success";
+}
+
 export interface LoginUserInfo {
   access_token: string;
 }

@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { RoutePath } from "@constants/enums";
 import UserAPI from "@api/UserAPI";
 import { JoinUserInfo } from "src/types/user";
+import { authStorage } from "src/services/ClientStorage";
 
 const useJoinUser = () => {
   const navigate = useNavigate();
 
   const { mutate } = useMutation((userInfo: JoinUserInfo) => UserAPI.join(userInfo), {
-    onSuccess: (isSuccess) => {
-      if (isSuccess) {
-        navigate(RoutePath.HOME, { replace: true });
-      }
+    onSuccess: ({ userId }) => {
+      authStorage.set(userId);
+      navigate(RoutePath.HOME, { replace: true });
     },
   });
 
