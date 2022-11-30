@@ -55,7 +55,7 @@ const drawTierLine = (chart: any) => {
       ctx.lineWidth = 1;
       if (yValue) {
         ctx.beginPath();
-        ctx.moveTo(35, yValue);
+        ctx.moveTo(40, yValue);
         ctx.lineTo(chart.width, yValue);
         ctx.setLineDash([5]);
         ctx.strokeStyle = style;
@@ -63,7 +63,7 @@ const drawTierLine = (chart: any) => {
       }
       if (line.text) {
         ctx.fillStyle = style;
-        ctx.fillText(line.text, 35, yValue + ctx.lineWidth - 5);
+        ctx.fillText(line.text, 40, yValue + ctx.lineWidth - 5);
       }
       ctx.restore();
     }

@@ -48,15 +48,13 @@ const TierGraph = () => {
   }, []);
 
   return (
-    <div style={{ width: "50%" }}>
-      <Chart
-        style={{ width: "80%" }}
-        type="line"
-        data={graphData}
-        plugins={plugin}
-        options={options}
-      />
-    </div>
+    <Chart
+      style={{ width: "60%" }}
+      type="line"
+      data={graphData}
+      plugins={plugin}
+      options={options}
+    />
   );
 };
 

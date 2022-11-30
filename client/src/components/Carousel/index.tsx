@@ -22,7 +22,7 @@ const Carousel = () => {
 
   useEffect(() => {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
-    slideRef.current.style.transform = `translateX(-${isHistogram ? 0 : 1}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
+    slideRef.current.style.transform = `translateX(-${isHistogram ? 0 : 5}0%)`; // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
   }, [isHistogram]);
 
   return (
@@ -32,9 +32,12 @@ const Carousel = () => {
           <NavigationButton onClick={movePrev}>통계</NavigationButton>
           <NavigationButton onClick={moveNext}>티어 변동</NavigationButton>
         </NavigationBar>
-        <ChartContainer ref={slideRef}>
-          <TierGraph />
-        </ChartContainer>
+        <StaticsContainer ref={slideRef}>
+          <ChartContainer />
+          <ChartContainer>
+            <TierGraph />
+          </ChartContainer>
+        </StaticsContainer>
       </Container>
     </Wrapper>
   );
@@ -71,11 +74,15 @@ export const NavigationButton = styled.button`
   color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
 `;
 
-export const ChartContainer = styled.div`
+export const StaticsContainer = styled.div`
   display: flex;
   width: 200%;
   text-align: center;
   align-items: center;
+`;
+
+export const ChartContainer = styled.div`
+  width: 50%;
 `;
 
 export default Carousel;
