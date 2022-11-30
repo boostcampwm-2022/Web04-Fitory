@@ -1,3 +1,4 @@
+import { Exception } from "@exception/exceptions";
 import { User } from "./../users/entities/user.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -15,16 +16,15 @@ export default class UploadService {
     try {
       const singleFile = files[0];
       const fileName = createImageURL(singleFile);
-      console.log(singleFile, fileName);
       const user = await this.userRepository
         .createQueryBuilder("user")
         .where("user.user_id = :userId", { userId })
         .getOne();
       user.profileImage = fileName;
       await this.userRepository.save(user);
-      return singleFile;
+      return fileName;
     } catch (error) {
-      throw new Error("MyError");
+      throw new Exception().fileSubmitError();
     }
   }
 }

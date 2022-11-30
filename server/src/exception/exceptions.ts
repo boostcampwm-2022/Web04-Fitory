@@ -37,4 +37,9 @@ export class Exception {
     const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid File Type");
     return new ForbiddenException(response);
   }
+
+  fileSubmitError(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "File Sumit Error");
+    return new ForbiddenException(response);
+  }
 }
