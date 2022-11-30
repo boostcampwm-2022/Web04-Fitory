@@ -19,7 +19,15 @@ export class GoogleOauthService {
   async register(userInfo: GoogleUserRegisterDto) {
     const tokenInfo = await this.oauthClient.getTokenInfo(userInfo.access_token);
     const oauthId = tokenInfo.sub.toString();
-    const userInfoWithOAuthId = { ...userInfo, oauthId };
+    const userInfoWithOAuthId = {
+      name: userInfo.name,
+      age: userInfo.age,
+      gender: userInfo.gender,
+      height: userInfo.height,
+      weight: userInfo.weight,
+      oauthId,
+    };
+
     const registerUserInfo = await this.registerUser(userInfoWithOAuthId);
 
     return this.findUserIdByOAuthId(registerUserInfo.oauthId).then((user) => {
