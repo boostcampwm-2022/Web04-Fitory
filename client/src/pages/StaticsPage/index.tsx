@@ -3,6 +3,7 @@ import PageTemplate from "@pages/PageTemplate";
 import styled from "styled-components";
 import ExerciseScoreContainer from "@components/ExerciseScoreContainer";
 import StaticsUserInfoContainer from "@components/StaticsUserInfoContainer";
+import Carousel from "@components/Carousel";
 
 const StaticsPage = () => {
   return (
@@ -15,6 +16,9 @@ const StaticsPage = () => {
         </ScoreContainer>
         <StaticsUserInfoContainer />
       </UserInfoContainer>
+      <div>
+        <Carousel />
+      </div>
     </PageTemplate>
   );
 };
