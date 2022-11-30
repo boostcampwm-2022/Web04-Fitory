@@ -17,7 +17,7 @@ import { JwtService } from "@nestjs/jwt";
 import { GoogleOauthService } from "./google-oauth.service";
 
 @Controller("api/oauth/google")
-@UseInterceptors(ClassSerializerInterceptor)
+// @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags("OAUTH API")
 export class GoogleOauthController {
   constructor(
@@ -29,16 +29,12 @@ export class GoogleOauthController {
   @ApiOperation({
     summary: "구글 로그인, 쿠키 생성 후 사용자에게 전송",
   })
-  async googleOAuthRegister(
-    @Body() accessToken: AccessTokenDto,
-    @Res() res: Response,
-    @Req() req: Request,
-  ) {
+  async googleOAuthRegister(@Body() accessToken: AccessTokenDto, @Req() req: Request) {
     const data = await this.googleOauthService.register(accessToken.access_token);
 
     const token = this.jwtService.sign({ sub: data.oauthId });
 
-    res.cookie("access_token", token, {
+    req.res.cookie("access_token", token, {
       sameSite: true,
       secure: false, // 배포시에는 true로 바꿔야됨
       httpOnly: true,

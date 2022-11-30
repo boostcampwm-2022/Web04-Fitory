@@ -5,6 +5,7 @@ import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
 import { PORT } from "@env";
+import path from "path";
 import { AppModule } from "./app.module";
 import { initDatabase } from "./utils/initDB";
 
@@ -13,10 +14,12 @@ async function bootstrap() {
   // initDatabase();
 
   const app = await NestFactory.create(AppModule);
+
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
 
   app.enableCors({
     origin: ["http://localhost:3000"],
+    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   });
 
