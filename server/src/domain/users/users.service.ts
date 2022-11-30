@@ -23,7 +23,7 @@ export class UsersService {
       .getOne();
 
     if (!user) {
-      return "No user find";
+      throw new Exception().userNotFound();
     }
     return HttpResponse.success({
       user,
