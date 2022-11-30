@@ -1,10 +1,10 @@
 import HttpClient from "src/services/HttpClient";
-import { LoginResponse, JoinUserInfo, UserInfo } from "src/types/user";
+import { LoginResponse, LoginUserInfo, JoinUserInfo, UserInfo } from "src/types/user";
 
 const UserAPI = {
-  googleLogin: async (accessToken: string) => {
+  googleLogin: async ({ access_token }: LoginUserInfo) => {
     const path = process.env.POST_GOOGLE_OAUTH_API as string;
-    const response = await HttpClient.post(path, { access_token: accessToken });
+    const response = await HttpClient.post(path, { access_token });
 
     return response.response as LoginResponse;
   },

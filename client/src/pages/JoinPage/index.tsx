@@ -1,18 +1,23 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { RoutePath, Gender } from "@constants/enums";
 import PageTemplate from "@pages/PageTemplate";
 import NicknameTextField from "@components/NicknameTextField";
 import AgeGenderInputSet from "@components/AgeGenderInputSet";
 import BodyInfoInputSet from "@components/BodyInfoInputSet";
 import UserValidation from "@utils/UserValidation";
+import useJoinUser from "@hooks/query/useJoinUser";
 import * as UserType from "src/types/user";
 import * as s from "./style";
 
 const JoinPage = () => {
-  const navigete = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { joinUser } = useJoinUser();
+
   const [step, setStep] = useState(0);
   const [userInfo, setUserInfo] = useState<UserType.JoinUserInfo>({
+    access_token: "",
     name: "",
     age: 0,
     gender: Gender.MALE,
@@ -26,7 +31,8 @@ const JoinPage = () => {
 
   const handleClickNextButton = () => {
     if (step === 2) {
-      navigete(RoutePath.PROFILE, { replace: true });
+      joinUser(userInfo);
+      return;
     }
     setStep(step + 1);
   };
@@ -84,6 +90,19 @@ const JoinPage = () => {
       ),
     },
   ];
+
+  useEffect(() => {
+    if (!location.state || !location.state.accessToken) {
+      navigate(RoutePath.HOME, { replace: true });
+      return;
+    }
+    if (!userInfo.access_token) {
+      setUserInfo({
+        ...userInfo,
+        access_token: location.state.accessToken,
+      });
+    }
+  }, [location, navigate, userInfo]);
 
   return (
     <PageTemplate isRoot={false} onClickBackButton={step ? handleClickBackButton : undefined}>

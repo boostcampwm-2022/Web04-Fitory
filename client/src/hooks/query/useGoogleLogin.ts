@@ -8,12 +8,12 @@ const useGoogleLogin = () => {
 
   const { mutate } = useMutation(
     ({ accessToken }: { accessToken: string }) => {
-      return UserAPI.googleLogin(accessToken);
+      return UserAPI.googleLogin({ access_token: accessToken });
     },
     {
-      onSuccess: ({ needRegister }) => {
+      onSuccess: ({ needRegister }, { accessToken }) => {
         if (needRegister) {
-          navigate(RoutePath.JOIN);
+          navigate(RoutePath.JOIN, { state: { accessToken } });
           return;
         }
         navigate(RoutePath.HOME, { replace: true });

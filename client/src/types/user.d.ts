@@ -1,17 +1,21 @@
+export type UserId = number | null;
 export type UserName = string;
 export type UserAge = number;
 export type UserGender = 0 | 1;
 export type UserHeight = number;
 export type UserWeight = number;
-export type UserId = number;
 export type UserIntroduce = string;
 
 export interface LoginResponse {
-  userId: number | null;
+  userId: UserId;
   needRegister: boolean;
 }
 
-export interface JoinUserInfo {
+export interface LoginUserInfo {
+  access_token: string;
+}
+
+export interface JoinUserInfo extends LoginUserInfo {
   name: UserName;
   age: UserAge;
   gender: UserGender;
