@@ -7,5 +7,5 @@ export class AccessTokenDto {
     type: String,
   })
   @IsString()
-  accessToken: string;
+  access_token: string;
 }

@@ -3,9 +3,10 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
-import { AppModule } from "./app.module";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
 import { PORT } from "@env";
+import path from "path";
+import { AppModule } from "./app.module";
 import { initDatabase } from "./utils/initDB";
 import express from "express";
 import path, { join } from "path";
@@ -16,11 +17,13 @@ async function bootstrap() {
   // initDatabase();
 
   const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
+
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
   app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
-    origin: ["http://localhost:8080"],
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   });
 
