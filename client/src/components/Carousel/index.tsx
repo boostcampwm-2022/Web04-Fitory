@@ -15,7 +15,7 @@ const Carousel = () => {
   };
 
   const moveNext = () => {
-    if (currentSlide >= CHART_NUM) {
+    if (currentSlide < CHART_NUM) {
       setCurrentSlide(currentSlide + 1);
     }
   };
@@ -26,28 +26,44 @@ const Carousel = () => {
   }, [currentSlide]);
 
   return (
-    <Container>
-      <ChartContainer>
-        <TierGraph />
-        <TierGraph />
-      </ChartContainer>
-      <div>
-        <button onClick={movePrev}>이전</button>
-        <button onClick={moveNext}>다음</button>
-      </div>
-    </Container>
+    <Wrapper>
+      <Container>
+        <NavigationBar>
+          <button onClick={movePrev}>통계</button>
+          <button onClick={moveNext}>티어 변동</button>
+        </NavigationBar>
+        <ChartContainer ref={slideRef}>
+          <TierGraph />
+        </ChartContainer>
+      </Container>
+    </Wrapper>
   );
 };
 
-export const Container = styled.div`
-  width: 500px;
-  height: 500px;
+export const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.COLORS.WHITE};
+  text-align: center;
+  padding-top: 50px;
+`;
 
+export const Container = styled.div`
+  width: 100%;
+  height: 500px;
   overflow: hidden;
+`;
+
+export const NavigationBar = styled.div`
+  display: flex;
+  width: 100%;
 `;
 
 export const ChartContainer = styled.div`
   display: flex;
+  width: 200%;
+  text-align: center;
+  align-items: center;
 `;
 
 export default Carousel;

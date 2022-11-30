@@ -28,6 +28,7 @@ export const UserInfoContainer = styled.div`
   text-align: center;
   height: 230px;
 
+  background-color: ${({ theme }) => theme.COLORS.WHITE};
   color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
 `;
