@@ -30,7 +30,7 @@ export class GoogleOauthController {
         sameSite: true,
         secure: false, // 배포시에는 true로 바꿔야됨
         httpOnly: true,
-        maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
+        maxAge: 3650 * 24 * 60 * 60 * 1000, // (10 year)
       });
 
       return HttpResponse.success({ userId, register: "success" });
@@ -53,7 +53,7 @@ export class GoogleOauthController {
         sameSite: true,
         secure: false, // 배포시에는 true로 바꿔야됨
         httpOnly: true,
-        maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
+        maxAge: 3650 * 24 * 60 * 60 * 1000, // (10 year)
       });
     }
 
