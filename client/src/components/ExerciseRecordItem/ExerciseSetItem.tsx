@@ -15,8 +15,8 @@ const ExerciseSetItem = ({ exerciseId, setId }: ExerciseSetItemProps) => {
 
   const hadleChangeTextField = (e: ChangeEvent<HTMLInputElement>) => {
     const setItem = exerciseList[exerciseId].setInfo[setId];
-    const stringValue = e.target.value.match(NUMBER_REGEX);
-    const numberValue = stringValue ? +stringValue[0] : 0;
+    const matchedArray = e.target.value.match(NUMBER_REGEX);
+    const numberValue = matchedArray ? +matchedArray[0] : 0;
 
     if (e.target.name === "weight") {
       updateExerciseSetList(exerciseId, setId, {
