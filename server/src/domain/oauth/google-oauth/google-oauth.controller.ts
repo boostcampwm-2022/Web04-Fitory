@@ -5,6 +5,7 @@ import { HttpResponse } from "@converter/response.converter";
 import { AccessTokenDto } from "@oauth/google-oauth/dto/access-token.dto";
 import { JwtService } from "@nestjs/jwt";
 import { GoogleUserRegisterDto } from "@oauth/google-oauth/dto/google-user-register.dto";
+import { Exception } from "@exception/exceptions";
 import { GoogleOauthService } from "./google-oauth.service";
 
 @Controller("api/oauth/google")
@@ -22,16 +23,20 @@ export class GoogleOauthController {
   async googleOAuthRegister(@Body() userInfo: GoogleUserRegisterDto, @Req() req: Request) {
     const userId = await this.googleOauthService.register(userInfo);
 
-    const token = this.jwtService.sign({ userId });
+    if (userId) {
+      const token = this.jwtService.sign({ userId });
 
-    req.res.cookie("access_token", token, {
-      sameSite: true,
-      secure: false, // 배포시에는 true로 바꿔야됨
-      httpOnly: true,
-      maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
-    });
+      req.res.cookie("access_token", token, {
+        sameSite: true,
+        secure: false, // 배포시에는 true로 바꿔야됨
+        httpOnly: true,
+        maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
+      });
 
-    return HttpResponse.success({ userId });
+      return HttpResponse.success({ userId, register: "success" });
+    }
+
+    throw new Exception().userNotFound();
   }
 
   @Post("login")
