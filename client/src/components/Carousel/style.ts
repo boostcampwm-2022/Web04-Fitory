@@ -59,4 +59,5 @@ export const StaticsContainer = styled.div`
 
 export const ChartContainer = styled.div`
   width: 50%;
+  padding: 0 5vw;
 `;
