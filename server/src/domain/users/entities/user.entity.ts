@@ -5,7 +5,7 @@ export class User {
   @PrimaryGeneratedColumn({ name: "user_id" })
   id!: number;
 
-  @Column({ name: "oauth_id" })
+  @Column({ name: "oauth_id", length: 180 })
   oauthId!: string;
 
   @Column({ name: "profile_image", length: 180, default: "http://profile.image" }) // default value 추후 수정 필요
