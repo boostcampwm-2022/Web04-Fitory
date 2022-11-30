@@ -8,25 +8,23 @@ import exerciseStore from "@stores/exerciseStore";
 import * as s from "./style";
 
 const RecordPage = () => {
-  const {
-    exerciseList,
-    createExerciseItem: createExercise,
-    deleteExerciseItem: deleteExercise,
-  } = exerciseStore();
-  // 운동 추가 시에만 auto scroll down을 하기 위해 쓰이는 이전 운동 수 상태
+  const { exerciseList, initExerciseList, createExerciseItem, deleteExerciseItem } =
+    exerciseStore();
   const [prevExersiceCount, setPrevExersiceCount] = useState<number>(1);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleClickExerciseIncreaseButton = () => {
     setPrevExersiceCount(exerciseList.length);
-    createExercise();
+    createExerciseItem();
   };
 
   const handleClickExerciseDecreaseButton = (index: number) => {
     setPrevExersiceCount(exerciseList.length);
     if (exerciseList.length > 1) {
-      deleteExercise(index);
+      deleteExerciseItem(index);
+      return;
     }
+    initExerciseList();
   };
 
   useEffect(() => {

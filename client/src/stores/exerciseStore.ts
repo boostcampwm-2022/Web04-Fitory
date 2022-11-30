@@ -12,6 +12,7 @@ const getInitalExerciseSet = (): ExerciseSet => {
 
 interface ExerciseState {
   exerciseList: Exercise[];
+  initExerciseList: () => void;
   createExerciseItem: () => void;
   deleteExerciseItem: (exerciseId: number) => void;
   createExerciseSetItem: (exerciseId: number) => void;
@@ -22,6 +23,8 @@ interface ExerciseState {
 
 const exerciseStore = create<ExerciseState>((set) => ({
   exerciseList: [getInitialExercise()],
+
+  initExerciseList: () => set({ exerciseList: [getInitialExercise()] }),
 
   createExerciseItem: () => {
     set(({ exerciseList }) => ({ exerciseList: [...exerciseList, getInitialExercise()] }));
