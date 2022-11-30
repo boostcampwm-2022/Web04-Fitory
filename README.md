@@ -1,12 +1,17 @@
 <div align="center">
     <img src="https://user-images.githubusercontent.com/70889358/204248725-d39976f5-238b-4926-8aba-573f061a2141.png" width="100%"/>
     <h1 align="center">
-    평준화된 운동 기준을 기록하다.
+    평준화된 운동 기준을 기록하다
     </h1>    
-    <img src="https://img.shields.io/github/issues/boostcampwm-2022/web04-fitory"/>
-    <img src="https://img.shields.io/github/issues-closed/boostcampwm-2022/web04-fitory"/>
+    <img src="https://img.shields.io/github/issues-raw/boostcampwm-2022/web04-fitory?color=orange"/>
+    <img src="https://img.shields.io/github/issues-closed-raw/boostcampwm-2022/web04-fitory?color=orange"/>
+    <img src="https://img.shields.io/github/issues-pr-raw/boostcampwm-2022/Web04-Fitory?color=violet"/>
+    <img src="https://img.shields.io/github/issues-pr-closed-raw/boostcampwm-2022/web04-fitory?color=violet"/>
+    <br>
     <img src="https://img.shields.io/github/commit-activity/w/boostcampwm-2022/web04-fitory">
     <img src="https://img.shields.io/github/last-commit/boostcampwm-2022/web04-fitory">
+    <br>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fghttps%2F%2Fgithub.com%2Fboostcampwm-2022%2FWeb04-Fitoryithub.com%2Fgjbae1212%2Fhit-counter&count_bg=%23698AFA&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
     <br><br>
 </div>
 

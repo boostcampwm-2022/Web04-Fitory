@@ -1,52 +1,63 @@
-import { Body, Controller, Get, Inject, Post, Res, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { Response } from "express";
+import { Body, Controller, Get, Inject, Post, Req, Res } from "@nestjs/common";
+import { Response, Request } from "express";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { AccessTokenDto } from "@oauth/google-oauth/dto/access-token.dto";
 import { HttpResponse } from "@converter/response.converter";
+import { AccessTokenDto } from "@oauth/google-oauth/dto/access-token.dto";
+import { JwtService } from "@nestjs/jwt";
+import { GoogleUserRegisterDto } from "@oauth/google-oauth/dto/google-user-register.dto";
+import { Exception } from "@exception/exceptions";
 import { GoogleOauthService } from "./google-oauth.service";
 
 @Controller("api/oauth/google")
 @ApiTags("OAUTH API")
 export class GoogleOauthController {
-  constructor(@Inject("AUTH_SERVICE") private readonly googleOauthService: GoogleOauthService) {}
+  constructor(
+    @Inject("AUTH_SERVICE") private readonly googleOauthService: GoogleOauthService,
+    private jwtService: JwtService,
+  ) {}
 
-  @Get()
-  @UseGuards(AuthGuard("google"))
+  @Post("register")
   @ApiOperation({
-    summary: "구글 로그인 페이지로 리다이렉트",
+    summary: "회원가입, 쿠키 생성 후 사용자에게 전송",
   })
-  googleOAuth() {
-    // redirect google login page
-    return { msg: "Google Authentication" };
-  }
+  async googleOAuthRegister(@Body() userInfo: GoogleUserRegisterDto, @Req() req: Request) {
+    const userId = await this.googleOauthService.register(userInfo);
 
-  @Post("validate")
-  @ApiOperation({
-    summary: "구글 로그인 callback, 쿠키 생성 후 사용자에게 전송",
-  })
-  async googleOAuthValidate(@Body() body: AccessTokenDto, @Res() res: Response) {
-    const { accessToken } = body;
+    if (userId) {
+      const token = this.jwtService.sign({ userId });
 
-    const userInfo = await this.googleOauthService.getUserInfo(accessToken);
-
-    const token = await this.googleOauthService.signIn({
-      oauthId: userInfo.data.sub,
-      name: userInfo.data.name,
-    });
-
-    if (token) {
-      res.cookie("access_token", token, {
+      req.res.cookie("access_token", token, {
         sameSite: true,
         secure: false, // 배포시에는 true로 바꿔야됨
         httpOnly: true,
         maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
       });
 
-      return HttpResponse.success({ validate: true });
+      return HttpResponse.success({ userId, register: "success" });
     }
 
-    return HttpResponse.success({ validate: false });
+    throw new Exception().userNotFound();
+  }
+
+  @Post("login")
+  @ApiOperation({
+    summary: "로그인, 쿠키 생성 후 사용자에게 전송",
+  })
+  async googleOAuthLogin(@Body() accessToken: AccessTokenDto, @Req() req: Request) {
+    const data = await this.googleOauthService.login(accessToken.access_token);
+
+    if (!data.needRegister) {
+      const token = this.jwtService.sign({ userId: data.userId });
+
+      req.res.cookie("access_token", token, {
+        sameSite: true,
+        secure: false, // 배포시에는 true로 바꿔야됨
+        httpOnly: true,
+        maxAge: 2 * 60 * 60 * 1000, // (2 hours) 나중에 maxAge 합의 필요
+      });
+    }
+
+    return HttpResponse.success(data);
   }
 
   @Get("logout")

@@ -3,8 +3,10 @@ import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { SBD_record } from "@record/entities/sbd_record.entity";
+import { Exception } from "@exception/exceptions";
 import { User } from "./entities/user.entity";
 import { UsersInfoDto } from "./dto/users-info.dto";
+import { Exception } from "@exception/exceptions";
 
 @Injectable()
 export class UsersService {
@@ -22,7 +24,7 @@ export class UsersService {
       .getOne();
 
     if (!user) {
-      return "No user find";
+      throw new Exception().userNotFound();
     }
     return HttpResponse.success({
       user,
@@ -38,16 +40,6 @@ export class UsersService {
     return HttpResponse.success({
       userProfileList,
     });
-  }
-
-  async registerUser(userInfo: UsersInfoDto) {
-    try {
-      const newUser = this.userRepository.create(userInfo);
-
-      return await this.userRepository.save(newUser);
-    } catch {
-      throw new InternalServerErrorException();
-    }
   }
 
   async checkUserName(name: string) {

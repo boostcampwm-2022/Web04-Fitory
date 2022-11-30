@@ -1,5 +1,12 @@
 import { HttpResponse } from "@converter/response.converter";
-import { BadRequestException, HttpException, HttpStatus } from "@nestjs/common";
+
+import {
+  BadRequestException,
+  ForbiddenException,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+} from "@nestjs/common";
 
 export class Exception {
   invalidUserIdError(): HttpException {
@@ -12,8 +19,18 @@ export class Exception {
     return new BadRequestException(response);
   }
 
+  invalidSubmit(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid Submit");
+    return new ForbiddenException(response);
+  }
+
+  routineNotFound(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.NOT_FOUND, "Routine Not Found");
+    return new NotFoundException(response);
+  }
+
   userNotFound(): HttpException {
     const response = HttpResponse.failed(HttpStatus.NOT_FOUND, "User Not Found");
-    return new BadRequestException(response);
+    return new NotFoundException(response);
   }
 }

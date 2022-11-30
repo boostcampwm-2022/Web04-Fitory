@@ -32,4 +32,5 @@ export interface SearchedUserInfo {
   user_user_id?: UserId;
   user_name: UserName;
   user_introduce?: UserIntroduce;
+  user_profile?: string;
 }
