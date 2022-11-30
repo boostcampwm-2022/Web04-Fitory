@@ -3,7 +3,6 @@ import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { SBD_record } from "@record/entities/sbd_record.entity";
-import { Exception } from "@exception/exceptions";
 import { User } from "./entities/user.entity";
 import { UsersInfoDto } from "./dto/users-info.dto";
 import { Exception } from "@exception/exceptions";
@@ -44,9 +43,7 @@ export class UsersService {
 
   async checkUserName(name: string) {
     const userExists = await this.findUserByName(name);
-
-    if (!userExists) throw new Exception().userNotFound();
-    return HttpResponse.success({ userExists: true });
+    return HttpResponse.success({ userExists });
   }
 
   async findUserByName(name: string) {
@@ -54,12 +51,7 @@ export class UsersService {
       .createQueryBuilder("user")
       .where("user.name = :name", { name })
       .getOne();
-
-    if (!user) {
-      return null;
-    }
-
-    return user;
+    return user ? true : false;
   }
 
   async getRecommandUserList(userId: number) {
