@@ -5,32 +5,32 @@ import styled from "styled-components";
 const CHART_NUM = 1;
 
 const Carousel = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isHistogram, setIsHistogram] = useState(true);
   const slideRef = useRef() as MutableRefObject<HTMLDivElement>;
 
   const movePrev = () => {
-    if (currentSlide !== 0) {
-      setCurrentSlide(currentSlide - 1);
+    if (!isHistogram) {
+      setIsHistogram(true);
     }
   };
 
   const moveNext = () => {
-    if (currentSlide < CHART_NUM) {
-      setCurrentSlide(currentSlide + 1);
+    if (isHistogram) {
+      setIsHistogram(false);
     }
   };
 
   useEffect(() => {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
-    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
-  }, [currentSlide]);
+    slideRef.current.style.transform = `translateX(-${isHistogram ? 0 : 1}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
+  }, [isHistogram]);
 
   return (
     <Wrapper>
       <Container>
         <NavigationBar>
-          <button onClick={movePrev}>통계</button>
-          <button onClick={moveNext}>티어 변동</button>
+          <NavigationButton onClick={movePrev}>통계</NavigationButton>
+          <NavigationButton onClick={moveNext}>티어 변동</NavigationButton>
         </NavigationBar>
         <ChartContainer ref={slideRef}>
           <TierGraph />
@@ -55,8 +55,20 @@ export const Container = styled.div`
 `;
 
 export const NavigationBar = styled.div`
+  padding: 10px;
   display: flex;
   width: 100%;
+
+  border-bottom: 1px solid ${({ theme }) => theme.COLORS.LIGHT_GRAY};
+  margin-bottom: 50px;
+`;
+
+export const NavigationButton = styled.button`
+  width: 50%;
+
+  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
 `;
 
 export const ChartContainer = styled.div`
