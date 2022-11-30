@@ -19,7 +19,7 @@ export const multerOptions = {
 
   storage: diskStorage({
     destination: (request, file, callback) => {
-      const uploadPath: string = "public";
+      const uploadPath: string = "user_profiles";
       if (!existsSync(uploadPath)) {
         mkdirSync(uploadPath);
       }
@@ -33,5 +33,5 @@ export const multerOptions = {
 
 export const createImageURL = (file: any): string => {
   const serverAddress: string = "http://localhost:8080";
-  return `${serverAddress}/public/${file.filename}`;
+  return `${serverAddress}/user_profiles/${file.filename}`;
 };

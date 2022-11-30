@@ -17,7 +17,7 @@ async function bootstrap() {
 
   const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
-  app.use("/public", express.static(path.join(__dirname, "../public")));
+  app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
     origin: ["http://localhost:8080"],
