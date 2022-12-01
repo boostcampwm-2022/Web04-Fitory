@@ -1,13 +1,18 @@
+import { UsersService } from "@user/users.service";
 import { FollowsService } from "@follow/follows.service";
-import { Controller, Get, Query } from "@nestjs/common";
-import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { ApiBody, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
+import { FollowUserIdDto } from "./dto/follow.dto";
 
 @Controller("api/follow")
 @ApiTags("FOLLOW API")
 export class FollowsController {
-  constructor(private readonly followService: FollowsService) {}
+  constructor(
+    private readonly followService: FollowsService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Get("following")
   @ApiOperation({
@@ -17,8 +22,10 @@ export class FollowsController {
     name: "userId",
     type: "number",
   })
-  getFollowingUserList(@Query("userId") userId: number) {
+  async getFollowingUserList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.followService.getFollowingUserList(userId);
   }
 
@@ -30,8 +37,32 @@ export class FollowsController {
     name: "userId",
     type: "number",
   })
-  getFollowerUserList(@Query("userId") userId: number) {
+  async getFollowerUserList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.followService.getFollowerUserList(userId);
+  }
+
+  @Post("doFollow")
+  @ApiOperation({
+    summary: "다른 사용자를 팔로잉 했을때 이를 등록",
+  })
+  async doFollow(@Body() userIds: FollowUserIdDto) {
+    const myUserIdExist = await this.usersService.isExistUser(userIds.myUserId);
+    const otherUserIdExist = await this.usersService.isExistUser(userIds.otherUserId);
+    if (!myUserIdExist || !otherUserIdExist) throw new Exception().userNotFound();
+    return this.followService.doFollow(userIds);
+  }
+
+  @Post("cancel")
+  @ApiOperation({
+    summary: "다른 사용자를 팔로우 취소 했을때 이를 등록",
+  })
+  async cancelFollow(@Body() userIds: FollowUserIdDto) {
+    const myUserIdExist = await this.usersService.isExistUser(userIds.myUserId);
+    const otherUserIdExist = await this.usersService.isExistUser(userIds.otherUserId);
+    if (!myUserIdExist || !otherUserIdExist) throw new Exception().userNotFound();
+    return this.followService.cancelFollow(userIds);
   }
 }

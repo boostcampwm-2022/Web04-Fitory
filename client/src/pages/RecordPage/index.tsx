@@ -3,39 +3,39 @@ import { MdDeleteForever } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
 import PageTemplate from "@pages/PageTemplate";
 import RoutineScroller from "@components/RoutineScroller";
-import ExersiceInputSet from "@components/ExerciseInputSet";
+import ExerciseRecordItem from "@components/ExerciseRecordItem";
+import exerciseStore from "@stores/exerciseStore";
 import * as s from "./style";
 
 const RecordPage = () => {
-  /**
-   * 임시로 운동 수를 상태로 제어함.
-   * TODO: 서버 API 연동 후 객체 형식으로 변경.
-   */
-  const [exersiceCount, setExersiceCount] = useState<number>(1);
+  const { exerciseList, initExerciseList, createExerciseItem, deleteExerciseItem } =
+    exerciseStore();
   const [prevExersiceCount, setPrevExersiceCount] = useState<number>(1);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleClickExerciseIncreaseButton = () => {
-    setPrevExersiceCount(exersiceCount);
-    setExersiceCount(exersiceCount + 1);
+    setPrevExersiceCount(exerciseList.length);
+    createExerciseItem();
   };
 
-  const handleClickExerciseDecreaseButton = () => {
-    setPrevExersiceCount(exersiceCount);
-    if (exersiceCount > 1) {
-      setExersiceCount(exersiceCount - 1);
+  const handleClickExerciseDecreaseButton = (index: number) => {
+    setPrevExersiceCount(exerciseList.length);
+    if (exerciseList.length > 1) {
+      deleteExerciseItem(index);
+      return;
     }
+    initExerciseList();
   };
 
   useEffect(() => {
-    if (prevExersiceCount >= exersiceCount) {
+    if (prevExersiceCount >= exerciseList.length) {
       return;
     }
     const targetElement = scrollRef.current;
     if (targetElement) {
       targetElement.scrollTop = targetElement.scrollHeight;
     }
-  }, [prevExersiceCount, exersiceCount]);
+  }, [prevExersiceCount, exerciseList]);
 
   return (
     <PageTemplate title="운동" isRoot={false}>
@@ -47,16 +47,16 @@ const RecordPage = () => {
           />
         </s.RoutineWrapper>
         <s.ExerciseListWrapper>
-          {Array.from(Array(exersiceCount)).map((_, i) => (
+          {exerciseList.map((_, i) => (
             // eslint-disable-next-line react/no-array-index-key
             <s.ExersiceItem key={i}>
               <s.ExersiceHeader>
                 <p># {i + 1}</p>
-                <s.ExersiceDecreaseButton onClick={handleClickExerciseDecreaseButton}>
+                <s.ExersiceDecreaseButton onClick={() => handleClickExerciseDecreaseButton(i)}>
                   <MdDeleteForever size={25} />
                 </s.ExersiceDecreaseButton>
               </s.ExersiceHeader>
-              <ExersiceInputSet />
+              <ExerciseRecordItem exerciseId={i} />
             </s.ExersiceItem>
           ))}
           <s.ExerciseIncreaseButton onClick={handleClickExerciseIncreaseButton}>

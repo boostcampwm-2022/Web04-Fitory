@@ -12,6 +12,7 @@ import { SbdRecordsModule } from "@record/sbd_records.module";
 import { SbdStatisticsModule } from "@statistics/sbd_statistics.module";
 import { UsersModule } from "@user/users.module";
 import { MockModule } from "@mock/mock.module";
+import { UploadModule } from "./domain/uploads/upload.module";
 import { typeormConfig } from "./config/typeorm.config";
 
 @Module({
@@ -25,8 +26,9 @@ import { typeormConfig } from "./config/typeorm.config";
     SbdStatisticsModule,
     FollowsModule,
     MockModule,
+    UploadModule,
     TypeOrmModule.forRoot(typeormConfig),
-    PassportModule.register({ session: true }),
+    PassportModule,
   ],
 
   providers: [{ provide: APP_FILTER, useClass: HttpExceptionFilter }],

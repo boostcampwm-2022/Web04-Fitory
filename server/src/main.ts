@@ -5,17 +5,20 @@ import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
 import { PORT } from "@env";
-import path from "path";
 import { AppModule } from "./app.module";
 import { initDatabase } from "./utils/initDB";
+import express from "express";
+import path, { join } from "path";
+import { NestExpressApplication } from "@nestjs/platform-express";
 
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
   // initDatabase();
 
-  const app = await NestFactory.create(AppModule);
+  const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
+  app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
     origin: ["http://localhost:3000"],

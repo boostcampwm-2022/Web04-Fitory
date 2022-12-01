@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsString, Matches, Max, Min } from "class-validator";
 
 export class GoogleUserInfoDto {
   @ApiProperty({
@@ -14,6 +14,7 @@ export class GoogleUserInfoDto {
     type: String,
   })
   @IsString()
+  @Matches("^[a-z|A-Z|0-9|ㄱ-힣]{2,12}$")
   name: string;
 
   @ApiProperty({
@@ -21,6 +22,8 @@ export class GoogleUserInfoDto {
     type: Number,
   })
   @IsNumber()
+  @Min(0)
+  @Max(1)
   gender: number;
 
   @ApiProperty({
@@ -28,6 +31,8 @@ export class GoogleUserInfoDto {
     type: Number,
   })
   @IsNumber()
+  @Min(1)
+  @Max(100)
   age: number;
 
   @ApiProperty({
@@ -35,6 +40,8 @@ export class GoogleUserInfoDto {
     type: Number,
   })
   @IsNumber()
+  @Min(1)
+  @Max(300)
   height: number;
 
   @ApiProperty({
@@ -42,5 +49,7 @@ export class GoogleUserInfoDto {
     type: Number,
   })
   @IsNumber()
+  @Min(1)
+  @Max(500)
   weight: number;
 }

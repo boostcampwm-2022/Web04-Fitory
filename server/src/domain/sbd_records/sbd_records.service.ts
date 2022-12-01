@@ -45,13 +45,13 @@ export class SbdRecordsService {
     const record = await this.recordsRepository
       .createQueryBuilder("record")
       .where("record.user_id = :userId", { userId })
-      .select("record.second_stamp")
-      .orderBy("record.second_stamp", "DESC")
+      .select("record.time_stamp")
+      .orderBy("record.time_stamp", "DESC")
       .getRawOne();
-    let secondStamp = 0;
-    if (record) secondStamp = record.second_stamp;
+    let timeStamp = 0;
+    if (record) timeStamp = record.time_stamp;
     return HttpResponse.success({
-      secondStamp,
+      timeStamp,
     });
   }
 

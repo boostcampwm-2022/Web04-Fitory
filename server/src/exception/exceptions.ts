@@ -1,11 +1,11 @@
 import { HttpResponse } from "@converter/response.converter";
-
 import {
   BadRequestException,
   ForbiddenException,
   HttpException,
   HttpStatus,
   NotFoundException,
+  UnauthorizedException,
 } from "@nestjs/common";
 
 export class Exception {
@@ -32,5 +32,25 @@ export class Exception {
   userNotFound(): HttpException {
     const response = HttpResponse.failed(HttpStatus.NOT_FOUND, "User Not Found");
     return new NotFoundException(response);
+  }
+
+  Unauthorized(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.UNAUTHORIZED, "Unauthorized");
+    return new UnauthorizedException(response);
+  }
+  
+  invalidFileType(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid File Type");
+    return new ForbiddenException(response);
+  }
+
+  fileSubmitError(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "File Sumit Error");
+    return new ForbiddenException(response);
+  }
+
+  invalidDelete(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid Delete Error");
+    return new ForbiddenException(response);
   }
 }

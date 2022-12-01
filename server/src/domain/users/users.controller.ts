@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Controller, Get, Query, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
+import { JwtAuthGuard } from "@oauth/jwt/jwt.guard";
+import { User } from "@user/entities/user.entity";
 import { UsersService } from "./users.service";
-import { UsersInfoDto } from "./dto/users-info.dto";
+import { GetUserId } from "../../decorator/validate.decorator";
 
 @Controller("api/users")
 @ApiTags("USER API")
@@ -18,7 +20,10 @@ export class UsersController {
     name: "id",
     type: "number",
   })
-  getUserInfo(@Query("id") userId: number) {
+  async getUserInfo(@Query("id") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.usersService.getUserInfo(userId);
   }
 
@@ -38,8 +43,10 @@ export class UsersController {
     name: "userId",
     type: "number",
   })
-  getRecommandUserList(@Query("userId") userId: number) {
+  async getRecommandUserList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.usersService.getRecommandUserList(userId);
   }
 
@@ -48,9 +55,17 @@ export class UsersController {
     summary: "유저 이름 중복 검사",
   })
   @ApiQuery({
-    name: "userId",
+    name: "userName",
+    type: "string",
   })
   checkUserName(@Query("userName") userName: string) {
     return this.usersService.checkUserName(userName);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get("test")
+  async getTest(@GetUserId() userId: User) {
+    console.log(userId);
+    return userId;
   }
 }

@@ -3,9 +3,9 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "src/domain/users/entities/user.entity";
 import { JwtModule } from "@nestjs/jwt";
 import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY } from "@env";
+import { JwtStrategy } from "@oauth/jwt/jwt.strategy";
 import { GoogleOauthController } from "./google-oauth.controller";
 import { GoogleOauthService } from "./google-oauth.service";
-import { JwtStrategy } from "../jwt/jwt.strategy";
 
 @Module({
   imports: [

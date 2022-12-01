@@ -4,7 +4,6 @@ import PageTemplate from "@pages/PageTemplate";
 import { PageState } from "@constants/enums";
 
 const ProfilePage = () => {
-  const isLogin = false;
   const navigate = useNavigate();
   const followerMove = () => {
     navigate("/follow", {
