@@ -9,6 +9,7 @@ import { FormatMonth, ExerciseState } from "@constants/enums";
 import getCalendarHeatMapArray from "@utils/getCalendarHeatMapArray";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import Paper from "@components/design/Paper";
+import useAllExerciseDate from "@hooks/query/useAllExerciseDate";
 import * as s from "./style";
 
 interface HeatItemProps {
@@ -30,14 +31,10 @@ const HeatItem = ({ exerciseState, x, y }: HeatItemProps) => {
 };
 
 const CalendarHeatMap = () => {
+  const { exerciseDateList } = useAllExerciseDate();
   const year = new Date().getFullYear();
   const heatMapArray = getCalendarHeatMapArray(year);
-  const exerciseStateList = getExerciseStateForOneYear(year, [
-    "220103",
-    "220104",
-    "220107",
-    "220111",
-  ]);
+  const exerciseStateList = getExerciseStateForOneYear(year, exerciseDateList);
 
   const isNeedMonthLabel = (i: number) => {
     return !i || heatMapArray[i - 1][0].month < heatMapArray[i][0].month;

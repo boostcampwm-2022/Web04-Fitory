@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Theme from "@styles/Theme";
-import { Tier as _Tier } from "@constants/enums";
+import { TIER } from "@constants/enums";
 
 export const Wrapper = styled.div`
   padding: 30px 50px;
@@ -58,7 +58,7 @@ export const RecordResult = styled.h2`
 `;
 
 export const Tier = styled(RecordResult)`
-  color: ${({ tier, theme }: { tier: _Tier | null; theme: typeof Theme }) =>
+  color: ${({ tier, theme }: { tier: typeof TIER[number] | null; theme: typeof Theme }) =>
     tier && theme.TIER_COLOR[tier]};
 `;
 
