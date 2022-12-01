@@ -23,6 +23,7 @@ export class FollowsService {
       .addSelect("user.introduce", "introduce")
       .innerJoin(User, "user", "user.user_id = follow.follower_id")
       .where("follow.followed_id = :userId", { userId })
+      .andWhere("follow.deleted = false")
       .getRawMany();
     return HttpResponse.success({
       followingUserProfileList,
@@ -38,6 +39,7 @@ export class FollowsService {
       .addSelect("user.introduce", "introduce")
       .innerJoin(User, "user", "user.user_id = follow.followed_id")
       .where("follow.follower_id = :userId", { userId })
+      .andWhere("follow.deleted = false")
       .getRawMany();
     return HttpResponse.success({
       followingUserProfileList,
