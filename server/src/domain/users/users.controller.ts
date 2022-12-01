@@ -48,7 +48,7 @@ export class UsersController {
     summary: "유저 이름 중복 검사",
   })
   @ApiQuery({
-    name: "userId",
+    name: "userName",
   })
   checkUserName(@Query("userName") userName: string) {
     return this.usersService.checkUserName(userName);
