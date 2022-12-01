@@ -1,17 +1,18 @@
 import {
   ArrayNotEmpty,
   IsArray,
+  IsDate,
   IsNotEmpty,
   IsNumber,
   IsString,
   Length,
+  Matches,
   Max,
   Min,
   ValidateNested,
 } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { type } from "os";
 
 export class ExerciseDataDto {
   @ApiProperty({
@@ -29,7 +30,7 @@ export class ExerciseDataDto {
   })
   @IsNotEmpty()
   @IsString()
-  @Length(6, 6)
+  @Matches("^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$")
   date: string;
 
   @ApiProperty({
@@ -85,7 +86,7 @@ export class SingleSet {
   count: number;
 
   @ApiProperty({
-    description: "중량",
+    description: "수행 여부",
     type: Number,
   })
   @IsNotEmpty()

@@ -49,7 +49,12 @@ export class Exception {
     return new ForbiddenException(response);
   }
 
-  routineNameDuplicate(): HttpException {
+  invalidDelete(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid Delete Error");
+    return new ForbiddenException(response);
+  }
+  
+    routineNameDuplicate(): HttpException {
     const response = HttpResponse.failed(HttpStatus.BAD_REQUEST, "Routine Name Duplicate");
     return new ForbiddenException(response);
   }
