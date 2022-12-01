@@ -16,7 +16,7 @@ export const SearchContainer = styled.div`
     return isText ? "800px" : "60px";
   }};
   position: absolute;
-  padding: 1.3rem 5vw;
+  padding: 1.3rem 8vw;
   transition: 0.25s linear;
 `;
 
@@ -31,6 +31,8 @@ export const UserSearchBarContainer = styled.div`
 export const SearchBar = styled.input`
   width: 100%;
   height: 100%;
+  margin-left: 2vw;
+
   background-color: transparent;
   border-top: none;
   border-left: none;

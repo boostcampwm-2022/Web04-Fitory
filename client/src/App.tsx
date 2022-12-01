@@ -12,6 +12,7 @@ import ProfilePage from "@pages/ProfilePage";
 import LoginPage from "@pages/LoginPage";
 import JoinPage from "@pages/JoinPage";
 import SearchPage from "@pages/SearchPage";
+import FollowPage from "@pages/FollowPage";
 import StaticsPage from "@pages/StaticsPage";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => {
             <Route path={RoutePath.LOGIN} element={<LoginPage />} />
             <Route path={RoutePath.JOIN} element={<JoinPage />} />
             <Route path={RoutePath.SEARCH} element={<SearchPage />} />
+            <Route path={RoutePath.FOLLOW} element={<FollowPage />} />
           </Routes>
         </Suspense>
       </QueryClientProvider>
