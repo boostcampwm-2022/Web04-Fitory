@@ -1,3 +1,5 @@
+import { FollowUserIdDto } from "./dto/follow.dto";
+import { Exception } from "@exception/exceptions";
 import { User } from "./../users/entities/user.entity";
 import { HttpResponse } from "@converter/response.converter";
 import { Follow } from "@follow/entities/follow.entity";
@@ -44,5 +46,20 @@ export class FollowsService {
     return HttpResponse.success({
       followingUserProfileList,
     });
+  }
+
+  async doFollow(userIds: FollowUserIdDto) {
+    try {
+      await this.followRepository.save({
+        followerId: userIds.myUserId,
+        followedId: userIds.otherUserId,
+        deleted: false,
+      });
+      return HttpResponse.success({
+        message: "Follow Request Success",
+      });
+    } catch (error) {
+      throw new Exception().invalidSubmit();
+    }
   }
 }
