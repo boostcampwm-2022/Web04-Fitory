@@ -1,9 +1,11 @@
 import { HttpResponse } from "@converter/response.converter";
-import { routineConverter } from "./converter/routines.converter";
-import { Routine } from "./entities/routine.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { User } from "@user/entities/user.entity";
+import { Exception } from "@exception/exceptions";
+import { Routine } from "./entities/routine.entity";
+import { routineConverter } from "./converter/routines.converter";
 import { SingleRoutineoDto } from "./dto/single-routine.dto";
 
 @Injectable()
@@ -17,14 +19,25 @@ export class RoutinesService {
     const routineList = await this.routinesRepository
       .createQueryBuilder("routine")
       .where("routine.user_id = :userId", { userId })
+      .andWhere("routine.deleted = false")
       .getMany();
     return HttpResponse.success({
       routineList: routineConverter.routineNameList(routineList),
     });
   }
 
-  async getSingleRoutine(userId: number, routineName: string) {
-    return HttpResponse.success({});
+  async getSingleRoutineDetail(userId: number, routineName: string) {
+    const routine = await this.routinesRepository
+      .createQueryBuilder("routine")
+      .innerJoin("routine.user", "user", "user.user_id = :userId", { userId })
+      .where("routine.routine_name = :routineName", { routineName })
+      .andWhere("routine.deleted = false")
+      .getMany();
+
+    if (routine.length) {
+      return HttpResponse.success({ routine });
+    }
+    throw new Exception().routineNotFound();
   }
 
   async saveSingleRoutine(singleRoutine: SingleRoutineoDto) {

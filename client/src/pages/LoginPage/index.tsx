@@ -7,12 +7,14 @@ import * as s from "./style";
 const LoginPage = () => {
   return (
     <PageTemplate isRoot>
-      <Paper style={{ width: "100%" }}>
-        <s.Wrapper>
-          <s.Title>로그인</s.Title>
-          <GoogleOAuthButton />
-        </s.Wrapper>
-      </Paper>
+      <s.Background>
+        <Paper style={{ width: "100%" }}>
+          <s.Wrapper>
+            <s.Title>로그인</s.Title>
+            <GoogleOAuthButton />
+          </s.Wrapper>
+        </Paper>
+      </s.Background>
     </PageTemplate>
   );
 };

@@ -15,6 +15,9 @@ export class Routine {
   @Column({ name: "exercise_string", length: 135 })
   exerciseString!: string;
 
+  @Column({ name: "deleted" })
+  deleted!: boolean;
+
   // FK
   @ManyToOne(() => User, { nullable: false })
   @JoinColumn({ name: "user_id", referencedColumnName: "id" })

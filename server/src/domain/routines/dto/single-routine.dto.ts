@@ -1,4 +1,4 @@
-import { IsNumber, IsString, Min } from "class-validator";
+import { IsNumber, IsString, Matches, Min } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class SingleRoutineoDto {
@@ -29,5 +29,6 @@ export class SingleRoutineoDto {
     type: String,
   })
   @IsString()
+  @Matches("^[0-9|/||]+$")
   exerciseString: string;
 }

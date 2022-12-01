@@ -3,6 +3,7 @@ import { Alarm } from "./entities/alram.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { User } from "@user/entities/user.entity";
 
 @Injectable()
 export class AlarmsService {
@@ -22,6 +23,20 @@ export class AlarmsService {
   }
 
   async getAlarmList(userId: number) {
-    return HttpResponse.success({});
+    const alarmObject = await this.alarmRepository
+      .createQueryBuilder("alarm")
+      .select("alarm.sender_user_id", "sender_user_id")
+      .addSelect("user.name", "name")
+      .addSelect("user.profile_image", "profile_image")
+      .addSelect("alarm.check", "check")
+      .addSelect("alarm.sender_user_id", "sender_user_id")
+      .addSelect("alarm.alarm_type", "alarm_type")
+      .addSelect("alarm.time_stamp", "time_stamp")
+      .innerJoin(User, "user", "user.user_id = alarm.sender_user_id")
+      .where("alarm.user_id = :userId", { userId })
+      .getRawMany();
+    return HttpResponse.success({
+      alarmObject,
+    });
   }
 }
