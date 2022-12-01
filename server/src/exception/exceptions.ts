@@ -38,7 +38,7 @@ export class Exception {
     const response = HttpResponse.failed(HttpStatus.UNAUTHORIZED, "Unauthorized");
     return new UnauthorizedException(response);
   }
-  
+
   invalidFileType(): HttpException {
     const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid File Type");
     return new ForbiddenException(response);
@@ -46,6 +46,11 @@ export class Exception {
 
   fileSubmitError(): HttpException {
     const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "File Sumit Error");
+    return new ForbiddenException(response);
+  }
+
+  routineNameDuplicate(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.BAD_REQUEST, "Routine Name Duplicate");
     return new ForbiddenException(response);
   }
 }
