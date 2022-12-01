@@ -17,9 +17,13 @@ const FollowPage = () => {
       pageState === PageState.FOLLOWER
         ? `${process.env.SERVER_BASE_URL}follow/follower?userId=1`
         : `${process.env.SERVER_BASE_URL}follow/following?userId=1`;
+
     const getUserList = async () => {
       await axios.get(REQUEST_URL).then((response) => {
-        console.log(response.data.response);
+        if (pageState === PageState.FOLLOWER) {
+          return console.log(response.data.response.followerUserProfileList);
+        }
+        return console.log(response.data.response.followingUserProfileList);
       });
     };
     getUserList();
@@ -27,7 +31,6 @@ const FollowPage = () => {
 
   return (
     <PageTemplate isRoot={false} title={pageState}>
-      <h1>확인용</h1>
       <p>{pageState}</p>
     </PageTemplate>
   );

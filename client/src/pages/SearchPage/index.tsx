@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "@pages/PageTemplate";
 import searchIcon from "@public/icons/btn_search.svg";
-import SearchResultUserProfile from "@components/SearchResultUserProfile";
 import axios from "axios";
 import { SearchedUserInfo } from "src/types/user";
 import CardsScroller from "@components/design/CardsScroller";
 import SearchUtils from "@utils/SearchUtils";
+import { drawSearchedUserList } from "@utils/drawSearchedUserList";
 import * as s from "./styles";
 import { drawRecommendUserList } from "./utils";
 
@@ -16,16 +16,6 @@ const SearchPage = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-  };
-
-  const drawSearchedUserList = () => {
-    return searchedUser.map((user: SearchedUserInfo) => {
-      return (
-        <s.UserProfile key={user.user_user_id}>
-          <SearchResultUserProfile userName={user.user_name} userMessage={user?.user_introduce} />
-        </s.UserProfile>
-      );
-    });
   };
 
   useEffect(() => {
@@ -56,7 +46,7 @@ const SearchPage = () => {
             <img src={searchIcon} alt="검색 아이콘" />
           </s.UserSearchBarContainer>
           <s.SearchResultContainer isText={searchValue.length !== 0}>
-            {drawSearchedUserList()}
+            {drawSearchedUserList(searchedUser)}
           </s.SearchResultContainer>
         </s.SearchContainer>
         <s.RecommendListContainer>
