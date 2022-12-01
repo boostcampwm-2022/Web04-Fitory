@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
-import { DEPLOY_HOST, DEPLOY_HOST_WWW, PORT } from "@env";
+import { DEPLOY_HOST, DEPLOY_HOST_WWW, LOCAL_HOST, PORT } from "@env";
 import express from "express";
 import path, { join } from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
@@ -21,7 +21,7 @@ async function bootstrap() {
   app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
-    origin: [DEPLOY_HOST_WWW, DEPLOY_HOST],
+    origin: [LOCAL_HOST],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   });
