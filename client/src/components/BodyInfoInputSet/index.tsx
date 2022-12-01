@@ -26,8 +26,8 @@ const BodyInfoInputSet = ({ height, weight, setBodyInfo }: BodyInfoInputSetProps
   const heightTextFieldRef = useInputFocus();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const stringValue = e.target.value.match(NUMBER_REGEX);
-    const numberValue = stringValue ? +stringValue[0] : 0;
+    const matchedArray = e.target.value.match(NUMBER_REGEX);
+    const numberValue = matchedArray ? +matchedArray[0] : 0;
 
     if (e.target.name === BodyInfo.HEIGHT) {
       if (numberValue <= UserHeight.MAX) {
@@ -47,7 +47,7 @@ const BodyInfoInputSet = ({ height, weight, setBodyInfo }: BodyInfoInputSetProps
         name={BodyInfo.HEIGHT}
         value={height || ""}
         placeholder="0"
-        onChange={(e) => handleChange(e)}
+        onChange={handleChange}
         ref={heightTextFieldRef}
       />
       <s.Label>체중 (kg)</s.Label>
@@ -55,7 +55,7 @@ const BodyInfoInputSet = ({ height, weight, setBodyInfo }: BodyInfoInputSetProps
         name={BodyInfo.WEIGHT}
         value={weight || ""}
         placeholder="0"
-        onChange={(e) => handleChange(e)}
+        onChange={handleChange}
       />
     </s.Wrapper>
   );

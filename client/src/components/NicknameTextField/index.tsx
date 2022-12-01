@@ -29,7 +29,7 @@ const NicknameTextField = ({ nickname, setNickname }: NicknameTextFieldProps) =>
         placeholder="닉네임"
         value={nickname}
         ref={textFieldRef}
-        onChange={(e) => handleChange(e)}
+        onChange={handleChange}
       />
       <s.Label>영문, 한글, 숫자 2~12자 이내</s.Label>
     </s.TextFieldWrapper>
