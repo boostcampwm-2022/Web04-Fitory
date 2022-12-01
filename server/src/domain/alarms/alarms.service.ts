@@ -1,3 +1,4 @@
+import { Exception } from "@exception/exceptions";
 import { HttpResponse } from "@converter/response.converter";
 import { Alarm } from "./entities/alram.entity";
 import { Injectable } from "@nestjs/common";
@@ -35,8 +36,18 @@ export class AlarmsService {
       .innerJoin(User, "user", "user.user_id = alarm.sender_user_id")
       .where("alarm.user_id = :userId", { userId })
       .getRawMany();
+    await this.checkToReadAlarm(userId);
     return HttpResponse.success({
       alarmObject,
     });
+  }
+
+  async checkToReadAlarm(userId: number) {
+    await this.alarmRepository
+      .createQueryBuilder("alarm")
+      .update(Alarm)
+      .set({ check: true })
+      .where("user_id = :userId", { userId })
+      .execute();
   }
 }
