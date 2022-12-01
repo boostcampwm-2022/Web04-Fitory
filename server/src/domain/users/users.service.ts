@@ -1,4 +1,5 @@
 import { HttpResponse } from "@converter/response.converter";
+import { Exception } from "@exception/exceptions";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
