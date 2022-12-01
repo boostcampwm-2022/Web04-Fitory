@@ -1,6 +1,8 @@
 import React from "react";
 import Paper from "@components/design/Paper";
-import { Tier } from "@constants/enums";
+import { TIER } from "@constants/enums";
+import useUserInfo from "@hooks/query/useUserInfo";
+import convertWeightUnits from "@utils/convertWeightUnits";
 import * as s from "./style";
 
 const UserInfoSummary = () => {
@@ -9,17 +11,18 @@ const UserInfoSummary = () => {
    * 후에 사용자 정보 API 연동 시 변동됩니다.
    */
   const isChallenge = true;
+  const { userInfo } = useUserInfo();
 
   return (
     <Paper style={{ width: "100%" }}>
       <s.Wrapper>
         <s.TextInfoWrapper>
-          <s.UserName>대구사나이김동규</s.UserName>
+          <s.UserName>{userInfo.name}</s.UserName>
           <s.RecordInfoWrapper>
             <s.RecordInfo>
               <p>티어</p>
-              <s.Tier tier={isChallenge ? Tier.CHAMPION : null}>
-                {isChallenge ? Tier.CHAMPION : "-"}
+              <s.Tier tier={userInfo.tier ? TIER[userInfo.tier] : null}>
+                {userInfo.tier ? TIER[userInfo.tier] : "-"}
               </s.Tier>
             </s.RecordInfo>
             <s.RecordInfo>
@@ -28,7 +31,7 @@ const UserInfoSummary = () => {
             </s.RecordInfo>
             <s.RecordInfo>
               <p>누적 중량</p>
-              <s.RecordResult>2.3t</s.RecordResult>
+              <s.RecordResult>{convertWeightUnits(+userInfo.volumeSum)}</s.RecordResult>
             </s.RecordInfo>
             <s.RecordInfo>
               <p>운동 횟수</p>
