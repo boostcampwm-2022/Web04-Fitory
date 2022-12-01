@@ -1,4 +1,6 @@
+import { RoutePath } from "@constants/enums";
 import HttpClient from "src/services/HttpClient";
+import { authStorage } from "src/services/ClientStorage";
 import { LoginResponse, JoinResponse, LoginUserInfo, JoinUserInfo, UserInfo } from "src/types/user";
 
 const UserAPI = {
@@ -17,10 +19,23 @@ const UserAPI = {
   },
 
   getUser: async () => {
-    const path = "users/get";
-    const response = await HttpClient.get(path);
+    try {
+      const userId = authStorage.get();
 
-    return response.response as UserInfo;
+      if (!userId) {
+        return null;
+      }
+
+      const path = `users/get?id=${userId}`;
+      const response = await HttpClient.get(path);
+      const { user } = response.response as { user: UserInfo };
+
+      return user;
+    } catch {
+      window.history.replaceState(null, "", RoutePath.LOGIN);
+      window.location.reload();
+      return null;
+    }
   },
 
   checkExistUserName: async (userName: string) => {
