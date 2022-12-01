@@ -16,7 +16,7 @@ export const SearchContainer = styled.div`
     return isText ? "800px" : "60px";
   }};
   position: absolute;
-  padding: 1.3rem 5vw;
+  padding: 1.3rem 8vw;
   transition: 0.25s linear;
 `;
 

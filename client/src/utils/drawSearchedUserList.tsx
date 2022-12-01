@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { SearchedUserInfo } from "../types/user";
 
 export const drawSearchedUserList = (searchedUser: SearchedUserInfo[]) => {
-  console.log(searchedUser);
   return searchedUser.map((user: SearchedUserInfo) => {
     // const keyValue = user.follower_id ? user.follower_id : user.user_id;
     let keyValue;

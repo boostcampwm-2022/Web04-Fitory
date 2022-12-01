@@ -21,7 +21,6 @@ const FollowPage = () => {
   };
 
   useEffect(() => {
-    console.log(pageState === PageState.FOLLOWER);
     const REQUEST_URL =
       pageState === PageState.FOLLOWER
         ? `${process.env.SERVER_BASE_URL}follow/follower?userId=2`
@@ -40,7 +39,6 @@ const FollowPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(userList);
     if (searchValue === "") {
       return setSearchedUser(userList);
     }
@@ -49,16 +47,20 @@ const FollowPage = () => {
 
   return (
     <PageTemplate isRoot={false} title={pageState}>
-      <s.UserSearchBarContainer>
-        <s.SearchBar
-          type="searchValue"
-          onChange={handleChange}
-          isText={searchValue.length !== 0}
-          placeholder="검색어를 입력하세요."
-        />
-        <img src={searchIcon} alt="검색 아이콘" />
-      </s.UserSearchBarContainer>
-      {drawSearchedUserList(searchedUser)}
+      <s.Wrapper>
+        <s.SearchContainer>
+          <s.UserSearchBarContainer>
+            <s.SearchBar
+              type="searchValue"
+              onChange={handleChange}
+              isText={searchValue.length !== 0}
+              placeholder="검색어를 입력하세요."
+            />
+            <img src={searchIcon} alt="검색 아이콘" />
+          </s.UserSearchBarContainer>
+        </s.SearchContainer>
+        {drawSearchedUserList(searchedUser)}
+      </s.Wrapper>
     </PageTemplate>
   );
 };

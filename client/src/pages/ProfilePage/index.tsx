@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
-import { PageState } from "@constants/enums";
+import { PageState, RoutePath } from "@constants/enums";
+import { authStorage } from "../../services/ClientStorage";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -16,11 +17,11 @@ const ProfilePage = () => {
       state: PageState.FOLLOWING,
     });
   };
-  // useEffect(() => {
-  //   if (!isLogin) {
-  //     navigate(RoutePath.LOGIN, { replace: true });
-  //   }
-  // }, [isLogin, navigate]);
+  useEffect(() => {
+    if (!authStorage.get()) {
+      navigate(RoutePath.LOGIN, { replace: true });
+    }
+  }, [navigate]);
 
   return (
     <PageTemplate isRoot>
