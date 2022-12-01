@@ -1,7 +1,7 @@
 import { authStorage } from "src/services/ClientStorage";
 import HttpClient from "src/services/HttpClient";
 import Exception from "src/services/Exception";
-import { Challenge } from "src/types/challenge";
+import * as ChallengeType from "src/types/challenge";
 
 const ChallengeAPI = {
   getBestChallengeScore: async () => {
@@ -12,9 +12,9 @@ const ChallengeAPI = {
         throw new Error();
       }
 
-      const path = `record/best?userId=${userId}`;
-      const response = await HttpClient.get(path);
-      const { bestRecord } = response.response as { bestRecord: Challenge };
+      const path = `record/best`;
+      const response = await HttpClient.get(path, { userId });
+      const { bestRecord } = response.response as { bestRecord: ChallengeType.Challenge };
 
       return bestRecord;
     } catch {

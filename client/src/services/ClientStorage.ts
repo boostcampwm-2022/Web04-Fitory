@@ -1,4 +1,4 @@
-class ClientStorage {
+class ClientStorage<T> {
   private key;
 
   private storage;
@@ -8,12 +8,12 @@ class ClientStorage {
     this.storage = storage;
   }
 
-  get(): unknown | null {
+  get(): T | null {
     const data = this.storage.getItem(this.key);
     return data ? JSON.parse(data) : null;
   }
 
-  set(data: unknown) {
+  set(data: T) {
     this.storage.setItem(this.key, JSON.stringify(data));
   }
 
@@ -22,6 +22,6 @@ class ClientStorage {
   }
 }
 
-const authStorage = new ClientStorage("fitory_auth", localStorage);
+const authStorage = new ClientStorage<number>("fitory_auth", localStorage);
 
 export { authStorage };
