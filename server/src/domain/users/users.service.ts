@@ -1,4 +1,5 @@
 import { HttpResponse } from "@converter/response.converter";
+import { Exception } from "@exception/exceptions";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -36,7 +37,10 @@ export class UsersService {
   async getEveryUserProfile() {
     const userProfileList = await this.userRepository
       .createQueryBuilder("user")
-      .select(["user.id", "user.name", "user.introduce", "user.profile_image"])
+      .select("user.user_id", "user_id")
+      .addSelect("user.name", "name")
+      .addSelect("user.introduce", "introduce")
+      .addSelect("user.profile_image", "profile_image")
       .getRawMany();
 
     return HttpResponse.success({
