@@ -5,7 +5,6 @@ import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
 import { PORT } from "@env";
-import path from "path";
 import { AppModule } from "./app.module";
 import { initDatabase } from "./utils/initDB";
 import express from "express";
