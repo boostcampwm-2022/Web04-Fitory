@@ -7,6 +7,7 @@ import { Request } from "express";
 import { User } from "@user/entities/user.entity";
 import { ACCESS_TOKEN_SECRETKEY } from "@env";
 import { JwtPayload } from "@type/jwt";
+import { Exception } from "@exception/exceptions";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
@@ -27,12 +28,14 @@ export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
   }
 
   async validate(payload: JwtPayload) {
-    const user = await this.userRepository.findOneBy({ oauthId: payload.sub });
+    const userId = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.id = :userId", { userId: payload.userId })
+      .select("user.id")
+      .getOne();
 
-    if (!user) throw new UnauthorizedException("Please log in to continue");
+    if (!userId) throw new Exception().Unauthorized();
 
-    return {
-      oauthId: payload.sub,
-    };
+    return userId;
   }
 }

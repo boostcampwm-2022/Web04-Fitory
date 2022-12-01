@@ -28,7 +28,7 @@ import { typeormConfig } from "./config/typeorm.config";
     MockModule,
     UploadModule,
     TypeOrmModule.forRoot(typeormConfig),
-    PassportModule.register({ session: true }),
+    PassportModule,
   ],
 
   providers: [{ provide: APP_FILTER, useClass: HttpExceptionFilter }],
