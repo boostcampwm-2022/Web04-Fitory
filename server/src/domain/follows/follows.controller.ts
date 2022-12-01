@@ -54,4 +54,15 @@ export class FollowsController {
     if (!myUserIdExist || !otherUserIdExist) throw new Exception().userNotFound();
     return this.followService.doFollow(userIds);
   }
+
+  @Post("cancel")
+  @ApiOperation({
+    summary: "다른 사용자를 팔로우 취소 했을때 이를 등록",
+  })
+  async cancelFollow(@Body() userIds: FollowUserIdDto) {
+    const myUserIdExist = await this.usersService.isExistUser(userIds.myUserId);
+    const otherUserIdExist = await this.usersService.isExistUser(userIds.otherUserId);
+    if (!myUserIdExist || !otherUserIdExist) throw new Exception().userNotFound();
+    return this.followService.cancelFollow(userIds);
+  }
 }
