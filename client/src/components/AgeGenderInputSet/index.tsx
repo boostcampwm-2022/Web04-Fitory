@@ -17,8 +17,8 @@ const AgeGenderInputSet = ({ age, gender, setAgeGender }: AgeGenderInputSetProps
   const ageTextFieldRef = useInputFocus();
 
   const handleChangeAge = (e: ChangeEvent<HTMLInputElement>) => {
-    const stringValue = e.target.value.match(NUMBER_REGEX);
-    const numberValue = stringValue ? +stringValue[0] : 0;
+    const matchedArray = e.target.value.match(NUMBER_REGEX);
+    const numberValue = matchedArray ? +matchedArray[0] : 0;
     if (numberValue > UserAge.MAX) {
       return;
     }
@@ -32,7 +32,7 @@ const AgeGenderInputSet = ({ age, gender, setAgeGender }: AgeGenderInputSetProps
         placeholder="0"
         value={age || ""}
         ref={ageTextFieldRef}
-        onChange={(e) => handleChangeAge(e)}
+        onChange={handleChangeAge}
       />
       <s.Label>성별</s.Label>
       <s.GenderWrapper>
