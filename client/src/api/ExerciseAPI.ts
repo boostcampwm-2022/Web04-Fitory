@@ -21,6 +21,25 @@ const ExerciseAPI = {
       return null;
     }
   },
+
+  getAllExerciseDate: async () => {
+    try {
+      const userId = authStorage.get();
+
+      if (!userId) {
+        throw new Error();
+      }
+
+      const path = `exercise/everyDate?userId=${userId}`;
+      const response = await HttpClient.get(path);
+      const { dateList } = response.response as { dateList: ExerciseType.ExerciseDate };
+
+      return dateList;
+    } catch {
+      Exception.UserNotFound();
+      return null;
+    }
+  },
 };
 
 export default ExerciseAPI;

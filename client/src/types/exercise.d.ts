@@ -13,3 +13,5 @@ export interface ExerciseProfile {
   totalVolume: number;
   totalExerciseDate: number;
 }
+
+export type ExerciseDate = string[];
