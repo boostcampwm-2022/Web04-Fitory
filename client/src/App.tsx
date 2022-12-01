@@ -11,6 +11,7 @@ import ProfilePage from "@pages/ProfilePage";
 import LoginPage from "@pages/LoginPage";
 import JoinPage from "@pages/JoinPage";
 import SearchPage from "@pages/SearchPage";
+import FollowPage from "@pages/FollowPage";
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID as string;
 
@@ -31,6 +32,7 @@ const App = () => {
           <Route path={RoutePath.LOGIN} element={<LoginPage />} />
           <Route path={RoutePath.JOIN} element={<JoinPage />} />
           <Route path={RoutePath.SEARCH} element={<SearchPage />} />
+          <Route path={RoutePath.FOLLOW} element={<FollowPage />} />
         </Routes>
       </GoogleOAuthProvider>
     </BrowserRouter>

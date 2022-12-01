@@ -7,6 +7,7 @@ export enum RoutePath {
   RECORD = "/record",
   LOGIN = "/login",
   JOIN = "/join",
+  FOLLOW = "/follow",
 }
 
 export enum FormatDay {
@@ -97,4 +98,9 @@ export enum Powerlifting {
   SQUAT = "스쿼트",
   BENCH_PRESS = "벤치프레스",
   DEADLIFT = "데드리프트",
+}
+
+export enum PageState {
+  FOLLOWING = "팔로잉",
+  FOLLOWER = "팔로워",
 }
