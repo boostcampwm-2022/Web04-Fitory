@@ -21,16 +21,18 @@ const FollowPage = () => {
   };
 
   useEffect(() => {
+    console.log(pageState === PageState.FOLLOWER);
     const REQUEST_URL =
       pageState === PageState.FOLLOWER
-        ? `${process.env.SERVER_BASE_URL}follow/follower?userId=1`
-        : `${process.env.SERVER_BASE_URL}follow/following?userId=1`;
-
+        ? `${process.env.SERVER_BASE_URL}follow/follower?userId=2`
+        : `${process.env.SERVER_BASE_URL}follow/following?userId=3`;
     const getUserList = async () => {
       await axios.get(REQUEST_URL).then((response) => {
         if (pageState === PageState.FOLLOWER) {
+          setSearchedUser(response.data.response.followerUserProfileList);
           return setUserList(response.data.response.followerUserProfileList);
         }
+        setSearchedUser(response.data.response.followingUserProfileList);
         return setUserList(response.data.response.followingUserProfileList);
       });
     };
@@ -38,7 +40,11 @@ const FollowPage = () => {
   }, []);
 
   useEffect(() => {
-    SearchUtils.searchUserDebounce(searchValue, userList, setSearchedUser);
+    console.log(userList);
+    if (searchValue === "") {
+      return setSearchedUser(userList);
+    }
+    return SearchUtils.searchUserDebounce(searchValue, userList, setSearchedUser);
   }, [searchValue]);
 
   return (

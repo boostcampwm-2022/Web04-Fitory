@@ -38,8 +38,10 @@ export interface UserInfo extends JoinUserInfo {
 }
 
 export interface SearchedUserInfo {
-  user_user_id?: UserId;
-  user_name: UserName;
-  user_introduce?: UserIntroduce;
-  user_profile?: string;
+  user_id?: UserId;
+  name: UserName;
+  introduce?: UserIntroduce;
+  profile_image?: string;
+  follower_id?: UserId;
+  followed_id?: UserId;
 }

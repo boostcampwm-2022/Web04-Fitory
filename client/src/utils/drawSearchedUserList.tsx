@@ -6,9 +6,14 @@ import { SearchedUserInfo } from "../types/user";
 export const drawSearchedUserList = (searchedUser: SearchedUserInfo[]) => {
   console.log(searchedUser);
   return searchedUser.map((user: SearchedUserInfo) => {
+    // const keyValue = user.follower_id ? user.follower_id : user.user_id;
+    let keyValue;
+    if (user.follower_id) keyValue = user.follower_id;
+    else if (user.user_id) keyValue = user.user_id;
+    else if (user.followed_id) keyValue = user.followed_id;
     return (
-      <UserProfile key={user.user_user_id}>
-        <SearchResultUserProfile userName={user.user_name} userMessage={user?.user_introduce} />
+      <UserProfile key={keyValue}>
+        <SearchResultUserProfile userName={user.name} userMessage={user?.introduce} />
       </UserProfile>
     );
   });

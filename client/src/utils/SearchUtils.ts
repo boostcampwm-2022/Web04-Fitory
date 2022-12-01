@@ -4,10 +4,10 @@ import { SearchedUserInfo } from "../types/user";
 const SearchUtils = {
   searchEvent: (word: string, userList: any[], setSearchedUser: any) => {
     const searchResult: SearchedUserInfo[] = userList.filter((user: SearchedUserInfo) => {
-      return user.user_name.includes(word);
+      return user.name.includes(word);
     });
     setSearchedUser(searchResult);
-    return userList.filter((user: SearchedUserInfo) => user.user_name.includes(word));
+    return searchResult;
   },
   searchUserDebounce: (
     searchValue: string,
