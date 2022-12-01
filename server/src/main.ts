@@ -4,12 +4,12 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
-import { PORT } from "@env";
-import { AppModule } from "./app.module";
-import { initDatabase } from "./utils/initDB";
+import { DEPLOY_HOST, DEPLOY_HOST_WWW, LOCAL_HOST, PORT } from "@env";
 import express from "express";
 import path, { join } from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
+import { initDatabase } from "./utils/initDB";
+import { AppModule } from "./app.module";
 
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
@@ -21,7 +21,7 @@ async function bootstrap() {
   app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
-    origin: ["http://localhost:3000"],
+    origin: [LOCAL_HOST],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   });

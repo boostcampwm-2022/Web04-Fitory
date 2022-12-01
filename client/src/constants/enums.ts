@@ -46,14 +46,7 @@ export enum ExerciseState {
   IDLE = "idle",
 }
 
-export enum Tier {
-  BRONZE = "BRONZE",
-  SILVER = "SILVER",
-  GOLD = "GOLD",
-  PLATINUM = "PLATINUM",
-  DIAMOND = "DIAMOND",
-  CHAMPION = "CHAMPION",
-}
+export const TIER = [null, "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "CHAMPION"] as const;
 
 export enum DayTypes {
   TODAY = "today",
@@ -98,3 +91,8 @@ export enum Powerlifting {
   BENCH_PRESS = "벤치프레스",
   DEADLIFT = "데드리프트",
 }
+
+export const WEIGHT_UNIT = {
+  TON: "t",
+  KG: "kg",
+} as const;
