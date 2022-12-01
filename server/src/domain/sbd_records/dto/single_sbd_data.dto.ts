@@ -1,4 +1,4 @@
-import { IsNumber, IsString, Min } from "class-validator";
+import { IsNumber, IsString, Length, Matches, Min } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class SingleSBDDataDto {
@@ -24,7 +24,7 @@ export class SingleSBDDataDto {
   })
   @IsNumber()
   @Min(1)
-  bench: number;
+  benchpress: number;
 
   @ApiProperty({
     description: "데드 리프트 중량",
@@ -32,12 +32,13 @@ export class SingleSBDDataDto {
   })
   @IsNumber()
   @Min(1)
-  dead: number;
+  deadlift: number;
 
   @ApiProperty({
     description: "기록 제출 날짜",
     type: String,
   })
   @IsString()
+  @Matches("^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$")
   date: string;
 }

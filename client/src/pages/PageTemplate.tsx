@@ -5,16 +5,29 @@ import BottomNavigationBar from "@components/BottomNavigationBar";
 
 interface PageTemplateProps {
   isRoot: boolean;
+  title?: string;
   topNavRightItem?: JSX.Element;
+  onClickBackButton?: () => void;
   children: React.ReactNode;
 }
 
-const PageTemplate = ({ isRoot, topNavRightItem, children }: PageTemplateProps) => {
+const PageTemplate = ({
+  isRoot,
+  title,
+  topNavRightItem,
+  onClickBackButton,
+  children,
+}: PageTemplateProps) => {
   return (
     <>
-      <TopNavigationBar isRoot={isRoot} rightItem={topNavRightItem} />
-      <MainContainer>{children}</MainContainer>
-      <BottomNavigationBar />
+      <TopNavigationBar
+        title={title}
+        isRoot={isRoot}
+        rightItem={topNavRightItem}
+        onClickBackButton={onClickBackButton}
+      />
+      <MainContainer isRoot={isRoot}>{children}</MainContainer>
+      {isRoot && <BottomNavigationBar />}
     </>
   );
 };

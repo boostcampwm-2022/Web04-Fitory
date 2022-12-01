@@ -4,11 +4,15 @@ import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Exception } from "@exception/exceptions";
 import { isValidUserId } from "@validation/validation";
 import { SbdRecordsService } from "./sbd_records.service";
+import { UsersService } from "@user/users.service";
 
 @Controller("api/record")
 @ApiTags("RECORD API")
 export class SbdRecordsController {
-  constructor(private readonly recordsService: SbdRecordsService) {}
+  constructor(
+    private readonly recordsService: SbdRecordsService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Get("every")
   @ApiOperation({
@@ -18,8 +22,10 @@ export class SbdRecordsController {
     name: "userId",
     type: "number",
   })
-  getEverySBDRecord(@Query("userId") userId: number) {
+  async getEverySBDRecord(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.recordsService.findEverySBDRecord(userId);
   }
 
@@ -31,8 +37,10 @@ export class SbdRecordsController {
     name: "userId",
     type: "number",
   })
-  getBestSBDRecord(@Query("userId") userId: number) {
+  async getBestSBDRecord(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.recordsService.findBestSBDRecord(userId);
   }
 
@@ -42,16 +50,19 @@ export class SbdRecordsController {
       "해당 사용자의 가장 최근 3대 챌린지 기록 시간을 초단위(new Date().getTime() / 1000) 형식으로 반환",
   })
   @ApiQuery({
-    name: "id",
+    name: "userId",
     type: "number",
   })
-  getRecentRecordTime(@Query("id") userId: number) {
+  async getRecentRecordTime(@Query("userId") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.recordsService.getRecentRecordTime(userId);
   }
 
   @Post("submit")
   @ApiOperation({
-    summary: "❌ 미구현) 해당 사용자의 SBD 측정 기록을 DB에 저장",
+    summary: "해당 사용자의 SBD 측정 기록을 DB에 저장",
   })
   registerUser(@Body() sbdData: SingleSBDDataDto) {
     return this.recordsService.submitSingleSBDRecord(sbdData);

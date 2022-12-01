@@ -1,3 +1,4 @@
+import { Exception } from "@exception/exceptions";
 import { SingleSBDDataDto } from "./dto/single_sbd_data.dto";
 import { HttpResponse } from "@converter/response.converter";
 import { recordConverter } from "./converter/sbd_records.converter";
@@ -5,12 +6,15 @@ import { Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { SBD_record } from "./entities/sbd_record.entity";
+import { User } from "@user/entities/user.entity";
 
 @Injectable()
 export class SbdRecordsService {
   constructor(
     @InjectRepository(SBD_record)
     private recordsRepository: Repository<SBD_record>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {}
 
   async findEverySBDRecord(userId: number) {
@@ -41,18 +45,34 @@ export class SbdRecordsService {
     const record = await this.recordsRepository
       .createQueryBuilder("record")
       .where("record.user_id = :userId", { userId })
-      .select("record.second_stamp")
-      .orderBy("record.second_stamp", "DESC")
+      .select("record.time_stamp")
+      .orderBy("record.time_stamp", "DESC")
       .getRawOne();
-    let secondStamp = 0;
-    if (record) secondStamp = record.second_stamp;
+    let timeStamp = 0;
+    if (record) timeStamp = record.time_stamp;
     return HttpResponse.success({
-      secondStamp,
+      timeStamp,
     });
   }
 
   async submitSingleSBDRecord(sbdData: SingleSBDDataDto) {
     try {
-    } catch (error) {}
+      const userObject = await this.userRepository
+        .createQueryBuilder("user")
+        .where("user.user_id = :userId", { userId: sbdData.userId })
+        .getOne();
+      const recordObject = this.recordsRepository.create(sbdData);
+      await this.recordsRepository.save({
+        ...recordObject,
+        SBD_sum: sbdData.squat + sbdData.benchpress + sbdData.deadlift,
+        userWeight: userObject.weight,
+        user: userObject,
+      });
+      return HttpResponse.success({
+        message: "Record Submit Success",
+      });
+    } catch (error) {
+      throw new Exception().invalidSubmit();
+    }
   }
 }

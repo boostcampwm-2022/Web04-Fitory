@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const Background = styled.div`
+  padding: 20px;
+`;
+
 export const Wrapper = styled.div`
   width: 100%;
   height: 100%;

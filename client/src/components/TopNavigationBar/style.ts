@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
+  border: 1px solid #f5f5f5;
 `;
 
 export const Content = styled.div`
@@ -26,6 +27,7 @@ export const Title = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+  color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
 `;
 
 export const LeftItem = styled.div`

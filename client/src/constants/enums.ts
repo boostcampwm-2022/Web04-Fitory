@@ -6,6 +6,7 @@ export enum RoutePath {
   CHALLENGE = "/challenge",
   RECORD = "/record",
   LOGIN = "/login",
+  JOIN = "/join",
 }
 
 export enum FormatDay {
@@ -45,14 +46,7 @@ export enum ExerciseState {
   IDLE = "idle",
 }
 
-export enum Tier {
-  BRONZE = "BRONZE",
-  SILVER = "SILVER",
-  GOLD = "GOLD",
-  PLATINUM = "PLATINUM",
-  DIAMOND = "DIAMOND",
-  CHAMPION = "CHAMPION",
-}
+export const TIER = [null, "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "CHAMPION"] as const;
 
 export enum DayTypes {
   TODAY = "today",
@@ -66,3 +60,39 @@ export enum DateTypes {
   WEEK = "week",
   DAY = "day",
 }
+
+export enum Gender {
+  MALE = 0,
+  FEMALE = 1,
+}
+
+export enum UserName {
+  MIN = 2,
+  MAX = 12,
+}
+
+export enum UserAge {
+  MIN = 1,
+  MAX = 120,
+}
+
+export enum UserHeight {
+  MIN = 1,
+  MAX = 300,
+}
+
+export enum UserWeight {
+  MIN = 1,
+  MAX = 300,
+}
+
+export enum Powerlifting {
+  SQUAT = "스쿼트",
+  BENCH_PRESS = "벤치프레스",
+  DEADLIFT = "데드리프트",
+}
+
+export const WEIGHT_UNIT = {
+  TON: "t",
+  KG: "kg",
+} as const;

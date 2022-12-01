@@ -1,19 +1,24 @@
 import { HttpResponse } from "@converter/response.converter";
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { Exception } from "@exception/exceptions";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { UsersInfoDto } from "./dto/users-info.dto";
-import { SBD_record } from "@record/entities/sbd_record.entity";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    @InjectRepository(SBD_record)
-    private recordsRepository: Repository<SBD_record>,
   ) {}
+
+  async isExistUser(userId: number) {
+    const userExist = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.user_id = :userId", { userId })
+      .getOne();
+    return userExist ? true : false;
+  }
 
   async getUserInfo(userId: number) {
     const user = await this.userRepository
@@ -22,7 +27,7 @@ export class UsersService {
       .getOne();
 
     if (!user) {
-      return "No user find";
+      throw new Exception().userNotFound();
     }
     return HttpResponse.success({
       user,
@@ -32,7 +37,10 @@ export class UsersService {
   async getEveryUserProfile() {
     const userProfileList = await this.userRepository
       .createQueryBuilder("user")
-      .select(["user.id", "user.name", "user.introduce", "user.profile_image"])
+      .select("user.user_id", "user_id")
+      .addSelect("user.name", "name")
+      .addSelect("user.introduce", "introduce")
+      .addSelect("user.profile_image", "profile_image")
       .getRawMany();
 
     return HttpResponse.success({
@@ -40,50 +48,50 @@ export class UsersService {
     });
   }
 
-  async registerUser(userInfo: UsersInfoDto) {
-    try {
-      const userExists = await this.findUserById(userInfo.oauthId);
-
-      if (userExists) return userExists;
-
-      const newUser = this.userRepository.create(userInfo);
-
-      return await this.userRepository.save(newUser);
-    } catch {
-      throw new InternalServerErrorException();
-    }
+  async checkUserName(name: string) {
+    const userExists = await this.findUserByName(name);
+    return HttpResponse.success({ userExists });
   }
 
-  async findUserById(oauthId: string) {
+  async findUserByName(name: string) {
     const user = await this.userRepository
       .createQueryBuilder("user")
-      .where("user.oauthId = :oauthId", { oauthId })
+      .where("user.name = :name", { name })
       .getOne();
-
-    if (!user) {
-      return null;
-    }
-
-    return user;
-  }
-
-  async getRecentRecordTime(userId: number) {
-    // new Date().getTime() / 1000;
-    const record = await this.recordsRepository
-      .createQueryBuilder("record")
-      .where("record.user_id = :userId", { userId })
-      .select("record.second_stamp")
-      .orderBy("record.second_stamp", "DESC")
-      .getRawMany();
-
-    const recentRecord = record[0];
-
-    return HttpResponse.success({
-      recentRecord,
-    });
+    return user ? true : false;
   }
 
   async getRecommandUserList(userId: number) {
-    return HttpResponse.success({});
+    const weight = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.user_id = :userId", { userId })
+      .select("user.weight")
+      .getRawOne();
+
+    const age = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.user_id = :userId", { userId })
+      .select("user.age")
+      .getRawOne();
+
+    const recommendWeight = await this.userRepository
+      .createQueryBuilder("user")
+      .where(`user.weight BETWEEN ${weight.user_weight - 5} AND ${weight.user_weight + 5}`)
+      .select("user.name")
+      .addSelect("user.profile_image")
+      .orderBy("rand()")
+      .take(5)
+      .getRawMany();
+
+    const recommendAge = await this.userRepository
+      .createQueryBuilder("user")
+      .where(`user.age BETWEEN ${age.user_age - 1} AND ${age.user_age + 1}`)
+      .select("user.name")
+      .addSelect("user.profile_image")
+      .orderBy("rand()")
+      .take(5)
+      .getRawMany();
+
+    return HttpResponse.success({ recommendWeight, recommendAge });
   }
 }

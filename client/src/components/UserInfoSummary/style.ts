@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Theme from "@styles/Theme";
-import { Tier as _Tier } from "@constants/enums";
+import { TIER } from "@constants/enums";
 
 export const Wrapper = styled.div`
   padding: 30px 50px;
@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    padding: 30px 40px;
+    padding: 30px;
   }
 `;
 
@@ -52,10 +52,13 @@ export const RecordInfo = styled.div`
 export const RecordResult = styled.h2`
   color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
   font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
+  }
 `;
 
 export const Tier = styled(RecordResult)`
-  color: ${({ tier, theme }: { tier: _Tier | null; theme: typeof Theme }) =>
+  color: ${({ tier, theme }: { tier: typeof TIER[number] | null; theme: typeof Theme }) =>
     tier && theme.TIER_COLOR[tier]};
 `;
 

@@ -2,11 +2,10 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "src/domain/users/entities/user.entity";
 import { JwtModule } from "@nestjs/jwt";
-import { GoogleOauthController } from "./google-oauth.controller";
-import { GoogleStrategy } from "./utils/google.strategy";
-import { GoogleOauthService } from "./google-oauth.service";
-import { JwtStrategy } from "../jwt/jwt.strategy";
 import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY } from "@env";
+import { JwtStrategy } from "@oauth/jwt/jwt.strategy";
+import { GoogleOauthController } from "./google-oauth.controller";
+import { GoogleOauthService } from "./google-oauth.service";
 
 @Module({
   imports: [
@@ -18,7 +17,6 @@ import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY } from "@env";
   ],
   controllers: [GoogleOauthController],
   providers: [
-    GoogleStrategy,
     JwtStrategy,
     {
       provide: "AUTH_SERVICE",

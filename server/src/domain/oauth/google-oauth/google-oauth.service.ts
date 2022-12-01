@@ -1,58 +1,69 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "src/domain/users/entities/user.entity";
-import { JwtService } from "@nestjs/jwt";
-import { JwtPayload } from "@type/jwt";
-import { GoogleUserDto } from "./dto/google-user.dto";
+import { google, Auth } from "googleapis";
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@env";
+import { GoogleUserRegisterDto } from "@oauth/google-oauth/dto/google-user-register.dto";
+import { GoogleUserInfoDto } from "@oauth/google-oauth/dto/google-user-info.dto";
 
 @Injectable()
 export class GoogleOauthService {
-  constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private jwtService: JwtService,
-  ) {}
+  oauthClient: Auth.OAuth2Client;
 
-  generateJwt(payload: JwtPayload) {
-    return this.jwtService.sign(payload);
+  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {
+    this.oauthClient = new google.auth.OAuth2(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
   }
 
-  async signIn(user: GoogleUserDto) {
-    if (!user) {
-      throw new BadRequestException("Unauthenticated");
-    }
+  async register(userInfo: GoogleUserRegisterDto) {
+    const tokenInfo = await this.oauthClient.getTokenInfo(userInfo.access_token);
+    const oauthId = tokenInfo.sub.toString();
+    const userInfoWithOAuthId = {
+      name: userInfo.name,
+      age: userInfo.age,
+      gender: userInfo.gender,
+      height: userInfo.height,
+      weight: userInfo.weight,
+      oauthId,
+    };
 
-    const userExists = await this.findUserById(user.oauthId);
+    const registerUserInfo = await this.registerUser(userInfoWithOAuthId);
 
-    if (!userExists) {
-      return this.registerUser(user);
-    }
-
-    return this.generateJwt({
-      sub: userExists.oauthId,
+    return this.findUserIdByOAuthId(registerUserInfo.oauthId).then((user) => {
+      return user?.id;
     });
   }
 
-  async registerUser(user: GoogleUserDto) {
-    try {
-      return this.generateJwt({
-        sub: user.oauthId,
-      });
-    } catch {
-      throw new InternalServerErrorException();
+  async login(token: string) {
+    const tokenInfo = await this.oauthClient.getTokenInfo(token);
+    const oauthId = tokenInfo.sub.toString();
+    const userId = await this.findUserIdByOAuthId(oauthId).then((user) => {
+      return user?.id;
+    });
+
+    if (!userId) {
+      return { userId: null, needRegister: true };
     }
+
+    return { userId, needRegister: false };
   }
 
-  async findUserById(oauthId: string) {
+  async registerUser(userInfo: GoogleUserInfoDto) {
+    const newUser = this.userRepository.create(userInfo);
+
+    return this.userRepository.save(newUser);
+  }
+
+  async findUserIdByOAuthId(oauthId: string) {
     const user = await this.userRepository
       .createQueryBuilder("user")
-      .where("user.oauth_id = :oauthId", { oauthId })
+      .where("user.oauthId = :oauthId", { oauthId })
+      .select("user.id")
       .getOne();
 
     if (!user) {
       return null;
     }
-
     return user;
   }
 }
