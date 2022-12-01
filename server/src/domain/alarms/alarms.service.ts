@@ -1,3 +1,4 @@
+import { Exception } from "@exception/exceptions";
 import { HttpResponse } from "@converter/response.converter";
 import { Alarm } from "./entities/alram.entity";
 import { Injectable } from "@nestjs/common";
@@ -38,5 +39,21 @@ export class AlarmsService {
     return HttpResponse.success({
       alarmObject,
     });
+  }
+
+  async sendFollowAlarm(myUserId: number, otherUserId: number) {
+    try {
+      await this.alarmRepository.save({
+        senderUserId: myUserId,
+        alarmType: 1,
+        check: false,
+        user: { id: otherUserId },
+      });
+      return HttpResponse.success({
+        message: "Follow Alarm Send Success",
+      });
+    } catch (error) {
+      throw new Exception().invalidSubmit();
+    }
   }
 }
