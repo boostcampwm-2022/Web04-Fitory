@@ -1,10 +1,8 @@
 import { HttpResponse } from "@converter/response.converter";
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { UsersInfoDto } from "./dto/users-info.dto";
-import { Exception } from "@exception/exceptions";
 
 @Injectable()
 export class UsersService {
