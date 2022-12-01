@@ -21,7 +21,7 @@ async function bootstrap() {
   app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
-    origin: [LOCAL_HOST],
+    origin: [DEPLOY_HOST, DEPLOY_HOST_WWW],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   });
