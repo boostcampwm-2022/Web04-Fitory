@@ -1,7 +1,7 @@
 import { IsNumber, IsString, Min } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class SingleRoutineoDto {
+export class RoutineDto {
   @ApiProperty({
     description: "유저의 고유 ID",
     type: Number,

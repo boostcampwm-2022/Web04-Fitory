@@ -2,11 +2,11 @@ import { HttpResponse } from "@converter/response.converter";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "@user/entities/user.entity";
 import { Exception } from "@exception/exceptions";
+import { exerciseConverter } from "@exercise/converter/exercise.converter";
 import { Routine } from "./entities/routine.entity";
 import { routineConverter } from "./converter/routines.converter";
-import { SingleRoutineoDto } from "./dto/single-routine.dto";
+import { RoutineDto } from "./dto/single-routine.dto";
 
 @Injectable()
 export class RoutinesService {
@@ -35,13 +35,31 @@ export class RoutinesService {
       .getMany();
 
     if (routine.length) {
-      return HttpResponse.success({ routine });
+      return HttpResponse.success({
+        dateList: routineConverter.routineDetailList(routine),
+      });
     }
     throw new Exception().routineNotFound();
   }
 
-  async saveSingleRoutine(singleRoutine: SingleRoutineoDto) {
-    try {
-    } catch (error) {}
+  async saveRoutine(routineData: RoutineDto) {
+    const routine = await this.routinesRepository
+      .createQueryBuilder("routine")
+      .innerJoin("routine.user", "user", "user.user_id = :userId", { userId: routineData.userId })
+      .where("routine.routine_name = :routineName", { routineName: routineData.routineName })
+      .andWhere("routine.deleted = false")
+      .getMany();
+
+    if (routine.length) {
+      throw new Exception().routineNameDuplicate();
+    }
+
+    return this.registerRoutine(routineData);
+  }
+
+  async registerRoutine(routineData: RoutineDto) {
+    const newRoutine = this.routinesRepository.create(routineData);
+
+    return this.routinesRepository.save({ ...newRoutine, user: { id: routineData.userId } });
   }
 }

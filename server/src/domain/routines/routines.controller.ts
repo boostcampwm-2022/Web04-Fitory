@@ -4,7 +4,7 @@ import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
 import { RoutinesService } from "./routines.service";
-import { SingleRoutineoDto } from "./dto/single-routine.dto";
+import { RoutineDto } from "./dto/single-routine.dto";
 
 @Controller("api/routines")
 @ApiTags("ROUTINE API")
@@ -54,9 +54,9 @@ export class RoutinesController {
 
   @Post("save")
   @ApiOperation({
-    summary: "❌ 미구현) 해당 루틴을 저장",
+    summary: "루틴 저장",
   })
-  registerUser(@Body() routineData: SingleRoutineoDto) {
-    return this.routinesService.saveSingleRoutine(routineData);
+  saveRoutine(@Body() routineData: RoutineDto) {
+    return this.routinesService.saveRoutine(routineData);
   }
 }
