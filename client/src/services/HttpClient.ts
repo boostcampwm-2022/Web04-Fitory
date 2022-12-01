@@ -12,8 +12,8 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 const HttpClient = {
-  get: async (path: string, params = {}, headers = {}): Promise<HttpSuccess | HttpFailed> => {
-    const response = await axiosInstance.get(path, { params, headers });
+  get: async (path: string, headers = {}): Promise<HttpSuccess | HttpFailed> => {
+    const response = await axiosInstance.get(path, { headers });
     return response.data;
   },
 
