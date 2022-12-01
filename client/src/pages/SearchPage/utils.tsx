@@ -5,7 +5,7 @@ import { SearchedUserInfo } from "../../types/user";
 export const drawRecommendUserList = (userList: any[]) => {
   return userList.map((user: SearchedUserInfo) => {
     return (
-      <Paper key={user.user_user_id}>
+      <Paper key={user.user_id}>
         <div style={{ width: "170px", height: "170px" }}>
           {/* <img src={user.user_profile} alt="유저 프로필 사진" /> */}
           <img
