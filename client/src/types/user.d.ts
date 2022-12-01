@@ -1,4 +1,4 @@
-export type UserId = number | null;
+export type UserId = number;
 export type UserName = string;
 export type UserAge = number;
 export type UserGender = 0 | 1;

@@ -26,8 +26,8 @@ const UserAPI = {
         throw new Error();
       }
 
-      const path = `users/get?id=${userId}`;
-      const response = await HttpClient.get(path);
+      const path = `users/get`;
+      const response = await HttpClient.get(path, { id: userId });
       const { user } = response.response as { user: UserType.UserInfo };
 
       return user;
@@ -38,13 +38,10 @@ const UserAPI = {
   },
 
   checkExistUserName: async (userName: string) => {
-    try {
-      const path = "users/checkName";
-      await HttpClient.get(path, { userName });
-      return true;
-    } catch {
-      return false;
-    }
+    const path = "users/checkName";
+    const response = await HttpClient.get(path, { userName });
+    const { userExists } = response.response as { userExists: boolean };
+    return userExists;
   },
 };
 
