@@ -56,6 +56,7 @@ export class UsersController {
   })
   @ApiQuery({
     name: "userName",
+    type: "string",
   })
   checkUserName(@Query("userName") userName: string) {
     return this.usersService.checkUserName(userName);

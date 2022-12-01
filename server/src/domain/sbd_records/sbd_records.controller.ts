@@ -50,10 +50,10 @@ export class SbdRecordsController {
       "해당 사용자의 가장 최근 3대 챌린지 기록 시간을 초단위(new Date().getTime() / 1000) 형식으로 반환",
   })
   @ApiQuery({
-    name: "id",
+    name: "userId",
     type: "number",
   })
-  async getRecentRecordTime(@Query("id") userId: number) {
+  async getRecentRecordTime(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     const userExist = await this.usersService.isExistUser(userId);
     if (!userExist) throw new Exception().userNotFound();
