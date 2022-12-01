@@ -31,6 +31,8 @@ export const UserSearchBarContainer = styled.div`
 export const SearchBar = styled.input`
   width: 100%;
   height: 100%;
+  margin-left: 2vw;
+
   background-color: transparent;
   border-top: none;
   border-left: none;

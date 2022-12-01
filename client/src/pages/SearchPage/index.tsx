@@ -37,13 +37,13 @@ const SearchPage = () => {
       <s.Wrapper>
         <s.SearchContainer isText={searchValue.length !== 0}>
           <s.UserSearchBarContainer>
+            <img src={searchIcon} alt="검색 아이콘" />
             <s.SearchBar
               type="searchValue"
               onChange={handleChange}
               isText={searchValue.length !== 0}
               placeholder="검색어를 입력하세요."
             />
-            <img src={searchIcon} alt="검색 아이콘" />
           </s.UserSearchBarContainer>
           <s.SearchResultContainer isText={searchValue.length !== 0}>
             {drawSearchedUserList(searchedUser)}
