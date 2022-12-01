@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Controller, Get, Query, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
+import { JwtAuthGuard } from "@oauth/jwt/jwt.guard";
+import { User } from "@user/entities/user.entity";
 import { UsersService } from "./users.service";
-import { UsersInfoDto } from "./dto/users-info.dto";
+import { GetUserId } from "../../decorator/validate.decorator";
 
 @Controller("api/users")
 @ApiTags("USER API")
@@ -57,5 +59,12 @@ export class UsersController {
   })
   checkUserName(@Query("userName") userName: string) {
     return this.usersService.checkUserName(userName);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get("test")
+  async getTest(@GetUserId() userId: User) {
+    console.log(userId);
+    return userId;
   }
 }
