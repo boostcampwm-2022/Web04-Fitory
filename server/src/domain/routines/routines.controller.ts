@@ -3,6 +3,7 @@ import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
+import { HttpResponse } from "@converter/response.converter";
 import { RoutinesService } from "./routines.service";
 import { RoutineDto } from "./dto/single-routine.dto";
 
@@ -56,7 +57,9 @@ export class RoutinesController {
   @ApiOperation({
     summary: "루틴 저장",
   })
-  saveRoutine(@Body() routineData: RoutineDto) {
-    return this.routinesService.saveRoutine(routineData);
+  async saveRoutine(@Body() routineData: RoutineDto) {
+    await this.routinesService.saveRoutine(routineData);
+
+    return HttpResponse.success("Routine save success");
   }
 }

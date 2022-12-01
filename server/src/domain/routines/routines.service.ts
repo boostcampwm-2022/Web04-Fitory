@@ -36,7 +36,7 @@ export class RoutinesService {
 
     if (routine.length) {
       return HttpResponse.success({
-        dateList: routineConverter.routineDetailList(routine),
+        routineList: routineConverter.routineDetailList(routine),
       });
     }
     throw new Exception().routineNotFound();
@@ -54,12 +54,27 @@ export class RoutinesService {
       throw new Exception().routineNameDuplicate();
     }
 
-    return this.registerRoutine(routineData);
+    await this.registerRoutine(routineData);
   }
 
   async registerRoutine(routineData: RoutineDto) {
-    const newRoutine = this.routinesRepository.create(routineData);
+    try {
+      await Promise.all(
+        routineData.exerciseList.map(async (exercise) => {
+          const routineString = routineConverter.routineObjectToString(exercise);
 
-    return this.routinesRepository.save({ ...newRoutine, user: { id: routineData.userId } });
+          await this.routinesRepository.save({
+            routineName: routineData.routineName,
+            exerciseName: exercise.exerciseName,
+            exerciseString: routineString.slice(1),
+            user: { id: routineData.userId },
+          });
+
+          return HttpResponse.success("Routine Save Success");
+        }),
+      );
+    } catch (error) {
+      throw new Exception().invalidSubmit();
+    }
   }
 }

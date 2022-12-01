@@ -1,4 +1,5 @@
 import { routineSet } from "@type/domain";
+import { RoutineDto, SingleExercise } from "@routine/dto/single-routine.dto";
 import { Routine } from "../entities/routine.entity";
 
 export const routineConverter = {
@@ -16,7 +17,7 @@ export const routineConverter = {
 
   routineDetailList: (routineList: Routine[]) => {
     const routineDetailObject: {
-      [routineName: string]: { [exerciseName: string]: routineSet[] }[];
+      [routineName: string]: { name: string; set: routineSet[] }[];
     } = {};
     routineList.map((routine: Routine) => {
       routineDetailObject[routine.routineName] = [];
@@ -27,9 +28,16 @@ export const routineConverter = {
       });
 
       routineDetailObject[routine.routineName].push({
-        [routine.exerciseName]: exerciseList,
+        name: routine.exerciseName,
+        set: exerciseList,
       });
     });
     return routineDetailObject;
+  },
+
+  routineObjectToString: (exerciseList: SingleExercise) => {
+    return exerciseList.setList.reduce((acc, cur) => {
+      return `${acc}|${cur.kg}/${cur.count}`;
+    }, "");
   },
 };
