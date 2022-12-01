@@ -28,7 +28,7 @@ export class GoogleOauthController {
 
       req.res.cookie("access_token", token, {
         sameSite: true,
-        secure: false, // 배포시에는 true로 바꿔야됨
+        secure: true, // 배포시에는 true로 바꿔야됨
         httpOnly: true,
         maxAge: 3650 * 24 * 60 * 60 * 1000, // (10 year)
       });
@@ -51,7 +51,7 @@ export class GoogleOauthController {
 
       req.res.cookie("access_token", token, {
         sameSite: true,
-        secure: false, // 배포시에는 true로 바꿔야됨
+        secure: true, // 배포시에는 true로 바꿔야됨
         httpOnly: true,
         maxAge: 3650 * 24 * 60 * 60 * 1000, // (10 year)
       });
