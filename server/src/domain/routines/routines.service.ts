@@ -19,6 +19,7 @@ export class RoutinesService {
     const routineList = await this.routinesRepository
       .createQueryBuilder("routine")
       .where("routine.user_id = :userId", { userId })
+      .andWhere("routine.deleted = false")
       .getMany();
     return HttpResponse.success({
       routineList: routineConverter.routineNameList(routineList),
@@ -30,6 +31,7 @@ export class RoutinesService {
       .createQueryBuilder("routine")
       .innerJoin("routine.user", "user", "user.user_id = :userId", { userId })
       .where("routine.routine_name = :routineName", { routineName })
+      .andWhere("routine.deleted = false")
       .getMany();
 
     if (routine.length) {

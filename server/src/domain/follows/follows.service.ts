@@ -15,58 +15,34 @@ export class FollowsService {
   ) {}
 
   async getFollowingUserList(userId: number) {
-    const followingObject = await this.followRepository
+    const followingUserProfileList = await this.followRepository
       .createQueryBuilder("follow")
       .select("follow.follower_id", "follower_id")
+      .addSelect("user.name", "name")
+      .addSelect("user.profile_image", "profile_image")
+      .addSelect("user.introduce", "introduce")
+      .innerJoin(User, "user", "user.user_id = follow.follower_id")
       .where("follow.followed_id = :userId", { userId })
+      .andWhere("follow.deleted = false")
       .getRawMany();
-    const followingUserProfileList = await Promise.all(
-      followingObject.map(async (item) => {
-        const following = await this.userRepository
-          .createQueryBuilder("user")
-          .select("user.name", "name")
-          .addSelect("user.profile_image", "profile_image")
-          .addSelect("user.introduce", "introduce")
-          .where("user.id = :userId", { userId: item.follower_id })
-          .getRawOne();
-        return {
-          userId: item.follower_id,
-          userName: following.name,
-          profileImage: following.profile_image,
-          introduce: following.introduce,
-        };
-      }),
-    );
     return HttpResponse.success({
       followingUserProfileList,
     });
   }
 
   async getFollowerUserList(userId: number) {
-    const followerObject = await this.followRepository
+    const followingUserProfileList = await this.followRepository
       .createQueryBuilder("follow")
       .select("follow.followed_id", "followed_id")
+      .addSelect("user.name", "name")
+      .addSelect("user.profile_image", "profile_image")
+      .addSelect("user.introduce", "introduce")
+      .innerJoin(User, "user", "user.user_id = follow.followed_id")
       .where("follow.follower_id = :userId", { userId })
+      .andWhere("follow.deleted = false")
       .getRawMany();
-    const followerUserProfileList = await Promise.all(
-      followerObject.map(async (item) => {
-        const following = await this.userRepository
-          .createQueryBuilder("user")
-          .select("user.name", "name")
-          .addSelect("user.profile_image", "profile_image")
-          .addSelect("user.introduce", "introduce")
-          .where("user.id = :userId", { userId: item.followed_id })
-          .getRawOne();
-        return {
-          userId: item.followed_id,
-          userName: following.name,
-          profileImage: following.profile_image,
-          introduce: following.introduce,
-        };
-      }),
-    );
     return HttpResponse.success({
-      followerUserProfileList,
+      followingUserProfileList,
     });
   }
 }
