@@ -17,6 +17,7 @@ export class AlarmsService {
     const alarmCount = await this.alarmRepository
       .createQueryBuilder("alarm")
       .where("alarm.user_id = :userId", { userId })
+      .andWhere("alarm.check = false")
       .getCount();
     return HttpResponse.success({
       alarmCount,
@@ -35,6 +36,7 @@ export class AlarmsService {
       .addSelect("alarm.time_stamp", "time_stamp")
       .innerJoin(User, "user", "user.user_id = alarm.sender_user_id")
       .where("alarm.user_id = :userId", { userId })
+      .andWhere("alarm.check = false")
       .getRawMany();
     await this.checkToReadAlarm(userId);
     return HttpResponse.success({
