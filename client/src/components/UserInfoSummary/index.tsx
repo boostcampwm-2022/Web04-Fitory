@@ -2,6 +2,7 @@ import React from "react";
 import Paper from "@components/design/Paper";
 import { TIER } from "@constants/enums";
 import useUserInfo from "@hooks/query/useUserInfo";
+import useExerciseProfile from "@hooks/query/useExerciseProfile";
 import convertWeightUnits from "@utils/convertWeightUnits";
 import * as s from "./style";
 
@@ -12,6 +13,7 @@ const UserInfoSummary = () => {
    */
   const isChallenge = true;
   const { userInfo } = useUserInfo();
+  const { exerciseProfile } = useExerciseProfile();
 
   return (
     <Paper style={{ width: "100%" }}>
@@ -31,11 +33,11 @@ const UserInfoSummary = () => {
             </s.RecordInfo>
             <s.RecordInfo>
               <p>누적 중량</p>
-              <s.RecordResult>{convertWeightUnits(+userInfo.volumeSum)}</s.RecordResult>
+              <s.RecordResult>{convertWeightUnits(exerciseProfile.totalVolume)}</s.RecordResult>
             </s.RecordInfo>
             <s.RecordInfo>
               <p>운동 횟수</p>
-              <s.RecordResult>142</s.RecordResult>
+              <s.RecordResult>{exerciseProfile.totalExerciseDate}</s.RecordResult>
             </s.RecordInfo>
           </s.RecordInfoWrapper>
           {!isChallenge && (
