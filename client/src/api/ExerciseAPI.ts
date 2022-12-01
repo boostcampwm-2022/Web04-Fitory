@@ -12,8 +12,8 @@ const ExerciseAPI = {
         throw new Error();
       }
 
-      const path = `exercise/profile?userId=${userId}`;
-      const response = await HttpClient.get(path);
+      const path = `exercise/profile`;
+      const response = await HttpClient.get(path, { userId });
 
       return response.response as ExerciseType.ExerciseProfile;
     } catch {
@@ -30,8 +30,8 @@ const ExerciseAPI = {
         throw new Error();
       }
 
-      const path = `exercise/everyDate?userId=${userId}`;
-      const response = await HttpClient.get(path);
+      const path = `exercise/everyDate`;
+      const response = await HttpClient.get(path, { userId });
       const { dateList } = response.response as { dateList: ExerciseType.ExerciseDate };
 
       return dateList;
