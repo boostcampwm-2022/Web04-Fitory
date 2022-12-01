@@ -2,7 +2,6 @@ import { HttpResponse } from "@converter/response.converter";
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { SBD_record } from "@record/entities/sbd_record.entity";
 import { User } from "./entities/user.entity";
 import { UsersInfoDto } from "./dto/users-info.dto";
 import { Exception } from "@exception/exceptions";
@@ -12,9 +11,15 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    @InjectRepository(SBD_record)
-    private recordsRepository: Repository<SBD_record>,
   ) {}
+
+  async isExistUser(userId: number) {
+    const userExist = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.user_id = :userId", { userId })
+      .getOne();
+    return userExist ? true : false;
+  }
 
   async getUserInfo(userId: number) {
     const user = await this.userRepository

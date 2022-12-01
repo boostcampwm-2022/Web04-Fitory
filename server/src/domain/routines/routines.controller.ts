@@ -1,3 +1,4 @@
+import { UsersService } from "@user/users.service";
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
@@ -8,7 +9,10 @@ import { SingleRoutineoDto } from "./dto/single-routine.dto";
 @Controller("api/routines")
 @ApiTags("ROUTINE API")
 export class RoutinesController {
-  constructor(private routinesService: RoutinesService) {}
+  constructor(
+    private readonly routinesService: RoutinesService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Get("list")
   @ApiOperation({
@@ -18,8 +22,10 @@ export class RoutinesController {
     name: "userId",
     type: "number",
   })
-  findAll(@Query("userId") userId: number) {
+  async findAll(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.routinesService.findEveryRoutine(userId);
   }
 
@@ -35,11 +41,13 @@ export class RoutinesController {
     name: "routineName",
     type: "string",
   })
-  getSingleRoutineDetail(
+  async getSingleRoutineDetail(
     @Query("userId") userId: number,
     @Query("routineName") routineName: string,
   ) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     // routineName에 대해 검증 추가 필요
     return this.routinesService.getSingleRoutineDetail(userId, routineName);
   }

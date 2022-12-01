@@ -6,7 +6,6 @@ import axios from "axios";
 import { SearchedUserInfo } from "src/types/user";
 import CardsScroller from "@components/design/CardsScroller";
 import Paper from "@components/design/Paper";
-import styled from "styled-components";
 import * as s from "./styles";
 
 const SearchPage = () => {

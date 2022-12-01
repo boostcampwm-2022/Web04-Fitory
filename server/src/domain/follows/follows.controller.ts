@@ -1,3 +1,4 @@
+import { UsersService } from "@user/users.service";
 import { FollowsService } from "@follow/follows.service";
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
@@ -7,7 +8,10 @@ import { Exception } from "@exception/exceptions";
 @Controller("api/follow")
 @ApiTags("FOLLOW API")
 export class FollowsController {
-  constructor(private readonly followService: FollowsService) {}
+  constructor(
+    private readonly followService: FollowsService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Get("following")
   @ApiOperation({
@@ -17,8 +21,10 @@ export class FollowsController {
     name: "userId",
     type: "number",
   })
-  getFollowingUserList(@Query("userId") userId: number) {
+  async getFollowingUserList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.followService.getFollowingUserList(userId);
   }
 
@@ -30,8 +36,10 @@ export class FollowsController {
     name: "userId",
     type: "number",
   })
-  getFollowerUserList(@Query("userId") userId: number) {
+  async getFollowerUserList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.followService.getFollowerUserList(userId);
   }
 }
