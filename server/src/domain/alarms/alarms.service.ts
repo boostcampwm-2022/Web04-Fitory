@@ -10,8 +10,6 @@ export class AlarmsService {
   constructor(
     @InjectRepository(Alarm)
     private alarmRepository: Repository<Alarm>,
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
   ) {}
 
   async countUnreadAlarm(userId: number) {

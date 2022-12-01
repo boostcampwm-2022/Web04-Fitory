@@ -18,7 +18,10 @@ export class UsersController {
     name: "id",
     type: "number",
   })
-  getUserInfo(@Query("id") userId: number) {
+  async getUserInfo(@Query("id") userId: number) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.usersService.getUserInfo(userId);
   }
 
@@ -38,8 +41,10 @@ export class UsersController {
     name: "userId",
     type: "number",
   })
-  getRecommandUserList(@Query("userId") userId: number) {
+  async getRecommandUserList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.usersService.getRecommandUserList(userId);
   }
 

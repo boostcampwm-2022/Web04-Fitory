@@ -4,11 +4,15 @@ import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidMonth, isValidUserId } from "@validation/validation";
 import { ExerciseDataDto } from "./dto/exercise.dto";
+import { UsersService } from "@user/users.service";
 
 @Controller("api/exercise")
 @ApiTags("EXERCISE API")
 export class ExercisesController {
-  constructor(private readonly exercisesService: ExercisesService) {}
+  constructor(
+    private readonly exercisesService: ExercisesService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Get("everyDate")
   @ApiOperation({
@@ -18,8 +22,10 @@ export class ExercisesController {
     name: "userId",
     type: "number",
   })
-  getEveryExerciseDate(@Query("userId") userId: number) {
+  async getEveryExerciseDate(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.exercisesService.findEveryExerciseDate(userId);
   }
 
@@ -35,9 +41,11 @@ export class ExercisesController {
     name: "userId",
     type: "number",
   })
-  getExerciseHistoryOfMonth(@Query("month") month: number, @Query("userId") userId: number) {
+  async getExerciseHistoryOfMonth(@Query("month") month: number, @Query("userId") userId: number) {
     if (!isValidMonth(month)) throw new Exception().invalidMonthError();
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.exercisesService.findExerciseHistoryOfMonth(month, userId);
   }
 
@@ -49,8 +57,10 @@ export class ExercisesController {
     name: "userId",
     type: "number",
   })
-  getInfoForProfile(@Query("userId") userId: number) {
+  async getInfoForProfile(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userExist = await this.usersService.isExistUser(userId);
+    if (!userExist) throw new Exception().userNotFound();
     return this.exercisesService.getProfileData(userId);
   }
 
