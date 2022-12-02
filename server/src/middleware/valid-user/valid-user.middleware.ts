@@ -11,24 +11,20 @@ export class ValidUserMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     try {
       const accessToken = req.cookies.access_token;
-      console.log("middleware", accessToken);
 
       if (accessToken) {
         const decodedToken = this.jwtService.verify(accessToken, {
           secret: ACCESS_TOKEN_SECRETKEY,
         });
-        console.log(decodedToken);
-
-        // req.headers("userId") === decodedToken;
-
         const { userId } = decodedToken;
-        console.log("middleware", userId);
+
+        if (req.headers.userId === userId) {
+          next();
+        }
       }
+      return new Exception().invalidUserIdError();
     } catch (error) {
-      console.log(error);
       throw new Exception().Unauthorized();
     }
-
-    next();
   }
 }
