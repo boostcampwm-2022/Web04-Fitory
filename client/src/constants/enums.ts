@@ -108,4 +108,5 @@ export const QUERY_KEY = {
   EXERCISE_PROFILE: "exerciseProfile",
   EXERCISE_DATE_LIST: "exerciseDateList",
   BEST_CHALLENGE_SCORE: "bestChallengeScore",
+  RECENT_CHALLENGE_TIME: "recentChallengeTime",
 };

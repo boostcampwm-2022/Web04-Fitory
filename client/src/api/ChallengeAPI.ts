@@ -50,6 +50,24 @@ const ChallengeAPI = {
       return null;
     }
   },
+
+  getRecentChallengeTime: async () => {
+    try {
+      const userId = authStorage.get();
+
+      if (!userId) {
+        throw new Error();
+      }
+
+      const path = "record/recent";
+      const response = await HttpClient.get(path, { userId });
+
+      return response.response as ChallengeType.ChallengeTimestamp;
+    } catch {
+      Exception.UserNotFound();
+      return null;
+    }
+  },
 };
 
 export default ChallengeAPI;

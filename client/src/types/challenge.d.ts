@@ -13,3 +13,8 @@ export interface ChallengeDetail extends Challenge {
 export interface ChallengeSubmission extends Challenge {
   userId: UserId;
 }
+
+export interface ChallengeTimestamp {
+  nowTimeStamp: string;
+  recentTimeStamp: string;
+}
