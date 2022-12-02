@@ -10,6 +10,5 @@ export interface recordItem {
   deadlift: number;
   benchpress: number;
   SBD_sum: number;
-  date: string;
   userWeight: number;
 }
