@@ -33,7 +33,7 @@ export class FollowsService {
   }
 
   async getFollowerUserList(userId: number) {
-    const followingUserProfileList = await this.followRepository
+    const followerUserProfileList = await this.followRepository
       .createQueryBuilder("follow")
       .select("follow.followed_id", "followed_id")
       .addSelect("user.name", "name")
@@ -44,7 +44,7 @@ export class FollowsService {
       .andWhere("follow.deleted = false")
       .getRawMany();
     return HttpResponse.success({
-      followingUserProfileList,
+      followerUserProfileList,
     });
   }
 
