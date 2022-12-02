@@ -13,3 +13,9 @@ export interface recordItem {
   date: string;
   userWeight: number;
 }
+
+export interface routineSet {
+  index: number;
+  kg: number;
+  count: number;
+}
