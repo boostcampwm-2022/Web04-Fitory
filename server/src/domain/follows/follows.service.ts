@@ -1,3 +1,5 @@
+import { FollowUserIdDto } from "./dto/follow.dto";
+import { Exception } from "@exception/exceptions";
 import { User } from "./../users/entities/user.entity";
 import { HttpResponse } from "@converter/response.converter";
 import { Follow } from "@follow/entities/follow.entity";
@@ -44,5 +46,49 @@ export class FollowsService {
     return HttpResponse.success({
       followingUserProfileList,
     });
+  }
+
+  async doFollow(userIds: FollowUserIdDto) {
+    try {
+      const followRelation = await this.getFollowRelation(userIds);
+      if (!followRelation) {
+        await this.followRepository.save({
+          followerId: userIds.myUserId,
+          followedId: userIds.otherUserId,
+          deleted: false,
+        });
+      } else {
+        followRelation.deleted = false;
+        await this.followRepository.save(followRelation);
+      }
+      return HttpResponse.success({
+        message: "Do Follow Request Success",
+      });
+    } catch (error) {
+      throw new Exception().invalidSubmit();
+    }
+  }
+
+  async cancelFollow(userIds: FollowUserIdDto) {
+    try {
+      const followRelation = await this.getFollowRelation(userIds);
+      followRelation.deleted = true;
+      await this.followRepository.save(followRelation);
+      return HttpResponse.success({
+        message: "Follow Cancel Success",
+      });
+    } catch (error) {
+      // 팔로우 관계가 아닌데 취소할 경우
+      throw new Exception().invalidDelete();
+    }
+  }
+
+  async getFollowRelation(userIds: FollowUserIdDto) {
+    const relation = await this.followRepository
+      .createQueryBuilder("follow")
+      .where("follow.follower_id = :myUserId", { myUserId: userIds.myUserId })
+      .andWhere("follow.followed_id = :otherUserId", { otherUserId: userIds.otherUserId })
+      .getOne();
+    return relation;
   }
 }

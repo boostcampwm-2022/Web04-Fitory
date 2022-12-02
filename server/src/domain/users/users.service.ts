@@ -1,10 +1,9 @@
 import { HttpResponse } from "@converter/response.converter";
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { Exception } from "@exception/exceptions";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { UsersInfoDto } from "./dto/users-info.dto";
-import { Exception } from "@exception/exceptions";
 
 @Injectable()
 export class UsersService {
@@ -38,7 +37,10 @@ export class UsersService {
   async getEveryUserProfile() {
     const userProfileList = await this.userRepository
       .createQueryBuilder("user")
-      .select(["user.id", "user.name", "user.introduce", "user.profile_image"])
+      .select("user.user_id", "user_id")
+      .addSelect("user.name", "name")
+      .addSelect("user.introduce", "introduce")
+      .addSelect("user.profile_image", "profile_image")
       .getRawMany();
 
     return HttpResponse.success({
@@ -48,9 +50,7 @@ export class UsersService {
 
   async checkUserName(name: string) {
     const userExists = await this.findUserByName(name);
-
-    if (!userExists) throw new Exception().userNotFound();
-    return HttpResponse.success({ userExists: true });
+    return HttpResponse.success({ userExists });
   }
 
   async findUserByName(name: string) {
@@ -58,12 +58,7 @@ export class UsersService {
       .createQueryBuilder("user")
       .where("user.name = :name", { name })
       .getOne();
-
-    if (!user) {
-      return null;
-    }
-
-    return user;
+    return user ? true : false;
   }
 
   async getRecommandUserList(userId: number) {

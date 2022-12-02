@@ -1,7 +1,17 @@
-import { IsNumber, IsString, Min } from "class-validator";
+import {
+  ArrayNotEmpty,
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Max,
+  Min,
+  ValidateNested,
+} from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 
-export class SingleRoutineoDto {
+export class RoutineDto {
   @ApiProperty({
     description: "유저의 고유 ID",
     type: Number,
@@ -18,16 +28,54 @@ export class SingleRoutineoDto {
   routineName: string;
 
   @ApiProperty({
+    description: "운동 배열",
+    type: () => [SingleExercise],
+  })
+  @IsArray()
+  @ArrayNotEmpty()
+  @Type(() => SingleExercise)
+  @ValidateNested({ each: true })
+  exerciseList: SingleExercise[];
+}
+
+export class SingleExercise {
+  @ApiProperty({
     description: "운동 이름",
     type: String,
   })
+  @IsNotEmpty()
   @IsString()
   exerciseName: string;
 
   @ApiProperty({
-    description: "운동 기록 문자열 ex) 90/7|90/7|70/5",
-    type: String,
+    description: "운동 배열",
+    type: () => [SingleSet],
   })
-  @IsString()
-  exerciseString: string;
+  @IsArray()
+  @ArrayNotEmpty()
+  @Type(() => SingleSet)
+  @ValidateNested({ each: true })
+  setList: SingleSet[];
+}
+
+export class SingleSet {
+  @ApiProperty({
+    description: "중량",
+    type: Number,
+  })
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  @Max(1000)
+  kg: number;
+
+  @ApiProperty({
+    description: "반복 횟수",
+    type: Number,
+  })
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  count: number;
 }
