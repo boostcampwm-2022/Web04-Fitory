@@ -23,8 +23,6 @@ export class AlarmsController {
   })
   async getUnreadAlarmCount(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.alarmService.countUnreadAlarm(userId);
   }
 
@@ -38,8 +36,6 @@ export class AlarmsController {
   })
   async getAlarmList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.alarmService.getAlarmList(userId);
   }
 }

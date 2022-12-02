@@ -25,8 +25,6 @@ export class RoutinesController {
   })
   async findAll(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.routinesService.findEveryRoutine(userId);
   }
 
@@ -47,8 +45,6 @@ export class RoutinesController {
     @Query("routineName") routineName: string,
   ) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     // routineName에 대해 검증 추가 필요
     return this.routinesService.getSingleRoutineDetail(userId, routineName);
   }
@@ -59,7 +55,6 @@ export class RoutinesController {
   })
   async saveRoutine(@Body() routineData: RoutineDto) {
     await this.routinesService.saveRoutine(routineData);
-
     return HttpResponse.success("Routine save success");
   }
 }
