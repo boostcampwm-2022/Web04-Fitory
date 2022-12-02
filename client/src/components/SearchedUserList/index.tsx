@@ -1,9 +1,9 @@
 import SearchResultUserProfile from "@components/SearchResultUserProfile";
 import React from "react";
-import styled from "styled-components";
-import { SearchedUserInfo } from "../types/user";
+import * as s from "./style";
+import { SearchedUserInfo } from "../../types/user";
 
-export const drawSearchedUserList = (searchedUser: SearchedUserInfo[]) => {
+const SearchedUserList = (searchedUser: SearchedUserInfo[]) => {
   return searchedUser.map((user: SearchedUserInfo) => {
     // const keyValue = user.follower_id ? user.follower_id : user.user_id;
     let keyValue;
@@ -11,15 +11,11 @@ export const drawSearchedUserList = (searchedUser: SearchedUserInfo[]) => {
     else if (user.user_id) keyValue = user.user_id;
     else if (user.followed_id) keyValue = user.followed_id;
     return (
-      <UserProfile key={keyValue}>
+      <s.UserProfile key={keyValue}>
         <SearchResultUserProfile userName={user.name} userMessage={user?.introduce} />
-      </UserProfile>
+      </s.UserProfile>
     );
   });
 };
 
-const UserProfile = styled.div`
-  padding: 5px 0;
-  height: 10%;
-  margin-bottom: 10px;
-`;
+export default SearchedUserList;
