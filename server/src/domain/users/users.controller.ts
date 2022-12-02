@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
@@ -6,6 +6,7 @@ import { JwtAuthGuard } from "@oauth/jwt/jwt.guard";
 import { User } from "@user/entities/user.entity";
 import { UsersService } from "./users.service";
 import { GetUserId } from "../../decorator/validate.decorator";
+import { UserProfileDto } from "./dto/user_profile.dto";
 
 @Controller("api/users")
 @ApiTags("USER API")
@@ -63,5 +64,14 @@ export class UsersController {
   async getTest(@GetUserId() userId: User) {
     console.log(userId);
     return userId;
+  }
+
+  @Post("update")
+  @ApiOperation({
+    summary: "해당 사용자의 프로필 정보를 업데이트",
+  })
+  async updateUserProfile(@Body() userProfileData: UserProfileDto) {
+    // 검증 추가 필요 - 존재하는 userId 인지
+    return this.usersService.updateUserProfile(userProfileData);
   }
 }

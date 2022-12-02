@@ -1,3 +1,4 @@
+import { UserProfileDto } from "./dto/user_profile.dto";
 import { HttpResponse } from "@converter/response.converter";
 import { Exception } from "@exception/exceptions";
 import { Injectable } from "@nestjs/common";
@@ -93,5 +94,23 @@ export class UsersService {
       .getRawMany();
 
     return HttpResponse.success({ recommendWeight, recommendAge });
+  }
+
+  async updateUserProfile(userProfileData: UserProfileDto) {
+    const userObject = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.user_id = :userId", { userId: userProfileData.userId })
+      .getOne();
+    // not exist => null
+    console.log(userObject);
+    // image link
+    // userObject.profileImage = userProfileData.profileImage
+    userObject.name = userProfileData.name;
+    userObject.age = userProfileData.age;
+    userObject.gender = userProfileData.gender;
+    userObject.height = userProfileData.height;
+    userObject.weight = userProfileData.weight;
+    userObject.introduce = userProfileData.introduce;
+    await this.userRepository.save(userObject);
   }
 }
