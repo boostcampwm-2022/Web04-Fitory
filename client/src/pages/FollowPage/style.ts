@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   gap: 20px;
   flex-direction: column;
   align-items: center;
-  padding: 1.3rem 8vw;
+  padding: 1.3rem 3vw;
 `;
 
 export const SearchContainer = styled.div`
@@ -34,4 +34,8 @@ export const SearchBar = styled.input`
   margin-left: 3vw;
   background-color: transparent;
   border: none;
+
+  :focus {
+    outline: none;
+  }
 `;
