@@ -5,6 +5,7 @@ import { ApiBody, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidMonth, isValidUserId } from "@validation/validation";
 import { ExerciseDataDto } from "./dto/exercise.dto";
 import { UsersService } from "@user/users.service";
+import { AlarmsService } from "@alarm/alarms.service";
 
 @Controller("api/exercise")
 @ApiTags("EXERCISE API")
@@ -12,6 +13,7 @@ export class ExercisesController {
   constructor(
     private readonly exercisesService: ExercisesService,
     private readonly usersService: UsersService,
+    private readonly alarmsService: AlarmsService,
   ) {}
 
   @Get("everyDate")
@@ -69,7 +71,8 @@ export class ExercisesController {
     summary: "해당 사용자가 제출한 운동 기록을 DB에 저장",
   })
   @ApiBody({ type: () => ExerciseDataDto })
-  submitExercise(@Body() exerciseData: ExerciseDataDto) {
+  async submitExercise(@Body() exerciseData: ExerciseDataDto) {
+    await this.alarmsService.sendExerciseAlarm(exerciseData.userId);
     return this.exercisesService.submitSingleSBDRecord(exerciseData);
   }
 }

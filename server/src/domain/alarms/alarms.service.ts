@@ -1,4 +1,5 @@
 import { Exception } from "@exception/exceptions";
+import { Follow } from "@follow/entities/follow.entity";
 import { HttpResponse } from "@converter/response.converter";
 import { Alarm } from "./entities/alram.entity";
 import { Injectable } from "@nestjs/common";
@@ -11,6 +12,8 @@ export class AlarmsService {
   constructor(
     @InjectRepository(Alarm)
     private alarmRepository: Repository<Alarm>,
+    @InjectRepository(Follow)
+    private followRepository: Repository<Follow>,
   ) {}
 
   async countUnreadAlarm(userId: number) {
@@ -51,5 +54,39 @@ export class AlarmsService {
       .set({ check: true })
       .where("user_id = :userId", { userId })
       .execute();
+  }
+
+  async sendFollowAlarm(myUserId: number, otherUserId: number) {
+    try {
+      await this.alarmRepository.save({
+        senderUserId: myUserId,
+        alarmType: 1,
+        check: false,
+        user: { id: otherUserId },
+      });
+      return HttpResponse.success({
+        message: "Follow Alarm Send Success",
+      });
+    } catch (error) {
+      throw new Exception().invalidSubmit();
+    }
+  }
+  
+  async sendExerciseAlarm(senderUserId: number) {
+    const followerList = await this.followRepository
+      .createQueryBuilder("follow")
+      .select("follow.follower_id", "follower_id")
+      .where("follow.followed_id = :senderUserId", { senderUserId })
+      .getRawMany();
+    await Promise.all(
+      followerList.map(async (row) => {
+        await this.alarmRepository.save({
+          senderUserId,
+          alarmType: 0,
+          check: false,
+          user: { id: row.follower_id },
+        });
+      }),
+    );
   }
 }

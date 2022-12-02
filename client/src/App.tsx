@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -12,6 +12,7 @@ import ProfilePage from "@pages/ProfilePage";
 import LoginPage from "@pages/LoginPage";
 import JoinPage from "@pages/JoinPage";
 import SearchPage from "@pages/SearchPage";
+import FollowPage from "@pages/FollowPage";
 import StaticsPage from "@pages/StaticsPage";
 
 const queryClient = new QueryClient();
@@ -21,21 +22,24 @@ const App = () => {
     <BrowserRouter>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
-        <Routes>
-          {/* Home */}
-          <Route path={RoutePath.HOME} element={<HomePage />} />
-          <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
-          <Route path={RoutePath.RECORD} element={<RecordPage />} />
-          {/* Search */}
-          <Route path={RoutePath.SEARCH} element={<SearchPage />} />
-          {/* Statics */}
-          <Route path={RoutePath.STATICS} element={<StaticsPage />} />
-          {/* Profile */}
-          <Route path={RoutePath.PROFILE} element={<ProfilePage />} />
-          <Route path={RoutePath.LOGIN} element={<LoginPage />} />
-          <Route path={RoutePath.JOIN} element={<JoinPage />} />
-          <Route path={RoutePath.SEARCH} element={<SearchPage />} />
-        </Routes>
+        <Suspense fallback={<div>loading..</div>}>
+          <Routes>
+            {/* Home */}
+            <Route path={RoutePath.HOME} element={<HomePage />} />
+            <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
+            <Route path={RoutePath.RECORD} element={<RecordPage />} />
+            {/* Search */}
+            <Route path={RoutePath.SEARCH} element={<SearchPage />} />
+            {/* Statics */}
+            <Route path={RoutePath.STATICS} element={<StaticsPage />} />
+            {/* Profile */}
+            <Route path={RoutePath.PROFILE} element={<ProfilePage />} />
+            <Route path={RoutePath.LOGIN} element={<LoginPage />} />
+            <Route path={RoutePath.JOIN} element={<JoinPage />} />
+            <Route path={RoutePath.SEARCH} element={<SearchPage />} />
+            <Route path={RoutePath.FOLLOW} element={<FollowPage />} />
+          </Routes>
+        </Suspense>
       </QueryClientProvider>
     </BrowserRouter>
   );

@@ -34,6 +34,7 @@ const JoinPage = () => {
     if (step === 0) {
       const isExist = await UserAPI.checkExistUserName(userInfo.name);
       if (isExist) {
+        // eslint-disable-next-line no-alert
         alert("이미 존재하는 닉네임입니다.");
         return;
       }
