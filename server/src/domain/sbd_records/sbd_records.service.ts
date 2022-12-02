@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 import { Exception } from "@exception/exceptions";
 import { SingleSBDDataDto } from "./dto/single_sbd_data.dto";
 import { HttpResponse } from "@converter/response.converter";
@@ -21,7 +23,7 @@ export class SbdRecordsService {
     const recordList = await this.recordsRepository
       .createQueryBuilder("SBD_record")
       .where("SBD_record.user_id = :userId", { userId })
-      .orderBy("CAST(SBD_record.date AS SIGNED)", "ASC")
+      .orderBy("SBD_record.time_stamp", "ASC")
       .getMany();
     return HttpResponse.success({
       recordList: recordConverter.everyRecord(recordList),
@@ -48,10 +50,12 @@ export class SbdRecordsService {
       .select("record.time_stamp")
       .orderBy("record.time_stamp", "DESC")
       .getRawOne();
+    dayjs.locale("ko");
     let timeStamp = 0;
     if (record) timeStamp = record.time_stamp;
     return HttpResponse.success({
-      timeStamp,
+      recentTimeStamp: timeStamp,
+      nowTimeStamp: dayjs().format("YYYY-MM-DDTHH:mm:ss"),
     });
   }
 

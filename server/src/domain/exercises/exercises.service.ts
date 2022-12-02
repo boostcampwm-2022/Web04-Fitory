@@ -1,12 +1,13 @@
-import { User } from "./../users/entities/user.entity";
 import { HttpResponse } from "@converter/response.converter";
-import { exerciseConverter } from "./converter/exercise.converter";
-import { Exercise } from "./entities/exercise.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Exception } from "src/exception/exceptions";
+import { Exercise } from "./entities/exercise.entity";
+import { exerciseConverter } from "./converter/exercise.converter";
+import { User } from "../users/entities/user.entity";
 import { ExerciseDataDto } from "./dto/exercise.dto";
+import dayjs from "dayjs";
 
 @Injectable()
 export class ExercisesService {
@@ -51,21 +52,17 @@ export class ExercisesService {
 
   async submitSingleSBDRecord(exerciseData: ExerciseDataDto) {
     try {
-      const userObject = await this.userRepository
-        .createQueryBuilder("user")
-        .where("user.user_id = :userId", { userId: exerciseData.userId })
-        .getOne();
       await Promise.all(
         exerciseData.exerciseList.map(async (exercise) => {
           const setString = exercise.setList.reduce((acc, cur) => {
-            return acc + "|" + cur.kg + "/" + cur.count + "/" + cur.check;
+            return `${acc}|${cur.kg}/${cur.count}/${cur.check}`;
           }, "");
-          console.log(exerciseData.userId);
+
           await this.exerciseRepository.save({
             exerciseName: exercise.exerciseName,
-            exerciseString: setString.substring(1),
-            date: exerciseData.date,
-            user: userObject,
+            exerciseString: setString.slice(1),
+            date: dayjs().format("YYMMDD"),
+            user: { id: exerciseData.userId },
           });
         }),
       );
@@ -87,7 +84,7 @@ export class ExercisesService {
   }
 
   async getTotalExerciseDate(userId: number) {
-    return await this.exerciseRepository
+    return this.exerciseRepository
       .createQueryBuilder("exercise")
       .select("exercise.date")
       .where("exercise.user_id = :userId", { userId })

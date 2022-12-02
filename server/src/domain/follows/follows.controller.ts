@@ -5,6 +5,7 @@ import { ApiBody, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
 import { FollowUserIdDto } from "./dto/follow.dto";
+import { AlarmsService } from "@alarm/alarms.service";
 
 @Controller("api/follow")
 @ApiTags("FOLLOW API")
@@ -12,6 +13,7 @@ export class FollowsController {
   constructor(
     private readonly followService: FollowsService,
     private readonly usersService: UsersService,
+    private readonly alarmsService: AlarmsService,
   ) {}
 
   @Get("following")
@@ -52,6 +54,7 @@ export class FollowsController {
     const myUserIdExist = await this.usersService.isExistUser(userIds.myUserId);
     const otherUserIdExist = await this.usersService.isExistUser(userIds.otherUserId);
     if (!myUserIdExist || !otherUserIdExist) throw new Exception().userNotFound();
+    await this.alarmsService.sendFollowAlarm(userIds.myUserId, userIds.otherUserId);
     return this.followService.doFollow(userIds);
   }
 

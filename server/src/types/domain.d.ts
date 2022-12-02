@@ -10,5 +10,12 @@ export interface recordItem {
   deadlift: number;
   benchpress: number;
   SBD_sum: number;
+  timeStamp: Date;
   userWeight: number;
+}
+
+export interface routineSet {
+  index: number;
+  kg: number;
+  count: number;
 }
