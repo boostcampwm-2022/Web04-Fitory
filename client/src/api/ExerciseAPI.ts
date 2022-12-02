@@ -32,11 +32,32 @@ const ExerciseAPI = {
 
       const path = `exercise/everyDate`;
       const response = await HttpClient.get(path, { userId });
+
       const { dateList } = response.response as { dateList: ExerciseType.ExerciseDate };
 
       return dateList;
     } catch {
       Exception.UserNotFound();
+      return null;
+    }
+  },
+
+  recordExercise: async (exerciseList: ExerciseType.Exercise[]) => {
+    try {
+      const userId = authStorage.get();
+
+      if (!userId) {
+        Exception.UserNotFound();
+        return null;
+      }
+
+      const path = "exercise/submit";
+      const response = await HttpClient.post(path, { userId, exerciseList });
+      console.log(response);
+      return response.response;
+    } catch {
+      // eslint-disable-next-line no-alert
+      alert("빈 입력 값이 없는지 확인해주세요.");
       return null;
     }
   },

@@ -1,12 +1,12 @@
 export interface ExerciseSet {
-  weight: number;
+  kg: number;
   count: number;
-  isComplete: boolean;
+  check: 0 | 1;
 }
 
 export interface Exercise {
-  name: string;
-  setInfo: ExerciseSet[];
+  exerciseName: string;
+  setList: ExerciseSet[];
 }
 
 export interface ExerciseProfile {

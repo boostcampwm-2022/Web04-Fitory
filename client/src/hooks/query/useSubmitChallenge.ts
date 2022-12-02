@@ -1,10 +1,10 @@
-import { QueryClient, useMutation } from "react-query";
+import { useQueryClient, useMutation } from "react-query";
 import ChallengeAPI from "@api/ChallengeAPI";
 import { QUERY_KEY } from "@constants/enums";
 import { Challenge } from "src/types/challenge";
 
 const useSubmitChallenge = () => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const { mutate } = useMutation(
     (SBDWeight: Challenge) => ChallengeAPI.submitChallengeScore(SBDWeight),

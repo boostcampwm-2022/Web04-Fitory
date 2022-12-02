@@ -5,21 +5,24 @@ import PageTemplate from "@pages/PageTemplate";
 import RoutineScroller from "@components/RoutineScroller";
 import ExerciseRecordItem from "@components/ExerciseRecordItem";
 import exerciseStore from "@stores/exerciseStore";
+import useRecordExercise from "@hooks/query/useRecordExercise";
 import * as s from "./style";
 
 const RecordPage = () => {
+  const { recordExercise } = useRecordExercise();
   const { exerciseList, initExerciseList, createExerciseItem, deleteExerciseItem } =
     exerciseStore();
-  const [prevExersiceCount, setPrevExersiceCount] = useState<number>(1);
+
+  const [isIncreaseExercise, setIsIncreaseExercise] = useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleClickExerciseIncreaseButton = () => {
-    setPrevExersiceCount(exerciseList.length);
+    setIsIncreaseExercise(true);
     createExerciseItem();
   };
 
   const handleClickExerciseDecreaseButton = (index: number) => {
-    setPrevExersiceCount(exerciseList.length);
+    setIsIncreaseExercise(false);
     if (exerciseList.length > 1) {
       deleteExerciseItem(index);
       return;
@@ -27,15 +30,21 @@ const RecordPage = () => {
     initExerciseList();
   };
 
+  const handleClickExerciseSaveButton = () => {
+    recordExercise(exerciseList);
+  };
+
+  // 운동 증가 버튼 클릭시 자동 스크롤 다운
   useEffect(() => {
-    if (prevExersiceCount >= exerciseList.length) {
+    if (!isIncreaseExercise) {
       return;
     }
+    setIsIncreaseExercise(false);
     const targetElement = scrollRef.current;
     if (targetElement) {
       targetElement.scrollTop = targetElement.scrollHeight;
     }
-  }, [prevExersiceCount, exerciseList]);
+  }, [isIncreaseExercise]);
 
   return (
     <PageTemplate title="운동" isRoot={false}>
@@ -66,7 +75,9 @@ const RecordPage = () => {
         </s.ExerciseListWrapper>
         <s.SaveButtonWrapper>
           <s.RoutineSaveButton>루틴 저장</s.RoutineSaveButton>
-          <s.ExerciseSaveButton>운동 완료</s.ExerciseSaveButton>
+          <s.ExerciseSaveButton onClick={handleClickExerciseSaveButton}>
+            운동 완료
+          </s.ExerciseSaveButton>
         </s.SaveButtonWrapper>
       </s.Wrapper>
     </PageTemplate>
