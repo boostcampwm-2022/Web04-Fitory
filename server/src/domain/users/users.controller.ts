@@ -71,7 +71,10 @@ export class UsersController {
     summary: "해당 사용자의 프로필 정보를 업데이트",
   })
   async updateUserProfile(@Body() userProfileData: UserProfileDto) {
-    // 검증 추가 필요 - 존재하는 userId 인지
+    const userId = userProfileData.userId;
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    const userIdExist = await this.usersService.isExistUser(userId);
+    if (!userIdExist) throw new Exception().userNotFound();
     return this.usersService.updateUserProfile(userProfileData);
   }
 }
