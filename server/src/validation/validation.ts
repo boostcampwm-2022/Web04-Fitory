@@ -1,5 +1,6 @@
 export function isValidUserId(userId: number) {
-  return /^([1-9]+[0-9]*)$/gm.test(userId.toString());
+  // return /^([1-9]+[0-9]*)$/gm.test(userId.toString());
+  return true;
 }
 
 export function isValidMonth(month: number) {

@@ -5,7 +5,9 @@ import { Powerlifting } from "@constants/enums";
 import squatSrc from "@public/images/img_squat.jpg";
 import benchpressSrc from "@public/images/img_benchpress.jpg";
 import deadliftSrc from "@public/images/img_deadlift.jpg";
-import useTimeCount from "@hooks/useTimeCount";
+import useDecreaseTime from "@hooks/useDecreaseTime";
+import useSubmitChallenge from "@hooks/query/useSubmitChallenge";
+import useRecentChallengeTime from "@hooks/query/useRecentChallengeTime";
 import addZeroPaddingToNumber from "@utils/addZeroPaddingToNumber";
 import * as s from "./style";
 
@@ -15,12 +17,11 @@ interface SBDWeightState {
   deadlift: number;
 }
 
-// 현재 시간에 10초를 더한 시간을 버튼 활성화 시간으로 테스트
-const targetTime = new Date();
-targetTime.setSeconds(targetTime.getSeconds() + 10);
-
 const ChallengePage = () => {
-  const remaingingTime = useTimeCount(targetTime);
+  const { submitChallenge } = useSubmitChallenge();
+  const { nowTimeStamp, targetTimeStamp } = useRecentChallengeTime();
+  const remaingingTime = useDecreaseTime(targetTimeStamp, nowTimeStamp);
+
   const [SBDWeight, setSBDWeight] = useState<SBDWeightState>({
     squat: 0,
     benchpress: 0,
@@ -55,6 +56,20 @@ const ChallengePage = () => {
     return false;
   };
 
+  const handleClickSubmitButton = () => {
+    if (remaingingTime) {
+      // eslint-disable-next-line no-alert
+      alert("최근 챌린지 후 24시간 내 이용할 수 없습니다.");
+      return;
+    }
+    if (!checkSBDWeightValidation()) {
+      // eslint-disable-next-line no-alert
+      alert("올바르지 않은 입력입니다.");
+      return;
+    }
+    submitChallenge(SBDWeight);
+  };
+
   return (
     <PageTemplate title="3대 챌린지" isRoot={false}>
       <s.Wrapper>
@@ -67,7 +82,7 @@ const ChallengePage = () => {
             setWeight={setWeight}
           />
         ))}
-        <s.SubmitButton disabled={!checkSBDWeightValidation()}>
+        <s.SubmitButton disabled={!checkSBDWeightValidation()} onClick={handleClickSubmitButton}>
           {remaingingTime ? (
             <>
               <span>{addZeroPaddingToNumber(remaingingTime.hours)} : </span>
