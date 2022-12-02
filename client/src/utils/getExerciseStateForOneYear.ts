@@ -15,17 +15,18 @@ const addZeroPadding = (date: number) => {
  * @param recordDateList 사용자가 운동을 완료했던 날짜 리스트
  */
 const getExerciseStateForOneYear = (year: number, recordDateList: string[]) => {
+  const dateList = [...recordDateList];
   const lastDigitOfYear = year.toString().slice(2);
   let numberOfNotExercised = 3;
 
   return getNumberOfDaysPerMonth(year).map((numberOfDays, month) => {
     return Array.from(Array(numberOfDays), (_, day) => {
       const date = lastDigitOfYear + addZeroPadding(month + 1) + addZeroPadding(day + 1);
-      if (recordDateList[0] !== date) {
+      if (dateList[0] !== date) {
         numberOfNotExercised += 1;
         return numberOfNotExercised < 3 ? ExerciseState.REST : ExerciseState.IDLE;
       }
-      recordDateList.shift();
+      dateList.shift();
       numberOfNotExercised = 0;
       return ExerciseState.EXERCISE;
     });
