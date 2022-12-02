@@ -102,3 +102,10 @@ export const WEIGHT_UNIT = {
   TON: "t",
   KG: "kg",
 } as const;
+
+export const QUERY_KEY = {
+  USER_INFO: "userInfo",
+  EXERCISE_PROFILE: "exerciseProfile",
+  EXERCISE_DATE_LIST: "exerciseDateList",
+  BEST_CHALLENGE_SCORE: "bestChallengeScore",
+};
