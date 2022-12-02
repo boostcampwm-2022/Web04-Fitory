@@ -97,20 +97,27 @@ export class UsersService {
   }
 
   async updateUserProfile(userProfileData: UserProfileDto) {
-    const userObject = await this.userRepository
-      .createQueryBuilder("user")
-      .where("user.user_id = :userId", { userId: userProfileData.userId })
-      .getOne();
-    // not exist => null
-    console.log(userObject);
-    // image link
-    // userObject.profileImage = userProfileData.profileImage
-    userObject.name = userProfileData.name;
-    userObject.age = userProfileData.age;
-    userObject.gender = userProfileData.gender;
-    userObject.height = userProfileData.height;
-    userObject.weight = userProfileData.weight;
-    userObject.introduce = userProfileData.introduce;
-    await this.userRepository.save(userObject);
+    try {
+      const userObject = await this.userRepository
+        .createQueryBuilder("user")
+        .where("user.user_id = :userId", { userId: userProfileData.userId })
+        .getOne();
+      // not exist => null
+      console.log(userObject);
+      // image link
+      // userObject.profileImage = userProfileData.profileImage
+      userObject.name = userProfileData.name;
+      userObject.age = userProfileData.age;
+      userObject.gender = userProfileData.gender;
+      userObject.height = userProfileData.height;
+      userObject.weight = userProfileData.weight;
+      userObject.introduce = userProfileData.introduce;
+      await this.userRepository.save(userObject);
+      return HttpResponse.success({
+        message: "Profile Update Success",
+      });
+    } catch (error) {
+      throw new Exception().invalidSubmit();
+    }
   }
 }
