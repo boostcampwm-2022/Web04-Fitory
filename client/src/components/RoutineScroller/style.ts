@@ -17,10 +17,11 @@ export const RoutineButton = styled.button`
   width: 100px;
   height: 100px;
   padding: 15px;
+  gap: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   color: ${({ theme }) => theme.COLORS.WHITE};
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};

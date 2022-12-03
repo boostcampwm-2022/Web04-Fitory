@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import PageTemplate from "@pages/PageTemplate";
 import RoutineScroller from "@components/RoutineScroller";
 import ExerciseRecordList from "@components/ExerciseRecordList";
@@ -11,7 +11,7 @@ import * as s from "./style";
 
 const RecordPage = () => {
   const { recordExercise } = useRecordExercise();
-  const { exerciseList, fetchRoutine } = exerciseStore();
+  const { exerciseList, initExerciseList, fetchRoutine } = exerciseStore();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleClickExerciseSaveButton = () => {
@@ -22,6 +22,10 @@ const RecordPage = () => {
     const routineInfo = await ExerciseAPI.getSingleRoutineInfo(authStorage.get(), routineName);
     fetchRoutine(routineInfo);
   };
+
+  useEffect(() => {
+    initExerciseList();
+  }, [initExerciseList]);
 
   return (
     <PageTemplate title="운동" isRoot={false}>
