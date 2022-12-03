@@ -1,16 +1,24 @@
+import Exception from "./Exception";
+
 class ClientStorage<T> {
   private key;
 
   private storage;
 
-  constructor(key: string, storage: Storage) {
+  private onException;
+
+  constructor(key: string, storage: Storage, onException: () => void) {
     this.key = key;
     this.storage = storage;
+    this.onException = onException;
   }
 
-  get(): T | null {
+  get(): T {
     const data = this.storage.getItem(this.key);
-    return data ? JSON.parse(data) : null;
+    if (data === null) {
+      this.onException();
+    }
+    return JSON.parse(data as string);
   }
 
   set(data: T) {
@@ -22,6 +30,6 @@ class ClientStorage<T> {
   }
 }
 
-const authStorage = new ClientStorage<number>("fitory_auth", localStorage);
+const authStorage = new ClientStorage<number>("fitory_auth", localStorage, Exception.UserNotFound);
 
 export { authStorage };
