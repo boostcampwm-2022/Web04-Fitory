@@ -28,14 +28,8 @@ export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
   }
 
   async validate(payload: JwtPayload) {
-    const userId = await this.userRepository
-      .createQueryBuilder("user")
-      .where("user.id = :userId", { userId: payload.userId })
-      .select("user.id")
-      .getOne();
+    if (!payload.userId) throw new Exception().Unauthorized();
 
-    if (!userId) throw new Exception().Unauthorized();
-
-    return userId;
+    return payload.userId;
   }
 }
