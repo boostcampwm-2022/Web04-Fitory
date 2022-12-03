@@ -19,6 +19,11 @@ export interface ExerciseProfile {
   totalExerciseDate: number;
 }
 
+export interface RoutineDetailInfo {
+  name: string;
+  set: [{ kg: number; count: number }];
+}
+
 export type ExerciseDate = string[];
 
 export type RoutineList = string[];

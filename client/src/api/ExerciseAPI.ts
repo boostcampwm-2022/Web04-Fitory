@@ -88,6 +88,16 @@ const ExerciseAPI = {
 
     return routineList;
   },
+
+  getSingleRoutineInfo: async (userId: UserId, routineName: string) => {
+    const path = `routines/single`;
+    const response = await HttpClient.get(path, { userId, routineName });
+    const { routineList } = response.response as {
+      routineList: { [key: string]: ExerciseType.RoutineDetailInfo[] };
+    };
+
+    return Object.values(routineList)[0];
+  },
 };
 
 export default ExerciseAPI;

@@ -6,7 +6,12 @@ import useRoutineList from "@hooks/query/useRoutineList";
 import { UserId } from "src/types/user";
 import * as s from "./style";
 
-const RoutineScroller = ({ userId }: { userId: UserId }) => {
+interface RoutineScrollerProps {
+  userId: UserId;
+  onClickRoutineItem: (routineName: string) => void;
+}
+
+const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) => {
   const { userInfo } = useUserInfo(userId);
   const { routineList } = useRoutineList(userId);
 
@@ -16,9 +21,11 @@ const RoutineScroller = ({ userId }: { userId: UserId }) => {
         <span>{userInfo.name}</span>님의 운동 루틴
       </s.Label>
       <CardsScroller>
-        {routineList?.map((routine) => (
-          <Paper key={routine} shadow={2} hover>
-            <s.RoutineButton>{routine}</s.RoutineButton>
+        {routineList?.map((routineName) => (
+          <Paper key={routineName} shadow={2} hover>
+            <s.RoutineButton onClick={() => onClickRoutineItem(routineName)}>
+              {routineName}
+            </s.RoutineButton>
           </Paper>
         ))}
       </CardsScroller>

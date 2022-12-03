@@ -7,12 +7,13 @@ import ExerciseRecordItem from "@components/ExerciseRecordItem";
 import RoutineSaveButton from "@components/RoutineSaveButton";
 import exerciseStore from "@stores/exerciseStore";
 import useRecordExercise from "@hooks/query/useRecordExercise";
+import ExerciseAPI from "@api/ExerciseAPI";
 import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
 const RecordPage = () => {
   const { recordExercise } = useRecordExercise();
-  const { exerciseList, initExerciseList, createExerciseItem, deleteExerciseItem } =
+  const { exerciseList, initExerciseList, createExerciseItem, deleteExerciseItem, fetchRoutine } =
     exerciseStore();
 
   const [isIncreaseExercise, setIsIncreaseExercise] = useState<boolean>(false);
@@ -36,6 +37,11 @@ const RecordPage = () => {
     recordExercise(exerciseList);
   };
 
+  const handleClickRoutineItem = async (routineName: string) => {
+    const routineInfo = await ExerciseAPI.getSingleRoutineInfo(authStorage.get(), routineName);
+    fetchRoutine(routineInfo);
+  };
+
   // 운동 증가 버튼 클릭시 자동 스크롤 다운
   useEffect(() => {
     if (!isIncreaseExercise) {
@@ -52,7 +58,7 @@ const RecordPage = () => {
     <PageTemplate title="운동" isRoot={false}>
       <s.Wrapper ref={scrollRef}>
         <s.RoutineWrapper>
-          <RoutineScroller userId={authStorage.get()} />
+          <RoutineScroller userId={authStorage.get()} onClickRoutineItem={handleClickRoutineItem} />
         </s.RoutineWrapper>
         <s.ExerciseListWrapper>
           {exerciseList.map((_, i) => (
