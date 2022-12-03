@@ -24,7 +24,13 @@ export const RoutineButton = styled.button`
   color: ${({ theme }) => theme.COLORS.WHITE};
   font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
   & > img {
-    width: 80%;
+    width: 60%;
     filter: invert(1);
+  }
+  & > p {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;

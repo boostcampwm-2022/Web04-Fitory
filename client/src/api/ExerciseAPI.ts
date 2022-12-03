@@ -46,19 +46,15 @@ const ExerciseAPI = {
   recordExercise: async (exerciseList: ExerciseType.Exercise[]) => {
     try {
       const userId = authStorage.get();
-
-      if (!userId) {
-        Exception.UserNotFound();
-        return;
-      }
-
       const path = "exercise/submit";
       await HttpClient.post(path, { userId, exerciseList });
       // eslint-disable-next-line no-alert
       alert("오늘의 운동 완료!");
+      return true;
     } catch {
       // eslint-disable-next-line no-alert
       alert("빈 입력 값이 없는지 확인해주세요.");
+      return false;
     }
   },
 

@@ -7,12 +7,13 @@ import * as s from "./style";
 
 const RoutineSaveButton = () => {
   const { saveRoutine } = useSaveRoutine();
-  const { openModal } = modalStore();
+  const { openModal, closeModal } = modalStore();
   const { exerciseList } = exerciseStore();
   const [routineName, setRoutineName] = useState("");
 
   const handleClickRoutineSaveButton = () => {
     saveRoutine({ routineName, exerciseList });
+    closeModal();
   };
 
   return (
