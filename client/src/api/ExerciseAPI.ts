@@ -1,6 +1,7 @@
 import { authStorage } from "src/services/ClientStorage";
 import HttpClient from "src/services/HttpClient";
 import Exception from "src/services/Exception";
+import { UserId } from "src/types/user";
 import * as ExerciseType from "src/types/exercise";
 
 const ExerciseAPI = {
@@ -78,6 +79,14 @@ const ExerciseAPI = {
       // eslint-disable-next-line no-alert
       alert("운동 이름과 루틴 이름이 모두 채워져 있는지 확인해주세요.");
     }
+  },
+
+  getRoutineList: async (userId: UserId) => {
+    const path = `routines/list`;
+    const response = await HttpClient.get(path, { userId });
+    const { routineList } = response.response as { routineList: ExerciseType.RoutineList };
+
+    return routineList;
   },
 };
 

@@ -20,3 +20,5 @@ export interface ExerciseProfile {
 }
 
 export type ExerciseDate = string[];
+
+export type RoutineList = string[];

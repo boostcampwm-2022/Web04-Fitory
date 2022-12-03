@@ -1,22 +1,22 @@
 import React from "react";
 import Paper from "@components/design/Paper";
 import CardsScroller from "@components/design/CardsScroller";
-import { UserName } from "src/types/user";
+import useUserInfo from "@hooks/query/useUserInfo";
+import useRoutineList from "@hooks/query/useRoutineList";
+import { UserId } from "src/types/user";
 import * as s from "./style";
 
-interface RoutineScrollerProps {
-  userName: UserName;
-  routineList: string[];
-}
+const RoutineScroller = ({ userId }: { userId: UserId }) => {
+  const { userInfo } = useUserInfo(userId);
+  const { routineList } = useRoutineList(userId);
 
-const RoutineScroller = ({ userName, routineList }: RoutineScrollerProps) => {
   return (
     <s.Wrapper>
       <s.Label>
-        <span>{userName}</span>님의 운동 루틴
+        <span>{userInfo.name}</span>님의 운동 루틴
       </s.Label>
       <CardsScroller>
-        {routineList.map((routine) => (
+        {routineList?.map((routine) => (
           <Paper key={routine} shadow={2} hover>
             <s.RoutineButton>{routine}</s.RoutineButton>
           </Paper>

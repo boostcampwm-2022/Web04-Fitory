@@ -7,6 +7,7 @@ import ExerciseRecordItem from "@components/ExerciseRecordItem";
 import RoutineSaveButton from "@components/RoutineSaveButton";
 import exerciseStore from "@stores/exerciseStore";
 import useRecordExercise from "@hooks/query/useRecordExercise";
+import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
 const RecordPage = () => {
@@ -51,10 +52,7 @@ const RecordPage = () => {
     <PageTemplate title="운동" isRoot={false}>
       <s.Wrapper ref={scrollRef}>
         <s.RoutineWrapper>
-          <RoutineScroller
-            userName="대구사나이김동규"
-            routineList={["등", "가슴", "어께", "하체"]}
-          />
+          <RoutineScroller userId={authStorage.get()} />
         </s.RoutineWrapper>
         <s.ExerciseListWrapper>
           {exerciseList.map((_, i) => (
