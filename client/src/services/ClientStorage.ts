@@ -13,6 +13,10 @@ class ClientStorage<T> {
     this.onException = onException;
   }
 
+  has(): boolean {
+    return Boolean(this.storage.getItem(this.key));
+  }
+
   get(): T {
     const data = this.storage.getItem(this.key);
     if (data === null) {
