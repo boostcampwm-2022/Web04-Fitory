@@ -14,7 +14,17 @@ export const Label = styled.p`
 `;
 
 export const RoutineButton = styled.button`
-  width: 83px;
-  height: 83px;
-  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.COLORS.WHITE};
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+  & > img {
+    width: 80%;
+    filter: invert(1);
+  }
 `;
