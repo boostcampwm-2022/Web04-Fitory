@@ -36,3 +36,10 @@ export const RoutineButton = styled.button`
     white-space: nowrap;
   }
 `;
+
+export const RoutineListAltText = styled.p`
+  padding: 30px;
+  text-align: center;
+  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
+`;

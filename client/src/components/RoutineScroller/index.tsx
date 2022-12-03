@@ -36,21 +36,25 @@ const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) =
       <s.Label>
         <span>{userInfo.name}</span>님의 운동 루틴
       </s.Label>
-      <CardsScroller>
-        {routineList?.map((routineName, i) => (
-          <Paper
-            key={routineName}
-            shadow={2}
-            style={{ backgroundColor: theme.COLORS.LIGHT_BLUE }}
-            hover
-          >
-            <s.RoutineButton onClick={() => onClickRoutineItem(routineName)}>
-              <img src={routineSrcList[i]} alt="루틴 버튼" />
-              <p>{routineName}</p>
-            </s.RoutineButton>
-          </Paper>
-        ))}
-      </CardsScroller>
+      {routineList?.length ? (
+        <CardsScroller>
+          {routineList.map((routineName, i) => (
+            <Paper
+              key={routineName}
+              shadow={2}
+              style={{ backgroundColor: theme.COLORS.LIGHT_BLUE }}
+              hover
+            >
+              <s.RoutineButton onClick={() => onClickRoutineItem(routineName)}>
+                <img src={routineSrcList[i]} alt="루틴 버튼" />
+                <p>{routineName}</p>
+              </s.RoutineButton>
+            </Paper>
+          ))}
+        </CardsScroller>
+      ) : (
+        <s.RoutineListAltText>저장한 운동 루틴이 없습니다.</s.RoutineListAltText>
+      )}
     </s.Wrapper>
   );
 };
