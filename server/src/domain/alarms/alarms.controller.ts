@@ -2,8 +2,8 @@ import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Exception } from "@exception/exceptions";
 import { isValidUserId } from "@validation/validation";
-import { AlarmsService } from "./alarms.service";
 import { UsersService } from "@user/users.service";
+import { AlarmsService } from "./alarms.service";
 
 @Controller("api/alarms")
 @ApiTags("ALARM API")
