@@ -48,17 +48,35 @@ const ExerciseAPI = {
 
       if (!userId) {
         Exception.UserNotFound();
-        return null;
+        return;
       }
 
       const path = "exercise/submit";
-      const response = await HttpClient.post(path, { userId, exerciseList });
-      console.log(response);
-      return response.response;
+      await HttpClient.post(path, { userId, exerciseList });
+      // eslint-disable-next-line no-alert
+      alert("오늘의 운동 완료!");
     } catch {
       // eslint-disable-next-line no-alert
       alert("빈 입력 값이 없는지 확인해주세요.");
-      return null;
+    }
+  },
+
+  saveRoutine: async ({ routineName, exerciseList }: ExerciseType.Routine) => {
+    try {
+      const userId = authStorage.get();
+
+      if (!userId) {
+        Exception.UserNotFound();
+        return;
+      }
+
+      const path = "routines/save";
+      await HttpClient.post(path, { userId, routineName, exerciseList });
+      // eslint-disable-next-line no-alert
+      alert("루틴 저장이 완료되었습니다!");
+    } catch {
+      // eslint-disable-next-line no-alert
+      alert("운동 이름과 루틴 이름이 모두 채워져 있는지 확인해주세요.");
     }
   },
 };

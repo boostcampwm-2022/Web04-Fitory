@@ -4,6 +4,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import PageTemplate from "@pages/PageTemplate";
 import RoutineScroller from "@components/RoutineScroller";
 import ExerciseRecordItem from "@components/ExerciseRecordItem";
+import RoutineSaveButton from "@components/RoutineSaveButton";
 import exerciseStore from "@stores/exerciseStore";
 import useRecordExercise from "@hooks/query/useRecordExercise";
 import * as s from "./style";
@@ -74,7 +75,7 @@ const RecordPage = () => {
           </s.ExerciseIncreaseButton>
         </s.ExerciseListWrapper>
         <s.SaveButtonWrapper>
-          <s.RoutineSaveButton>루틴 저장</s.RoutineSaveButton>
+          <RoutineSaveButton />
           <s.ExerciseSaveButton onClick={handleClickExerciseSaveButton}>
             운동 완료
           </s.ExerciseSaveButton>

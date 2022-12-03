@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DefaultButton } from "@styles/Components";
+import { DefaultButton, OutlinedTextField } from "@styles/Components";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -109,5 +109,21 @@ export const RoutineSaveButton = styled(DefaultButton)`
 
 export const ExerciseSaveButton = styled(DefaultButton)`
   flex-grow: 1;
+  border-radius: 7px;
+`;
+
+export const RoutineNameTextField = styled(OutlinedTextField)`
+  margin-bottom: 40px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+`;
+
+export const RoutineNameLabel = styled.h2`
+  margin-bottom: 40px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+`;
+
+export const RoutineNameSaveButton = styled(DefaultButton)`
+  margin: auto;
   border-radius: 7px;
 `;
