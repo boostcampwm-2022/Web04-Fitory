@@ -16,15 +16,16 @@ export const Label = styled.p`
 export const RoutineButton = styled.button`
   width: 100px;
   height: 100px;
-  padding: 10px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   color: ${({ theme }) => theme.COLORS.WHITE};
-  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
   & > img {
-    width: 60%;
+    width: 50%;
     filter: invert(1);
   }
   & > p {
