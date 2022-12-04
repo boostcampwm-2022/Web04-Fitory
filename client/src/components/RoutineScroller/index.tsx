@@ -46,7 +46,7 @@ const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) =
               hover
             >
               <s.RoutineButton onClick={() => onClickRoutineItem(routineName)}>
-                <img src={routineSrcList[i]} alt="루틴 버튼" />
+                <img src={routineSrcList[i % 6]} alt="루틴 버튼" />
                 <p>{routineName}</p>
               </s.RoutineButton>
             </Paper>
