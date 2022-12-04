@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import {
   NUMBER_OF_DAYS,
   HEAT_ITEM_SIZE,
@@ -35,6 +35,8 @@ const CalendarHeatMap = () => {
   const { nowTimeStamp } = useRecentChallengeTime();
   const { exerciseDateList } = useAllExerciseDate();
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const heatMapArray = getCalendarHeatMapArray(nowTimeStamp);
   const exerciseStateList = [
     ...getExerciseStateForOneYear(nowTimeStamp.getFullYear() - 1, exerciseDateList),
@@ -45,11 +47,21 @@ const CalendarHeatMap = () => {
     return !i || heatMapArray[i - 1][0].month < heatMapArray[i][0].month;
   };
 
+  useEffect(() => {
+    if (!scrollRef.current) {
+      return;
+    }
+    const targetElement = scrollRef.current;
+    if (targetElement) {
+      targetElement.scrollLeft = targetElement.scrollWidth;
+    }
+  }, []);
+
   return (
     <Paper style={{ width: "100%" }}>
       <s.Wrapper>
         {/* <s.Year>{year}</s.Year> */}
-        <s.HeatMap>
+        <s.HeatMap ref={scrollRef}>
           <svg
             width={HEAT_ITEM_SIZE * heatMapArray.length}
             height={HEAT_ITEM_SIZE * (HEAT_ITEM_DISTANCE + NUMBER_OF_DAYS)}
