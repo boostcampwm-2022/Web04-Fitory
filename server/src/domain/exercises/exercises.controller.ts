@@ -26,8 +26,6 @@ export class ExercisesController {
   })
   async getEveryExerciseDate(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.exercisesService.findEveryExerciseDate(userId);
   }
 
@@ -46,8 +44,6 @@ export class ExercisesController {
   async getExerciseHistoryOfMonth(@Query("month") month: number, @Query("userId") userId: number) {
     if (!isValidMonth(month)) throw new Exception().invalidMonthError();
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.exercisesService.findExerciseHistoryOfMonth(month, userId);
   }
 
@@ -61,8 +57,6 @@ export class ExercisesController {
   })
   async getInfoForProfile(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.exercisesService.getProfileData(userId);
   }
 

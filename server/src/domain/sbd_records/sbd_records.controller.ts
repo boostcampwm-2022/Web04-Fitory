@@ -24,8 +24,6 @@ export class SbdRecordsController {
   })
   async getEverySBDRecord(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.recordsService.findEverySBDRecord(userId);
   }
 
@@ -39,8 +37,6 @@ export class SbdRecordsController {
   })
   async getBestSBDRecord(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.recordsService.findBestSBDRecord(userId);
   }
 
@@ -55,8 +51,6 @@ export class SbdRecordsController {
   })
   async getRecentRecordTime(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.recordsService.getRecentRecordTime(userId);
   }
 
