@@ -39,8 +39,8 @@ const CalendarHeatMap = () => {
 
   const heatMapArray = getCalendarHeatMapArray(nowTimeStamp);
   const exerciseStateList = [
-    ...getExerciseStateForOneYear(nowTimeStamp.getFullYear() - 1, exerciseDateList),
-    ...getExerciseStateForOneYear(nowTimeStamp.getFullYear(), exerciseDateList),
+    ...getExerciseStateForOneYear(nowTimeStamp.getFullYear() - 1, exerciseDateList, nowTimeStamp),
+    ...getExerciseStateForOneYear(nowTimeStamp.getFullYear(), exerciseDateList, nowTimeStamp),
   ];
 
   const isNeedMonthLabel = (i: number) => {
