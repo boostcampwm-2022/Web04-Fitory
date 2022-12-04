@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { SearchedUserInfo } from "../types/user";
 
+let timer;
 const SearchUtils = {
   searchEvent: (word: string, userList: any[], setSearchedUser: any) => {
     const searchResult: SearchedUserInfo[] = userList.filter((user: SearchedUserInfo) => {
@@ -17,11 +18,25 @@ const SearchUtils = {
     const debounce = setTimeout(() => {
       if (searchValue.length !== 0) SearchUtils.searchEvent(searchValue, userList, setSearchedUser);
       else setSearchedUser([]);
-    }, 200);
+    }, 500);
     return () => {
       clearTimeout(debounce);
     };
   },
+  // searchUserDebounce: (
+  //   searchValue: string,
+  //   userList: any[],
+  //   setSearchedUser: React.Dispatch<React.SetStateAction<SearchedUserInfo[]>>,
+  // ) => {
+  //   if (timer) {
+  //     clearTimeout(timer);
+  //   }
+  //   timer = setTimeout(() => {
+  //     if (searchValue.length !== 0) SearchUtils.searchEvent(searchValue, userList, setSearchedUser);
+  //     else setSearchedUser([]);
+  //     console.log("hi");
+  //   }, 200);
+  // },
 };
 
 export default SearchUtils;
