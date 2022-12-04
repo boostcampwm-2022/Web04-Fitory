@@ -10,6 +10,7 @@ import getCalendarHeatMapArray from "@utils/getCalendarHeatMapArray";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import Paper from "@components/design/Paper";
 import useAllExerciseDate from "@hooks/query/useAllExerciseDate";
+import useRecentChallengeTime from "@hooks/query/useRecentChallengeTime";
 import * as s from "./style";
 
 interface HeatItemProps {
@@ -31,10 +32,14 @@ const HeatItem = ({ exerciseState, x, y }: HeatItemProps) => {
 };
 
 const CalendarHeatMap = () => {
+  const { nowTimeStamp } = useRecentChallengeTime();
   const { exerciseDateList } = useAllExerciseDate();
-  const year = new Date().getFullYear();
-  const heatMapArray = getCalendarHeatMapArray(year);
-  const exerciseStateList = getExerciseStateForOneYear(year, exerciseDateList);
+
+  const heatMapArray = getCalendarHeatMapArray(nowTimeStamp);
+  const exerciseStateList = [
+    ...getExerciseStateForOneYear(nowTimeStamp.getFullYear() - 1, exerciseDateList),
+    ...getExerciseStateForOneYear(nowTimeStamp.getFullYear(), exerciseDateList),
+  ];
 
   const isNeedMonthLabel = (i: number) => {
     return !i || heatMapArray[i - 1][0].month < heatMapArray[i][0].month;
@@ -43,7 +48,7 @@ const CalendarHeatMap = () => {
   return (
     <Paper style={{ width: "100%" }}>
       <s.Wrapper>
-        <s.Year>{year}</s.Year>
+        {/* <s.Year>{year}</s.Year> */}
         <s.HeatMap>
           <svg
             width={HEAT_ITEM_SIZE * heatMapArray.length}
