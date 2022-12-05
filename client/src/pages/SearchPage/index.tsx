@@ -5,7 +5,7 @@ import axios from "axios";
 import { SearchedUserInfo } from "src/types/user";
 import CardsScroller from "@components/design/CardsScroller";
 import SearchUtils from "@utils/SearchUtils";
-import { drawSearchedUserList } from "@utils/drawSearchedUserList";
+import SearchedUserList from "@components/SearchedUserList";
 import * as s from "./styles";
 import { drawRecommendUserList } from "./utils";
 
@@ -46,7 +46,7 @@ const SearchPage = () => {
             />
           </s.UserSearchBarContainer>
           <s.SearchResultContainer isText={searchValue.length !== 0}>
-            {drawSearchedUserList(searchedUser)}
+            {SearchedUserList(searchedUser)}
           </s.SearchResultContainer>
         </s.SearchContainer>
         <s.RecommendListContainer>
