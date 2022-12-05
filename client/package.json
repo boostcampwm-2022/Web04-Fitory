@@ -4,8 +4,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --progress",
-    "dev:bundle": "BUNDLE=true webpack-dev-server --mode=production --progress",
-    "build": "webpack --mode=production",
+    "dev:bundle": "BUNDLE=true webpack-dev-server --mode=production --node-env=production --progress",
+    "build": "webpack --mode=production --node-env=production",
     "jest:coverage": "jest --watchAll=false --coverage",
     "cypress:open": "cypress open",
     "storybook": "start-storybook -p 6006",
