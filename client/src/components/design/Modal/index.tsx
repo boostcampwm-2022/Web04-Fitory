@@ -11,14 +11,15 @@ const Modal = ({ children }: ModalProps) => {
   const { isShowModal, closeModal } = modalStore((state) => state);
 
   return (
-    <s.Overlay isShow={isShowModal} onClick={closeModal}>
+    <s.Wrapper isShow={isShowModal}>
+      <s.Overlay onClick={closeModal} />
       <s.Window>
         <s.CloseButton onClick={closeModal}>
           <img src={cancelSrc} alt="모달 닫기 버튼" />
         </s.CloseButton>
         {children}
       </s.Window>
-    </s.Overlay>
+    </s.Wrapper>
   );
 };
 

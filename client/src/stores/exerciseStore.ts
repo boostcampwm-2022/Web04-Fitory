@@ -1,13 +1,13 @@
 import create from "zustand";
 import updateOneElementFromArray from "@utils/updateOneElementFromArray";
-import { Exercise, ExerciseSet } from "src/types/exercise";
+import { Exercise, ExerciseSet, RoutineDetailInfo } from "src/types/exercise";
 
 const getInitialExercise = (): Exercise => {
-  return { name: "", setInfo: [{ weight: 0, count: 0, isComplete: false }] };
+  return { exerciseName: "", setList: [{ kg: 0, count: 0, check: 0 }] };
 };
 
 const getInitalExerciseSet = (): ExerciseSet => {
-  return { weight: 0, count: 0, isComplete: false };
+  return { kg: 0, count: 0, check: 0 };
 };
 
 interface ExerciseState {
@@ -19,6 +19,7 @@ interface ExerciseState {
   deleteExerciseSetItem: (exerciseId: number) => void;
   updateExerciseName: (exerciseId: number, name: string) => void;
   updateExerciseSetList: (exerciseId: number, setId: number, newSet: ExerciseSet) => void;
+  fetchRoutine: (routineInfo: RoutineDetailInfo[]) => void;
 }
 
 const exerciseStore = create<ExerciseState>((set) => ({
@@ -40,7 +41,7 @@ const exerciseStore = create<ExerciseState>((set) => ({
     set(({ exerciseList }) => ({
       exerciseList: updateOneElementFromArray(exerciseList, exerciseId, {
         ...exerciseList[exerciseId],
-        setInfo: [...exerciseList[exerciseId].setInfo, getInitalExerciseSet()],
+        setList: [...exerciseList[exerciseId].setList, getInitalExerciseSet()],
       }),
     }));
   },
@@ -49,18 +50,18 @@ const exerciseStore = create<ExerciseState>((set) => ({
     set(({ exerciseList }) => ({
       exerciseList: updateOneElementFromArray(exerciseList, exerciseId, {
         ...exerciseList[exerciseId],
-        setInfo: [
-          ...exerciseList[exerciseId].setInfo.slice(0, exerciseList[exerciseId].setInfo.length - 1),
+        setList: [
+          ...exerciseList[exerciseId].setList.slice(0, exerciseList[exerciseId].setList.length - 1),
         ],
       }),
     }));
   },
 
-  updateExerciseName: (exerciseId: number, name: string) => {
+  updateExerciseName: (exerciseId: number, exerciseName: string) => {
     set(({ exerciseList }) => ({
       exerciseList: updateOneElementFromArray(exerciseList, exerciseId, {
         ...exerciseList[exerciseId],
-        name,
+        exerciseName,
       }),
     }));
   },
@@ -69,11 +70,24 @@ const exerciseStore = create<ExerciseState>((set) => ({
     set(({ exerciseList }) => ({
       exerciseList: updateOneElementFromArray(exerciseList, exerciseId, {
         ...exerciseList[exerciseId],
-        setInfo: updateOneElementFromArray(exerciseList[exerciseId].setInfo, setId, {
+        setList: updateOneElementFromArray(exerciseList[exerciseId].setList, setId, {
           ...setItem,
         }),
       }),
     }));
+  },
+
+  fetchRoutine: (routineInfo: RoutineDetailInfo[]) => {
+    set({
+      exerciseList: routineInfo.map(({ name, set: setList }) => ({
+        exerciseName: name,
+        setList: setList.map(({ kg, count }) => ({
+          kg,
+          count,
+          check: 0,
+        })),
+      })),
+    });
   },
 }));
 
