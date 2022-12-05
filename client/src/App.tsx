@@ -18,6 +18,13 @@ import StaticsPage from "@pages/StaticsPage";
 const queryClient = new QueryClient();
 
 const App = () => {
+  // //! sse 실행 방법
+  // const userId = 1;
+  // const eventSource = new EventSource(`http://localhost:8080/api/alarms/unread?userId=${userId}`);
+  // eventSource.onmessage = ({ data }) => {
+  //   console.log(`${userId}'s unread alarm: `, JSON.parse(data).unreadAlarmCount);
+  // };
+
   return (
     <BrowserRouter>
       <GlobalStyle />
