@@ -9,8 +9,8 @@ export const drawRecommendUserList = (userList: any[]) => {
   }
   return userList.map((user: SearchedUserInfo) => {
     return (
-      <Paper key={user.user_id}>
-        <div style={{ width: "170px", height: "170px" }}>
+      <Paper key={user.user_id} style={{ padding: "10px", backgroundColor: "transparent" }}>
+        <div style={{ width: "150px", height: "150px" }}>
           {/* <img src={user.user_profile} alt="유저 프로필 사진" /> */}
           <img
             style={{ width: "100%", height: "100%", borderRadius: "20px" }}

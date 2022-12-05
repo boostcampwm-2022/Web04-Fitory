@@ -16,7 +16,7 @@ export const SearchContainer = styled.div`
     return isText ? "800px" : "60px";
   }};
   position: absolute;
-  padding: 1.3rem 8vw;
+  padding: 1.3rem 3vw;
   transition: 0.25s linear;
 `;
 
@@ -40,6 +40,10 @@ export const SearchBar = styled.input`
   border-bottom: ${({ theme, isText }: { theme: typeof Theme; isText: boolean }) => {
     return isText ? `1px solid ${theme.COLORS.LIGHT_GRAY}` : "none";
   }};
+
+  :focus {
+    outline: none;
+  }
 `;
 
 export const SearchResultContainer = styled.div`
@@ -59,12 +63,6 @@ export const SearchResultContainer = styled.div`
   }
 `;
 
-export const UserProfile = styled.div`
-  padding: 5px 0;
-  height: 10%;
-  margin-bottom: 10px;
-`;
-
 export const RecommendListContainer = styled.div`
   padding-top: 100px;
   height: 300px;
@@ -77,10 +75,4 @@ export const RecommendLabel = styled.p`
     return theme.FONT_SIZE.MEDIUM;
   }};
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
-`;
-
-export const UserProfileImg = styled.img`
-  width: 100%;
-  height: 100%;
-  borderradius: 20px;
 `;
