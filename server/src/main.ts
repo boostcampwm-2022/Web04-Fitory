@@ -1,4 +1,4 @@
-import { NestFactory } from "@nestjs/core";
+import { NestFactory, Reflector } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
 import passport from "passport";
@@ -8,6 +8,8 @@ import { LOCAL_HOST, PORT } from "@env";
 import express from "express";
 import path from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
+import { JwtAuthGuard } from "@guard/jwt.guard";
+import { UserIdGuard } from "@guard/auth.guard";
 import { initDatabase } from "./utils/initDB";
 import { AppModule } from "./app.module";
 
@@ -16,8 +18,10 @@ async function bootstrap() {
   // initDatabase();
 
   const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
-
+  const reflector = app.get(Reflector);
+  app.useGlobalGuards(new JwtAuthGuard(), new UserIdGuard(reflector)); // 전역 user id 검증 가드 적용
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
+
   app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
