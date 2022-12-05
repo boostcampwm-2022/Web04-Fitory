@@ -71,7 +71,7 @@ export class AlarmsService {
       throw new Exception().invalidSubmit();
     }
   }
-  
+
   async sendExerciseAlarm(senderUserId: number) {
     const followerList = await this.followRepository
       .createQueryBuilder("follow")
