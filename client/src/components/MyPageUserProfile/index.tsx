@@ -4,25 +4,28 @@ import ProfileImageContainer from "@components/ProfileImageContainer";
 
 const MyPageUserProfile = () => {
   return (
-    <>
-      <MyProfileContainer>
-        <PageLabel>마이페이지</PageLabel>
-        <UserInfoContainer>
-          <UserProfileImgContainer>
-            <ProfileImageContainer isModified />
-          </UserProfileImgContainer>
-          <UserInfo>
-            <p>나이 만 24세</p>
-            <p>성별 남</p>
-            <p>신장 223cm</p>
-            <p>체중 11kg</p>
-          </UserInfo>
-        </UserInfoContainer>
-      </MyProfileContainer>
-      <DetailInfoContainer>
-        <p>정보란</p>
-      </DetailInfoContainer>
-    </>
+    <MyProfileContainer>
+      <PageLabel>마이페이지</PageLabel>
+      <UserInfoContainer>
+        <UserProfileImgContainer>
+          <ProfileImageContainer isModified />
+        </UserProfileImgContainer>
+        <UserInfo>
+          <UserInformation>
+            <InfoLabel>나이</InfoLabel> 만 24세
+          </UserInformation>
+          <UserInformation>
+            <InfoLabel>성별</InfoLabel> 남
+          </UserInformation>
+          <UserInformation>
+            <InfoLabel>신장</InfoLabel> 223cm
+          </UserInformation>
+          <UserInformation>
+            <InfoLabel>체중</InfoLabel> 11kg
+          </UserInformation>
+        </UserInfo>
+      </UserInfoContainer>
+    </MyProfileContainer>
   );
 };
 
@@ -30,24 +33,45 @@ export default MyPageUserProfile;
 
 export const MyProfileContainer = styled.div`
   background-color: ${({ theme }) => theme.COLORS.WHITE};
-  padding: 30px;
+  padding: 30px 5vw;
 `;
 
 export const PageLabel = styled.label`
-  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_LARGE};
+  color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
+  font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
 `;
 
 export const UserInfoContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
+  width: 100%;
+  height: 100px;
 `;
 
 export const UserProfileImgContainer = styled.div`
-  width: 150px;
-  height: 150px;
+  width: 30%;
+  height: 100%;
 `;
 
-export const UserInfo = styled.div``;
+export const UserInfo = styled.div`
+  margin-left: 10%;
+  width: 50%;
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
+  color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
+`;
+
+export const UserInformation = styled.div`
+  height: 25%;
+  display: flex;
+  align-items: center;
+`;
+
+export const InfoLabel = styled.div`
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+  color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
+  margin-right: 30px;
+`;
 
 export const DetailInfoContainer = styled.div``;

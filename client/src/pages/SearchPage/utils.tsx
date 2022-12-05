@@ -3,6 +3,9 @@ import React from "react";
 import { SearchedUserInfo } from "../../types/user";
 
 export const drawRecommendUserList = (userList: any[]) => {
+  if (!userList) {
+    return <p> 나와 비슷한 친구가 없습니다.</p>;
+  }
   return userList.map((user: SearchedUserInfo) => {
     return (
       <Paper key={user.user_id}>

@@ -48,7 +48,7 @@ const UserAPI = {
       throw new Error();
     }
     const path = "users/recommand/list";
-    const response = await HttpClient.get(path, { userId: 1 });
+    const response = await HttpClient.get(path, { userId });
     return [response.response.recommendWeight, response.response.recommendAge] as [
       UserType.SearchedUserInfo[],
       UserType.SearchedUserInfo[],

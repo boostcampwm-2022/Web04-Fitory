@@ -1,7 +1,6 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { SearchedUserInfo } from "../types/user";
 
-let timer;
 const SearchUtils = {
   searchEvent: (word: string, userList: any[], setSearchedUser: any) => {
     const searchResult: SearchedUserInfo[] = userList.filter((user: SearchedUserInfo) => {
