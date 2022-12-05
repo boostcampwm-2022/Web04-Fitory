@@ -14,30 +14,30 @@ export class User {
   @Column({ length: 45 })
   name!: string;
 
-  @Column({ nullable: true })
+  @Column({})
   age!: number;
 
-  @Column({ nullable: true })
+  @Column({})
   gender!: number;
 
-  @Column({ nullable: true })
+  @Column({})
   height!: number;
 
-  @Column({ nullable: true })
+  @Column({})
   weight!: number;
 
-  @Column({ nullable: true, length: 180 })
+  @Column({ length: 180, default: "-" })
   introduce!: string;
 
-  @Column({ nullable: true })
+  @Column({ default: 0 })
   tier!: number;
 
-  @Column({ nullable: true, name: "follower_count" })
+  @Column({ name: "follower_count", default: 0 })
   followerCount!: number;
 
-  @Column({ nullable: true, name: "following_count" })
+  @Column({ name: "following_count", default: 0 })
   followingCount!: number;
 
-  @Column({ nullable: true, name: "volume_sum" })
+  @Column({ name: "volume_sum", default: 0 })
   volumeSum!: number;
 }

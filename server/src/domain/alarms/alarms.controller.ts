@@ -2,8 +2,8 @@ import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Exception } from "@exception/exceptions";
 import { isValidUserId } from "@validation/validation";
-import { AlarmsService } from "./alarms.service";
 import { UsersService } from "@user/users.service";
+import { AlarmsService } from "./alarms.service";
 
 @Controller("api/alarms")
 @ApiTags("ALARM API")
@@ -23,8 +23,6 @@ export class AlarmsController {
   })
   async getUnreadAlarmCount(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.alarmService.countUnreadAlarm(userId);
   }
 
@@ -38,8 +36,6 @@ export class AlarmsController {
   })
   async getAlarmList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.alarmService.getAlarmList(userId);
   }
 }

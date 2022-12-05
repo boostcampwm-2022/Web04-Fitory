@@ -17,13 +17,11 @@ export class UsersController {
     summary: "해당 사용자의 모든 정보를 반환",
   })
   @ApiQuery({
-    name: "id",
+    name: "userId",
     type: "number",
   })
-  async getUserInfo(@Query("id") userId: number) {
+  async getUserInfo(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.usersService.getUserInfo(userId);
   }
 
@@ -45,8 +43,6 @@ export class UsersController {
   })
   async getRecommandUserList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.usersService.getRecommandUserList(userId);
   }
 

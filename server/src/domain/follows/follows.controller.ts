@@ -26,8 +26,6 @@ export class FollowsController {
   })
   async getFollowingUserList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.followService.getFollowingUserList(userId);
   }
 
@@ -41,8 +39,6 @@ export class FollowsController {
   })
   async getFollowerUserList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.followService.getFollowerUserList(userId);
   }
 

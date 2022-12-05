@@ -23,15 +23,6 @@ export class ExerciseDataDto {
   userId: number;
 
   @ApiProperty({
-    description: "기록 제출 날짜",
-    type: String,
-  })
-  @IsNotEmpty()
-  @IsString()
-  @Matches("^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$")
-  date: string;
-
-  @ApiProperty({
     description: "운동 배열",
     type: () => [SingleExercise],
   })
@@ -79,7 +70,7 @@ export class SingleSet {
   })
   @IsNotEmpty()
   @IsNumber()
-  @Min(0)
+  @Min(1)
   @Max(100)
   count: number;
 

@@ -1,12 +1,17 @@
 export interface ExerciseSet {
-  weight: number;
+  kg: number;
   count: number;
-  isComplete: boolean;
+  check?: 0 | 1;
 }
 
 export interface Exercise {
-  name: string;
-  setInfo: ExerciseSet[];
+  exerciseName: string;
+  setList: ExerciseSet[];
+}
+
+export interface Routine {
+  routineName: string;
+  exerciseList: Exercise[];
 }
 
 export interface ExerciseProfile {
@@ -14,4 +19,11 @@ export interface ExerciseProfile {
   totalExerciseDate: number;
 }
 
+export interface RoutineDetailInfo {
+  name: string;
+  set: [{ kg: number; count: number }];
+}
+
 export type ExerciseDate = string[];
+
+export type RoutineList = string[];

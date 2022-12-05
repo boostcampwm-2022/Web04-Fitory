@@ -23,7 +23,7 @@ export class SbdRecordsService {
     const recordList = await this.recordsRepository
       .createQueryBuilder("SBD_record")
       .where("SBD_record.user_id = :userId", { userId })
-      .orderBy("CAST(SBD_record.date AS SIGNED)", "ASC")
+      .orderBy("SBD_record.time_stamp", "ASC")
       .getMany();
     return HttpResponse.success({
       recordList: recordConverter.everyRecord(recordList),

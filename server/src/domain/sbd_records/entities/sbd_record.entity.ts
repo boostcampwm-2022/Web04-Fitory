@@ -25,9 +25,6 @@ export class SBD_record {
   @Column({ name: "SBD_sum" })
   SBD_sum!: number;
 
-  @Column({ name: "date", length: 45 })
-  date!: string;
-
   @CreateDateColumn({
     name: "time_stamp",
     type: "timestamp",
