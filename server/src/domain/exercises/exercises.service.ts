@@ -7,6 +7,7 @@ import { Exercise } from "./entities/exercise.entity";
 import { exerciseConverter } from "./converter/exercise.converter";
 import { User } from "../users/entities/user.entity";
 import { ExerciseDataDto } from "./dto/exercise.dto";
+import dayjs from "dayjs";
 
 @Injectable()
 export class ExercisesService {
@@ -60,7 +61,7 @@ export class ExercisesService {
           await this.exerciseRepository.save({
             exerciseName: exercise.exerciseName,
             exerciseString: setString.slice(1),
-            date: exerciseData.date,
+            date: dayjs().format("YYMMDD"),
             user: { id: exerciseData.userId },
           });
         }),

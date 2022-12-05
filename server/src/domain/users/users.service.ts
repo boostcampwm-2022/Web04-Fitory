@@ -13,11 +13,12 @@ export class UsersService {
   ) {}
 
   async isExistUser(userId: number) {
-    const userExist = await this.userRepository
-      .createQueryBuilder("user")
-      .where("user.user_id = :userId", { userId })
-      .getOne();
-    return userExist ? true : false;
+    // const userExist = await this.userRepository
+    //   .createQueryBuilder("user")
+    //   .where("user.user_id = :userId", { userId })
+    //   .getOne();
+    // return userExist ? true : false;
+    return true;
   }
 
   async getUserInfo(userId: number) {
@@ -58,7 +59,7 @@ export class UsersService {
       .createQueryBuilder("user")
       .where("user.name = :name", { name })
       .getOne();
-    return user ? true : false;
+    return !!user;
   }
 
   async getRecommandUserList(userId: number) {
@@ -77,7 +78,9 @@ export class UsersService {
     const recommendWeight = await this.userRepository
       .createQueryBuilder("user")
       .where(`user.weight BETWEEN ${weight.user_weight - 5} AND ${weight.user_weight + 5}`)
-      .select("user.name")
+      .andWhere("user.user_id != :userId", { userId })
+      .select("user.user_id", "user_id")
+      .addSelect("user.name", "name")
       .addSelect("user.profile_image")
       .orderBy("rand()")
       .take(5)
@@ -86,7 +89,9 @@ export class UsersService {
     const recommendAge = await this.userRepository
       .createQueryBuilder("user")
       .where(`user.age BETWEEN ${age.user_age - 1} AND ${age.user_age + 1}`)
-      .select("user.name")
+      .andWhere("user.user_id != :userId", { userId })
+      .select("user.user_id", "user_id")
+      .addSelect("user.name", "name")
       .addSelect("user.profile_image")
       .orderBy("rand()")
       .take(5)

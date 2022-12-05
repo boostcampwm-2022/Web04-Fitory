@@ -12,7 +12,7 @@ export const recordConverter = {
           deadlift: record.deadlift,
           benchpress: record.benchpress,
           SBD_sum: record.SBD_sum,
-          date: record.date,
+          timeStamp: record.timeStamp,
           userWeight: record.userWeight,
         },
       });

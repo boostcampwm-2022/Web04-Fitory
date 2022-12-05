@@ -35,7 +35,10 @@ export class Exception {
   }
 
   Unauthorized(): HttpException {
-    const response = HttpResponse.failed(HttpStatus.UNAUTHORIZED, "Unauthorized");
+    const response = HttpResponse.failed(
+      HttpStatus.UNAUTHORIZED,
+      "Unauthorized, Access Token Error",
+    );
     return new UnauthorizedException(response);
   }
 
