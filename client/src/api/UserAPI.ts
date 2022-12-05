@@ -18,7 +18,7 @@ const UserAPI = {
 
   getUser: async (userId: UserType.UserId) => {
     const path = `users/get`;
-    const response = await HttpClient.get(path, { id: userId });
+    const response = await HttpClient.get(path, { userId });
     const { user } = response.response as { user: UserType.UserInfo };
 
     return user;
