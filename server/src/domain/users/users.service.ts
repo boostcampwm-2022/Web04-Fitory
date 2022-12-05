@@ -78,7 +78,9 @@ export class UsersService {
     const recommendWeight = await this.userRepository
       .createQueryBuilder("user")
       .where(`user.weight BETWEEN ${weight.user_weight - 5} AND ${weight.user_weight + 5}`)
-      .select("user.name")
+      .andWhere("user.user_id != :userId", { userId })
+      .select("user.user_id", "user_id")
+      .addSelect("user.name", "name")
       .addSelect("user.profile_image")
       .orderBy("rand()")
       .take(5)
@@ -87,7 +89,9 @@ export class UsersService {
     const recommendAge = await this.userRepository
       .createQueryBuilder("user")
       .where(`user.age BETWEEN ${age.user_age - 1} AND ${age.user_age + 1}`)
-      .select("user.name")
+      .andWhere("user.user_id != :userId", { userId })
+      .select("user.user_id", "user_id")
+      .addSelect("user.name", "name")
       .addSelect("user.profile_image")
       .orderBy("rand()")
       .take(5)
