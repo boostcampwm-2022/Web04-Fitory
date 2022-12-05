@@ -1,26 +1,18 @@
-export enum RoutePath {
-  HOME = "/",
-  STATICS = "/statics",
-  SEARCH = "/search",
-  PROFILE = "/profile",
-  CHALLENGE = "/challenge",
-  RECORD = "/record",
-  LOGIN = "/login",
-  JOIN = "/join",
-  FOLLOW = "/follow",
-}
+export const RoutePath = {
+  HOME: "/",
+  STATICS: "/statics",
+  SEARCH: "/search",
+  PROFILE: "/profile",
+  CHALLENGE: "/challenge",
+  RECORD: "/record",
+  LOGIN: "/login",
+  JOIN: "/join",
+  FOLLOW: "/follow",
+} as const;
 
-export enum FormatDay {
-  "일",
-  "월",
-  "화",
-  "수",
-  "목",
-  "금",
-  "토",
-}
+export const FormatDay = ["일", "월", "화", "수", "목", "금", "토"] as const;
 
-export enum FormatMonth {
+export const FormatMonth = [
   null,
   "1월",
   "2월",
@@ -34,69 +26,69 @@ export enum FormatMonth {
   "10월",
   "11월",
   "12월",
-}
+] as const;
 
-export enum HeatItemDistance {
-  DX = 2,
-  DY = 2,
-}
+export const HeatItemDistance = {
+  DX: 2,
+  DY: 2,
+} as const;
 
-export enum ExerciseState {
-  EXERCISE = "exercise",
-  REST = "rest",
-  IDLE = "idle",
-}
+export const ExerciseState = {
+  EXERCISE: "exercise",
+  REST: "rest",
+  IDLE: "idle",
+} as const;
 
 export const TIER = [null, "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "CHAMPION"] as const;
 
-export enum DayTypes {
-  TODAY = "today",
-  OTHER_DAYS = "otherDays",
-  THIS_DAYS = "thisDays",
-}
+export const DayTypes = {
+  TODAY: "today",
+  OTHER_DAYS: "otherDays",
+  THIS_DAYS: "thisDays",
+} as const;
 
-export enum DateTypes {
-  YEAR = "year",
-  MONTH = "month",
-  WEEK = "week",
-  DAY = "day",
-}
+export const DateTypes = {
+  YEAR: "year",
+  MONTH: "month",
+  WEEK: "week",
+  DAY: "day",
+} as const;
 
-export enum Gender {
-  MALE = 0,
-  FEMALE = 1,
-}
+export const Gender = {
+  MALE: 0,
+  FEMALE: 1,
+} as const;
 
-export enum UserName {
-  MIN = 2,
-  MAX = 12,
-}
+export const UserName = {
+  MIN: 2,
+  MAX: 12,
+} as const;
 
-export enum UserAge {
-  MIN = 1,
-  MAX = 120,
-}
+export const UserAge = {
+  MIN: 1,
+  MAX: 120,
+} as const;
 
-export enum UserHeight {
-  MIN = 1,
-  MAX = 300,
-}
+export const UserHeight = {
+  MIN: 1,
+  MAX: 300,
+} as const;
 
-export enum UserWeight {
-  MIN = 1,
-  MAX = 300,
-}
+export const UserWeight = {
+  MIN: 1,
+  MAX: 300,
+} as const;
 
-export enum Powerlifting {
-  SQUAT = "스쿼트",
-  BENCH_PRESS = "벤치프레스",
-  DEADLIFT = "데드리프트",
-}
+export const Powerlifting = {
+  SQUAT: "스쿼트",
+  BENCH_PRESS: "벤치프레스",
+  DEADLIFT: "데드리프트",
+} as const;
 
-export enum PageState {
-  FOLLOWING = "팔로잉",
-  FOLLOWER = "팔로워",
-}
+export const PageState = {
+  FOLLOWING: "팔로잉",
+  FOLLOWER: "팔로워",
+} as const;
 
 export const WEIGHT_UNIT = {
   TON: "t",
