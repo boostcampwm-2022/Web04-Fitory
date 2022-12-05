@@ -6,7 +6,7 @@ import CalendarHeader from "@components/Calendar/CalendarHeader";
 import CalendarBody from "@components/Calendar/CalendarBody";
 import * as s from "./style";
 
-const Calendar = () => {
+const Calendar = (isRoot: boolean) => {
   dayjs.extend(weekOfYear);
   const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
 
@@ -14,7 +14,7 @@ const Calendar = () => {
     <Paper style={{ width: "100%" }}>
       <s.Wrapper>
         <CalendarHeader date={date} setDate={setDate} />
-        <CalendarBody date={date} />
+        <CalendarBody date={date} isRoot={isRoot} />
       </s.Wrapper>
     </Paper>
   );

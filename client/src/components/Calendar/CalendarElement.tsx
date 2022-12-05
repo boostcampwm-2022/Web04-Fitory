@@ -7,9 +7,10 @@ interface CalendarElementProps {
   exerciseState: ExerciseState;
   day: dayjs.Dayjs;
   today: dayjs.Dayjs;
+  isRoot: boolean;
 }
 
-const CalendarElement = ({ exerciseState, day, today }: CalendarElementProps) => {
+const CalendarElement = ({ exerciseState, day, today, isRoot }: CalendarElementProps) => {
   let dayType = null;
 
   if (dayjs().format("YYYYMMDD") === day.format("YYYYMMDD")) {
@@ -20,8 +21,12 @@ const CalendarElement = ({ exerciseState, day, today }: CalendarElementProps) =>
     dayType = DayTypes.THIS_DAYS;
   }
 
+  const handleClickEvent = () => {
+    console.log("click");
+  };
+
   return (
-    <s.DayContainer dayType={dayType}>
+    <s.DayContainer dayType={dayType} onClick={!isRoot ? handleClickEvent : undefined}>
       <s.DayLabel dayType={dayType}>{day.format("D")}</s.DayLabel>
       <s.CompleteDot state={exerciseState} dayType={dayType} />
     </s.DayContainer>

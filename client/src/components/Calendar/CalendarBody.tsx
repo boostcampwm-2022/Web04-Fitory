@@ -7,7 +7,7 @@ import { DateTypes, FormatDay } from "@constants/enums";
 import useAllExerciseDate from "@hooks/query/useAllExerciseDate";
 import * as s from "./style";
 
-const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
+const CalendarBody = ({ date, isRoot }: { date: dayjs.Dayjs; isRoot: boolean }) => {
   const today = date;
   const { exerciseDateList } = useAllExerciseDate();
   const exerciseStateList = getExerciseStateForOneYear(today.year(), exerciseDateList);
@@ -48,6 +48,7 @@ const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
                   exerciseState={exerciseStateList[month][currentDay]}
                   day={day}
                   today={today}
+                  isRoot={isRoot}
                 />
               );
             })}
