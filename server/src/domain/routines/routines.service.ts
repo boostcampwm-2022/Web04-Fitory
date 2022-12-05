@@ -92,7 +92,7 @@ export class RoutinesService {
             .set({
               routineName: routineData.routineName,
               exerciseName: exercise.exerciseName,
-              exerciseString,
+              exerciseString: exerciseString.slice(1),
             })
             .where("routine.id = :routineId", { routineId: exercise.routineId })
             .andWhere("routine.deleted = false")
