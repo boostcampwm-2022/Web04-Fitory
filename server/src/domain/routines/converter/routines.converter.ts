@@ -16,23 +16,21 @@ export const routineConverter = {
   },
 
   routineDetailList: (routineList: Routine[]) => {
-    const routineDetailObject: {
-      [routineName: string]: { name: string; set: routineSet[] }[];
-    } = {};
+    const routineDetail: { exerciseName: string; set: routineSet[] }[] = [];
     routineList.map((routine: Routine) => {
-      routineDetailObject[routine.routineName] = [];
+      console.log(routine);
       const exerciseList: routineSet[] = [];
       routine.exerciseString.split("|").map((singleExercise, index) => {
         const [kg, count] = singleExercise.split("/").map((item) => Number(item));
         exerciseList.push({ index: index + 1, kg, count });
       });
 
-      routineDetailObject[routine.routineName].push({
-        name: routine.exerciseName,
+      routineDetail.push({
+        exerciseName: routine.exerciseName,
         set: exerciseList,
       });
     });
-    return routineDetailObject;
+    return routineDetail;
   },
 
   routineObjectToString: (exerciseList: SingleExercise) => {

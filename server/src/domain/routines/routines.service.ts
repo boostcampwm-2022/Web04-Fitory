@@ -36,7 +36,7 @@ export class RoutinesService {
 
     if (routine.length) {
       return HttpResponse.success({
-        routineList: routineConverter.routineDetailList(routine),
+        routine: routineConverter.routineDetailList(routine),
       });
     }
     throw new Exception().routineNotFound();
