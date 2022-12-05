@@ -11,6 +11,8 @@ import { drawRecommendUserList } from "./utils";
 
 const SearchPage = () => {
   const [userList, setUserList] = useState<SearchedUserInfo[]>([]);
+  const [recommendAgeUserList, setRecommendAgeUserList] = useState([]);
+  const [recommendWeightUserList, setRecommendWeightUserList] = useState([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>([]);
 
@@ -20,8 +22,11 @@ const SearchPage = () => {
 
   useEffect(() => {
     (async () => {
-      const list = await UserAPI.getUserList();
-      setUserList(list);
+      const [recommendWeight, recommendAge] = await UserAPI.getRecommendUserList();
+      setRecommendAgeUserList(recommendAge);
+      setRecommendWeightUserList(recommendWeight);
+      const allUserList = await UserAPI.getUserList();
+      setUserList(allUserList);
     })();
   }, []);
 
@@ -48,11 +53,11 @@ const SearchPage = () => {
         </s.SearchContainer>
         <s.RecommendListContainer>
           <s.RecommendLabel>나와 비슷한 체급</s.RecommendLabel>
-          <CardsScroller>{drawRecommendUserList(userList)}</CardsScroller>
+          <CardsScroller>{drawRecommendUserList(recommendWeightUserList)}</CardsScroller>
         </s.RecommendListContainer>
         <s.RecommendListContainer>
           <s.RecommendLabel>나와 비슷한 나이</s.RecommendLabel>
-          <CardsScroller>{drawRecommendUserList(userList)}</CardsScroller>
+          <CardsScroller>{drawRecommendUserList(recommendAgeUserList)}</CardsScroller>
         </s.RecommendListContainer>
       </s.Wrapper>
     </PageTemplate>
