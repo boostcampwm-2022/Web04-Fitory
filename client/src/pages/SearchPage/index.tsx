@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "@pages/PageTemplate";
 import searchIcon from "@public/icons/btn_search.svg";
-import axios from "axios";
 import { SearchedUserInfo } from "src/types/user";
 import CardsScroller from "@components/design/CardsScroller";
 import SearchUtils from "@utils/SearchUtils";
 import { drawSearchedUserList } from "@utils/drawSearchedUserList";
+import UserAPI from "@api/UserAPI";
 import * as s from "./styles";
 import { drawRecommendUserList } from "./utils";
 
@@ -19,13 +19,10 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    const url = `${process.env.SERVER_BASE_URL}${process.env.GET_USERLIST_API}`;
-    const getUserList = async () => {
-      await axios.get(url, { withCredentials: true }).then((response) => {
-        setUserList(response.data.response.userProfileList);
-      });
-    };
-    getUserList();
+    (async () => {
+      const list = await UserAPI.getUserList();
+      setUserList(list);
+    })();
   }, []);
 
   useEffect(() => {

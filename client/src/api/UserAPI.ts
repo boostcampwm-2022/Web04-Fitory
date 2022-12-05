@@ -43,6 +43,16 @@ const UserAPI = {
     const { userExists } = response.response as { userExists: boolean };
     return userExists;
   },
+
+  getUserList: async () => {
+    const path = "users/profile/list";
+    const response = await HttpClient.get(path);
+    const { userProfileList } = response.response as {
+      userProfileList: UserType.SearchedUserInfo[];
+    };
+
+    return userProfileList;
+  },
 };
 
 export default UserAPI;
