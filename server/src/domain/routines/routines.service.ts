@@ -36,6 +36,7 @@ export class RoutinesService {
 
     if (routine.length) {
       return HttpResponse.success({
+        routineName,
         routine: routineConverter.routineDetailList(routine),
       });
     }
@@ -73,6 +74,49 @@ export class RoutinesService {
           return HttpResponse.success("Routine Save Success");
         }),
       );
+    } catch (error) {
+      console.log(error);
+      throw new Exception().invalidSubmit();
+    }
+  }
+
+  async updateRoutine(routineData: RoutineDto) {
+    try {
+      await Promise.all(
+        routineData.exerciseList.map(async (exercise) => {
+          const exerciseString = routineConverter.routineObjectToString(exercise);
+
+          await this.routinesRepository
+            .createQueryBuilder("routine")
+            .update()
+            .set({
+              routineName: routineData.routineName,
+              exerciseName: exercise.exerciseName,
+              exerciseString,
+            })
+            .where("routine.id = :routineId", { routineId: exercise.routineId })
+            .andWhere("routine.deleted = false")
+            .execute();
+        }),
+      );
+      return HttpResponse.success("Routine Update Success");
+    } catch (error) {
+      throw new Exception().invalidSubmit();
+    }
+  }
+
+  async deleteRoutine(userId: number, routineName: string) {
+    try {
+      await this.routinesRepository
+        .createQueryBuilder("routine")
+        .innerJoin("routine.user", "user", "user.user_id = :userId", { userId })
+        .where("routine.routine_name = :routineName", { routineName })
+        .andWhere("routine.deleted = false")
+        .update()
+        .set({ deleted: true })
+        .execute();
+
+      return HttpResponse.success("Routine Delete Success");
     } catch (error) {
       throw new Exception().invalidSubmit();
     }
