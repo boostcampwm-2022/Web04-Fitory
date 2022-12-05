@@ -1,11 +1,11 @@
-export interface exerciseSet {
+export interface ExerciseSet {
   index: number;
   kg: number;
   count: number;
   check: number;
 }
 
-export interface recordItem {
+export interface RecordItem {
   squat: number;
   deadlift: number;
   benchpress: number;
@@ -14,8 +14,14 @@ export interface recordItem {
   userWeight: number;
 }
 
-export interface routineSet {
+export interface RoutineSet {
   index: number;
   kg: number;
   count: number;
+}
+
+export interface RoutineType {
+  routineId: number;
+  exerciseName: string;
+  set: RoutineSet[];
 }
