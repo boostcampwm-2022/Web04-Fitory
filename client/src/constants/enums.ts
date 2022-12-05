@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
 export const RoutePath = {
   HOME: "/",
   STATICS: "/statics",
@@ -9,8 +10,10 @@ export const RoutePath = {
   JOIN: "/join",
   FOLLOW: "/follow",
 } as const;
+export type RoutePath = typeof RoutePath[keyof typeof RoutePath];
 
 export const FormatDay = ["일", "월", "화", "수", "목", "금", "토"] as const;
+type FormatDay = typeof FormatDay[keyof typeof FormatDay];
 
 export const FormatMonth = [
   null,
@@ -27,25 +30,30 @@ export const FormatMonth = [
   "11월",
   "12월",
 ] as const;
+export type FormatMonth = typeof FormatMonth[keyof typeof FormatMonth];
 
 export const HeatItemDistance = {
   DX: 2,
   DY: 2,
 } as const;
+export type HeatItemDistance = typeof HeatItemDistance[keyof typeof HeatItemDistance];
 
 export const ExerciseState = {
   EXERCISE: "exercise",
   REST: "rest",
   IDLE: "idle",
 } as const;
+export type ExerciseState = typeof ExerciseState[keyof typeof ExerciseState];
 
 export const TIER = [null, "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "CHAMPION"] as const;
+export type TIER = typeof TIER[keyof typeof TIER];
 
 export const DayTypes = {
   TODAY: "today",
   OTHER_DAYS: "otherDays",
   THIS_DAYS: "thisDays",
 } as const;
+export type DayTypes = typeof DayTypes[keyof typeof DayTypes];
 
 export const DateTypes = {
   YEAR: "year",
@@ -53,49 +61,58 @@ export const DateTypes = {
   WEEK: "week",
   DAY: "day",
 } as const;
+export type DateTypes = typeof DateTypes[keyof typeof DateTypes];
 
 export const Gender = {
   MALE: 0,
   FEMALE: 1,
 } as const;
+export type Gender = typeof Gender[keyof typeof Gender];
 
 export const UserName = {
   MIN: 2,
   MAX: 12,
 } as const;
+export type UserName = typeof UserName[keyof typeof UserName];
 
 export const UserAge = {
   MIN: 1,
   MAX: 120,
 } as const;
+export type UserAge = typeof UserAge[keyof typeof UserAge];
 
 export const UserHeight = {
   MIN: 1,
   MAX: 300,
 } as const;
+export type UserHeight = typeof UserHeight[keyof typeof UserHeight];
 
 export const UserWeight = {
   MIN: 1,
   MAX: 300,
 } as const;
+export type UserWeight = typeof UserWeight[keyof typeof UserWeight];
 
 export const Powerlifting = {
   SQUAT: "스쿼트",
   BENCH_PRESS: "벤치프레스",
   DEADLIFT: "데드리프트",
 } as const;
+export type Powerlifting = typeof Powerlifting[keyof typeof Powerlifting];
 
 export const PageState = {
   FOLLOWING: "팔로잉",
   FOLLOWER: "팔로워",
 } as const;
+export type PageState = typeof PageState[keyof typeof PageState];
 
-export const WEIGHT_UNIT = {
+export const WeightUnit = {
   TON: "t",
   KG: "kg",
 } as const;
+export type WeightUnit = typeof WeightUnit[keyof typeof WeightUnit];
 
-export const QUERY_KEY = {
+export const QueryKey = {
   USER_INFO: "userInfo",
   EXERCISE_PROFILE: "exerciseProfile",
   EXERCISE_DATE_LIST: "exerciseDateList",
@@ -104,3 +121,4 @@ export const QUERY_KEY = {
   ROUTINE_LIST: "routineList",
   ROUTINE_INFO: "routineInfo",
 } as const;
+export type QueryKey = typeof QueryKey[keyof typeof QueryKey];
