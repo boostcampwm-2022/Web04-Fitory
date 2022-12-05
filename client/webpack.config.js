@@ -1,9 +1,35 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const Dotenv = require("dotenv-webpack");
 
+const loadPlugin = () => {
+  const plugins = [
+    new HtmlWebpackPlugin({
+      template: "/public/index.html",
+      minify:
+        process.env.NODE_ENV === "production"
+          ? {
+              collapseWhitespace: true,
+              removeComments: true,
+            }
+          : false,
+    }),
+    new Dotenv(),
+  ];
+
+  if (process.env.BUNDLE) {
+    plugins.push(new BundleAnalyzerPlugin());
+  }
+
+  return plugins;
+};
+
 module.exports = {
+  mode: "development",
+
   entry: {
     index: path.resolve(__dirname, "./src/index"),
   },
@@ -58,7 +84,13 @@ module.exports = {
     ],
   },
 
-  plugins: [
-    new Dotenv(), // 별도의 import 없이 process.env.[이름]으로 dotenv 사용 가능
-  ],
+  plugins: loadPlugin(),
+
+  devServer: {
+    static: path.resolve(__dirname, "dist"),
+    port: 3000,
+    open: true,
+    hot: true,
+    historyApiFallback: true,
+  },
 };
