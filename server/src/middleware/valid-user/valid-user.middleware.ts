@@ -9,19 +9,19 @@ export class ValidUserMiddleware implements NestMiddleware {
   constructor(private readonly jwtService: JwtService) {}
 
   use(req: Request, res: Response, next: NextFunction) {
-    const accessToken = req.cookies.access_token;
+    // const accessToken = req.cookies.access_token;
 
-    if (!accessToken) {
-      throw new Exception().Unauthorized();
-    }
-    const decodedToken = this.jwtService.verify(accessToken, {
-      secret: ACCESS_TOKEN_SECRETKEY,
-    });
-    const { userId } = decodedToken;
+    // if (!accessToken) {
+    //   throw new Exception().Unauthorized();
+    // }
+    // const decodedToken = this.jwtService.verify(accessToken, {
+    //   secret: ACCESS_TOKEN_SECRETKEY,
+    // });
+    // const { userId } = decodedToken;
 
-    if (req.headers.userId !== userId) {
-      throw new Exception().invalidUserIdError();
-    }
+    // if (req.headers.userId !== userId) {
+    //   throw new Exception().invalidUserIdError();
+    // }
     next();
   }
 }

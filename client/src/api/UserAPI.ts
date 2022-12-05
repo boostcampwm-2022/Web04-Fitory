@@ -1,6 +1,4 @@
 import HttpClient from "src/services/HttpClient";
-import Exception from "src/services/Exception";
-import { authStorage } from "src/services/ClientStorage";
 import * as UserType from "src/types/user";
 
 const UserAPI = {
@@ -18,23 +16,12 @@ const UserAPI = {
     return response.response as UserType.JoinResponse;
   },
 
-  getUser: async () => {
-    try {
-      const userId = authStorage.get();
+  getUser: async (userId: UserType.UserId) => {
+    const path = `users/get`;
+    const response = await HttpClient.get(path, { id: userId });
+    const { user } = response.response as { user: UserType.UserInfo };
 
-      if (!userId) {
-        throw new Error();
-      }
-
-      const path = `users/get`;
-      const response = await HttpClient.get(path, { id: userId });
-      const { user } = response.response as { user: UserType.UserInfo };
-
-      return user;
-    } catch {
-      Exception.UserNotFound();
-      return null;
-    }
+    return user;
   },
 
   checkExistUserName: async (userName: string) => {

@@ -17,10 +17,10 @@ export class UsersController {
     summary: "해당 사용자의 모든 정보를 반환",
   })
   @ApiQuery({
-    name: "id",
+    name: "userId",
     type: "number",
   })
-  async getUserInfo(@Query("id") userId: number) {
+  async getUserInfo(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.usersService.getUserInfo(userId);
   }
