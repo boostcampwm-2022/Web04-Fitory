@@ -8,6 +8,7 @@ export enum RoutePath {
   LOGIN = "/login",
   JOIN = "/join",
   FOLLOW = "/follow",
+  CALENDAR = "/calendar",
 }
 
 export enum FormatDay {
