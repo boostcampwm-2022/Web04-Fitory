@@ -1,5 +1,6 @@
 import { IsNumber, IsString, Length, Matches, Max, Min } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
 
 export class UserProfileDto {
   @ApiProperty({
@@ -8,6 +9,7 @@ export class UserProfileDto {
   })
   @IsNumber()
   @Min(1)
+  @Transform((prop) => Number(prop.obj.userId))
   userId: number;
 
   @ApiProperty({
@@ -27,6 +29,7 @@ export class UserProfileDto {
   @IsNumber()
   @Min(1)
   @Max(100)
+  @Transform((prop) => Number(prop.obj.age))
   age: number;
 
   @ApiProperty({
@@ -36,6 +39,7 @@ export class UserProfileDto {
   @IsNumber()
   @Min(0)
   @Max(1)
+  @Transform((prop) => Number(prop.obj.gender))
   gender: number;
 
   @ApiProperty({
@@ -46,6 +50,7 @@ export class UserProfileDto {
   @IsNumber()
   @Min(1)
   @Max(300)
+  @Transform((prop) => Number(prop.obj.height))
   height: number;
 
   @ApiProperty({
@@ -56,6 +61,7 @@ export class UserProfileDto {
   @IsNumber()
   @Min(1)
   @Max(500)
+  @Transform((prop) => Number(prop.obj.weight))
   weight: number;
 
   @ApiProperty({

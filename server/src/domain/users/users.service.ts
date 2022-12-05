@@ -5,6 +5,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
+import { createImageURL } from "./options/multer_options";
 
 @Injectable()
 export class UsersService {
@@ -96,16 +97,13 @@ export class UsersService {
     return HttpResponse.success({ recommendWeight, recommendAge });
   }
 
-  async updateUserProfile(userProfileData: UserProfileDto) {
+  async updateUserProfile(userProfileData: UserProfileDto, filePath: string) {
     try {
       const userObject = await this.userRepository
         .createQueryBuilder("user")
         .where("user.user_id = :userId", { userId: userProfileData.userId })
         .getOne();
-      // not exist => null
-      console.log(userObject);
-      // image link
-      // userObject.profileImage = userProfileData.profileImage
+      userObject.profileImage = filePath;
       userObject.name = userProfileData.name;
       userObject.age = userProfileData.age;
       userObject.gender = userProfileData.gender;
@@ -118,6 +116,16 @@ export class UsersService {
       });
     } catch (error) {
       throw new Exception().invalidSubmit();
+    }
+  }
+
+  async uploadFiles(files: File[]) {
+    try {
+      const singleFile = files[0];
+      const fileName = createImageURL(singleFile);
+      return fileName;
+    } catch (error) {
+      throw new Exception().fileSubmitError();
     }
   }
 }

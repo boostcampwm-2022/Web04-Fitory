@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
@@ -7,6 +16,8 @@ import { User } from "@user/entities/user.entity";
 import { UsersService } from "./users.service";
 import { GetUserId } from "../../decorator/validate.decorator";
 import { UserProfileDto } from "./dto/user_profile.dto";
+import { FilesInterceptor } from "@nestjs/platform-express";
+import { multerOptions } from "./options/multer_options";
 
 @Controller("api/users")
 @ApiTags("USER API")
@@ -66,15 +77,17 @@ export class UsersController {
     return userId;
   }
 
+  @UseInterceptors(FilesInterceptor("images", null, multerOptions))
   @Post("update")
   @ApiOperation({
     summary: "해당 사용자의 프로필 정보를 업데이트",
   })
-  async updateUserProfile(@Body() userProfileData: UserProfileDto) {
+  async updateUserProfile(@UploadedFiles() files: File[], @Body() userProfileData: UserProfileDto) {
     const userId = userProfileData.userId;
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     const userIdExist = await this.usersService.isExistUser(userId);
     if (!userIdExist) throw new Exception().userNotFound();
-    return this.usersService.updateUserProfile(userProfileData);
+    const filePath = await this.usersService.uploadFiles(files);
+    return this.usersService.updateUserProfile(userProfileData, filePath);
   }
 }
