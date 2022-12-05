@@ -1,19 +1,19 @@
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import GlobalStyle from "@styles/GlobalStyle";
 import { RoutePath } from "@constants/enums";
 
-import HomePage from "@pages/HomePage";
-import ChallengePage from "@pages/ChallengePage";
-import RecordPage from "@pages/RecordPage";
-import ProfilePage from "@pages/ProfilePage";
-import LoginPage from "@pages/LoginPage";
-import JoinPage from "@pages/JoinPage";
-import SearchPage from "@pages/SearchPage";
-import FollowPage from "@pages/FollowPage";
-import StaticsPage from "@pages/StaticsPage";
+const HomePage = lazy(() => import("@pages/HomePage"));
+const ChallengePage = lazy(() => import("@pages/ChallengePage"));
+const RecordPage = lazy(() => import("@pages/RecordPage"));
+const ProfilePage = lazy(() => import("@pages/ProfilePage"));
+const FollowPage = lazy(() => import("@pages/FollowPage"));
+const LoginPage = lazy(() => import("@pages/LoginPage"));
+const JoinPage = lazy(() => import("@pages/JoinPage"));
+const StaticsPage = lazy(() => import("@pages/StaticsPage"));
+const SearchPage = lazy(() => import("@pages/SearchPage"));
 
 const queryClient = new QueryClient();
 
