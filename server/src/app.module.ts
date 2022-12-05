@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { APP_FILTER } from "@nestjs/core";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -12,8 +12,10 @@ import { SbdRecordsModule } from "@record/sbd_records.module";
 import { SbdStatisticsModule } from "@statistics/sbd_statistics.module";
 import { UsersModule } from "@user/users.module";
 import { MockModule } from "@mock/mock.module";
+import { JwtService } from "@nestjs/jwt";
 import { UploadModule } from "./domain/uploads/upload.module";
 import { typeormConfig } from "./config/typeorm.config";
+import { ValidUserMiddleware } from "./middleware/valid-user/valid-user.middleware";
 
 @Module({
   imports: [
@@ -31,6 +33,10 @@ import { typeormConfig } from "./config/typeorm.config";
     PassportModule,
   ],
 
-  providers: [{ provide: APP_FILTER, useClass: HttpExceptionFilter }],
+  providers: [JwtService, { provide: APP_FILTER, useClass: HttpExceptionFilter }],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(ValidUserMiddleware).exclude("api/oauth").forRoutes("api");
+  }
+}

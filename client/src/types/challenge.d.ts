@@ -4,10 +4,17 @@ export interface Challenge {
   squat: number;
   deadlift: number;
   benchpress: number;
+}
+
+export interface ChallengeDetail extends Challenge {
   SBD_sum: number;
 }
 
 export interface ChallengeSubmission extends Challenge {
   userId: UserId;
-  date: string;
+}
+
+export interface ChallengeTimestamp {
+  nowTimeStamp: string;
+  recentTimeStamp: string;
 }

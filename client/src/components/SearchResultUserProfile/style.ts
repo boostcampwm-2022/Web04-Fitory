@@ -17,7 +17,7 @@ export const ProfileImgContainer = styled.div`
 `;
 
 export const UserInfoContainer = styled.div`
-  margin-left: 2vw;
+  margin-left: 20px;
   width: 70%;
 `;
 

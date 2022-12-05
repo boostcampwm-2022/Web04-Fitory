@@ -49,6 +49,8 @@
 
 # 기술 스택
 
+> ['Fitory'의 기술 스택 선정 이유](https://github.com/boostcampwm-2022/Web04-Fitory/wiki/%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D-%EC%84%A0%EC%A0%95)도 참고해보세요!
+
 ![FitoryTechStack](https://user-images.githubusercontent.com/33220404/205257348-b4cfc340-d3f5-4d96-8fc3-0e74d1ce27bf.jpeg)
 
 <br />
@@ -71,7 +73,7 @@
 - [Branch 전략](https://github.com/boostcampwm-2022/Web04-Fitory/wiki/Branch-%EC%A0%84%EB%9E%B5)
 - [테스트 전략](https://github.com/boostcampwm-2022/Web04-Fitory/wiki/%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5)
 
-더 자세한 사항들은 ['Fitory'의 Wiki](https://github.com/boostcampwm-2022/Web04-Fitory/wiki)를 확인해주세요!
+> 더 자세한 사항들은 ['Fitory'의 Wiki](https://github.com/boostcampwm-2022/Web04-Fitory/wiki)를 확인해주세요!
 
 <br />
 

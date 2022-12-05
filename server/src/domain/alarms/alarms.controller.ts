@@ -2,9 +2,9 @@ import { Controller, Get, Param, Query, Sse } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Exception } from "@exception/exceptions";
 import { isValidUserId } from "@validation/validation";
-import { AlarmsService } from "./alarms.service";
 import { UsersService } from "@user/users.service";
 import { interval, map, Observable, switchMap } from "rxjs";
+import { AlarmsService } from "./alarms.service";
 
 @Controller("api/alarms")
 @ApiTags("ALARM API")

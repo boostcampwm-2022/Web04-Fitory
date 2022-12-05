@@ -5,10 +5,11 @@ import useUserInfo from "@hooks/query/useUserInfo";
 import useExerciseProfile from "@hooks/query/useExerciseProfile";
 import useBestChallengeScore from "@hooks/query/useBestChallengeScore";
 import convertWeightUnits from "@utils/convertWeightUnits";
+import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
 const UserInfoSummary = () => {
-  const { userInfo } = useUserInfo();
+  const { userInfo } = useUserInfo(authStorage.get());
   const { exerciseProfile } = useExerciseProfile();
   const { bestChallengeScore } = useBestChallengeScore();
 
