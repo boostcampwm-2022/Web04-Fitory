@@ -31,7 +31,7 @@ const SearchPage = () => {
   }, []);
 
   useEffect(() => {
-    SearchUtils.searchUserDebounce(searchValue, userList, setSearchedUser);
+    return SearchUtils.searchUser(searchValue, userList, setSearchedUser);
   }, [searchValue]);
 
   return (

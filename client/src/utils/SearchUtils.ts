@@ -22,20 +22,17 @@ const SearchUtils = {
       clearTimeout(debounce);
     };
   },
-  // searchUserDebounce: (
-  //   searchValue: string,
-  //   userList: any[],
-  //   setSearchedUser: React.Dispatch<React.SetStateAction<SearchedUserInfo[]>>,
-  // ) => {
-  //   if (timer) {
-  //     clearTimeout(timer);
-  //   }
-  //   timer = setTimeout(() => {
-  //     if (searchValue.length !== 0) SearchUtils.searchEvent(searchValue, userList, setSearchedUser);
-  //     else setSearchedUser([]);
-  //     console.log("hi");
-  //   }, 200);
-  // },
+
+  searchUser: (
+    searchValue: string,
+    userList: any[],
+    setSearchedUser: React.Dispatch<React.SetStateAction<SearchedUserInfo[]>>,
+  ) => {
+    const timer = setTimeout(() => {
+      setSearchedUser(SearchUtils.searchEvent(searchValue, userList, setSearchedUser));
+    }, 500);
+    return () => clearTimeout(timer);
+  },
 };
 
 export default SearchUtils;
