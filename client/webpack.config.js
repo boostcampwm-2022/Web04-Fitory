@@ -37,12 +37,12 @@ module.exports = {
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
-    clean: true, // CleanWebpackPlugin 대체
+    clean: true,
   },
 
   optimization: {
     minimize: true,
-    minimizer: [new TerserPlugin()], // output으로 나오는 파일의 사이즈를 줄여줌
+    minimizer: [new TerserPlugin()],
     splitChunks: {
       chunks: "all",
     },
@@ -51,9 +51,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/, // .ts 에 한하여 ts-loader를 이용하여 transpiling
+        test: /\.tsx?$/,
         exclude: /node_module/,
-        loader: "babel-loader", // 'babel-loader' 만으로 'ts-loader' 대체 가능
+        loader: "babel-loader",
       },
       {
         test: /\.(webp|png|jpe?g|gif|svg|ico)$/i,
@@ -77,7 +77,6 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     plugins: [
-      // tsconfig.json 파일의 paths를 참조하여 alias 자동 설정
       new TsconfigPathsPlugin({
         configFile: path.resolve(__dirname, "./tsconfig.json"),
       }),
@@ -85,6 +84,10 @@ module.exports = {
   },
 
   plugins: loadPlugin(),
+
+  performance: {
+    hints: false,
+  },
 
   devServer: {
     static: path.resolve(__dirname, "dist"),
