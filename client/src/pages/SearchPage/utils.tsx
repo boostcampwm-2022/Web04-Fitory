@@ -1,10 +1,11 @@
 import Paper from "@components/design/Paper";
 import React from "react";
+import styled from "styled-components";
 import { SearchedUserInfo } from "../../types/user";
 
 export const drawRecommendUserList = (userList: any[]) => {
-  if (!userList) {
-    return <p> 나와 비슷한 친구가 없습니다.</p>;
+  if (userList.length === 0) {
+    return <Notice>* 나와 비슷한 친구가 없습니다.</Notice>;
   }
   return userList.map((user: SearchedUserInfo) => {
     return (
@@ -21,3 +22,10 @@ export const drawRecommendUserList = (userList: any[]) => {
     );
   });
 };
+
+const Notice = styled.div`
+  width: 100%;
+  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
+  text-align: center;
+  margin-top: 90px;
+`;
