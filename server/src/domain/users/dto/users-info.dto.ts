@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsString, Length, Matches, Max, Min } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class UsersInfoDto {
@@ -17,6 +17,7 @@ export class UsersInfoDto {
     type: String,
   })
   @IsString()
+  @Matches("^[a-z|A-Z|0-9|ㄱ-힣]{2,12}$")
   name: string;
 
   @ApiProperty({
@@ -26,6 +27,8 @@ export class UsersInfoDto {
     maximum: 100,
   })
   @IsNumber()
+  @Min(1)
+  @Max(100)
   age: number;
 
   @ApiProperty({
@@ -33,6 +36,8 @@ export class UsersInfoDto {
     type: Number,
   })
   @IsNumber()
+  @Min(0)
+  @Max(1)
   gender: number;
 
   @ApiProperty({
@@ -41,6 +46,8 @@ export class UsersInfoDto {
     minimum: 0,
   })
   @IsNumber()
+  @Min(1)
+  @Max(300)
   height: number;
 
   @ApiProperty({
@@ -49,6 +56,8 @@ export class UsersInfoDto {
     minimum: 0,
   })
   @IsNumber()
+  @Min(1)
+  @Max(500)
   weight: number;
 
   @ApiProperty({
@@ -56,6 +65,7 @@ export class UsersInfoDto {
     type: String,
   })
   @IsString()
+  @Length(0, 500)
   introduce: string;
 
   @ApiProperty({
@@ -66,6 +76,8 @@ export class UsersInfoDto {
     default: 0,
   })
   @IsNumber()
+  @Min(0)
+  @Max(6)
   tier: number;
 
   @ApiProperty({
@@ -75,6 +87,8 @@ export class UsersInfoDto {
     default: 0,
   })
   @IsNumber()
+  @Min(0)
+  @Max(5000)
   follower_count: number;
 
   @ApiProperty({
@@ -84,6 +98,8 @@ export class UsersInfoDto {
     default: 0,
   })
   @IsNumber()
+  @Min(0)
+  @Max(5000)
   following_count: number;
 
   @ApiProperty({
@@ -93,5 +109,6 @@ export class UsersInfoDto {
     default: 0,
   })
   @IsNumber()
+  @Min(0)
   volume_sum: number;
 }

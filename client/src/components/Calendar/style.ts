@@ -99,7 +99,8 @@ export const DayLabel = styled.div`
   justify-content: center;
   align-items: center;
   margin: auto;
-  border-radius: 50%;
+  padding-bottom: 4px;
+  border-radius: 8px;
   background-color: ${({ dayType, theme }: { dayType: DayTypes; theme: typeof Theme }) => {
     return dayType === DayTypes.TODAY ? theme.COLORS.LIGHT_BLUE : "transparent";
   }};
@@ -109,9 +110,8 @@ export const CompleteDot = styled.div`
   position: relative;
   top: -10px;
   margin: 0 auto;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
+  width: 50%;
+  height: 3px;
   background-color: ${({
     state,
     dayType,
@@ -121,9 +121,12 @@ export const CompleteDot = styled.div`
     dayType: DayTypes;
     theme: typeof Theme;
   }) => {
-    if (dayType === DayTypes.TODAY) {
-      return theme.COLORS.WHITE;
+    if (state === ExerciseState.EXERCISE) {
+      if (dayType === DayTypes.TODAY) {
+        return theme.COLORS.WHITE;
+      }
+      return theme.COLORS.LIGHT_PURPLE;
     }
-    return state === ExerciseState.EXERCISE ? theme.COLORS.LIGHT_PURPLE : "transparent";
+    return undefined;
   }};
 `;

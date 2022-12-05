@@ -3,20 +3,26 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
-import { AppModule } from "./app.module";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
-import { PORT } from "@env";
+import { LOCAL_HOST, PORT } from "@env";
+import express from "express";
+import path from "path";
+import { NestExpressApplication } from "@nestjs/platform-express";
 import { initDatabase } from "./utils/initDB";
+import { AppModule } from "./app.module";
 
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
   // initDatabase();
 
-  const app = await NestFactory.create(AppModule);
+  const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
+
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
+  app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
-    origin: ["http://localhost:8080"],
+    origin: [LOCAL_HOST],
+    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   });
 

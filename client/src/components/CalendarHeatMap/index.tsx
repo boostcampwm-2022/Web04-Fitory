@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import {
   NUMBER_OF_DAYS,
   HEAT_ITEM_SIZE,
@@ -9,6 +9,8 @@ import { FormatMonth, ExerciseState } from "@constants/enums";
 import getCalendarHeatMapArray from "@utils/getCalendarHeatMapArray";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import Paper from "@components/design/Paper";
+import useAllExerciseDate from "@hooks/query/useAllExerciseDate";
+import useRecentChallengeTime from "@hooks/query/useRecentChallengeTime";
 import * as s from "./style";
 
 interface HeatItemProps {
@@ -30,24 +32,36 @@ const HeatItem = ({ exerciseState, x, y }: HeatItemProps) => {
 };
 
 const CalendarHeatMap = () => {
-  const year = new Date().getFullYear();
-  const heatMapArray = getCalendarHeatMapArray(year);
-  const exerciseStateList = getExerciseStateForOneYear(year, [
-    "220103",
-    "220104",
-    "220107",
-    "220111",
-  ]);
+  const { nowTimeStamp } = useRecentChallengeTime();
+  const { exerciseDateList } = useAllExerciseDate();
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const heatMapArray = getCalendarHeatMapArray(nowTimeStamp);
+  const exerciseStateList = [
+    ...getExerciseStateForOneYear(nowTimeStamp.getFullYear() - 1, exerciseDateList, nowTimeStamp),
+    ...getExerciseStateForOneYear(nowTimeStamp.getFullYear(), exerciseDateList, nowTimeStamp),
+  ];
 
   const isNeedMonthLabel = (i: number) => {
     return !i || heatMapArray[i - 1][0].month < heatMapArray[i][0].month;
   };
 
+  useEffect(() => {
+    if (!scrollRef.current) {
+      return;
+    }
+    const targetElement = scrollRef.current;
+    if (targetElement) {
+      targetElement.scrollLeft = targetElement.scrollWidth;
+    }
+  }, []);
+
   return (
     <Paper style={{ width: "100%" }}>
       <s.Wrapper>
-        <s.Year>{year}</s.Year>
-        <s.HeatMap>
+        {/* <s.Year>{year}</s.Year> */}
+        <s.HeatMap ref={scrollRef}>
           <svg
             width={HEAT_ITEM_SIZE * heatMapArray.length}
             height={HEAT_ITEM_SIZE * (HEAT_ITEM_DISTANCE + NUMBER_OF_DAYS)}

@@ -10,4 +10,7 @@ export class Follow {
 
   @Column({ name: "followed_id" })
   followedId!: number;
+
+  @Column({ name: "deleted", default: false })
+  deleted!: boolean;
 }

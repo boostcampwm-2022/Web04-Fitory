@@ -4,27 +4,13 @@ import CalendarElement from "@components/Calendar/CalendarElement";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import { NUMBER_OF_DAYS } from "@constants/consts";
 import { DateTypes, FormatDay } from "@constants/enums";
+import useAllExerciseDate from "@hooks/query/useAllExerciseDate";
 import * as s from "./style";
 
 const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
   const today = date;
-  const exerciseStateList = getExerciseStateForOneYear(today.year(), [
-    "220103",
-    "220104",
-    "220107",
-    "220108",
-    "220111",
-    "220112",
-    "220113",
-    "220114",
-    "220115",
-    "220116",
-    "220117",
-    "220118",
-    "221121",
-    "221122",
-    "221124",
-  ]);
+  const { exerciseDateList } = useAllExerciseDate();
+  const exerciseStateList = getExerciseStateForOneYear(today.year(), exerciseDateList);
 
   const firstWeek = today.clone().startOf(DateTypes.MONTH).week();
   const lastWeek =

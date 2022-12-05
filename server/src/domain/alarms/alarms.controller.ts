@@ -2,12 +2,16 @@ import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Exception } from "@exception/exceptions";
 import { isValidUserId } from "@validation/validation";
+import { UsersService } from "@user/users.service";
 import { AlarmsService } from "./alarms.service";
 
 @Controller("api/alarms")
 @ApiTags("ALARM API")
 export class AlarmsController {
-  constructor(private readonly alarmService: AlarmsService) {}
+  constructor(
+    private readonly alarmService: AlarmsService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Get("everyDate")
   @ApiOperation({
@@ -17,20 +21,20 @@ export class AlarmsController {
     name: "userId",
     type: "number",
   })
-  getUnreadAlarmCount(@Query("userId") userId: number) {
+  async getUnreadAlarmCount(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.alarmService.countUnreadAlarm(userId);
   }
 
   @Get("list")
   @ApiOperation({
-    summary: "❌ 미구현) 해당 사용자가 받은 알림 리스트를 반환",
+    summary: "해당 사용자가 받은 알림 상세 정보 리스트를 반환",
   })
   @ApiQuery({
     name: "userId",
     type: "number",
   })
-  getAlarmList(@Query("userId") userId: number) {
+  async getAlarmList(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.alarmService.getAlarmList(userId);
   }

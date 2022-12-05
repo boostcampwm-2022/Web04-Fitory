@@ -28,6 +28,7 @@ export const Title = styled.div`
   align-items: center;
   color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+  color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
 `;
 
 export const LeftItem = styled.div`

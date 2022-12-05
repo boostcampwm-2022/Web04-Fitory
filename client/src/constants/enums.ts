@@ -8,6 +8,7 @@ export enum RoutePath {
   LOGIN = "/login",
   JOIN = "/join",
   NOTIFICATION = "/notification",
+  FOLLOW = "/follow",
 }
 
 export enum FormatDay {
@@ -20,7 +21,7 @@ export enum FormatDay {
   "토",
 }
 
-export enum FormatMonth {
+export const FormatMonth = [
   null,
   "1월",
   "2월",
@@ -34,7 +35,19 @@ export enum FormatMonth {
   "10월",
   "11월",
   "12월",
-}
+  "1월",
+  "2월",
+  "3월",
+  "4월",
+  "5월",
+  "6월",
+  "7월",
+  "8월",
+  "9월",
+  "10월",
+  "11월",
+  "12월",
+] as const;
 
 export enum HeatItemDistance {
   DX = 2,
@@ -47,14 +60,7 @@ export enum ExerciseState {
   IDLE = "idle",
 }
 
-export enum Tier {
-  BRONZE = "BRONZE",
-  SILVER = "SILVER",
-  GOLD = "GOLD",
-  PLATINUM = "PLATINUM",
-  DIAMOND = "DIAMOND",
-  CHAMPION = "CHAMPION",
-}
+export const TIER = [null, "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "CHAMPION"] as const;
 
 export enum DayTypes {
   TODAY = "today",
@@ -98,3 +104,29 @@ export enum NotificationState {
   EXERCISE = 1,
   FOLLOW = 2,
 }
+
+export enum Powerlifting {
+  SQUAT = "스쿼트",
+  BENCH_PRESS = "벤치프레스",
+  DEADLIFT = "데드리프트",
+}
+
+export enum PageState {
+  FOLLOWING = "팔로잉",
+  FOLLOWER = "팔로워",
+}
+
+export const WEIGHT_UNIT = {
+  TON: "t",
+  KG: "kg",
+} as const;
+
+export const QUERY_KEY = {
+  USER_INFO: "userInfo",
+  EXERCISE_PROFILE: "exerciseProfile",
+  EXERCISE_DATE_LIST: "exerciseDateList",
+  BEST_CHALLENGE_SCORE: "bestChallengeScore",
+  RECENT_CHALLENGE_TIME: "recentChallengeTime",
+  ROUTINE_LIST: "routineList",
+  ROUTINE_INFO: "routineInfo",
+} as const;

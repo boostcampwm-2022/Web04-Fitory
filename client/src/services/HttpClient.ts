@@ -1,19 +1,24 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { HttpSuccess, HttpFailed } from "src/types/http";
+import { authStorage } from "./ClientStorage";
 
 const axiosInstance = axios.create({
   baseURL: process.env.SERVER_BASE_URL,
   withCredentials: true,
 });
 
-axiosInstance.interceptors.request.use((config) => {
-  // TODO: header에 Authorization 옵션 추가
+axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+  if (authStorage.has()) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const headers = config.headers as any;
+    headers.UserId = authStorage.get();
+  }
   return config;
 });
 
 const HttpClient = {
-  get: async (path: string, headers = {}): Promise<HttpSuccess | HttpFailed> => {
-    const response = await axiosInstance.get(path, { headers });
+  get: async (path: string, params = {}, headers = {}): Promise<HttpSuccess | HttpFailed> => {
+    const response = await axiosInstance.get(path, { params, headers });
     return response.data;
   },
 
