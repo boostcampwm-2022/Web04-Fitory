@@ -56,7 +56,7 @@ module.exports = {
         loader: "babel-loader", // 'babel-loader' 만으로 'ts-loader' 대체 가능
       },
       {
-        test: /\.(png|jpe?g|gif|svg|ico)$/i,
+        test: /\.(webp|png|jpe?g|gif|svg|ico)$/i,
         type: "asset/resource",
         generator: {
           filename: "images/[name][ext][query]",
