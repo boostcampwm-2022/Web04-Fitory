@@ -3,13 +3,17 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import UserAPI from "@api/UserAPI";
 import { RoutePath, QUERY_KEY } from "@constants/enums";
-import { UserInfo } from "src/types/user";
+import { UserInfo, UserId } from "src/types/user";
 
-const useUserInfo = () => {
+const useUserInfo = (userId: UserId) => {
   const navigate = useNavigate();
-  const { data, isLoading } = useQuery(QUERY_KEY.USER_INFO, () => UserAPI.getUser(), {
-    suspense: true,
-  });
+  const { data, isLoading } = useQuery(
+    [QUERY_KEY.USER_INFO, userId],
+    () => UserAPI.getUser(userId),
+    {
+      suspense: true,
+    },
+  );
 
   useEffect(() => {
     if (!isLoading && !data) {

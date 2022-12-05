@@ -121,4 +121,6 @@ export const QUERY_KEY = {
   EXERCISE_DATE_LIST: "exerciseDateList",
   BEST_CHALLENGE_SCORE: "bestChallengeScore",
   RECENT_CHALLENGE_TIME: "recentChallengeTime",
-};
+  ROUTINE_LIST: "routineList",
+  ROUTINE_INFO: "routineInfo",
+} as const;

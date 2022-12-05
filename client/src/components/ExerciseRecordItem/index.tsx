@@ -20,7 +20,7 @@ const ExerciseRecordItem = ({ exerciseId }: ExersiceInputSetProps) => {
   };
 
   const handleClickDeleteSetButton = () => {
-    if (exerciseList[exerciseId].setInfo.length > 1) {
+    if (exerciseList[exerciseId].setList.length > 1) {
       deleteExerciseSetItem(exerciseId);
     }
   };
@@ -29,7 +29,7 @@ const ExerciseRecordItem = ({ exerciseId }: ExersiceInputSetProps) => {
     <s.Wrapper>
       <s.ExerciseNameTextField
         placeholder="운동 이름"
-        value={exerciseList[exerciseId].name}
+        value={exerciseList[exerciseId].exerciseName}
         onChange={(e) => handleChangeExerciseName(e)}
       />
       <s.ExerciseContentWrapper>
@@ -39,7 +39,7 @@ const ExerciseRecordItem = ({ exerciseId }: ExersiceInputSetProps) => {
             <button type="button" onClick={handleClickDeleteSetButton}>
               −
             </button>
-            <span>{exerciseList[exerciseId].setInfo.length}</span>
+            <span>{exerciseList[exerciseId].setList.length}</span>
             <button type="button" onClick={handleClickCreateSetButton}>
               +
             </button>
@@ -50,7 +50,7 @@ const ExerciseRecordItem = ({ exerciseId }: ExersiceInputSetProps) => {
             <s.Label>kg</s.Label>
             <s.Label>회</s.Label>
           </s.WeightInfoRow>
-          {exerciseList[exerciseId].setInfo.map((_, setId) => (
+          {exerciseList[exerciseId].setList.map((_, setId) => (
             // eslint-disable-next-line react/no-array-index-key
             <ExerciseSetItem key={`${exerciseId}${setId}`} exerciseId={exerciseId} setId={setId} />
           ))}
