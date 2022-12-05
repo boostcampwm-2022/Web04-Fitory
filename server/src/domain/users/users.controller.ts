@@ -64,8 +64,8 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get("test")
-  async getTest(@GetUserId() userId: User) {
-    console.log(userId);
+  async getTest(@GetUserId() userId: number) {
+    console.log("user test api", userId);
     return userId;
   }
 }

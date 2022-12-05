@@ -17,7 +17,7 @@ export class UsersService {
       .createQueryBuilder("user")
       .where("user.user_id = :userId", { userId })
       .getOne();
-    return userExist ? true : false;
+    return !!userExist;
   }
 
   async getUserInfo(userId: number) {
@@ -58,7 +58,7 @@ export class UsersService {
       .createQueryBuilder("user")
       .where("user.name = :name", { name })
       .getOne();
-    return user ? true : false;
+    return !!user;
   }
 
   async getRecommandUserList(userId: number) {
