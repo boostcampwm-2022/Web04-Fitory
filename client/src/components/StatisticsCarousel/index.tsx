@@ -2,7 +2,7 @@ import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import TierGraph from "@components/TierGraph";
 import * as s from "./style";
 
-const Carousel = () => {
+const StatisticsCarousel = () => {
   const [isHistogram, setIsHistogram] = useState<boolean>(true);
   const slideRef = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -45,4 +45,4 @@ const Carousel = () => {
   );
 };
 
-export default Carousel;
+export default StatisticsCarousel;

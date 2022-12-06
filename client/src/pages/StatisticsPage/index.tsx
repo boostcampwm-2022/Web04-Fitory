@@ -1,11 +1,11 @@
 import React from "react";
 import PageTemplate from "@pages/PageTemplate";
 import ExerciseScoreContainer from "@components/ExerciseScoreContainer";
-import StaticsUserInfoContainer from "@components/StaticsUserInfoContainer";
-import Carousel from "@components/Carousel";
+import StatisticsUserInfoContainer from "@components/StatisticsUserInfoContainer";
+import StatisticsCarousel from "@components/StatisticsCarousel";
 import * as s from "./style";
 
-const StaticsPage = () => {
+const StatisticsPage = () => {
   return (
     <PageTemplate isRoot>
       <s.UserInfoContainer>
@@ -14,13 +14,13 @@ const StaticsPage = () => {
           <ExerciseScoreContainer exerciseName="벤치프레스" exerciseScore={140} />
           <ExerciseScoreContainer exerciseName="데드리프트" exerciseScore={140} />
         </s.ScoreContainer>
-        <StaticsUserInfoContainer />
+        <StatisticsUserInfoContainer />
       </s.UserInfoContainer>
       <div>
-        <Carousel />
+        <StatisticsCarousel />
       </div>
     </PageTemplate>
   );
 };
 
-export default StaticsPage;
+export default StatisticsPage;

@@ -1,7 +1,7 @@
 import React from "react";
 import * as s from "./style";
 
-const StaticsUserInfoContainer = () => {
+const StatisticsUserInfoContainer = () => {
   return (
     <s.Container>
       <s.UserData>성별</s.UserData>
@@ -11,4 +11,4 @@ const StaticsUserInfoContainer = () => {
   );
 };
 
-export default StaticsUserInfoContainer;
+export default StatisticsUserInfoContainer;

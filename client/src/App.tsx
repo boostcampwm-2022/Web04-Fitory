@@ -13,7 +13,7 @@ import LoginPage from "@pages/LoginPage";
 import JoinPage from "@pages/JoinPage";
 import SearchPage from "@pages/SearchPage";
 import FollowPage from "@pages/FollowPage";
-import StaticsPage from "@pages/StaticsPage";
+import StatisticsPage from "@pages/StatisticsPage";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +31,7 @@ const App = () => {
             {/* Search */}
             <Route path={RoutePath.SEARCH} element={<SearchPage />} />
             {/* Statics */}
-            <Route path={RoutePath.STATICS} element={<StaticsPage />} />
+            <Route path={RoutePath.STATICS} element={<StatisticsPage />} />
             {/* Profile */}
             <Route path={RoutePath.PROFILE} element={<ProfilePage />} />
             <Route path={RoutePath.LOGIN} element={<LoginPage />} />
