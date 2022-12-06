@@ -3,7 +3,6 @@ import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
-import { HttpResponse } from "@converter/response.converter";
 import { RoutinesService } from "./routines.service";
 import { RoutineDto } from "./dto/single-routine.dto";
 
@@ -45,7 +44,6 @@ export class RoutinesController {
     @Query("routineName") routineName: string,
   ) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    // routineName에 대해 검증 추가 필요
     return this.routinesService.getSingleRoutineDetail(userId, routineName);
   }
 
@@ -54,7 +52,31 @@ export class RoutinesController {
     summary: "루틴 저장",
   })
   async saveRoutine(@Body() routineData: RoutineDto) {
-    await this.routinesService.saveRoutine(routineData);
-    return HttpResponse.success("Routine save success");
+    return this.routinesService.saveRoutine(routineData);
+  }
+
+  @Post("update")
+  @ApiOperation({
+    summary: "루틴 수정",
+  })
+  async updateRoutine(@Body() routineData: RoutineDto) {
+    return this.routinesService.updateRoutine(routineData);
+  }
+
+  @Get("delete")
+  @ApiOperation({
+    summary: "해당 루틴 삭제",
+  })
+  @ApiQuery({
+    name: "userId",
+    type: "number",
+  })
+  @ApiQuery({
+    name: "routineName",
+    type: "string",
+  })
+  async deleteRoutine(@Query("userId") userId: number, @Query("routineName") routineName: string) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    return this.routinesService.deleteRoutine(userId, routineName);
   }
 }

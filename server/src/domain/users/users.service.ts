@@ -18,12 +18,11 @@ export class UsersService {
   ) {}
 
   async isExistUser(userId: number) {
-    // const userExist = await this.userRepository
-    //   .createQueryBuilder("user")
-    //   .where("user.user_id = :userId", { userId })
-    //   .getOne();
-    // return userExist ? true : false;
-    return true;
+    const userExist = await this.userRepository
+      .createQueryBuilder("user")
+      .where("user.user_id = :userId", { userId })
+      .getOne();
+    return !!userExist;
   }
 
   async getUserInfo(userId: number) {

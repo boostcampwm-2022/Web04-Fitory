@@ -1,4 +1,4 @@
-import { exerciseSet } from "@type/domain";
+import { ExerciseSet } from "@type/domain";
 import { Exercise } from "../entities/exercise.entity";
 
 export const exerciseConverter = {
@@ -13,26 +13,26 @@ export const exerciseConverter = {
   },
 
   historyOfMonth: (historyList: Exercise[]) => {
-    const historyObject: { [key: string]: { name: string; set: exerciseSet[] }[] } = {};
+    const historyObject: { [key: string]: { name: string; set: ExerciseSet[] }[] } = {};
     historyList.map((history) => {
       if (!historyObject.hasOwnProperty(history.date)) {
         historyObject[`${history.date}`] = [];
       }
-      const set: exerciseSet[] = [];
+      const set: ExerciseSet[] = [];
       history.exerciseString.split("|").map((setString, index) => {
         const [kg, count, check] = setString.split("/").map((element) => Number(element));
         set.push({ index: index + 1, kg, count, check });
       });
       historyObject[`${history.date}`].push({
         name: history.exerciseName,
-        set: set,
+        set,
       });
     });
     return historyObject;
   },
 
   totalVolume: (exerciseList: Exercise[]) => {
-    let totalVolume: number = 0;
+    let totalVolume = 0;
     exerciseList.map((item) => {
       item.exerciseString.split("|").map((innerItem) => {
         const [kg, count, check] = innerItem.split("/");

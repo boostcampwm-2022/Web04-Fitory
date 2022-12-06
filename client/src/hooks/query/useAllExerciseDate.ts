@@ -8,7 +8,7 @@ const useAllExerciseDate = () => {
     suspense: true,
   });
 
-  return { exerciseDateList: data as ExerciseDate };
+  return { exerciseDateList: [...(data as ExerciseDate)] };
 };
 
 export default useAllExerciseDate;
