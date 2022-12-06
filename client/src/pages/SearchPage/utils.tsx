@@ -1,15 +1,17 @@
 import Paper from "@components/design/Paper";
 import React from "react";
-import styled from "styled-components";
 import defaultImg from "@public/images/img_default_profile.png";
+import * as s from "./styles";
 import { SearchedUserInfo } from "../../types/user";
 
-export const drawRecommendUserList = (userList: any[]) => {
-  const handleImgError = (e) => {
-    e.target.src = defaultImg;
+export const drawRecommendUserList = (userList: SearchedUserInfo[]) => {
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    if (e.target instanceof HTMLImageElement) {
+      e.target.src = defaultImg;
+    }
   };
   if (userList.length === 0) {
-    return <Notice>* 나와 비슷한 친구가 없습니다.</Notice>;
+    return <s.Notice>* 나와 비슷한 친구가 없습니다.</s.Notice>;
   }
   return userList.map((user: SearchedUserInfo) => {
     return (
@@ -26,10 +28,3 @@ export const drawRecommendUserList = (userList: any[]) => {
     );
   });
 };
-
-const Notice = styled.div`
-  width: 100%;
-  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
-  text-align: center;
-  margin-top: 90px;
-`;

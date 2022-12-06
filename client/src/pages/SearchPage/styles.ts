@@ -77,3 +77,10 @@ export const RecommendLabel = styled.p`
   }};
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
 `;
+
+export const Notice = styled.div`
+  width: 100%;
+  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
+  text-align: center;
+  margin-top: 90px;
+`;
