@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import { PageState, RoutePath } from "@constants/enums";
+import MyPageUserProfile from "@components/MyPageUserProfile";
 import { authStorage } from "../../services/ClientStorage";
 
 const ProfilePage = () => {
@@ -17,14 +18,15 @@ const ProfilePage = () => {
       state: PageState.FOLLOWING,
     });
   };
-  useEffect(() => {
-    if (!authStorage.get()) {
-      navigate(RoutePath.LOGIN, { replace: true });
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (!authStorage.get()) {
+  //     navigate(RoutePath.LOGIN, { replace: true });
+  //   }
+  // }, [navigate]);
 
   return (
     <PageTemplate isRoot>
+      <MyPageUserProfile />
       <button onClick={followingMove}>
         <p>팔로잉</p>
       </button>
