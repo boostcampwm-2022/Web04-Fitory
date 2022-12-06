@@ -35,14 +35,13 @@ export class AlarmsService {
       .addSelect("user.name", "name")
       .addSelect("user.profile_image", "profile_image")
       .addSelect("alarm.check", "check")
-      .addSelect("alarm.sender_user_id", "sender_user_id")
       .addSelect("alarm.alarm_type", "alarm_type")
       .addSelect("alarm.time_stamp", "time_stamp")
       .innerJoin(User, "user", "user.user_id = alarm.sender_user_id")
       .where("alarm.user_id = :userId", { userId })
       .andWhere("alarm.id > :index", { index })
       .andWhere("DATE(alarm.time_stamp) >= DATE_ADD(NOW(), INTERVAL -1 MONTH)")
-      .take(10)
+      .limit(10)
       .getRawMany();
     await this.checkToReadAlarm(userId);
     return HttpResponse.success({
