@@ -12,6 +12,7 @@ import useUserInfo from "@hooks/query/useUserInfo";
 import useRoutineList from "@hooks/query/useRoutineList";
 import ExerciseAPI from "@api/ExerciseAPI";
 import theme from "@styles/Theme";
+import { authStorage } from "src/services/ClientStorage";
 import { UserId } from "src/types/user";
 import * as s from "./style";
 
@@ -59,7 +60,10 @@ const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) =
               }}
               hover
             >
-              <s.RoutineDeleteButton onClick={() => handleClickRoutineDeleteButton(routineName)}>
+              <s.RoutineDeleteButton
+                visible={userId === authStorage.get()}
+                onClick={() => handleClickRoutineDeleteButton(routineName)}
+              >
                 <img src={cancelSrc} alt="루틴 삭제 버튼" />
               </s.RoutineDeleteButton>
               <s.RoutineButton onClick={() => onClickRoutineItem(routineName)}>

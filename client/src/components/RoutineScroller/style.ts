@@ -44,7 +44,6 @@ export const RoutineDeleteButton = styled.button`
   height: 17px;
   border-radius: 100%;
   position: absolute;
-  display: flex;
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.COLORS.RED};
@@ -55,6 +54,7 @@ export const RoutineDeleteButton = styled.button`
   &:hover {
     filter: contrast(0.8);
   }
+  display: ${({ visible }: { visible: boolean }) => (visible ? "flex" : "none")};
 `;
 
 export const RoutineListAltText = styled.p`
