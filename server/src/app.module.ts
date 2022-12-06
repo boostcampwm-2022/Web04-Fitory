@@ -13,7 +13,6 @@ import { SbdStatisticsModule } from "@statistics/sbd_statistics.module";
 import { UsersModule } from "@user/users.module";
 import { MockModule } from "@mock/mock.module";
 import { JwtService } from "@nestjs/jwt";
-import { UploadModule } from "./domain/uploads/upload.module";
 import { typeormConfig } from "./config/typeorm.config";
 import { ValidUserMiddleware } from "./middleware/valid-user/valid-user.middleware";
 
@@ -28,7 +27,6 @@ import { ValidUserMiddleware } from "./middleware/valid-user/valid-user.middlewa
     SbdStatisticsModule,
     FollowsModule,
     MockModule,
-    UploadModule,
     TypeOrmModule.forRoot(typeormConfig),
     PassportModule,
   ],
