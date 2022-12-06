@@ -6,13 +6,14 @@ import CalendarHeatMap from "@components/CalendarHeatMap";
 import arrowRightSrc from "@public/icons/mark_arrow_right.svg";
 import { RoutePath } from "@constants/enums";
 import Calendar from "@components/Calendar";
+import NotificationButton from "@components/NotificationButton";
 import * as s from "./style";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    <PageTemplate isRoot>
+    <PageTemplate topNavRightItem={<NotificationButton />} isRoot>
       <s.Wrapper>
         <UserInfoSummary />
         <s.ChallengeButton type="button" onClick={() => navigate(RoutePath.CHALLENGE)}>

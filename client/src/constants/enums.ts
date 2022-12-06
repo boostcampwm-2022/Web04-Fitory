@@ -7,6 +7,7 @@ export enum RoutePath {
   RECORD = "/record",
   LOGIN = "/login",
   JOIN = "/join",
+  NOTIFICATION = "/notification",
   FOLLOW = "/follow",
 }
 
@@ -97,6 +98,11 @@ export enum UserHeight {
 export enum UserWeight {
   MIN = 1,
   MAX = 300,
+}
+
+export enum NotificationState {
+  EXERCISE = 1,
+  FOLLOW = 2,
 }
 
 export enum Powerlifting {

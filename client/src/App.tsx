@@ -12,6 +12,7 @@ import ProfilePage from "@pages/ProfilePage";
 import LoginPage from "@pages/LoginPage";
 import JoinPage from "@pages/JoinPage";
 import SearchPage from "@pages/SearchPage";
+import NotificationPage from "@pages/NotificationPage";
 import FollowPage from "@pages/FollowPage";
 import StaticsPage from "@pages/StaticsPage";
 
@@ -28,6 +29,7 @@ const App = () => {
             <Route path={RoutePath.HOME} element={<HomePage />} />
             <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
             <Route path={RoutePath.RECORD} element={<RecordPage />} />
+            <Route path={RoutePath.NOTIFICATION} element={<NotificationPage />} />
             {/* Search */}
             <Route path={RoutePath.SEARCH} element={<SearchPage />} />
             {/* Statics */}
