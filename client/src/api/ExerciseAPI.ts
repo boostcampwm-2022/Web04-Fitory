@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+import { AxiosError } from "axios";
 import { authStorage } from "src/services/ClientStorage";
 import HttpClient from "src/services/HttpClient";
 import { UserId } from "src/types/user";
@@ -26,11 +28,9 @@ const ExerciseAPI = {
       const userId = authStorage.get();
       const path = "exercise/submit";
       await HttpClient.post(path, { userId, exerciseList });
-      // eslint-disable-next-line no-alert
       alert("오늘의 운동 완료!");
       return true;
     } catch {
-      // eslint-disable-next-line no-alert
       alert("빈 입력 값이 없는지 확인해주세요.");
       return false;
     }
@@ -41,11 +41,14 @@ const ExerciseAPI = {
       const userId = authStorage.get();
       const path = "routines/save";
       await HttpClient.post(path, { userId, routineName, exerciseList });
-      // eslint-disable-next-line no-alert
       alert("루틴 저장이 완료되었습니다!");
-    } catch {
-      // eslint-disable-next-line no-alert
-      alert("운동 이름과 루틴 이름이 모두 채워져 있는지 확인해주세요.");
+    } catch (e) {
+      if ((e as AxiosError).response?.status === 400) {
+        alert("운동 이름과 루틴 이름이 모두 채워져 있는지 확인해주세요.");
+      }
+      if ((e as AxiosError).request.status === 403) {
+        alert("이미 존재하는 루틴 이름입니다.");
+      }
     }
   },
 
