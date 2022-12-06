@@ -1,5 +1,6 @@
 import HttpClient from "src/services/HttpClient";
 import * as UserType from "src/types/user";
+import { authStorage } from "../services/ClientStorage";
 
 const UserAPI = {
   googleLogin: async ({ access_token }: UserType.LoginUserInfo) => {
@@ -29,6 +30,29 @@ const UserAPI = {
     const response = await HttpClient.get(path, { userName });
     const { userExists } = response.response as { userExists: boolean };
     return userExists;
+  },
+
+  getUserList: async () => {
+    const path = "users/profile/list";
+    const response = await HttpClient.get(path);
+    const { userProfileList } = response.response as {
+      userProfileList: UserType.SearchedUserInfo[];
+    };
+
+    return userProfileList;
+  },
+
+  getRecommendUserList: async () => {
+    const userId = authStorage.get();
+    if (!userId) {
+      throw new Error();
+    }
+    const path = "users/recommand/list";
+    const response = await HttpClient.get(path, { userId });
+    return [response.response.recommendWeight, response.response.recommendAge] as [
+      UserType.SearchedUserInfo[],
+      UserType.SearchedUserInfo[],
+    ];
   },
 };
 

@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "src/domain/users/entities/user.entity";
 import { google, Auth } from "googleapis";
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@env";
 import { GoogleUserRegisterDto } from "@oauth/google-oauth/dto/google-user-register.dto";
 import { GoogleUserInfoDto } from "@oauth/google-oauth/dto/google-user-info.dto";
+import { User } from "@user/entities/user.entity";
 
 @Injectable()
 export class GoogleOauthService {

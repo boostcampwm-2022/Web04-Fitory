@@ -57,8 +57,13 @@ export class Exception {
     return new ForbiddenException(response);
   }
   
-    routineNameDuplicate(): HttpException {
-    const response = HttpResponse.failed(HttpStatus.BAD_REQUEST, "Routine Name Duplicate");
+  routineNameDuplicate(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Routine Name Duplicate");
+    return new ForbiddenException(response);
+  }
+
+  guardError(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Auth Guard Error, Invalid User Id");
     return new ForbiddenException(response);
   }
 }
