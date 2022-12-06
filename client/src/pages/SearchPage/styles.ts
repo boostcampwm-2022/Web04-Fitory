@@ -15,6 +15,7 @@ export const SearchContainer = styled.div`
   height: ${({ isText }: { isText: boolean }) => {
     return isText ? "800px" : "60px";
   }};
+  margin-top: 20px;
   position: absolute;
   padding: 1.3rem 3vw;
   transition: 0.25s linear;

@@ -1,9 +1,13 @@
 import Paper from "@components/design/Paper";
 import React from "react";
 import styled from "styled-components";
+import defaultImg from "@public/images/img_default_profile.png";
 import { SearchedUserInfo } from "../../types/user";
 
 export const drawRecommendUserList = (userList: any[]) => {
+  const handleImgError = (e) => {
+    e.target.src = defaultImg;
+  };
   if (userList.length === 0) {
     return <Notice>* 나와 비슷한 친구가 없습니다.</Notice>;
   }
@@ -11,10 +15,10 @@ export const drawRecommendUserList = (userList: any[]) => {
     return (
       <Paper key={user.user_id} style={{ padding: "10px", backgroundColor: "transparent" }}>
         <div style={{ width: "150px", height: "150px" }}>
-          {/* <img src={user.user_profile} alt="유저 프로필 사진" /> */}
           <img
-            style={{ width: "100%", height: "100%", borderRadius: "20px" }}
-            src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+            style={{ width: "100%", height: "100%", borderRadius: "20px", objectFit: "fill" }}
+            src={user.profile_image}
+            onError={handleImgError}
             alt="유저 프로필 사진"
           />
         </div>
