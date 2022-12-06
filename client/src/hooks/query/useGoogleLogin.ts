@@ -13,6 +13,7 @@ const useGoogleLogin = () => {
     },
     {
       onSuccess: ({ userId, needRegister }, { accessToken }) => {
+        authStorage.remove();
         if (needRegister) {
           navigate(RoutePath.JOIN, { state: { accessToken } });
           return;
