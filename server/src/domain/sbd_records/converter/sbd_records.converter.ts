@@ -1,9 +1,9 @@
-import { recordItem } from "@type/domain";
+import { RecordItem } from "@type/domain";
 import { SBD_record } from "../entities/sbd_record.entity";
 
 export const recordConverter = {
   everyRecord: (recordList: SBD_record[]) => {
-    const recordObject: { index: number; record: recordItem }[] = [];
+    const recordObject: { index: number; record: RecordItem }[] = [];
     recordList.map((record, index) => {
       recordObject.push({
         index: index + 1,
