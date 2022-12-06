@@ -1,3 +1,4 @@
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { UserProfileDto } from "./dto/user_profile.dto";
 import { HttpResponse } from "@converter/response.converter";
 import { Exception } from "@exception/exceptions";
@@ -5,7 +6,9 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { createImageURL } from "./options/multer_options";
+let CryptoJS = require("crypto-js");
+import { v4 as uuid } from "uuid";
+import { extname } from "path";
 
 @Injectable()
 export class UsersService {
@@ -124,11 +127,53 @@ export class UsersService {
     }
   }
 
-  async uploadFiles(files: File[]) {
+  async getExistProfileImageLink(userId: number) {
+    const { profileImageLink } = await this.userRepository
+      .createQueryBuilder("user")
+      .select("user.profile_image", "profileImageLink")
+      .where("user.user_id = :userId", { userId })
+      .getRawOne();
+    const fileName = profileImageLink.split("/").at(-1);
+    return fileName === "default.image" ? undefined : fileName;
+  }
+
+  async uploadFiles(file: Express.Multer.File, userId: number) {
+    const uploadFolder: string = "user_profiles";
     try {
-      const singleFile = files[0];
-      const fileName = createImageURL(singleFile);
-      return fileName;
+      const newFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(file.buffer)).toString();
+      const existFileName = await this.getExistProfileImageLink(userId);
+
+      if (!existsSync(uploadFolder)) {
+        mkdirSync(uploadFolder);
+      }
+
+      let existFileBuffer: Buffer;
+      if (existFileName) {
+        existFileBuffer = readFileSync(`${uploadFolder}/${existFileName}`);
+      }
+
+      let existFileHash: string;
+      if (existFileBuffer) {
+        existFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(existFileBuffer)).toString();
+      }
+
+      let newFileName;
+      if (newFileHash !== existFileHash) {
+        if (!existFileName) {
+          newFileName = `${uuid()}${extname(file.originalname)}`;
+          writeFileSync(`${uploadFolder}/${newFileName}`, file.buffer);
+        } else {
+          newFileName = existFileName;
+          writeFileSync(`${uploadFolder}/${newFileName}`, file.buffer);
+        }
+      }
+
+      let filePath;
+      if (newFileName) {
+        const serverAddress: string = "http://localhost:8080";
+        filePath = `${serverAddress}/${newFileName}`;
+      }
+      return filePath;
     } catch (error) {
       throw new Exception().fileSubmitError();
     }

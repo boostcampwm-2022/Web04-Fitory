@@ -1,3 +1,4 @@
+import { map } from "rxjs";
 import {
   Body,
   Controller,
@@ -18,6 +19,7 @@ import { GetUserId } from "../../decorator/validate.decorator";
 import { UserProfileDto } from "./dto/user_profile.dto";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { multerOptions } from "./options/multer_options";
+let CryptoJS = require("crypto-js");
 
 @Controller("api/users")
 @ApiTags("USER API")
@@ -82,12 +84,15 @@ export class UsersController {
   @ApiOperation({
     summary: "해당 사용자의 프로필 정보를 업데이트",
   })
-  async updateUserProfile(@UploadedFiles() files: File[], @Body() userProfileData: UserProfileDto) {
+  async updateUserProfile(
+    @UploadedFiles() file: Array<Express.Multer.File>,
+    @Body() userProfileData: UserProfileDto,
+  ) {
     const userId = userProfileData.userId;
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     const userIdExist = await this.usersService.isExistUser(userId);
     if (!userIdExist) throw new Exception().userNotFound();
-    const filePath = await this.usersService.uploadFiles(files);
+    const filePath = await this.usersService.uploadFiles(file[0], userId);
     return this.usersService.updateUserProfile(userProfileData, filePath);
   }
 }

@@ -1,8 +1,5 @@
 import { Exception } from "@exception/exceptions";
-import { existsSync, mkdirSync } from "fs";
-import { diskStorage } from "multer";
-import { extname } from "path";
-import { v4 as uuid } from "uuid";
+import { memoryStorage } from "multer";
 
 export const multerOptions = {
   fileFilter: (
@@ -17,21 +14,10 @@ export const multerOptions = {
     }
   },
 
-  storage: diskStorage({
-    destination: (request, file, callback) => {
-      const uploadPath: string = "user_profiles";
-      if (!existsSync(uploadPath)) {
-        mkdirSync(uploadPath);
-      }
-      callback(null, uploadPath);
-    },
-    filename: (request, file, callback) => {
-      callback(null, `${uuid()}${extname(file.originalname)}`);
-    },
-  }),
+  storage: memoryStorage(),
 };
 
-export const createImageURL = (file: any): string => {
+export const createImageURL = (file: Express.Multer.File): string => {
   const serverAddress: string = "http://localhost:8080";
   return `${serverAddress}/user_profiles/${file.filename}`;
 };
