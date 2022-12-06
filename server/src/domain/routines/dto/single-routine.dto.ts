@@ -3,6 +3,7 @@ import {
   IsArray,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   Max,
   Min,
@@ -39,6 +40,14 @@ export class RoutineDto {
 }
 
 export class SingleExercise {
+  @ApiProperty({
+    description: "루틴 고유 ID",
+    type: Number,
+  })
+  @IsNumber()
+  @IsOptional()
+  routineId: number;
+
   @ApiProperty({
     description: "운동 이름",
     type: String,
