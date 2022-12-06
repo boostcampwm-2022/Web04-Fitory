@@ -63,11 +63,15 @@ const ExerciseAPI = {
   getSingleRoutineInfo: async (userId: UserId, routineName: string) => {
     const path = `routines/single`;
     const response = await HttpClient.get(path, { userId, routineName });
-    const { routine } = response.response as {
-      routine: { [key: string]: ExerciseType.RoutineDetailInfo[] };
-    };
+    const { routine } = response.response as { routine: ExerciseType.RoutineDetailInfo[] };
 
     return routine;
+  },
+
+  deleteRoutine: async (routineName: string) => {
+    const path = `routines/delete`;
+    const userId = authStorage.get();
+    await HttpClient.get(path, { userId, routineName });
   },
 };
 
