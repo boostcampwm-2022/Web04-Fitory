@@ -4,8 +4,8 @@ import useUserInfo from "@hooks/query/useUserInfo";
 import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
 
-const MyPageUserProfile = () => {
-  const { userInfo } = useUserInfo(authStorage.get());
+const MyPageUserProfile = ({ userId }: { userId: number }) => {
+  const { userInfo } = useUserInfo(userId);
 
   return (
     <>

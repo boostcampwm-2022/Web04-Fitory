@@ -6,8 +6,10 @@ import profileIcon from "@public/icons/btn_profile.svg";
 import BottomNavigationButton from "@components/BottomNavigationButton";
 import { RoutePath } from "@constants/enums";
 import * as s from "./style";
+import { authStorage } from "../../services/ClientStorage";
 
 const BottomNavigationBar = () => {
+  const userId = authStorage.get();
   return (
     <s.Wrapper>
       <s.Content>
@@ -27,7 +29,7 @@ const BottomNavigationBar = () => {
           title="검색 화면 이동 아이콘"
         />
         <BottomNavigationButton
-          path={RoutePath.PROFILE}
+          path={`${RoutePath.PROFILE}/${userId}`}
           iconImageUrl={profileIcon}
           title="프로필 화면 이동 아이콘"
         />

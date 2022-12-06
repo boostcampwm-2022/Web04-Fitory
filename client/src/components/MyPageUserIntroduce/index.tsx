@@ -1,10 +1,9 @@
 import React from "react";
 import useUserInfo from "@hooks/query/useUserInfo";
 import * as s from "./style";
-import { authStorage } from "../../services/ClientStorage";
 
-const MyPageUserIntroduce = () => {
-  const { userInfo } = useUserInfo(authStorage.get());
+const MyPageUserIntroduce = ({ userId }: { userId: number }) => {
+  const { userInfo } = useUserInfo(userId);
 
   return (
     <>

@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { getTierColor, getUserTierUtil } from "@utils/getUserTierUtil";
 import useUserInfo from "@hooks/query/useUserInfo";
 import * as s from "./style";
-import { authStorage } from "../../services/ClientStorage";
 
-const MyPageSubInfoContainer = () => {
+const MyPageSubInfoContainer = ({ userId }: { userId: number }) => {
   const navigate = useNavigate();
-  const { userInfo } = useUserInfo(authStorage.get());
+  const { userInfo } = useUserInfo(userId);
 
   const followerMove = () => {
     navigate("/follow", {

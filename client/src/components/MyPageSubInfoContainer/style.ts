@@ -29,7 +29,7 @@ export const TierContainer = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
   height: 50px;
   line-height: 50px;
-
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
   color: ${(props) => props.color};
 `;
 

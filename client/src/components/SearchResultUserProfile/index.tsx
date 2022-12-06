@@ -1,5 +1,6 @@
 import React from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
+import { Button } from "react-query/types/devtools/styledComponents";
 import * as s from "./style";
 
 export interface SearchResultUserProfileProps {

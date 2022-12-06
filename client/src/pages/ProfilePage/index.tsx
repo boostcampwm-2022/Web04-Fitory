@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import { RoutePath } from "@constants/enums";
 import MyPageUserProfile from "@components/MyPageUserProfile";
@@ -9,7 +9,11 @@ import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
 
 const ProfilePage = () => {
+  console.log(window.location.href);
   const navigate = useNavigate();
+  const params = useParams();
+  const profileUserId = parseInt(params.userid as string, 10);
+
   useEffect(() => {
     if (!authStorage.get()) {
       navigate(RoutePath.LOGIN, { replace: true });
@@ -19,9 +23,9 @@ const ProfilePage = () => {
   return (
     <PageTemplate isRoot>
       <s.MyProfileContainer>
-        <MyPageUserProfile />
-        <MyPageUserIntroduce />
-        <MyPageSubInfoContainer />
+        <MyPageUserProfile userId={profileUserId} />
+        <MyPageUserIntroduce userId={profileUserId} />
+        <MyPageSubInfoContainer userId={profileUserId} />
       </s.MyProfileContainer>
     </PageTemplate>
   );
