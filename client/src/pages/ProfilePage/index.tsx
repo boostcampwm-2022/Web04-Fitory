@@ -1,38 +1,28 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
-import { PageState, RoutePath } from "@constants/enums";
+import { RoutePath } from "@constants/enums";
 import MyPageUserProfile from "@components/MyPageUserProfile";
+import MyPageUserIntroduce from "@components/MyPageUserIntroduce";
+import MyPageSubInfoContainer from "@components/MyPageSubInfoContainer";
+import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const followerMove = () => {
-    navigate("/follow", {
-      state: PageState.FOLLOWER,
-    });
-  };
-
-  const followingMove = () => {
-    navigate("/follow", {
-      state: PageState.FOLLOWING,
-    });
-  };
-  // useEffect(() => {
-  //   if (!authStorage.get()) {
-  //     navigate(RoutePath.LOGIN, { replace: true });
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    if (!authStorage.get()) {
+      navigate(RoutePath.LOGIN, { replace: true });
+    }
+  }, [navigate]);
 
   return (
     <PageTemplate isRoot>
-      <MyPageUserProfile />
-      <button onClick={followingMove}>
-        <p>팔로잉</p>
-      </button>
-      <button onClick={followerMove}>
-        <p>팔로워</p>
-      </button>
+      <s.MyProfileContainer>
+        <MyPageUserProfile />
+        <MyPageUserIntroduce />
+        <MyPageSubInfoContainer />
+      </s.MyProfileContainer>
     </PageTemplate>
   );
 };

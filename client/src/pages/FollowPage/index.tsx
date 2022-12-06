@@ -6,8 +6,10 @@ import PageTemplate from "@pages/PageTemplate";
 import SearchUtils from "@utils/SearchUtils";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchedUserList from "@components/SearchedUserList";
+import useUserInfo from "@hooks/query/useUserInfo";
 import * as s from "./style";
 import { SearchedUserInfo } from "../../types/user";
+import { authStorage } from "../../services/ClientStorage";
 
 const FollowPage = () => {
   const location = useLocation();
@@ -23,8 +25,8 @@ const FollowPage = () => {
   useEffect(() => {
     const REQUEST_URL =
       pageState === PageState.FOLLOWER
-        ? `${process.env.SERVER_BASE_URL}follow/follower?userId=2`
-        : `${process.env.SERVER_BASE_URL}follow/following?userId=3`;
+        ? `${process.env.SERVER_BASE_URL}follow/follower?userId=${authStorage.get()}`
+        : `${process.env.SERVER_BASE_URL}follow/following?userId=${authStorage.get()}`;
     const getUserList = async () => {
       await axios.get(REQUEST_URL).then((response) => {
         if (pageState === PageState.FOLLOWER) {
