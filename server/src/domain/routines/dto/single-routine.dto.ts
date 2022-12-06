@@ -40,6 +40,14 @@ export class RoutineDto {
 
 export class SingleExercise {
   @ApiProperty({
+    description: "루틴 고유 ID",
+    type: Number,
+  })
+  @IsNumber()
+  @Min(1)
+  routineId: number;
+
+  @ApiProperty({
     description: "운동 이름",
     type: String,
   })
