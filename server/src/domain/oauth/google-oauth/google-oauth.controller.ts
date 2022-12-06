@@ -7,6 +7,7 @@ import { JwtService } from "@nestjs/jwt";
 import { GoogleUserRegisterDto } from "@oauth/google-oauth/dto/google-user-register.dto";
 import { Exception } from "@exception/exceptions";
 import { GoogleOauthService } from "./google-oauth.service";
+import { NoAuth } from "../../../decorator/validate.decorator";
 
 @Controller("api/oauth/google")
 @ApiTags("OAUTH API")
@@ -16,6 +17,7 @@ export class GoogleOauthController {
     private jwtService: JwtService,
   ) {}
 
+  @NoAuth()
   @Post("register")
   @ApiOperation({
     summary: "회원가입, 쿠키 생성 후 사용자에게 전송",
@@ -39,6 +41,7 @@ export class GoogleOauthController {
     throw new Exception().userNotFound();
   }
 
+  @NoAuth()
   @Post("login")
   @ApiOperation({
     summary: "로그인, 쿠키 생성 후 사용자에게 전송",
