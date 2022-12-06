@@ -11,7 +11,7 @@ axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
   if (authStorage.has()) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const headers = config.headers as any;
-    headers.UserId = authStorage.get();
+    headers.user_id = authStorage.get();
   }
   return config;
 });
