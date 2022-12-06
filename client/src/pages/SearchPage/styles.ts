@@ -59,12 +59,6 @@ export const SearchResultContainer = styled.div`
   }
 `;
 
-export const UserProfile = styled.div`
-  padding: 5px 0;
-  height: 10%;
-  margin-bottom: 10px;
-`;
-
 export const RecommendListContainer = styled.div`
   padding-top: 100px;
   height: 300px;
@@ -77,10 +71,4 @@ export const RecommendLabel = styled.p`
     return theme.FONT_SIZE.MEDIUM;
   }};
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
-`;
-
-export const UserProfileImg = styled.img`
-  width: 100%;
-  height: 100%;
-  borderradius: 20px;
 `;

@@ -1,68 +1,64 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+import toggleBtn from "@public/images/btn_toggle.svg";
+import exerciseCompleteMark from "@public/icons/mark_exercise_complete.svg";
+import exerciseFailMark from "@public/icons/mark_exercise_fail.svg";
+import * as s from "./style";
 
 const ExerciseSetContainer = ({ exercise }) => {
+  const [visibleState, setVisibleState] = useState(false);
+
+  useEffect(() => {
+    setVisibleState(false);
+  }, [exercise]);
+
+  const handleClickEvent = () => {
+    setVisibleState((prevState) => !prevState);
+  };
+
+  const drawExerciseList = (dayExerciseHistory) => {
+    return (
+      <>
+        <s.HeaderRow>
+          <s.AttributeLabel>세트</s.AttributeLabel>
+          <s.AttributeLabel>무게</s.AttributeLabel>
+          <s.AttributeLabel>회수</s.AttributeLabel>
+          <s.AttributeLabel>완료</s.AttributeLabel>
+        </s.HeaderRow>
+        {drawExerciseSet(dayExerciseHistory)}
+      </>
+    );
+  };
+
   const drawExerciseSet = (dayExerciseHistory) => {
     return dayExerciseHistory.map((set, index) => {
       return (
-        <SetRow key={index}>
-          <AttributeLabel>{set.index}</AttributeLabel>
-          <AttributeLabel>{set.kg}</AttributeLabel>
-          <AttributeLabel>{set.count}</AttributeLabel>
-          <AttributeLabel>{set.check}</AttributeLabel>
-        </SetRow>
+        <s.SetRow key={index}>
+          <s.AttributeLabel>{set.index}</s.AttributeLabel>
+          <s.AttributeLabel>{set.kg}</s.AttributeLabel>
+          <s.AttributeLabel>{set.count}</s.AttributeLabel>
+          <s.CheckedImg
+            src={set.check === 1 ? exerciseCompleteMark : exerciseFailMark}
+            alt="운동 완료 여부"
+          />
+        </s.SetRow>
       );
     });
   };
   return (
-    <Wrapper>
-      <SetNameLabel>{exercise.name}</SetNameLabel>
-      <HeaderRow>
-        <AttributeLabel>세트</AttributeLabel>
-        <AttributeLabel>무게</AttributeLabel>
-        <AttributeLabel>회수</AttributeLabel>
-        <AttributeLabel>완료</AttributeLabel>
-      </HeaderRow>
-      <div>{drawExerciseSet(exercise.set)}</div>
-    </Wrapper>
+    <s.Wrapper>
+      <s.ExerciseHistoryHeader>
+        <button onClick={handleClickEvent}>
+          <s.ToggleButton
+            visibleState={visibleState}
+            src={toggleBtn}
+            alt="운동 세부사항 보기 버튼"
+          />
+        </button>
+        <s.SetNameLabel>{exercise.name}</s.SetNameLabel>
+      </s.ExerciseHistoryHeader>
+      <div>{visibleState ? drawExerciseList(exercise.set) : null}</div>
+    </s.Wrapper>
   );
 };
 
-const HeaderRow = styled.div`
-  display: flex;
-  height: 50px;
-  align-items: center;
-  border-bottom: 2px solid ${({ theme }) => theme.COLORS.DEEP_BLUE};
-`;
-
-const SetRow = styled.div`
-  display: flex;
-  height: 50px;
-  align-items: center;
-  border-bottom: 1px solid ${({ theme }) => theme.COLORS.DEEP_BLUE};
-`;
-
 export default ExerciseSetContainer;
-
-const Wrapper = styled.div`
-  margin-top: 50px;
-  background-color: ${({ theme }) => theme.COLORS.WHITE};
-  width: 100%;
-  padding: 20px;
-  border-radius: 20px;
-
-  text-align: center;
-  color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
-  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
-`;
-
-const SetNameLabel = styled.div`
-  text-align: left;
-  width: 100%;
-`;
-
-const AttributeLabel = styled.div`
-  text-align: center;
-  width: 25%;
-`;
