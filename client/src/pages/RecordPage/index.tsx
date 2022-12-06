@@ -25,6 +25,7 @@ const RecordPage = () => {
 
   useEffect(() => {
     initExerciseList();
+    return () => initExerciseList();
   }, [initExerciseList]);
 
   return (
