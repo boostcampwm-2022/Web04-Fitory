@@ -73,6 +73,14 @@ const ExerciseAPI = {
     const userId = authStorage.get();
     await HttpClient.get(path, { userId, routineName });
   },
+
+  getSingleMonthHistory: async (month: number) => {
+    const path = `exercise/singleMonth`;
+    const userId = authStorage.get();
+    const response = await HttpClient.get(path, { month, userId });
+    const { historyList } = response.response;
+    return historyList;
+  },
 };
 
 export default ExerciseAPI;

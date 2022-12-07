@@ -14,6 +14,7 @@ import JoinPage from "@pages/JoinPage";
 import SearchPage from "@pages/SearchPage";
 import FollowPage from "@pages/FollowPage";
 import StaticsPage from "@pages/StaticsPage";
+import CalendarPage from "@pages/CalendarPage";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => {
             <Route path={RoutePath.HOME} element={<HomePage />} />
             <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
             <Route path={RoutePath.RECORD} element={<RecordPage />} />
+            <Route path={RoutePath.CALENDAR} element={<CalendarPage />} />
             {/* Search */}
             <Route path={RoutePath.SEARCH} element={<SearchPage />} />
             {/* Statics */}
