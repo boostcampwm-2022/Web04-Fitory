@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from "react-query";
 import ExerciseAPI from "@api/ExerciseAPI";
-import { QUERY_KEY } from "@constants/enums";
+import { QueryKey } from "@constants/enums";
 import { Routine } from "src/types/exercise";
 
 const useSaveRoutine = () => {
@@ -20,7 +20,7 @@ const useSaveRoutine = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(QUERY_KEY.ROUTINE_LIST);
+        queryClient.invalidateQueries(QueryKey.ROUTINE_LIST);
       },
     },
   );

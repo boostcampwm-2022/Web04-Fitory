@@ -1,6 +1,6 @@
 import React, { useState, useEffect, RefObject } from "react";
-import { MdDeleteForever } from "react-icons/md";
-import { AiOutlinePlus } from "react-icons/ai";
+import { MdDeleteForever } from "@react-icons/all-files/md/MdDeleteForever";
+import { AiOutlinePlus } from "@react-icons/all-files/ai/AiOutlinePlus";
 import ExerciseRecordItem from "@components/ExerciseRecordItem";
 import exerciseStore from "@stores/exerciseStore";
 import * as s from "./style";

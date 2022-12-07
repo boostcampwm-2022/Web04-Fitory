@@ -1,15 +1,18 @@
 import React from "react";
-import routineSrc1 from "@public/images/btn_routine_1.png";
-import routineSrc2 from "@public/images/btn_routine_2.png";
-import routineSrc3 from "@public/images/btn_routine_3.png";
-import routineSrc4 from "@public/images/btn_routine_4.png";
-import routineSrc5 from "@public/images/btn_routine_5.png";
-import routineSrc6 from "@public/images/btn_routine_6.png";
+import routineSrc1 from "@public/images/btn_routine_1.webp";
+import routineSrc2 from "@public/images/btn_routine_2.webp";
+import routineSrc3 from "@public/images/btn_routine_3.webp";
+import routineSrc4 from "@public/images/btn_routine_4.webp";
+import routineSrc5 from "@public/images/btn_routine_5.webp";
+import routineSrc6 from "@public/images/btn_routine_6.webp";
+import cancelSrc from "@public/icons/btn_cancel.svg";
 import Paper from "@components/design/Paper";
 import CardsScroller from "@components/design/CardsScroller";
 import useUserInfo from "@hooks/query/useUserInfo";
 import useRoutineList from "@hooks/query/useRoutineList";
+import ExerciseAPI from "@api/ExerciseAPI";
 import theme from "@styles/Theme";
+import { authStorage } from "src/services/ClientStorage";
 import { UserId } from "src/types/user";
 import * as s from "./style";
 
@@ -31,6 +34,13 @@ const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) =
   const { userInfo } = useUserInfo(userId);
   const { routineList } = useRoutineList(userId);
 
+  const handleClickRoutineDeleteButton = (routineName: string) => {
+    // eslint-disable-next-line no-alert
+    if (window.confirm("해당 루틴을 정말로 삭제하시겠습니까?")) {
+      ExerciseAPI.deleteRoutine(routineName);
+    }
+  };
+
   return (
     <s.Wrapper>
       <s.Label>
@@ -42,9 +52,20 @@ const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) =
             <Paper
               key={routineName}
               shadow={2}
-              style={{ backgroundColor: theme.COLORS.LIGHT_BLUE }}
+              style={{
+                position: "relative",
+                display: "flex",
+                justifyContent: "flex-end",
+                backgroundColor: theme.COLORS.LIGHT_BLUE,
+              }}
               hover
             >
+              <s.RoutineDeleteButton
+                visible={userId === authStorage.get()}
+                onClick={() => handleClickRoutineDeleteButton(routineName)}
+              >
+                <img src={cancelSrc} alt="루틴 삭제 버튼" />
+              </s.RoutineDeleteButton>
               <s.RoutineButton onClick={() => onClickRoutineItem(routineName)}>
                 <img src={routineSrcList[i % 6]} alt="루틴 버튼" />
                 <p>{routineName}</p>

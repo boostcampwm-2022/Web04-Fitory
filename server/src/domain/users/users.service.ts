@@ -1,9 +1,14 @@
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import { UserProfileDto } from "./dto/user_profile.dto";
 import { HttpResponse } from "@converter/response.converter";
 import { Exception } from "@exception/exceptions";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
+let CryptoJS = require("crypto-js");
+import { v4 as uuid } from "uuid";
+import { extname } from "path";
 
 @Injectable()
 export class UsersService {
@@ -97,5 +102,79 @@ export class UsersService {
       .getRawMany();
 
     return HttpResponse.success({ recommendWeight, recommendAge });
+  }
+
+  async updateUserProfile(userProfileData: UserProfileDto, filePath: string) {
+    try {
+      const userObject = await this.userRepository
+        .createQueryBuilder("user")
+        .where("user.user_id = :userId", { userId: userProfileData.userId })
+        .getOne();
+      userObject.profileImage = filePath;
+      userObject.name = userProfileData.name;
+      userObject.age = userProfileData.age;
+      userObject.gender = userProfileData.gender;
+      userObject.height = userProfileData.height;
+      userObject.weight = userProfileData.weight;
+      userObject.introduce = userProfileData.introduce;
+      await this.userRepository.save(userObject);
+      return HttpResponse.success({
+        message: "Profile Update Success",
+      });
+    } catch (error) {
+      throw new Exception().invalidSubmit();
+    }
+  }
+
+  async getExistProfileImageLink(userId: number) {
+    const { profileImageLink } = await this.userRepository
+      .createQueryBuilder("user")
+      .select("user.profile_image", "profileImageLink")
+      .where("user.user_id = :userId", { userId })
+      .getRawOne();
+    const fileName = profileImageLink.split("/").at(-1);
+    return fileName === "default.image" ? undefined : fileName;
+  }
+
+  async uploadFiles(file: Express.Multer.File, userId: number) {
+    const uploadFolder: string = "user_profiles";
+    try {
+      const newFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(file.buffer)).toString();
+      const existFileName = await this.getExistProfileImageLink(userId);
+
+      if (!existsSync(uploadFolder)) {
+        mkdirSync(uploadFolder);
+      }
+
+      let existFileBuffer: Buffer;
+      if (existFileName) {
+        existFileBuffer = readFileSync(`${uploadFolder}/${existFileName}`);
+      }
+
+      let existFileHash: string;
+      if (existFileBuffer) {
+        existFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(existFileBuffer)).toString();
+      }
+
+      let newFileName;
+      if (newFileHash !== existFileHash) {
+        if (!existFileName) {
+          newFileName = `${uuid()}${extname(file.originalname)}`;
+          writeFileSync(`${uploadFolder}/${newFileName}`, file.buffer);
+        } else {
+          newFileName = existFileName;
+          writeFileSync(`${uploadFolder}/${newFileName}`, file.buffer);
+        }
+      }
+
+      let filePath;
+      if (newFileName) {
+        const serverAddress: string = "http://localhost:8080";
+        filePath = `${serverAddress}/${newFileName}`;
+      }
+      return filePath;
+    } catch (error) {
+      throw new Exception().fileSubmitError();
+    }
   }
 }

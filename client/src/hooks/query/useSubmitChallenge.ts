@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from "react-query";
 import ChallengeAPI from "@api/ChallengeAPI";
-import { QUERY_KEY } from "@constants/enums";
+import { QueryKey } from "@constants/enums";
 import { Challenge } from "src/types/challenge";
 
 const useSubmitChallenge = () => {
@@ -9,7 +9,7 @@ const useSubmitChallenge = () => {
   const { mutate } = useMutation(
     (SBDWeight: Challenge) => ChallengeAPI.submitChallengeScore(SBDWeight),
     {
-      onSuccess: () => queryClient.invalidateQueries(QUERY_KEY.BEST_CHALLENGE_SCORE),
+      onSuccess: () => queryClient.invalidateQueries(QueryKey.BEST_CHALLENGE_SCORE),
     },
   );
 
