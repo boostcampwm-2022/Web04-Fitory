@@ -8,11 +8,8 @@ import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
 
 const ProfilePage = () => {
-  useEffect(() => {
-    (() => {})();
-  });
-  const { userid } = useParams();
-  const profileUserId = userid ? parseInt(userid as string, 10) : authStorage.get();
+  const { userId } = useParams();
+  const profileUserId = userId ? parseInt(userId as string, 10) : authStorage.get();
   return (
     <PageTemplate isRoot>
       <s.MyProfileContainer>

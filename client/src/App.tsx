@@ -33,8 +33,10 @@ const App = () => {
             {/* Statics */}
             <Route path={RoutePath.STATICS} element={<StaticsPage />} />
             {/* Profile */}
-            <Route path={`${RoutePath.PROFILE}`} element={<ProfilePage />} />
-            <Route path={`${RoutePath.PROFILE}/:userid`} element={<ProfilePage />} />
+            <Route path={`${RoutePath.PROFILE}`}>
+              <Route path=":userId" element={<ProfilePage />} />
+              <Route path="" element={<ProfilePage />} />
+            </Route>
             <Route path={RoutePath.LOGIN} element={<LoginPage />} />
             <Route path={RoutePath.JOIN} element={<JoinPage />} />
             <Route path={RoutePath.SEARCH} element={<SearchPage />} />
