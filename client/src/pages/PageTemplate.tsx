@@ -8,6 +8,7 @@ import Exception from "src/services/Exception";
 interface PageTemplateProps {
   isRoot: boolean;
   title?: string;
+  ignoreException?: boolean;
   topNavRightItem?: JSX.Element;
   onClickBackButton?: () => void;
   children: React.ReactNode;
@@ -16,12 +17,13 @@ interface PageTemplateProps {
 const PageTemplate = ({
   isRoot,
   title,
+  ignoreException,
   topNavRightItem,
   onClickBackButton,
   children,
 }: PageTemplateProps) => {
   useEffect(() => {
-    if (!authStorage.has()) {
+    if (!ignoreException && !authStorage.has()) {
       Exception.UserNotFound();
     }
   });
