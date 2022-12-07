@@ -2,7 +2,7 @@ import React from "react";
 import useUserInfo from "@hooks/query/useUserInfo";
 import * as s from "./style";
 
-const MyPageUserIntroduce = ({ userId }: { userId: number }) => {
+const MyPageUserIntroduce = ({ userId, isOwner }: { userId: number; isOwner: boolean }) => {
   const { userInfo } = useUserInfo(userId);
 
   return (

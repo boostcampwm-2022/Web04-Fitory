@@ -4,18 +4,30 @@ import PageTemplate from "@pages/PageTemplate";
 import MyPageUserProfile from "@components/MyPageUserProfile";
 import MyPageUserIntroduce from "@components/MyPageUserIntroduce";
 import MyPageSubInfoContainer from "@components/MyPageSubInfoContainer";
+import MyPageEditButton from "@components/MyPageEditButton";
+import useUserInfo from "@hooks/query/useUserInfo";
+import FollowButton from "@components/FollowButton";
 import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
 
 const ProfilePage = () => {
   const { userId } = useParams();
+  const { userInfo } = useUserInfo(authStorage.get());
+  const { id } = userInfo;
   const profileUserId = userId ? parseInt(userId as string, 10) : authStorage.get();
+  const isOwner = profileUserId === id;
+
   return (
     <PageTemplate isRoot>
       <s.MyProfileContainer>
-        <MyPageUserProfile userId={profileUserId} />
-        <MyPageUserIntroduce userId={profileUserId} />
+        <MyPageUserProfile userId={profileUserId} isOwner={isOwner} />
+        <MyPageUserIntroduce userId={profileUserId} isOwner={isOwner} />
         <MyPageSubInfoContainer userId={profileUserId} />
+        {isOwner ? (
+          <MyPageEditButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
+        ) : (
+          <FollowButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
+        )}
       </s.MyProfileContainer>
     </PageTemplate>
   );

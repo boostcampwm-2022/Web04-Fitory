@@ -2,9 +2,8 @@ import React from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import useUserInfo from "@hooks/query/useUserInfo";
 import * as s from "./style";
-import { authStorage } from "../../services/ClientStorage";
 
-const MyPageUserProfile = ({ userId }: { userId: number }) => {
+const MyPageUserProfile = ({ userId, isOwner }: { userId: number; isOwner: boolean }) => {
   const { userInfo } = useUserInfo(userId);
 
   return (

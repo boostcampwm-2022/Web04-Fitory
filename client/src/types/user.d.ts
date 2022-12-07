@@ -29,6 +29,7 @@ export interface JoinUserInfo extends LoginUserInfo {
 }
 
 export interface UserInfo extends JoinUserInfo {
+  id: number;
   profileImage: string;
   introduce: string;
   tier: number;

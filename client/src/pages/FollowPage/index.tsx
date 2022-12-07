@@ -6,6 +6,7 @@ import PageTemplate from "@pages/PageTemplate";
 import SearchUtils from "@utils/SearchUtils";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchedUserList from "@components/SearchedUserList";
+import UserAPI from "@api/UserAPI";
 import * as s from "./style";
 import { SearchedUserInfo } from "../../types/user";
 import { authStorage } from "../../services/ClientStorage";
