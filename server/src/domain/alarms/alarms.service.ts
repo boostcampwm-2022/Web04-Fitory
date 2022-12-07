@@ -80,6 +80,8 @@ export class AlarmsService {
       .getRawMany();
     await Promise.all(
       followerList.map(async (row) => {
+        global.alarmBar.add(row.follower_id);
+
         await this.alarmRepository.save({
           senderUserId,
           alarmType: 0,

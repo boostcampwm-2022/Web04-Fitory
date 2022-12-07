@@ -1,7 +1,7 @@
 import { Strategy } from "passport-jwt";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable } from "@nestjs/common";
-import { Request } from "express";
+import { Request, Response } from "express";
 import { ACCESS_TOKEN_SECRETKEY } from "@env";
 import { JwtPayload } from "@type/jwt";
 import { Exception } from "@exception/exceptions";

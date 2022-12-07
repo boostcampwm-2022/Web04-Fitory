@@ -12,9 +12,15 @@ import { JwtAuthGuard } from "@guard/jwt.guard";
 import { initDatabase } from "./utils/initDB";
 import { AppModule } from "./app.module";
 
+declare global {
+  var alarmBar: Set<number>;
+}
+
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
   // initDatabase();
+
+  global.alarmBar = new Set();
 
   const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
 
@@ -33,7 +39,7 @@ async function bootstrap() {
   app.use(passport.initialize());
 
   const reflector = app.get(Reflector);
-  app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+  // app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
 
   app.useGlobalPipes(
     new ValidationPipe({
