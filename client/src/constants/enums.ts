@@ -9,7 +9,7 @@ export const RoutePath = {
   LOGIN: "/login",
   JOIN: "/join",
   FOLLOW: "/follow",
-  CALENDAR = "/calendar",
+  CALENDAR: "/calendar",
 } as const;
 export type RoutePath = typeof RoutePath[keyof typeof RoutePath];
 
@@ -123,3 +123,11 @@ export const QueryKey = {
   ROUTINE_INFO: "routineInfo",
 } as const;
 export type QueryKey = typeof QueryKey[keyof typeof QueryKey];
+
+export const StatusCode = {
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+} as const;
+export type StatusCode = typeof StatusCode[keyof typeof StatusCode];

@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
 import { AxiosError } from "axios";
+import { StatusCode } from "@constants/enums";
 import { authStorage } from "src/services/ClientStorage";
 import HttpClient from "src/services/HttpClient";
 import { UserId } from "src/types/user";
@@ -43,10 +44,10 @@ const ExerciseAPI = {
       await HttpClient.post(path, { userId, routineName, exerciseList });
       alert("루틴 저장이 완료되었습니다!");
     } catch (e) {
-      if ((e as AxiosError).response?.status === 400) {
+      if ((e as AxiosError).response?.status === StatusCode.BAD_REQUEST) {
         alert("운동 이름과 루틴 이름이 모두 채워져 있는지 확인해주세요.");
       }
-      if ((e as AxiosError).request.status === 403) {
+      if ((e as AxiosError).request.status === StatusCode.FORBIDDEN) {
         alert("이미 존재하는 루틴 이름입니다.");
       }
     }
