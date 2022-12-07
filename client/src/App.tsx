@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import GlobalStyle from "@styles/GlobalStyle";
 import { RoutePath } from "@constants/enums";
+import Loading from "@components/Loading";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 const ChallengePage = lazy(() => import("@pages/ChallengePage"));
@@ -30,7 +31,7 @@ const App = () => {
     <BrowserRouter>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<div>loading..</div>}>
+        <Suspense fallback={<Loading isLazy />}>
           <Routes>
             {/* Home */}
             <Route path={RoutePath.HOME} element={<HomePage />} />
