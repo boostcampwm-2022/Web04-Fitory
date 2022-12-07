@@ -10,13 +10,13 @@ const MyPageSubInfoContainer = ({ userId }: { userId: number }) => {
   const { userInfo } = useUserInfo(userId);
 
   const followerMove = () => {
-    navigate("/follow", {
+    navigate(`/follow/${userId}`, {
       state: PageState.FOLLOWER,
     });
   };
 
   const followingMove = () => {
-    navigate("/follow", {
+    navigate(`/follow/${userId}`, {
       state: PageState.FOLLOWING,
     });
   };

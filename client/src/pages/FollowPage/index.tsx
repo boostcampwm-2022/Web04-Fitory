@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { PageState } from "@constants/enums";
 import PageTemplate from "@pages/PageTemplate";
 import SearchUtils from "@utils/SearchUtils";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchedUserList from "@components/SearchedUserList";
-import useUserInfo from "@hooks/query/useUserInfo";
 import * as s from "./style";
 import { SearchedUserInfo } from "../../types/user";
 import { authStorage } from "../../services/ClientStorage";
@@ -17,7 +16,8 @@ const FollowPage = () => {
   const [userList, setUserList] = useState<SearchedUserInfo[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>(userList);
-
+  const { userId } = useParams();
+  const profileUserId = userId ? parseInt(userId as string, 10) : authStorage.get();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
@@ -25,8 +25,8 @@ const FollowPage = () => {
   useEffect(() => {
     const REQUEST_URL =
       pageState === PageState.FOLLOWER
-        ? `${process.env.SERVER_BASE_URL}follow/follower?userId=${authStorage.get()}`
-        : `${process.env.SERVER_BASE_URL}follow/following?userId=${authStorage.get()}`;
+        ? `${process.env.SERVER_BASE_URL}follow/follower?userId=${profileUserId}`
+        : `${process.env.SERVER_BASE_URL}follow/following?userId=${profileUserId}`;
     const getUserList = async () => {
       await axios.get(REQUEST_URL).then((response) => {
         if (pageState === PageState.FOLLOWER) {

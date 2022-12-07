@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import MyPageUserProfile from "@components/MyPageUserProfile";

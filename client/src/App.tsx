@@ -33,14 +33,17 @@ const App = () => {
             {/* Statics */}
             <Route path={RoutePath.STATICS} element={<StaticsPage />} />
             {/* Profile */}
-            <Route path={`${RoutePath.PROFILE}`}>
+            <Route path={RoutePath.PROFILE}>
               <Route path=":userId" element={<ProfilePage />} />
               <Route path="" element={<ProfilePage />} />
             </Route>
             <Route path={RoutePath.LOGIN} element={<LoginPage />} />
             <Route path={RoutePath.JOIN} element={<JoinPage />} />
             <Route path={RoutePath.SEARCH} element={<SearchPage />} />
-            <Route path={RoutePath.FOLLOW} element={<FollowPage />} />
+            <Route path={RoutePath.FOLLOW}>
+              <Route path=":userId" element={<FollowPage />} />
+              <Route path="" element={<FollowPage />} />
+            </Route>
           </Routes>
         </Suspense>
       </QueryClientProvider>
