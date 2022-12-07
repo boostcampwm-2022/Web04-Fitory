@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DefaultButton } from "@styles/Components";
 
 export const Wrapper = styled.div`
   gap: 20px;
@@ -35,4 +36,11 @@ export const SorryText = styled.h2`
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_LARGE};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
   color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
+`;
+
+export const ReloadButton = styled(DefaultButton)`
+  margin-top: 50px;
+  width: 300px;
+  text-align: center;
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
 `;

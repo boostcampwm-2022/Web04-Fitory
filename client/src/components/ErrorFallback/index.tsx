@@ -12,6 +12,7 @@ const ErrorFallback = () => {
           앗! 예상치 못한 에러가 발생했어요.<span>다시 시도해보세요.</span>
         </s.Title>
         <s.SorryText>Sorry..😅</s.SorryText>
+        <s.ReloadButton onClick={() => window.location.reload()}>새로고침</s.ReloadButton>
       </s.Wrapper>
     </MainContainer>
   );
