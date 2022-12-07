@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Chart as ChartJS, registerables } from "chart.js";
-import { Chart } from "react-chartjs-2";
+import { Chart, registerables } from "chart.js";
+import { Line } from "react-chartjs-2";
 import { judColors } from "@components/TierGraph/utils";
 import options from "./option";
 import plugin from "./plugin";
 import mockData from "./mockData";
+import * as s from "./style";
 
-ChartJS.register(...registerables);
+Chart.register(...registerables);
 
 interface MockDataType {
   date: string;
@@ -48,13 +49,9 @@ const TierGraph = () => {
   }, []);
 
   return (
-    <Chart
-      style={{ width: "60%" }}
-      type="line"
-      data={graphData}
-      plugins={plugin}
-      options={options}
-    />
+    <s.Wrapper>
+      <Line data={graphData} plugins={plugin} options={options} />
+    </s.Wrapper>
   );
 };
 

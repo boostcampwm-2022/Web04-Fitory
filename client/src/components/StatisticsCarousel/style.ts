@@ -21,7 +21,6 @@ export const NavigationBar = styled.div`
   width: 100%;
 
   border-bottom: 1px solid ${({ theme }) => theme.COLORS.LIGHT_GRAY};
-  margin-bottom: 50px;
 `;
 
 export const NavigationButton = styled.button`
@@ -51,13 +50,18 @@ export const NavigationButton = styled.button`
 `;
 
 export const StaticsContainer = styled.div`
+  padding-top: 30px;
   display: flex;
   width: 200%;
+  height: 100%;
   text-align: center;
   align-items: center;
 `;
 
 export const ChartContainer = styled.div`
   width: 50%;
+  height: 100%;
   padding: 0 5vw;
+  display: flex;
+  justify-content: center;
 `;
