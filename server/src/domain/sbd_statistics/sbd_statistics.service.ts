@@ -24,26 +24,32 @@ export class SbdStatisticsService {
     const max = statistics[0][statistics[1] - 1].SBD_volume;
     const len = Math.ceil((max - min) / range);
 
-    const numArray = Array(len)
+    const loopNum = Array(len)
       .fill(min)
       .map((x, y) => x + y * range);
 
-    const responseData: { x_start: number; x_end: number; y: number }[] = [];
-    const result = await this.extracted(numArray, range, max, gender, betweenWeight, responseData);
+    const responseData = await this.loopStatisticsDataByRange(
+      loopNum,
+      range,
+      max,
+      gender,
+      betweenWeight,
+    );
 
-    return HttpResponse.success({ min, max, result });
+    return HttpResponse.success({ min, max, responseData });
   }
 
-  async extracted(
-    numArray: number[],
+  async loopStatisticsDataByRange(
+    loopNum: number[],
     range: number,
     max: number,
     gender: number,
     betweenWeight: FindOperator<number>,
-    responseData: { x_start: number; x_end: number; y: number }[],
   ) {
+    const responseData: { x_start: number; x_end: number; y: number }[] = [];
+
     await Promise.all(
-      numArray.map(async (n) => {
+      loopNum.map(async (n) => {
         const start = n;
         const end = n + range;
         if (end > max) {
