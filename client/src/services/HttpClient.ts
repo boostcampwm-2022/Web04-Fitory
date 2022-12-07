@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
+import { StatusCode } from "@constants/enums";
 import { HttpSuccess, HttpFailed } from "src/types/http";
 import Exception from "./Exception";
 import { authStorage } from "./ClientStorage";
@@ -20,7 +21,7 @@ axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error: AxiosError) => {
-    if ((error.response?.data as HttpFailed).statusCode === 401) {
+    if ((error.response?.data as HttpFailed).statusCode === StatusCode.UNAUTHORIZED) {
       Exception.UserNotFound();
     }
   },
