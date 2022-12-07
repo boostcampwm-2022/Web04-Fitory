@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 
 export const Container = styled.div`
   width: 100%;
-  height: 500px;
+  height: 100%;
   overflow: hidden;
 `;
 
@@ -27,7 +27,7 @@ export const NavigationBar = styled.div`
 export const NavigationButton = styled.button`
   width: 50%;
 
-  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
 
   :first-child {
     font-weight: ${({ theme, isHistogram }: { theme: typeof Theme; isHistogram: boolean }) => {

@@ -8,17 +8,17 @@ import * as s from "./style";
 const StatisticsPage = () => {
   return (
     <PageTemplate isRoot>
-      <s.UserInfoContainer>
-        <s.ScoreContainer>
-          <ExerciseScoreContainer exerciseName="스쿼트" exerciseScore={140} />
-          <ExerciseScoreContainer exerciseName="벤치프레스" exerciseScore={140} />
-          <ExerciseScoreContainer exerciseName="데드리프트" exerciseScore={140} />
-        </s.ScoreContainer>
-        <StatisticsUserInfoContainer />
-      </s.UserInfoContainer>
-      <div>
+      <s.Wrapper>
+        <s.UserInfoContainer>
+          <s.ScoreContainer>
+            <ExerciseScoreContainer exerciseName="스쿼트" exerciseScore={140} />
+            <ExerciseScoreContainer exerciseName="벤치프레스" exerciseScore={140} />
+            <ExerciseScoreContainer exerciseName="데드리프트" exerciseScore={140} />
+          </s.ScoreContainer>
+          <StatisticsUserInfoContainer />
+        </s.UserInfoContainer>
         <StatisticsCarousel />
-      </div>
+      </s.Wrapper>
     </PageTemplate>
   );
 };

@@ -31,7 +31,7 @@ const App = () => {
             {/* Search */}
             <Route path={RoutePath.SEARCH} element={<SearchPage />} />
             {/* Statics */}
-            <Route path={RoutePath.STATICS} element={<StatisticsPage />} />
+            <Route path={RoutePath.statistics} element={<StatisticsPage />} />
             {/* Profile */}
             <Route path={RoutePath.PROFILE} element={<ProfilePage />} />
             <Route path={RoutePath.LOGIN} element={<LoginPage />} />
