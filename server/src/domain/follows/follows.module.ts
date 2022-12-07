@@ -1,3 +1,4 @@
+import { EventService } from "./../event/event.service";
 import { AlarmsService } from "@alarm/alarms.service";
 import { Alarm } from "@alarm/entities/alram.entity";
 import { UsersService } from "@user/users.service";
@@ -11,6 +12,6 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 @Module({
   imports: [TypeOrmModule.forFeature([Follow, User, Alarm])],
   controllers: [FollowsController],
-  providers: [FollowsService, UsersService, AlarmsService],
+  providers: [FollowsService, UsersService, AlarmsService, EventService],
 })
 export class FollowsModule {}

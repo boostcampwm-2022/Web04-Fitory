@@ -1,3 +1,4 @@
+import { EventService } from "./../event/event.service";
 import { UsersService } from "@user/users.service";
 import { FollowsService } from "@follow/follows.service";
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
@@ -14,6 +15,7 @@ export class FollowsController {
     private readonly followService: FollowsService,
     private readonly usersService: UsersService,
     private readonly alarmsService: AlarmsService,
+    private readonly eventService: EventService,
   ) {}
 
   @Get("following")
@@ -51,6 +53,7 @@ export class FollowsController {
     const otherUserIdExist = await this.usersService.isExistUser(userIds.otherUserId);
     if (!myUserIdExist || !otherUserIdExist) throw new Exception().userNotFound();
     await this.alarmsService.sendFollowAlarm(userIds.myUserId, userIds.otherUserId);
+    this.eventService.sendEvent([userIds.otherUserId]);
     return this.followService.doFollow(userIds);
   }
 
