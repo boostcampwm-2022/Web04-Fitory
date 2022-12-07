@@ -12,4 +12,8 @@ export const UserIntroduceContainer = styled.div`
   line-height: 40px;
   font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
   color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
