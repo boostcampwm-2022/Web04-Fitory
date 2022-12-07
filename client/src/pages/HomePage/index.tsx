@@ -20,7 +20,7 @@ const HomePage = () => {
           <img src={arrowRightSrc} alt="3대 챌린지 도전하기 버튼" />
         </s.ChallengeButton>
         <CalendarHeatMap />
-        <Calendar />
+        <Calendar isRoot />
         <s.RecordButton type="button" onClick={() => navigate(RoutePath.RECORD)}>
           운동 기록하기
         </s.RecordButton>

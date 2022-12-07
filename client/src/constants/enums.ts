@@ -9,6 +9,7 @@ export const RoutePath = {
   LOGIN: "/login",
   JOIN: "/join",
   FOLLOW: "/follow",
+  CALENDAR = "/calendar",
 } as const;
 export type RoutePath = typeof RoutePath[keyof typeof RoutePath];
 

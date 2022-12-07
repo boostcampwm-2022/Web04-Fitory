@@ -29,7 +29,6 @@ import { typeormConfig } from "./config/typeorm.config";
     SbdStatisticsModule,
     FollowsModule,
     MockModule,
-    UploadModule,
     TypeOrmModule.forRoot(typeormConfig),
     PassportModule,
     TypeOrmModule.forFeature([User]),

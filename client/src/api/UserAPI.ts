@@ -44,15 +44,14 @@ const UserAPI = {
 
   getRecommendUserList: async () => {
     const userId = authStorage.get();
-    if (!userId) {
-      throw new Error();
-    }
     const path = "users/recommand/list";
     const response = await HttpClient.get(path, { userId });
-    return [response.response.recommendWeight, response.response.recommendAge] as [
-      UserType.SearchedUserInfo[],
-      UserType.SearchedUserInfo[],
-    ];
+    const { recommendWeight, recommendAge } = response.response as {
+      recommendWeight: UserType.SearchedUserInfo[];
+      recommendAge: UserType.SearchedUserInfo[];
+    };
+
+    return [recommendWeight, recommendAge];
   },
 };
 

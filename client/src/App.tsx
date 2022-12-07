@@ -14,10 +14,18 @@ const LoginPage = lazy(() => import("@pages/LoginPage"));
 const JoinPage = lazy(() => import("@pages/JoinPage"));
 const StaticsPage = lazy(() => import("@pages/StaticsPage"));
 const SearchPage = lazy(() => import("@pages/SearchPage"));
+const CalendarPage = lazy(() => import("@pages/CalendarPage"));
 
 const queryClient = new QueryClient();
 
 const App = () => {
+  // //! sse 실행 방법
+  // const userId = 1;
+  // const eventSource = new EventSource(`http://localhost:8080/api/alarms/unread?userId=${userId}`);
+  // eventSource.onmessage = ({ data }) => {
+  //   console.log(`${userId}'s unread alarm: `, JSON.parse(data).unreadAlarmCount);
+  // };
+
   return (
     <BrowserRouter>
       <GlobalStyle />
@@ -28,6 +36,7 @@ const App = () => {
             <Route path={RoutePath.HOME} element={<HomePage />} />
             <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
             <Route path={RoutePath.RECORD} element={<RecordPage />} />
+            <Route path={RoutePath.CALENDAR} element={<CalendarPage />} />
             {/* Search */}
             <Route path={RoutePath.SEARCH} element={<SearchPage />} />
             {/* Statics */}

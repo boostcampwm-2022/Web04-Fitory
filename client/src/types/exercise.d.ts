@@ -20,7 +20,8 @@ export interface ExerciseProfile {
 }
 
 export interface RoutineDetailInfo {
-  name: string;
+  routineId: number;
+  exerciseName: string;
   set: [{ kg: number; count: number }];
 }
 
