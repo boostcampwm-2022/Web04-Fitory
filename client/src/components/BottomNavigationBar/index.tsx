@@ -9,7 +9,6 @@ import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
 
 const BottomNavigationBar = () => {
-  const userId = authStorage.get();
   return (
     <s.Wrapper>
       <s.Content>
@@ -29,7 +28,7 @@ const BottomNavigationBar = () => {
           title="검색 화면 이동 아이콘"
         />
         <BottomNavigationButton
-          path={`${RoutePath.PROFILE}/${userId}`}
+          path={`${RoutePath.PROFILE}`}
           iconImageUrl={profileIcon}
           title="프로필 화면 이동 아이콘"
         />
