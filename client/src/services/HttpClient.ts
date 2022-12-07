@@ -1,5 +1,6 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 import { HttpSuccess, HttpFailed } from "src/types/http";
+import Exception from "./Exception";
 import { authStorage } from "./ClientStorage";
 
 const axiosInstance = axios.create({
@@ -15,6 +16,15 @@ axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
   }
   return config;
 });
+
+axiosInstance.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  (error: AxiosError) => {
+    if ((error.response?.data as HttpFailed).statusCode === 401) {
+      Exception.UserNotFound();
+    }
+  },
+);
 
 const HttpClient = {
   get: async (path: string, params = {}, headers = {}): Promise<HttpSuccess | HttpFailed> => {
