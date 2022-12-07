@@ -1,25 +1,12 @@
-import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
 import UserAPI from "@api/UserAPI";
-import { RoutePath, QUERY_KEY } from "@constants/enums";
+import { QueryKey } from "@constants/enums";
 import { UserInfo, UserId } from "src/types/user";
 
 const useUserInfo = (userId: UserId) => {
-  const navigate = useNavigate();
-  const { data, isLoading } = useQuery(
-    [QUERY_KEY.USER_INFO, userId],
-    () => UserAPI.getUser(userId),
-    {
-      suspense: true,
-    },
-  );
-
-  useEffect(() => {
-    if (!isLoading && !data) {
-      navigate(RoutePath.LOGIN, { replace: true });
-    }
-  }, [data, isLoading, navigate]);
+  const { data } = useQuery([QueryKey.USER_INFO, userId], () => UserAPI.getUser(userId), {
+    suspense: true,
+  });
 
   return { userInfo: data as UserInfo };
 };

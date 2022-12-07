@@ -3,6 +3,9 @@ import { SearchedUserInfo } from "../types/user";
 
 const SearchUtils = {
   searchEvent: (word: string, userList: any[], setSearchedUser: any) => {
+    if (word.length === 0) {
+      return [];
+    }
     const searchResult: SearchedUserInfo[] = userList.filter((user: SearchedUserInfo) => {
       return user.name.includes(word);
     });
@@ -17,7 +20,7 @@ const SearchUtils = {
     const debounce = setTimeout(() => {
       if (searchValue.length !== 0) SearchUtils.searchEvent(searchValue, userList, setSearchedUser);
       else setSearchedUser([]);
-    }, 500);
+    }, 250);
     return () => {
       clearTimeout(debounce);
     };

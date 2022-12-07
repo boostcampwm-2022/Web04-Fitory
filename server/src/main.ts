@@ -17,8 +17,7 @@ async function bootstrap() {
   // initDatabase();
 
   const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
-  const reflector = app.get(Reflector);
-  app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+
   app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
 
   app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
@@ -32,6 +31,9 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.use(passport.initialize());
+
+  const reflector = app.get(Reflector);
+  app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
 
   app.useGlobalPipes(
     new ValidationPipe({
