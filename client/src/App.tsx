@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import GlobalStyle from "@styles/GlobalStyle";
 import { RoutePath } from "@constants/enums";
 import Loading from "@components/Loading";
+import NotFoundPage from "@pages/NotFountPage";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 const ChallengePage = lazy(() => import("@pages/ChallengePage"));
@@ -48,6 +49,7 @@ const App = () => {
             <Route path={RoutePath.JOIN} element={<JoinPage />} />
             <Route path={RoutePath.SEARCH} element={<SearchPage />} />
             <Route path={RoutePath.FOLLOW} element={<FollowPage />} />
+            <Route path="/*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </QueryClientProvider>
