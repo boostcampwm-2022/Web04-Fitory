@@ -15,8 +15,8 @@ import { MockModule } from "@mock/mock.module";
 import { JwtStrategy } from "@guard/jwt.strategy";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { User } from "@user/entities/user.entity";
-import { UploadModule } from "./domain/uploads/upload.module";
 import { typeormConfig } from "./config/typeorm.config";
+import { EventModule } from "./domain/event/event.module";
 
 @Module({
   imports: [
@@ -32,6 +32,7 @@ import { typeormConfig } from "./config/typeorm.config";
     TypeOrmModule.forRoot(typeormConfig),
     PassportModule,
     TypeOrmModule.forFeature([User]),
+    EventModule,
   ],
 
   providers: [

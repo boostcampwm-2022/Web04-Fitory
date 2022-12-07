@@ -13,7 +13,7 @@ import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
 import { UsersService } from "./users.service";
-import { GetUserId } from "../../decorator/validate.decorator";
+// import { GetUserId } from "../../decorator/validate.decorator";
 import { UserProfileDto } from "./dto/user_profile.dto";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { multerOptions } from "./options/multer_options";
