@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserAPI from "@api/UserAPI";
+import { SearchedUserInfo } from "../../types/user";
 import * as s from "./style";
 
 interface MyPageButtonProp {
@@ -12,8 +13,12 @@ const FollowButton = ({ userId, ownerId, isOwner }: MyPageButtonProp) => {
   const [followState, setFollowState] = useState(true);
   useEffect(() => {
     (async () => {
-      console.log(ownerId);
       const ownerFollowList = await UserAPI.getFollowingUser(ownerId);
+      ownerFollowList.map((user) => {
+        if (user.follower_id === userId) {
+          return setFollowState(false);
+        }
+      });
     })();
   }, [followState]);
   return (

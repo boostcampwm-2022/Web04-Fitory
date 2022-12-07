@@ -4,7 +4,6 @@ import searchIcon from "@public/icons/btn_search.svg";
 import { SearchedUserInfo } from "src/types/user";
 import CardsScroller from "@components/design/CardsScroller";
 import SearchUtils from "@utils/SearchUtils";
-import { drawSearchedUserList } from "@utils/drawSearchedUserList";
 import UserAPI from "@api/UserAPI";
 import SearchedUserList from "@components/SearchedUserList";
 import * as s from "./styles";

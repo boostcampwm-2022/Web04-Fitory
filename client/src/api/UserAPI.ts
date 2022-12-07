@@ -52,7 +52,7 @@ const UserAPI = {
     const path = "follow/following";
     const response = await HttpClient.get(path, { userId });
     const { followingUserProfileList } = response.response as {
-      followingUserProfileList: UserType.SearchedUserInfo;
+      followingUserProfileList: UserType.SearchedUserInfo[];
     };
     console.log(followingUserProfileList);
 

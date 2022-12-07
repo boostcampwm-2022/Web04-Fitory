@@ -8,13 +8,12 @@ import { SearchedUserInfo } from "../../types/user";
 const SearchedUserList = (searchedUser: SearchedUserInfo[]) => {
   const navigate = useNavigate();
   return searchedUser.map((user: SearchedUserInfo) => {
-    const handleClickEvent = () => {
-      navigate(`${RoutePath.PROFILE}/${user.user_id}`);
-    };
-    let keyValue;
+    let keyValue = user.user_id;
     if (user.follower_id) keyValue = user.follower_id;
-    else if (user.user_id) keyValue = user.user_id;
     else if (user.followed_id) keyValue = user.followed_id;
+    const handleClickEvent = () => {
+      navigate(`${RoutePath.PROFILE}/${keyValue}`);
+    };
     return (
       <s.UserProfile key={keyValue} onClick={handleClickEvent}>
         <SearchResultUserProfile userName={user.name} userMessage={user?.introduce} />
