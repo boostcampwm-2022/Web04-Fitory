@@ -45,6 +45,7 @@ export const UserMessageContainer = styled.p`
 `;
 
 export const ButtonContainer = styled.div`
-  width: 100px;
+  width: 20%;
   height: 40px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
 `;

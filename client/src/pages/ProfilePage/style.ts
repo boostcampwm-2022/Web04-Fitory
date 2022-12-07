@@ -8,4 +8,5 @@ export const MyProfileContainer = styled.div`
 
 export const ButtonContainer = styled.div`
   height: 50px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
 `;

@@ -18,7 +18,7 @@ const ProfilePage = () => {
   const isOwner = profileUserId === id;
 
   return (
-    <PageTemplate isRoot>
+    <PageTemplate isRoot={isOwner}>
       <s.MyProfileContainer>
         <MyPageUserProfile userId={profileUserId} isOwner={isOwner} />
         <MyPageUserIntroduce userId={profileUserId} isOwner={isOwner} />
@@ -27,7 +27,7 @@ const ProfilePage = () => {
           {isOwner ? (
             <MyPageEditButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
           ) : (
-            <FollowButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
+            <FollowButton otherUserId={profileUserId as number} myUserId={id} />
           )}
         </s.ButtonContainer>
       </s.MyProfileContainer>

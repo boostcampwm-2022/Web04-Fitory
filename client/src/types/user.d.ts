@@ -12,6 +12,12 @@ export interface LoginResponse {
 }
 
 export interface JoinResponse {
+  myUserId: UserId;
+  otherUserId: UserId;
+  register: "success";
+}
+
+export interface FollowResponse {
   userId: UserId;
   register: "success";
 }
@@ -45,4 +51,9 @@ export interface SearchedUserInfo {
   profile_image?: string;
   follower_id?: UserId;
   followed_id?: UserId;
+}
+
+export interface FollowUserInfo {
+  myUserId: UserId;
+  otherUserId: UserId;
 }

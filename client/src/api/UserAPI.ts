@@ -48,7 +48,7 @@ const UserAPI = {
     const { followerUserProfileList } = response.response as {
       followerUserProfileList: UserType.SearchedUserInfo[];
     };
-    console.log(response.response);
+
     return followerUserProfileList;
   },
 
@@ -58,7 +58,6 @@ const UserAPI = {
     const { followingUserProfileList } = response.response as {
       followingUserProfileList: UserType.SearchedUserInfo[];
     };
-    console.log(followingUserProfileList);
 
     return followingUserProfileList;
   },

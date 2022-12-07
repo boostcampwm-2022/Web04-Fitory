@@ -11,10 +11,7 @@ interface MyPageButtonProp {
 const MyPageEditButton = ({ userId, ownerId, isOwner }: MyPageButtonProp) => {
   const [editState, setEditState] = useState(true);
   useEffect(() => {
-    (async () => {
-      console.log(ownerId);
-      const ownerFollowList = await UserAPI.getFollowingUser(ownerId);
-    })();
+    (async () => {})();
   }, [editState]);
   return (
     <s.Wrapper>

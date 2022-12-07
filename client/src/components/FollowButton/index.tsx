@@ -1,26 +1,34 @@
 import React, { useEffect, useState } from "react";
+import FollowAPI from "@api/FollowAPI";
 import UserAPI from "@api/UserAPI";
 import * as s from "./style";
+import { FollowUserInfo } from "../../types/user";
 
-interface MyPageButtonProp {
-  userId: number;
-  ownerId: number;
-}
-
-const FollowButton = ({ userId, ownerId }: MyPageButtonProp) => {
+const FollowButton = ({ otherUserId, myUserId }: FollowUserInfo) => {
   const [followState, setFollowState] = useState(true);
+  // false == 팔로우중 true: 팔로우 가능
+  const followButtonClickEvent = async () => {
+    if (followState) {
+      return FollowAPI.follow({ myUserId, otherUserId });
+    }
+    return FollowAPI.unFollow({ myUserId, otherUserId });
+  };
   useEffect(() => {
     (async () => {
-      const ownerFollowList = await UserAPI.getFollowingUser(ownerId);
+      const ownerFollowList = await UserAPI.getFollowingUser(myUserId);
       ownerFollowList.map((user) => {
-        if (user.follower_id === userId) {
+        if (user.follower_id === otherUserId) {
           return setFollowState(false);
         }
         return true;
       });
     })();
   }, [followState]);
-  return <s.ProfileButton>{followState ? "팔로우" : "언팔로우"}</s.ProfileButton>;
+  return (
+    <s.ProfileButton type="button" onClick={followButtonClickEvent}>
+      {followState ? "팔로우" : "팔로우 취소"}
+    </s.ProfileButton>
+  );
 };
 
 export default FollowButton;
