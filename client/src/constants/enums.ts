@@ -1,6 +1,6 @@
 export enum RoutePath {
   HOME = "/",
-  statistics = "/statistics",
+  STATISTICS = "/statistics",
   SEARCH = "/search",
   PROFILE = "/profile",
   CHALLENGE = "/challenge",

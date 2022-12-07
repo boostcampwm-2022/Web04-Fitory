@@ -17,7 +17,7 @@ const BottomNavigationBar = () => {
           title="홈 화면 이동 아이콘"
         />
         <BottomNavigationButton
-          path={RoutePath.statistics}
+          path={RoutePath.STATISTICS}
           iconImageUrl={staticsIcon}
           title="통계 화면 이동 아이콘"
         />
