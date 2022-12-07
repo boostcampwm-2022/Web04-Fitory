@@ -8,7 +8,7 @@ const useUserInfo = (userId: UserId) => {
     suspense: true,
   });
 
-  return { userInfo: data as UserInfo };
+  return { userInfo: data as UserInfo } as const;
 };
 
 export default useUserInfo;
