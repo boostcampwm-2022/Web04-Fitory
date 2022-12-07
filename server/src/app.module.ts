@@ -34,13 +34,6 @@ import { typeormConfig } from "./config/typeorm.config";
     TypeOrmModule.forFeature([User]),
   ],
 
-  providers: [
-    JwtStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-    { provide: APP_FILTER, useClass: HttpExceptionFilter },
-  ],
+  providers: [JwtStrategy, { provide: APP_FILTER, useClass: HttpExceptionFilter }],
 })
 export class AppModule {}
