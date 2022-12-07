@@ -1,6 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import MainContainer from "@components/MainContainer";
 import altLogoSrc from "@public/images/img_logo_alt.webp";
+import { RoutePath } from "@constants/enums";
 import * as s from "./style";
 
 const NotFoundPage = () => {
@@ -12,7 +14,9 @@ const NotFoundPage = () => {
           해당 페이지를 <span>찾을 수 없습니다.</span>
         </s.Title>
         <s.SubTitle>404 - Page is not Found</s.SubTitle>
-        <s.HomeNavButton>홈으로 이동</s.HomeNavButton>
+        <Link to={RoutePath.HOME}>
+          <s.HomeNavButton>홈으로 이동</s.HomeNavButton>
+        </Link>
       </s.Wrapper>
     </MainContainer>
   );
