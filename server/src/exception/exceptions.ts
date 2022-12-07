@@ -56,14 +56,17 @@ export class Exception {
     const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid Delete Error");
     return new ForbiddenException(response);
   }
-  
+
   routineNameDuplicate(): HttpException {
     const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Routine Name Duplicate");
     return new ForbiddenException(response);
   }
 
   guardError(): HttpException {
-    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Auth Guard Error, Invalid User Id");
-    return new ForbiddenException(response);
+    const response = HttpResponse.failed(
+      HttpStatus.UNAUTHORIZED,
+      "Auth Guard Error, Invalid User Id",
+    );
+    return new UnauthorizedException(response);
   }
 }

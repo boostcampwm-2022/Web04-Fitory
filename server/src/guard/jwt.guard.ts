@@ -17,7 +17,8 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
     }
 
     // call AuthGuard in order to ensure user is injected in request
-    const guardResult = await super.canActivate(context);
+    // https://github.com/nestjs/passport/blob/master/lib/auth.guard.ts#L45
+    const guardResult = (await super.canActivate(context)) as boolean;
 
     if (!guardResult) {
       return false;
