@@ -6,10 +6,6 @@ const getInitialExercise = (): Exercise => {
   return { exerciseName: "", setList: [{ kg: 0, count: 0, check: 0 }] };
 };
 
-const getInitalExerciseSet = (): ExerciseSet => {
-  return { kg: 0, count: 0, check: 0 };
-};
-
 interface ExerciseState {
   exerciseList: Exercise[];
   initExerciseList: () => void;
@@ -41,7 +37,10 @@ const exerciseStore = create<ExerciseState>((set) => ({
     set(({ exerciseList }) => ({
       exerciseList: updateOneElementFromArray(exerciseList, exerciseId, {
         ...exerciseList[exerciseId],
-        setList: [...exerciseList[exerciseId].setList, getInitalExerciseSet()],
+        setList: [
+          ...exerciseList[exerciseId].setList,
+          { ...exerciseList[exerciseId].setList[exerciseList[exerciseId].setList.length - 1] },
+        ],
       }),
     }));
   },
@@ -79,8 +78,8 @@ const exerciseStore = create<ExerciseState>((set) => ({
 
   fetchRoutine: (routineInfo: RoutineDetailInfo[]) => {
     set({
-      exerciseList: routineInfo.map(({ name, set: setList }) => ({
-        exerciseName: name,
+      exerciseList: routineInfo.map(({ exerciseName, set: setList }) => ({
+        exerciseName,
         setList: setList.map(({ kg, count }) => ({
           kg,
           count,
