@@ -5,3 +5,7 @@ export const MyProfileContainer = styled.div`
   padding: 30px 5vw;
   height: 450px;
 `;
+
+export const ButtonContainer = styled.div`
+  height: 50px;
+`;

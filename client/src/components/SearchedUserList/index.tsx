@@ -16,7 +16,11 @@ const SearchedUserList = (searchedUser: SearchedUserInfo[]) => {
     };
     return (
       <s.UserProfile key={keyValue} onClick={handleClickEvent}>
-        <SearchResultUserProfile userName={user.name} userMessage={user?.introduce} />
+        <SearchResultUserProfile
+          userName={user.name}
+          userMessage={user?.introduce}
+          profileId={keyValue}
+        />
       </s.UserProfile>
     );
   });

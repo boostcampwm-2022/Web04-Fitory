@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import UserAPI from "@api/UserAPI";
-import { SearchedUserInfo } from "../../types/user";
 import * as s from "./style";
 
 interface MyPageButtonProp {
   userId: number;
   ownerId: number;
-  isOwner: boolean;
 }
 
-const FollowButton = ({ userId, ownerId, isOwner }: MyPageButtonProp) => {
+const FollowButton = ({ userId, ownerId }: MyPageButtonProp) => {
   const [followState, setFollowState] = useState(true);
   useEffect(() => {
     (async () => {
@@ -18,14 +16,11 @@ const FollowButton = ({ userId, ownerId, isOwner }: MyPageButtonProp) => {
         if (user.follower_id === userId) {
           return setFollowState(false);
         }
+        return true;
       });
     })();
   }, [followState]);
-  return (
-    <s.Wrapper>
-      <s.ProfileButton>{followState ? "팔로우" : "언팔로우"}</s.ProfileButton>
-    </s.Wrapper>
-  );
+  return <s.ProfileButton>{followState ? "팔로우" : "언팔로우"}</s.ProfileButton>;
 };
 
 export default FollowButton;

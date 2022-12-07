@@ -45,7 +45,11 @@ const UserAPI = {
   getFollowerUser: async (userId: number) => {
     const path = "follow/follower";
     const response = await HttpClient.get(path, { userId });
+    const { followerUserProfileList } = response.response as {
+      followerUserProfileList: UserType.SearchedUserInfo[];
+    };
     console.log(response.response);
+    return followerUserProfileList;
   },
 
   getFollowingUser: async (userId: number) => {

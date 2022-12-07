@@ -23,11 +23,13 @@ const ProfilePage = () => {
         <MyPageUserProfile userId={profileUserId} isOwner={isOwner} />
         <MyPageUserIntroduce userId={profileUserId} isOwner={isOwner} />
         <MyPageSubInfoContainer userId={profileUserId} />
-        {isOwner ? (
-          <MyPageEditButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
-        ) : (
-          <FollowButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
-        )}
+        <s.ButtonContainer>
+          {isOwner ? (
+            <MyPageEditButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
+          ) : (
+            <FollowButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
+          )}
+        </s.ButtonContainer>
       </s.MyProfileContainer>
     </PageTemplate>
   );
