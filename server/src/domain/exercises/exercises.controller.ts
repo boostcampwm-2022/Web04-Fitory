@@ -1,3 +1,5 @@
+import { EventService } from "./../event/event.service";
+import { FollowsService } from "@follow/follows.service";
 import { Exception } from "@exception/exceptions";
 import { ExercisesService } from "./exercises.service";
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
@@ -14,6 +16,8 @@ export class ExercisesController {
     private readonly exercisesService: ExercisesService,
     private readonly usersService: UsersService,
     private readonly alarmsService: AlarmsService,
+    private readonly followService: FollowsService,
+    private readonly eventService: EventService,
   ) {}
 
   @Get("everyDate")
@@ -67,6 +71,8 @@ export class ExercisesController {
   @ApiBody({ type: () => ExerciseDataDto })
   async submitExercise(@Body() exerciseData: ExerciseDataDto) {
     await this.alarmsService.sendExerciseAlarm(exerciseData.userId);
+    const followerUserIdList = await this.followService.getFollowerUserIdList(exerciseData.userId);
+    this.eventService.sendEvent(followerUserIdList);
     return this.exercisesService.submitSingleSBDRecord(exerciseData);
   }
 }

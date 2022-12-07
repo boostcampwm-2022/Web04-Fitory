@@ -14,4 +14,10 @@ export class EventService {
   registerChannel(userId: number) {
     return fromEvent(this.emitter, `${userId}ch`);
   }
+
+  sendEvent(userIdList: Array<number>) {
+    userIdList.map((userId) => {
+      this.emitter.emit(`${userId}ch`, { message: true });
+    });
+  }
 }

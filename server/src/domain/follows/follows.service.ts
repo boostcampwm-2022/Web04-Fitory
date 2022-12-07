@@ -16,6 +16,16 @@ export class FollowsService {
     private userRepository: Repository<User>,
   ) {}
 
+  async getFollowerUserIdList(userId: number) {
+    const followerUserIdList = await this.followRepository
+      .createQueryBuilder("follow")
+      .select("follow.follower_id", "followerId")
+      .where("follow.followed_id = :userId", { userId })
+      .andWhere("follow.deleted = false")
+      .getRawMany();
+    return followerUserIdList.map((item) => item.followerId);
+  }
+
   async getFollowingUserList(userId: number) {
     const followingUserProfileList = await this.followRepository
       .createQueryBuilder("follow")

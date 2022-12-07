@@ -1,3 +1,5 @@
+import { EventService } from "./../event/event.service";
+import { FollowsService } from "@follow/follows.service";
 import { Follow } from "@follow/entities/follow.entity";
 import { AlarmsService } from "@alarm/alarms.service";
 import { Alarm } from "@alarm/entities/alram.entity";
@@ -12,6 +14,6 @@ import { ExercisesService } from "./exercises.service";
 @Module({
   imports: [TypeOrmModule.forFeature([Exercise, User, Alarm, Follow])],
   controllers: [ExercisesController],
-  providers: [ExercisesService, UsersService, AlarmsService],
+  providers: [ExercisesService, UsersService, AlarmsService, FollowsService, EventService],
 })
 export class ExercisesModule {}
