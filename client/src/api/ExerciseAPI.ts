@@ -32,7 +32,7 @@ const ExerciseAPI = {
       alert("오늘의 운동 완료!");
       return true;
     } catch {
-      alert("빈 입력 값이 없는지 확인해주세요.");
+      alert("운동 이름과 횟수가 모두 채워져 있는지 확인해주세요.");
       return false;
     }
   },
@@ -72,6 +72,7 @@ const ExerciseAPI = {
   deleteRoutine: async (routineName: string) => {
     const path = `routines/delete`;
     const userId = authStorage.get();
+
     await HttpClient.get(path, { userId, routineName });
   },
 
@@ -79,7 +80,8 @@ const ExerciseAPI = {
     const path = `exercise/singleMonth`;
     const userId = authStorage.get();
     const response = await HttpClient.get(path, { month, userId });
-    const { historyList } = response.response;
+    const { historyList } = response.response as { historyList: ExerciseType.ExerciseHistoryList };
+
     return historyList;
   },
 };

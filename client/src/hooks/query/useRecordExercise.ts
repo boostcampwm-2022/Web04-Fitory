@@ -11,9 +11,13 @@ const useRecordExercise = () => {
   const { mutate } = useMutation(
     (exerciseList: Exercise[]) => ExerciseAPI.recordExercise(exerciseList),
     {
-      onSuccess: () => {
+      onSuccess: (isSuccess) => {
+        if (!isSuccess) {
+          return;
+        }
         queryClient.invalidateQueries(QueryKey.EXERCISE_DATE_LIST);
         queryClient.invalidateQueries(QueryKey.EXERCISE_PROFILE);
+        queryClient.invalidateQueries(QueryKey.SINGLE_MONTH_EXERCISE_HISTORY);
         navigate(RoutePath.HOME, { replace: true });
       },
     },

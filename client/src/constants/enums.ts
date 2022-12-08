@@ -133,6 +133,7 @@ export const QueryKey = {
   RECENT_CHALLENGE_TIME: "recentChallengeTime",
   ROUTINE_LIST: "routineList",
   ROUTINE_INFO: "routineInfo",
+  SINGLE_MONTH_EXERCISE_HISTORY: "singleMonthExerciseHistory",
   WEIGHT_CLASS_STATISTICS: "weightClassStatistics",
 } as const;
 export type QueryKey = typeof QueryKey[keyof typeof QueryKey];
