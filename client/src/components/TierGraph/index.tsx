@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Chart, registerables } from "chart.js";
+import { Chart, registerables, Plugin } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { judColors } from "@components/TierGraph/utils";
+import { AnyObject } from "immer/dist/types/types-internal";
 import options from "./option";
 import plugin from "./plugin";
 import mockData from "./mockData";
@@ -47,7 +48,9 @@ const TierGraph = () => {
     setDataInfo(scores);
   }, []);
 
-  return <Line data={graphData} plugins={plugin} options={options} />;
+  return (
+    <Line data={graphData} plugins={plugin as Plugin<"line", AnyObject>[]} options={options} />
+  );
 };
 
 export default TierGraph;

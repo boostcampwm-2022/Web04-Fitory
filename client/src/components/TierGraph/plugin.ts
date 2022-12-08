@@ -1,5 +1,6 @@
 import theme from "@styles/Theme";
 import { Chart } from "chart.js";
+import { AnyObject } from "immer/dist/types/types-internal";
 
 const drawColorGraph = (chart: Chart) => {
   const { ctx } = chart;
@@ -78,7 +79,7 @@ const plugin = [
     afterLayout: (chart: Chart) => {
       drawColorGraph(chart);
     },
-  },
+  } as AnyObject,
 ];
 
 export default plugin;
