@@ -1,4 +1,3 @@
-import { FollowsService } from "@follow/follows.service";
 import {
   Body,
   Controller,
@@ -9,15 +8,14 @@ import {
   UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
-
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
+import { FilesInterceptor } from "@nestjs/platform-express";
+import { FollowsService } from "@follow/follows.service";
 import { UsersService } from "./users.service";
 import { UserProfileDto } from "./dto/user_profile.dto";
-import { FilesInterceptor } from "@nestjs/platform-express";
 import { multerOptions } from "./options/multer_options";
-let CryptoJS = require("crypto-js");
 import { NoAuth } from "../../decorator/validate.decorator";
 
 @Controller("api/users")
@@ -83,7 +81,7 @@ export class UsersController {
     @UploadedFiles() file: Array<Express.Multer.File>,
     @Body() userProfileData: UserProfileDto,
   ) {
-    const userId = userProfileData.userId;
+    const { userId } = userProfileData;
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     const userIdExist = await this.usersService.isExistUser(userId);
     if (!userIdExist) throw new Exception().userNotFound();
