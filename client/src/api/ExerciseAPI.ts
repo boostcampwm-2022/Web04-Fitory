@@ -32,7 +32,7 @@ const ExerciseAPI = {
       alert("오늘의 운동 완료!");
       return true;
     } catch {
-      alert("빈 입력 값이 없는지 확인해주세요.");
+      alert("운동 이름과 횟수가 모두 채워져 있는지 확인해주세요.");
       return false;
     }
   },
