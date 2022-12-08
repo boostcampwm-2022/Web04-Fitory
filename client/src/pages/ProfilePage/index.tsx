@@ -5,8 +5,8 @@ import MyPageUserProfile from "@components/MyPageUserProfile";
 import MyPageEditButton from "@components/MyPageEditButton";
 import useUserInfo from "@hooks/query/useUserInfo";
 import FollowButton from "@components/FollowButton";
+import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
-import { authStorage } from "../../services/ClientStorage";
 
 const ProfilePage = () => {
   const { userId } = useParams();
