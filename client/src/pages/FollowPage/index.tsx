@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import axios from "axios";
 import { PageState } from "@constants/enums";
 import PageTemplate from "@pages/PageTemplate";
 import SearchUtils from "@utils/SearchUtils";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchedUserList from "@components/SearchedUserList";
+import UserAPI from "@api/UserAPI";
 import * as s from "./style";
 import { SearchedUserInfo } from "../../types/user";
 import { authStorage } from "../../services/ClientStorage";
@@ -13,7 +13,7 @@ import { authStorage } from "../../services/ClientStorage";
 const FollowPage = () => {
   const location = useLocation();
   const pageState = (location.state as string) || PageState.FOLLOWING;
-  const [userList, setUserList] = useState<SearchedUserInfo[]>([]);
+  const [userList] = useState<SearchedUserInfo[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>(userList);
   const { userId } = useParams();
@@ -23,22 +23,13 @@ const FollowPage = () => {
   };
 
   useEffect(() => {
-    const REQUEST_URL =
-      pageState === PageState.FOLLOWER
-        ? `${process.env.SERVER_BASE_URL}follow/follower?userId=${profileUserId}`
-        : `${process.env.SERVER_BASE_URL}follow/following?userId=${profileUserId}`;
-    const getUserList = async () => {
-      await axios.get(REQUEST_URL).then((response) => {
-        if (pageState === PageState.FOLLOWER) {
-          setSearchedUser(response.data.response.followerUserProfileList);
-          return setUserList(response.data.response.followerUserProfileList);
-        }
-        setSearchedUser(response.data.response.followingUserProfileList);
-        return setUserList(response.data.response.followingUserProfileList);
-      });
-    };
-    getUserList();
-    console.log(SearchedUserList);
+    (async () => {
+      if (pageState === PageState.FOLLOWER) {
+        setSearchedUser(await UserAPI.getFollowerUser(profileUserId));
+      } else {
+        setSearchedUser(await UserAPI.getFollowingUser(profileUserId));
+      }
+    })();
   }, []);
 
   useEffect(() => {
