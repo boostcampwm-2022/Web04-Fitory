@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import axios from "axios";
 import { PageState } from "@constants/enums";
 import PageTemplate from "@pages/PageTemplate";
 import SearchUtils from "@utils/SearchUtils";
@@ -14,7 +13,7 @@ import { authStorage } from "../../services/ClientStorage";
 const FollowPage = () => {
   const location = useLocation();
   const pageState = (location.state as string) || PageState.FOLLOWING;
-  const [userList, setUserList] = useState<SearchedUserInfo[]>([]);
+  const [userList] = useState<SearchedUserInfo[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>(userList);
   const { userId } = useParams();
@@ -31,8 +30,6 @@ const FollowPage = () => {
         setSearchedUser(await UserAPI.getFollowingUser(profileUserId));
       }
     })();
-
-    console.log(SearchedUserList);
   }, []);
 
   useEffect(() => {
