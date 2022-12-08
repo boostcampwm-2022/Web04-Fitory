@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import dayjs from "dayjs";
 import { DayTypes, ExerciseState } from "@constants/enums";
 import * as s from "./style";
@@ -7,17 +7,10 @@ interface CalendarElementProps {
   exerciseState: ExerciseState;
   day: dayjs.Dayjs;
   today: dayjs.Dayjs;
-  isRoot: boolean;
-  setDisplayDate: React.Dispatch<React.SetStateAction<string>>;
+  setDisplayDate?: Dispatch<SetStateAction<string>>;
 }
 
-const CalendarElement = ({
-  exerciseState,
-  day,
-  today,
-  isRoot,
-  setDisplayDate,
-}: CalendarElementProps) => {
+const CalendarElement = ({ exerciseState, day, today, setDisplayDate }: CalendarElementProps) => {
   let dayType = null;
 
   if (dayjs().format("YYYYMMDD") === day.format("YYYYMMDD")) {
@@ -29,7 +22,7 @@ const CalendarElement = ({
   }
 
   const handleClickEvent = () => {
-    if (!isRoot) {
+    if (setDisplayDate) {
       setDisplayDate(day.format("YYMMDD"));
     }
   };

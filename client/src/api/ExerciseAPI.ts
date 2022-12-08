@@ -72,6 +72,7 @@ const ExerciseAPI = {
   deleteRoutine: async (routineName: string) => {
     const path = `routines/delete`;
     const userId = authStorage.get();
+
     await HttpClient.get(path, { userId, routineName });
   },
 
@@ -79,7 +80,8 @@ const ExerciseAPI = {
     const path = `exercise/singleMonth`;
     const userId = authStorage.get();
     const response = await HttpClient.get(path, { month, userId });
-    const { historyList } = response.response;
+    const { historyList } = response.response as { historyList: ExerciseType.ExerciseHistoryList };
+
     return historyList;
   },
 };

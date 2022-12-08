@@ -28,3 +28,12 @@ export interface RoutineDetailInfo {
 export type ExerciseDate = string[];
 
 export type RoutineList = string[];
+
+interface ExerciseHistory {
+  name: string;
+  set: ExerciseSet[];
+}
+
+export interface ExerciseHistoryList {
+  [key: string]: ExerciseHistory[];
+}

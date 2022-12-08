@@ -1,42 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import Paper from "@components/design/Paper";
 import CalendarHeader from "@components/Calendar/CalendarHeader";
 import CalendarBody from "@components/Calendar/CalendarBody";
-import ExerciseAPI from "@api/ExerciseAPI";
 import { RoutePath } from "@constants/enums";
 import * as s from "./style";
 
-const Calendar = ({
-  isRoot,
-  setHistory,
-  setDisplayDate,
-}: {
+dayjs.extend(weekOfYear);
+
+interface CalendarProps {
   isRoot: boolean;
-  setHistory: React.Dispatch<React.SetStateAction<{}>>;
-  setDisplayDate: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+  setCalendarMonth?: Dispatch<SetStateAction<number>>;
+  setDisplayDate?: Dispatch<SetStateAction<string>>;
+}
+
+const Calendar = ({ isRoot, setCalendarMonth, setDisplayDate }: CalendarProps) => {
   const navigate = useNavigate();
-  dayjs.extend(weekOfYear);
   const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
 
   useEffect(() => {
-    if (!isRoot) {
-      (async () => {
-        const month = parseInt(date.format("MM"));
-        const history = await ExerciseAPI.getSingleMonthHistory(month);
-        setHistory(history);
-      })();
+    if (setCalendarMonth) {
+      setCalendarMonth(date.month() + 1);
     }
-  }, [date]);
+  }, [date, setCalendarMonth]);
 
   return (
     <Paper style={{ width: "100%" }}>
       <s.Wrapper onClick={() => isRoot && navigate(RoutePath.CALENDAR)}>
         <CalendarHeader date={date} setDate={setDate} />
-        <CalendarBody date={date} isRoot={isRoot} setDisplayDate={setDisplayDate} />
+        <CalendarBody today={date} setDisplayDate={setDisplayDate} />
       </s.Wrapper>
     </Paper>
   );

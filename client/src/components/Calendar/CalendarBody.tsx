@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import dayjs from "dayjs";
 import CalendarElement from "@components/Calendar/CalendarElement";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
@@ -8,13 +8,11 @@ import useAllExerciseDate from "@hooks/query/useAllExerciseDate";
 import * as s from "./style";
 
 interface CalendarBodyProp {
-  date: dayjs.Dayjs;
-  isRoot: boolean;
-  setDisplayDate: React.Dispatch<React.SetStateAction<string>>;
+  today: dayjs.Dayjs;
+  setDisplayDate?: Dispatch<SetStateAction<string>>;
 }
 
-const CalendarBody = ({ date, isRoot, setDisplayDate }: CalendarBodyProp) => {
-  const today = date;
+const CalendarBody = ({ today, setDisplayDate }: CalendarBodyProp) => {
   const { exerciseDateList } = useAllExerciseDate();
   const exerciseStateList = getExerciseStateForOneYear(today.year(), exerciseDateList);
 
@@ -54,7 +52,6 @@ const CalendarBody = ({ date, isRoot, setDisplayDate }: CalendarBodyProp) => {
                   exerciseState={exerciseStateList[month][currentDay]}
                   day={day}
                   today={today}
-                  isRoot={isRoot}
                   setDisplayDate={setDisplayDate}
                 />
               );

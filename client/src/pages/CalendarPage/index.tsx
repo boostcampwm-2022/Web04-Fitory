@@ -1,50 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PageTemplate from "@pages/PageTemplate";
 import Calendar from "@components/Calendar";
-import styled from "styled-components";
 import ExerciseSetContainer from "@components/ExerciseSetContainer";
+import useRecentChallengeTime from "@hooks/query/useRecentChallengeTime";
+import useSingleMonthExerciseHistory from "@hooks/query/useSingleMonthExerciseHistory";
+import * as s from "./style";
 
-const CalendarPage = () => {
-  const [exerciseHistoryList, setHistory] = useState([]);
-  const [displayDate, setDisplayDate] = useState();
-  const drawExerciseList = () => {
-    if (!exerciseHistoryList[displayDate]) {
-      return (
-        <NoticeContainer>
-          <p>* 해당 일자에 운동 기록이 없어요 :(</p>
-        </NoticeContainer>
-      );
-    }
-    return exerciseHistoryList[displayDate].map((exercise, index) => {
-      return (
-        <div key={index}>
-          <ExerciseSetContainer exercise={exercise} />
-        </div>
-      );
-    });
+const ExerciseHistory = ({ month, displayDate }: { month: number; displayDate: string }) => {
+  const { exerciseHistoryList } = useSingleMonthExerciseHistory(month);
+
+  const checkDateOfExercise = () => {
+    return displayDate && exerciseHistoryList[displayDate];
   };
 
   return (
+    <s.ExerciseHistoryContainer>
+      {checkDateOfExercise() ? (
+        exerciseHistoryList[displayDate].map((exercise, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div key={index}>
+            <ExerciseSetContainer exercise={exercise} />
+          </div>
+        ))
+      ) : (
+        <s.NoticeContainer>
+          <p>* 해당 일자에 운동 기록이 없어요 :(</p>
+        </s.NoticeContainer>
+      )}
+    </s.ExerciseHistoryContainer>
+  );
+};
+
+const CalendarPage = () => {
+  const { nowTimeStamp } = useRecentChallengeTime();
+  const [calendarMonth, setCalendarMonth] = useState(nowTimeStamp.getMonth() + 1);
+  const [displayDate, setDisplayDate] = useState<string>("");
+
+  return (
     <PageTemplate isRoot={false} title="캘린더">
-      <Calendar isRoot={false} setHistory={setHistory} setDisplayDate={setDisplayDate} />
-      <ExerciseHistoryContainer>{drawExerciseList()}</ExerciseHistoryContainer>
+      <Calendar
+        isRoot={false}
+        setCalendarMonth={setCalendarMonth}
+        setDisplayDate={setDisplayDate}
+      />
+      <ExerciseHistory month={calendarMonth} displayDate={displayDate} />
     </PageTemplate>
   );
 };
 
 export default CalendarPage;
-
-export const ExerciseHistoryContainer = styled.div`
-  width: 100%;
-  height: 500px;
-`;
-
-export const NoticeContainer = styled.div`
-  margin-top: 50px;
-  background-color: ${({ theme }) => theme.COLORS.WHITE};
-  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
-  border-radius: 20px;
-  text-align: center;
-  width: 100%;
-  padding: 30px;
-`;
