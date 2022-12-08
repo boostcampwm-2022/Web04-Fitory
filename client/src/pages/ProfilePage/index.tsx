@@ -1,38 +1,32 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useParams } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
-import { PageState, RoutePath } from "@constants/enums";
 import MyPageUserProfile from "@components/MyPageUserProfile";
+import MyPageEditButton from "@components/MyPageEditButton";
+import useUserInfo from "@hooks/query/useUserInfo";
+import FollowButton from "@components/FollowButton";
+import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
 
 const ProfilePage = () => {
-  const navigate = useNavigate();
-  const followerMove = () => {
-    navigate("/follow", {
-      state: PageState.FOLLOWER,
-    });
-  };
-
-  const followingMove = () => {
-    navigate("/follow", {
-      state: PageState.FOLLOWING,
-    });
-  };
-  // useEffect(() => {
-  //   if (!authStorage.get()) {
-  //     navigate(RoutePath.LOGIN, { replace: true });
-  //   }
-  // }, [navigate]);
+  const { userId } = useParams();
+  const profileUserId = userId ? parseInt(userId as string, 10) : authStorage.get();
+  const { userInfo } = useUserInfo(profileUserId);
+  const { id } = userInfo;
+  const isOwner = profileUserId === authStorage.get();
 
   return (
-    <PageTemplate isRoot>
-      <MyPageUserProfile />
-      <button onClick={followingMove}>
-        <p>팔로잉</p>
-      </button>
-      <button onClick={followerMove}>
-        <p>팔로워</p>
-      </button>
+    <PageTemplate isRoot={isOwner}>
+      <s.MyProfileContainer>
+        <MyPageUserProfile userInfo={userInfo} />
+        <s.ButtonContainer>
+          {isOwner ? (
+            <MyPageEditButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
+          ) : (
+            <FollowButton userInfo={userInfo} />
+          )}
+        </s.ButtonContainer>
+      </s.MyProfileContainer>
     </PageTemplate>
   );
 };

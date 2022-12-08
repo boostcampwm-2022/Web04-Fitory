@@ -16,15 +16,23 @@ export class FollowsService {
     private userRepository: Repository<User>,
   ) {}
 
+  async getFollowerCount(userId: number) {
+    return this.followRepository.count({ where: { followedId: userId, deleted: false } });
+  }
+
+  async getFollowingCount(userId: number) {
+    return this.followRepository.count({ where: { followerId: userId, deleted: false } });
+  }
+
   async getFollowingUserList(userId: number) {
     const followingUserProfileList = await this.followRepository
       .createQueryBuilder("follow")
-      .select("follow.follower_id", "follower_id")
+      .select("follow.followed_id", "followed_id")
       .addSelect("user.name", "name")
       .addSelect("user.profile_image", "profile_image")
       .addSelect("user.introduce", "introduce")
-      .innerJoin(User, "user", "user.user_id = follow.follower_id")
-      .where("follow.followed_id = :userId", { userId })
+      .innerJoin(User, "user", "user.user_id = follow.followed_id")
+      .where("follow.follower_id = :userId", { userId })
       .andWhere("follow.deleted = false")
       .getRawMany();
     return HttpResponse.success({
@@ -35,12 +43,12 @@ export class FollowsService {
   async getFollowerUserList(userId: number) {
     const followerUserProfileList = await this.followRepository
       .createQueryBuilder("follow")
-      .select("follow.followed_id", "followed_id")
+      .select("follow.follower_id", "follower_id")
       .addSelect("user.name", "name")
       .addSelect("user.profile_image", "profile_image")
       .addSelect("user.introduce", "introduce")
-      .innerJoin(User, "user", "user.user_id = follow.followed_id")
-      .where("follow.follower_id = :userId", { userId })
+      .innerJoin(User, "user", "user.user_id = follow.follower_id")
+      .where("follow.followed_id = :userId", { userId })
       .andWhere("follow.deleted = false")
       .getRawMany();
     return HttpResponse.success({
@@ -52,15 +60,19 @@ export class FollowsService {
     try {
       const followRelation = await this.getFollowRelation(userIds);
       if (!followRelation) {
+        // 첫 팔로우
         await this.followRepository.save({
           followerId: userIds.myUserId,
           followedId: userIds.otherUserId,
           deleted: false,
         });
       } else {
+        // 취소 했지만 다시 팔로우
         followRelation.deleted = false;
         await this.followRepository.save(followRelation);
       }
+      global.alarmBar.add(userIds.otherUserId);
+
       return HttpResponse.success({
         message: "Do Follow Request Success",
       });

@@ -1,13 +1,19 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const UserInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   text-align: center;
   height: 230px;
-
-  background-color: ${({ theme }) => theme.COLORS.WHITE};
-  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
-  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
 `;
 
 export const ScoreContainer = styled.div`
@@ -15,6 +21,7 @@ export const ScoreContainer = styled.div`
   display: flex;
   width: 100%;
   height: 200px;
+  padding-bottom: 20px;
   align-items: center;
   background-color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
 `;

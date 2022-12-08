@@ -16,7 +16,7 @@ const ProfilePage = lazy(() => import("@pages/ProfilePage"));
 const FollowPage = lazy(() => import("@pages/FollowPage"));
 const LoginPage = lazy(() => import("@pages/LoginPage"));
 const JoinPage = lazy(() => import("@pages/JoinPage"));
-const StaticsPage = lazy(() => import("@pages/StaticsPage"));
+const StatisticsPage = lazy(() => import("@pages/StatisticsPage"));
 const SearchPage = lazy(() => import("@pages/SearchPage"));
 const CalendarPage = lazy(() => import("@pages/CalendarPage"));
 
@@ -24,18 +24,14 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       suspense: true,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      retry: false,
     },
   },
 });
 
 const App = () => {
-  // //! sse 실행 방법
-  // const userId = 1;
-  // const eventSource = new EventSource(`http://localhost:8080/api/alarms/unread?userId=${userId}`);
-  // eventSource.onmessage = ({ data }) => {
-  //   console.log(`${userId}'s unread alarm: `, JSON.parse(data).unreadAlarmCount);
-  // };
-
   return (
     <BrowserRouter>
       <GlobalStyle />
@@ -50,14 +46,20 @@ const App = () => {
               <Route path={RoutePath.CALENDAR} element={<CalendarPage />} />
               {/* Search */}
               <Route path={RoutePath.SEARCH} element={<SearchPage />} />
-              {/* Statics */}
-              <Route path={RoutePath.STATICS} element={<StaticsPage />} />
+              {/* Statistics */}
+              <Route path={RoutePath.STATISTICS} element={<StatisticsPage />} />
               {/* Profile */}
-              <Route path={RoutePath.PROFILE} element={<ProfilePage />} />
+              <Route path={RoutePath.PROFILE}>
+                <Route path=":userId" element={<ProfilePage />} />
+                <Route path="" element={<ProfilePage />} />
+              </Route>
               <Route path={RoutePath.LOGIN} element={<LoginPage />} />
               <Route path={RoutePath.JOIN} element={<JoinPage />} />
               <Route path={RoutePath.SEARCH} element={<SearchPage />} />
-              <Route path={RoutePath.FOLLOW} element={<FollowPage />} />
+              <Route path={RoutePath.FOLLOW}>
+                <Route path=":userId" element={<FollowPage />} />
+                <Route path="" element={<FollowPage />} />
+              </Route>
               <Route path="/*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>

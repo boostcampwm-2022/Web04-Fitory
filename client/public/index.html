@@ -5,9 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
     <title>Fitory</title>
   </head>
   <body>
     <div id="root"></div>
+    <script type="text/javascript">
+      const subscription = new EventSource(`http://localhost:8080/api/alarms/unread`,{ withCredentials: true } );
+      subscription.onmessage = message => {
+        const {fetchAlarmSign} = JSON.parse(message.data)
+        console.log(fetchAlarmSign)
+      };
+    </script>
   </body>
 </html>

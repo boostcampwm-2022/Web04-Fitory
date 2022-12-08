@@ -1,77 +1,76 @@
 import React from "react";
-import styled from "styled-components";
 import ProfileImageContainer from "@components/ProfileImageContainer";
+import { useNavigate } from "react-router-dom";
+import { PageState, TIER } from "@constants/enums";
+import { getTierColor } from "@utils/getUserTierUtil";
 
-const MyPageUserProfile = () => {
+import { UserInfo } from "src/types/user";
+import * as s from "./style";
+
+const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
+  const navigate = useNavigate();
+
+  const followerMove = () => {
+    navigate(`/follow/${userInfo.id}`, {
+      state: PageState.FOLLOWER,
+    });
+  };
+
+  const followingMove = () => {
+    navigate(`/follow/${userInfo.id}`, {
+      state: PageState.FOLLOWING,
+    });
+  };
+
   return (
-    <MyProfileContainer>
-      <PageLabel>마이페이지</PageLabel>
-      <UserInfoContainer>
-        <UserProfileImgContainer>
-          <ProfileImageContainer isModified />
-        </UserProfileImgContainer>
-        <UserInfo>
-          <UserInformation>
-            <InfoLabel>나이</InfoLabel> 만 24세
-          </UserInformation>
-          <UserInformation>
-            <InfoLabel>성별</InfoLabel> 남
-          </UserInformation>
-          <UserInformation>
-            <InfoLabel>신장</InfoLabel> 223cm
-          </UserInformation>
-          <UserInformation>
-            <InfoLabel>체중</InfoLabel> 11kg
-          </UserInformation>
-        </UserInfo>
-      </UserInfoContainer>
-    </MyProfileContainer>
+    <>
+      <s.PageLabel>마이페이지</s.PageLabel>
+      <s.UserInfoContainer>
+        <s.UserProfileImgContainer>
+          <ProfileImageContainer isModified profileImgUrl={userInfo.profileImage as string} />
+        </s.UserProfileImgContainer>
+        <s.UserInfoRow>
+          <s.UserInformation>
+            <s.InfoLabel>나이</s.InfoLabel> {userInfo.age}
+          </s.UserInformation>
+          <s.UserInformation>
+            <s.InfoLabel>성별</s.InfoLabel>
+            {userInfo.gender === 0 ? "남" : "여"}
+          </s.UserInformation>
+          <s.UserInformation>
+            <s.InfoLabel>신장</s.InfoLabel> {userInfo.height}cm
+          </s.UserInformation>
+          <s.UserInformation>
+            <s.InfoLabel>체중</s.InfoLabel> {userInfo.weight}kg
+          </s.UserInformation>
+        </s.UserInfoRow>
+      </s.UserInfoContainer>
+      <div>
+        <s.UserNameLabel>{userInfo.name}</s.UserNameLabel>
+        <s.UserIntroduceContainer>{userInfo.introduce}</s.UserIntroduceContainer>
+      </div>
+      <s.Wrapper>
+        <s.ContentContainer>
+          <s.ContentLabel>티어</s.ContentLabel>
+          <s.TierContainer color={getTierColor(userInfo.tier)}>
+            {TIER[userInfo.tier]}
+          </s.TierContainer>
+        </s.ContentContainer>
+        <s.ContentContainer>
+          <s.FollowButton onClick={followingMove}>
+            <s.ContentLabel>팔로잉</s.ContentLabel>
+            <s.FollowContainer>{userInfo.followingCount}</s.FollowContainer>
+          </s.FollowButton>
+        </s.ContentContainer>
+        <s.ContentContainer>
+          <s.FollowButton onClick={followerMove}>
+            <s.ContentLabel>팔로워</s.ContentLabel>
+            <s.FollowContainer>{userInfo.followerCount}</s.FollowContainer>
+          </s.FollowButton>
+        </s.ContentContainer>
+      </s.Wrapper>
+    </>
   );
 };
 
 export default MyPageUserProfile;
-
-export const MyProfileContainer = styled.div`
-  background-color: ${({ theme }) => theme.COLORS.WHITE};
-  padding: 30px 5vw;
-`;
-
-export const PageLabel = styled.label`
-  color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
-  font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
-`;
-
-export const UserInfoContainer = styled.div`
-  margin-top: 30px;
-  display: flex;
-  width: 100%;
-  height: 100px;
-`;
-
-export const UserProfileImgContainer = styled.div`
-  width: 30%;
-  height: 100%;
-`;
-
-export const UserInfo = styled.div`
-  margin-left: 10%;
-  width: 50%;
-  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
-  color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
-`;
-
-export const UserInformation = styled.div`
-  height: 25%;
-  display: flex;
-  align-items: center;
-`;
-
-export const InfoLabel = styled.div`
-  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
-  color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
-  margin-right: 30px;
-`;
-
-export const DetailInfoContainer = styled.div``;
