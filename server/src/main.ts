@@ -4,13 +4,15 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
-import { LOCAL_HOST, PORT } from "@env";
+import { DEPLOY_HOST, DEPLOY_HOST_WWW, LOCAL_HOST, PORT } from "@env";
 import express from "express";
 import path from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { initDatabase } from "./utils/initDB";
 import { AppModule } from "./app.module";
+import { SetResponseHeader } from "./middleware/zero-downtime-deploy/set-response-header.middleware";
+import { GlobalService } from "./middleware/zero-downtime-deploy/is-disable-keep-alive.global";
 
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
@@ -23,7 +25,7 @@ async function bootstrap() {
   app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
-    origin: [LOCAL_HOST],
+    origin: [DEPLOY_HOST, DEPLOY_HOST_WWW],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   });
@@ -51,6 +53,16 @@ async function bootstrap() {
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerDocumentBuilder);
   SwaggerModule.setup("api", app, swaggerDocument);
 
-  await app.listen(PORT as string);
+  GlobalService.isDisableKeepAlive = false;
+
+  app.use(SetResponseHeader);
+
+  // Starts listening to shutdown hooks
+  app.enableShutdownHooks();
+
+  await app.listen(PORT as string, () => {
+    process.send("ready");
+    console.log(`application is listening on port ${PORT}`);
+  });
 }
 bootstrap();
