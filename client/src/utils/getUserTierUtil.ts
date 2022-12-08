@@ -1,24 +1,5 @@
 import theme from "@styles/Theme";
 
-export const getUserTierUtil = (tier: number) => {
-  switch (tier) {
-    case 1:
-      return "BRONZE";
-    case 2:
-      return "SILVER";
-    case 3:
-      return "GOLD";
-    case 4:
-      return "PLATINUM";
-    case 5:
-      return "DIAMOND";
-    case 6:
-      return "CHAMPION";
-    default:
-      return "-";
-  }
-};
-
 export const getTierColor = (tier: number) => {
   switch (tier) {
     case 1:

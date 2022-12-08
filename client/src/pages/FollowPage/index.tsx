@@ -12,7 +12,7 @@ import { authStorage } from "../../services/ClientStorage";
 
 const FollowPage = () => {
   const location = useLocation();
-  const pageState = location.state as string;
+  const pageState = (location.state as string) || PageState.FOLLOWING;
   const [userList, setUserList] = useState<SearchedUserInfo[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>(userList);
@@ -38,6 +38,7 @@ const FollowPage = () => {
       });
     };
     getUserList();
+    console.log(SearchedUserList);
   }, []);
 
   useEffect(() => {

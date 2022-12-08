@@ -7,7 +7,7 @@ import { FollowUserInfo } from "../../types/user";
 const FollowButton = ({ otherUserId, myUserId }: FollowUserInfo) => {
   const [followState, setFollowState] = useState(true);
   // false == 팔로우중 true: 팔로우 가능
-  const followButtonClickEvent = async () => {
+  const handleButtonClick = async () => {
     if (followState) {
       return FollowAPI.follow({ myUserId, otherUserId });
     }
@@ -25,7 +25,7 @@ const FollowButton = ({ otherUserId, myUserId }: FollowUserInfo) => {
     })();
   }, [followState]);
   return (
-    <s.ProfileButton type="button" onClick={followButtonClickEvent}>
+    <s.ProfileButton type="button" onClick={handleButtonClick}>
       {followState ? "팔로우" : "팔로우 취소"}
     </s.ProfileButton>
   );

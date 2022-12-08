@@ -1,7 +1,7 @@
 import React from "react";
-import { PageState } from "@constants/enums";
+import { PageState, TIER } from "@constants/enums";
 import { useNavigate } from "react-router-dom";
-import { getTierColor, getUserTierUtil } from "@utils/getUserTierUtil";
+import { getTierColor } from "@utils/getUserTierUtil";
 import useUserInfo from "@hooks/query/useUserInfo";
 import * as s from "./style";
 
@@ -24,9 +24,7 @@ const MyPageSubInfoContainer = ({ userId }: { userId: number }) => {
     <s.Wrapper>
       <s.ContentContainer>
         <s.ContentLabel>티어</s.ContentLabel>
-        <s.TierContainer color={getTierColor(userInfo.tier)}>
-          {getUserTierUtil(userInfo.tier)}
-        </s.TierContainer>
+        <s.TierContainer color={getTierColor(userInfo.tier)}>{TIER[userInfo.tier]}</s.TierContainer>
       </s.ContentContainer>
       <s.ContentContainer>
         <s.FollowButton onClick={followingMove}>
