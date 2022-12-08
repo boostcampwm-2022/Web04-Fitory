@@ -69,4 +69,12 @@ export class Exception {
     );
     return new UnauthorizedException(response);
   }
+
+  invalidStatistics(): HttpException {
+    const response = HttpResponse.failed(
+      HttpStatus.FORBIDDEN,
+      "Invalid Gender or Weight for Statistics",
+    );
+    return new ForbiddenException(response);
+  }
 }

@@ -13,7 +13,7 @@ const useBestChallengeScore = () => {
   );
   const isEmpty = !Object.keys(data as ChallengeDetail).length;
 
-  return { bestChallengeScore: isEmpty ? null : data };
+  return { bestChallengeScore: isEmpty ? null : data } as const;
 };
 
 export default useBestChallengeScore;
