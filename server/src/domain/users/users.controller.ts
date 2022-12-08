@@ -1,4 +1,6 @@
+import { FollowsService } from "@follow/follows.service";
 import { Body, Controller, Get, Post, Query, UploadedFiles, UseInterceptors } from "@nestjs/common";
+
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
@@ -11,7 +13,7 @@ import { NoAuth } from "../../decorator/validate.decorator";
 @Controller("api/users")
 @ApiTags("USER API")
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService, private followService: FollowsService) {}
 
   @Get("get")
   @ApiOperation({
@@ -23,7 +25,9 @@ export class UsersController {
   })
   async getUserInfo(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    return this.usersService.getUserInfo(userId);
+    const followerCount = await this.followService.getFollowerCount(userId);
+    const followingCount = await this.followService.getFollowingCount(userId);
+    return this.usersService.getUserInfo(userId, followerCount, followingCount);
   }
 
   @Get("profile/list")

@@ -42,6 +42,26 @@ const UserAPI = {
     return userProfileList;
   },
 
+  getFollowerUser: async (userId: number) => {
+    const path = "follow/follower";
+    const response = await HttpClient.get(path, { userId });
+    const { followerUserProfileList } = response.response as {
+      followerUserProfileList: UserType.SearchedUserInfo[];
+    };
+
+    return followerUserProfileList;
+  },
+
+  getFollowingUser: async (userId: number) => {
+    const path = "follow/following";
+    const response = await HttpClient.get(path, { userId });
+    const { followingUserProfileList } = response.response as {
+      followingUserProfileList: UserType.SearchedUserInfo[];
+    };
+
+    return followingUserProfileList;
+  },
+
   getRecommendUserList: async () => {
     const userId = authStorage.get();
     const path = "users/recommand/list";
