@@ -20,7 +20,16 @@ const StatisticsPage = lazy(() => import("@pages/StatisticsPage"));
 const SearchPage = lazy(() => import("@pages/SearchPage"));
 const CalendarPage = lazy(() => import("@pages/CalendarPage"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      retry: false,
+    },
+  },
+});
 
 const App = () => {
   return (
