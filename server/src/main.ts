@@ -34,6 +34,7 @@ async function bootstrap() {
     origin: [DEPLOY_HOST, DEPLOY_HOST_WWW],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
+    allowedHeaders: "user_id",
   });
 
   app.use(cookieParser());
