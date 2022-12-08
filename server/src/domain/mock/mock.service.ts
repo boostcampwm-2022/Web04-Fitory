@@ -66,7 +66,7 @@ export class MockService {
     return data;
   }
 
-  async mockUsers(num: number[]) {
+  async mockUsers(num: number) {
     return Promise.all(
       num.map(async (id: number) => {
         return this.userRepository
