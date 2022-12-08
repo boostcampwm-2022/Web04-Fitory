@@ -11,8 +11,8 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { initDatabase } from "./utils/initDB";
 import { AppModule } from "./app.module";
-// import { SetResponseHeader } from "./middleware/zero-downtime-deploy/set-response-header.middleware";
-// import { GlobalService } from "./middleware/zero-downtime-deploy/is-disable-keep-alive.global";
+import { SetResponseHeader } from "./middleware/zero-downtime-deploy/set-response-header.middleware";
+import { GlobalService } from "./middleware/zero-downtime-deploy/is-disable-keep-alive.global";
 
 declare global {
   var alarmBar: Set<number>;
@@ -41,7 +41,7 @@ async function bootstrap() {
   app.use(passport.initialize());
 
   const reflector = app.get(Reflector);
-  // app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+  app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -59,12 +59,12 @@ async function bootstrap() {
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerDocumentBuilder);
   SwaggerModule.setup("api", app, swaggerDocument);
 
-  // GlobalService.isDisableKeepAlive = false;
-  //
-  // app.use(SetResponseHeader);
-  //
-  // // Starts listening to shutdown hooks
-  // app.enableShutdownHooks();
+  GlobalService.isDisableKeepAlive = false;
+
+  app.use(SetResponseHeader);
+
+  // Starts listening to shutdown hooks
+  app.enableShutdownHooks();
 
   await app.listen(PORT as string, () => {
     process.send("ready");
