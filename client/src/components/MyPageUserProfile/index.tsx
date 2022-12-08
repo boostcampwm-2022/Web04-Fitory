@@ -1,23 +1,23 @@
 import React from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
-import useUserInfo from "@hooks/query/useUserInfo";
 import { useNavigate } from "react-router-dom";
 import { PageState, TIER } from "@constants/enums";
 import { getTierColor } from "@utils/getUserTierUtil";
+
+import { UserInfo } from "src/types/user";
 import * as s from "./style";
 
-const MyPageUserProfile = ({ userId, isOwner }: { userId: number; isOwner: boolean }) => {
-  const { userInfo } = useUserInfo(userId);
+const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
   const navigate = useNavigate();
 
   const followerMove = () => {
-    navigate(`/follow/${userId}`, {
+    navigate(`/follow/${userInfo.id}`, {
       state: PageState.FOLLOWER,
     });
   };
 
   const followingMove = () => {
-    navigate(`/follow/${userId}`, {
+    navigate(`/follow/${userInfo.id}`, {
       state: PageState.FOLLOWING,
     });
   };

@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from "react";
 import FollowAPI from "@api/FollowAPI";
 import UserAPI from "@api/UserAPI";
+import { useQueryClient } from "react-query";
+import { QueryKey } from "@constants/enums";
 import * as s from "./style";
-import { FollowUserInfo } from "../../types/user";
+import { UserInfo } from "../../types/user";
+import { authStorage } from "../../services/ClientStorage";
 
-const FollowButton = ({ otherUserId, myUserId }: FollowUserInfo) => {
+const FollowButton = ({ userInfo }: { userInfo: UserInfo }) => {
   const [followState, setFollowState] = useState(true);
-  const handleButtonClick = () => {
-    (async () => {
+  const myUserId = authStorage.get();
+  const otherUserId = userInfo.id;
+  const queryClient = useQueryClient();
+  const handleButtonClick = async () => {
+    await (() => {
       if (followState) {
         return FollowAPI.follow({ myUserId, otherUserId });
       }
       return FollowAPI.unFollow({ myUserId, otherUserId });
     })();
-    return setFollowState(!followState);
+    setFollowState(!followState);
+    return queryClient.invalidateQueries([QueryKey.USER_INFO, otherUserId]);
   };
+
+
   useEffect(() => {
     (async () => {
       const ownerFollowList = await UserAPI.getFollowingUser(myUserId);

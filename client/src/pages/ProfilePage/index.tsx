@@ -10,20 +10,20 @@ import { authStorage } from "../../services/ClientStorage";
 
 const ProfilePage = () => {
   const { userId } = useParams();
-  const { userInfo } = useUserInfo(authStorage.get());
-  const { id } = userInfo;
   const profileUserId = userId ? parseInt(userId as string, 10) : authStorage.get();
-  const isOwner = profileUserId === id;
+  const { userInfo } = useUserInfo(profileUserId);
+  const { id } = userInfo;
+  const isOwner = profileUserId === authStorage.get();
 
   return (
     <PageTemplate isRoot={isOwner}>
       <s.MyProfileContainer>
-        <MyPageUserProfile userId={profileUserId} isOwner={isOwner} />
+        <MyPageUserProfile userInfo={userInfo} />
         <s.ButtonContainer>
           {isOwner ? (
             <MyPageEditButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
           ) : (
-            <FollowButton otherUserId={profileUserId as number} myUserId={id} />
+            <FollowButton userInfo={userInfo} />
           )}
         </s.ButtonContainer>
       </s.MyProfileContainer>
