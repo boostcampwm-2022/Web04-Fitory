@@ -4,10 +4,13 @@ import Theme from "@styles/Theme";
 export const Wrapper = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
+  display: flex;
+  align-items: center;
 `;
 
 export const ProfileContainer = styled.div`
   height: 100%;
+  width: 80%;
   display: flex;
   align-items: center;
 `;
@@ -39,4 +42,10 @@ export const UserMessageContainer = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
+
+export const ButtonContainer = styled.div`
+  width: 20%;
+  height: 40px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
 `;

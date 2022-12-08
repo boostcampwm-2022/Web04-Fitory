@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { APP_FILTER, APP_GUARD } from "@nestjs/core";
+import { APP_FILTER } from "@nestjs/core";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AlarmsModule } from "@alarm/alarms.module";
@@ -13,7 +13,6 @@ import { SbdStatisticsModule } from "@statistics/sbd_statistics.module";
 import { UsersModule } from "@user/users.module";
 import { MockModule } from "@mock/mock.module";
 import { JwtStrategy } from "@guard/jwt.strategy";
-import { JwtAuthGuard } from "@guard/jwt.guard";
 import { User } from "@user/entities/user.entity";
 import { typeormConfig } from "./config/typeorm.config";
 

@@ -19,7 +19,7 @@ const useRecentChallengeTime = () => {
     recentTimeStamp: new Date(recentTimeStamp),
     nowTimeStamp: new Date(nowTimeStamp),
     targetTimeStamp,
-  };
+  } as const;
 };
 
 export default useRecentChallengeTime;
