@@ -17,11 +17,11 @@ export class FollowsService {
   ) {}
 
   async getFollowerCount(userId: number) {
-    return this.followRepository.count({ where: { followedId: userId } });
+    return this.followRepository.count({ where: { followedId: userId, deleted: false } });
   }
 
   async getFollowingCount(userId: number) {
-    return this.followRepository.count({ where: { followerId: userId } });
+    return this.followRepository.count({ where: { followerId: userId, deleted: false } });
   }
 
   async getFollowingUserList(userId: number) {
