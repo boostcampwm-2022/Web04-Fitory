@@ -23,6 +23,7 @@ const CalendarPage = lazy(() => import("@pages/CalendarPage"));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      suspense: true,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       retry: false,

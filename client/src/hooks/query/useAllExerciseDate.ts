@@ -4,9 +4,7 @@ import { QueryKey } from "@constants/enums";
 import { ExerciseDate } from "src/types/exercise";
 
 const useAllExerciseDate = () => {
-  const { data } = useQuery(QueryKey.EXERCISE_DATE_LIST, () => ExerciseAPI.getAllExerciseDate(), {
-    suspense: true,
-  });
+  const { data } = useQuery(QueryKey.EXERCISE_DATE_LIST, () => ExerciseAPI.getAllExerciseDate());
 
   return { exerciseDateList: [...(data as ExerciseDate)] };
 };
