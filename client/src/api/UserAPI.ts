@@ -73,6 +73,11 @@ const UserAPI = {
 
     return [recommendWeight, recommendAge];
   },
+
+  getFollowerList: async (userId: number, path: string) => {
+    const response = await HttpClient.get(path, { userId });
+    console.log(response);
+  },
 };
 
 export default UserAPI;

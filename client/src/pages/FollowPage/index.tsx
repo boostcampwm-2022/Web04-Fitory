@@ -6,6 +6,7 @@ import PageTemplate from "@pages/PageTemplate";
 import SearchUtils from "@utils/SearchUtils";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchedUserList from "@components/SearchedUserList";
+import UserAPI from "@api/UserAPI";
 import * as s from "./style";
 import { SearchedUserInfo } from "../../types/user";
 import { authStorage } from "../../services/ClientStorage";
@@ -23,21 +24,14 @@ const FollowPage = () => {
   };
 
   useEffect(() => {
-    const REQUEST_URL =
-      pageState === PageState.FOLLOWER
-        ? `${process.env.SERVER_BASE_URL}follow/follower?userId=${profileUserId}`
-        : `${process.env.SERVER_BASE_URL}follow/following?userId=${profileUserId}`;
-    const getUserList = async () => {
-      await axios.get(REQUEST_URL).then((response) => {
-        if (pageState === PageState.FOLLOWER) {
-          setSearchedUser(response.data.response.followerUserProfileList);
-          return setUserList(response.data.response.followerUserProfileList);
-        }
-        setSearchedUser(response.data.response.followingUserProfileList);
-        return setUserList(response.data.response.followingUserProfileList);
-      });
-    };
-    getUserList();
+    (async () => {
+      if (pageState === PageState.FOLLOWER) {
+        setSearchedUser(await UserAPI.getFollowerUser(profileUserId));
+      } else {
+        setSearchedUser(await UserAPI.getFollowingUser(profileUserId));
+      }
+    })();
+
     console.log(SearchedUserList);
   }, []);
 
