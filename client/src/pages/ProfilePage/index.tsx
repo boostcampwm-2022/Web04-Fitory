@@ -7,7 +7,6 @@ import useUserInfo from "@hooks/query/useUserInfo";
 import FollowButton from "@components/FollowButton";
 import { QueryKey } from "@constants/enums";
 import { useQueryClient } from "react-query";
-import UserAPI from "@api/UserAPI";
 import { authStorage } from "../../services/ClientStorage";
 import * as s from "./style";
 
