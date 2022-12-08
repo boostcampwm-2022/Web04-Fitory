@@ -1,8 +1,9 @@
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import TierGraph from "@components/TierGraph";
+import WeightClassHistogram from "@components/WeightClassHistogram";
 import * as s from "./style";
 
-const Carousel = () => {
+const StatisticsCarousel = () => {
   const [isHistogram, setIsHistogram] = useState<boolean>(true);
   const slideRef = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -28,16 +29,22 @@ const Carousel = () => {
       <s.Container>
         <s.NavigationBar>
           <s.NavigationButton isHistogram={isHistogram} onClick={movePrev}>
-            통계
+            내 체급 통계
           </s.NavigationButton>
           <s.NavigationButton isHistogram={isHistogram} onClick={moveNext}>
             티어 변동
           </s.NavigationButton>
         </s.NavigationBar>
         <s.StaticsContainer ref={slideRef}>
-          <s.ChartContainer>여기에 히스토그램을 넣어주세요.</s.ChartContainer>
           <s.ChartContainer>
-            <TierGraph />
+            <div>
+              <WeightClassHistogram />
+            </div>
+          </s.ChartContainer>
+          <s.ChartContainer>
+            <div>
+              <TierGraph />
+            </div>
           </s.ChartContainer>
         </s.StaticsContainer>
       </s.Container>
@@ -45,4 +52,4 @@ const Carousel = () => {
   );
 };
 
-export default Carousel;
+export default StatisticsCarousel;

@@ -10,7 +10,7 @@ export const ExerciseName = styled.p`
 
 export const ExerciseScore = styled.p`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_LARGE};
+  font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
 
-  margin: 20px 0 10px 0;
+  padding: 20px 0 10px 0;
 `;

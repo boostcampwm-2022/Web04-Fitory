@@ -6,12 +6,12 @@ export const Wrapper = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   text-align: center;
-  padding-top: 50px;
+  padding-top: 70px;
 `;
 
 export const Container = styled.div`
   width: 100%;
-  height: 500px;
+  height: 100%;
   overflow: hidden;
 `;
 
@@ -21,13 +21,12 @@ export const NavigationBar = styled.div`
   width: 100%;
 
   border-bottom: 1px solid ${({ theme }) => theme.COLORS.LIGHT_GRAY};
-  margin-bottom: 50px;
 `;
 
 export const NavigationButton = styled.button`
   width: 50%;
 
-  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
 
   :first-child {
     font-weight: ${({ theme, isHistogram }: { theme: typeof Theme; isHistogram: boolean }) => {
@@ -53,11 +52,19 @@ export const NavigationButton = styled.button`
 export const StaticsContainer = styled.div`
   display: flex;
   width: 200%;
+  height: 100%;
   text-align: center;
   align-items: center;
 `;
 
 export const ChartContainer = styled.div`
   width: 50%;
-  padding: 0 5vw;
+  height: 100%;
+  padding: 20px 5vw;
+  display: flex;
+  justify-content: center;
+  & > div {
+    width: 100%;
+    height: 40vh;
+  }
 `;

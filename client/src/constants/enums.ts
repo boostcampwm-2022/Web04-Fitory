@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 export const RoutePath = {
   HOME: "/",
-  STATICS: "/statics",
+  STATISTICS: "/statistics",
   SEARCH: "/search",
   PROFILE: "/profile",
   CHALLENGE: "/challenge",
@@ -133,6 +133,7 @@ export const QueryKey = {
   RECENT_CHALLENGE_TIME: "recentChallengeTime",
   ROUTINE_LIST: "routineList",
   ROUTINE_INFO: "routineInfo",
+  WEIGHT_CLASS_STATISTICS: "weightClassStatistics",
 } as const;
 export type QueryKey = typeof QueryKey[keyof typeof QueryKey];
 
