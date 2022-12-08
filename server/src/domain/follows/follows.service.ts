@@ -60,15 +60,19 @@ export class FollowsService {
     try {
       const followRelation = await this.getFollowRelation(userIds);
       if (!followRelation) {
+        // 첫 팔로우
         await this.followRepository.save({
           followerId: userIds.myUserId,
           followedId: userIds.otherUserId,
           deleted: false,
         });
       } else {
+        // 취소 했지만 다시 팔로우
         followRelation.deleted = false;
         await this.followRepository.save(followRelation);
       }
+      global.alarmBar.add(userIds.otherUserId);
+
       return HttpResponse.success({
         message: "Do Follow Request Success",
       });

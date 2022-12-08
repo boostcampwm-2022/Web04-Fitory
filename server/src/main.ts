@@ -12,9 +12,15 @@ import { JwtAuthGuard } from "@guard/jwt.guard";
 import { initDatabase } from "./utils/initDB";
 import { AppModule } from "./app.module";
 
+declare global {
+  var alarmBar: Set<number>;
+}
+
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
   // initDatabase();
+
+  global.alarmBar = new Set();
 
   const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
 
