@@ -16,6 +16,14 @@ export class FollowsService {
     private userRepository: Repository<User>,
   ) {}
 
+  async getFollowerCount(userId: number) {
+    return this.followRepository.count({ where: { followedId: userId } });
+  }
+
+  async getFollowingCount(userId: number) {
+    return this.followRepository.count({ where: { followerId: userId } });
+  }
+
   async getFollowingUserList(userId: number) {
     const followingUserProfileList = await this.followRepository
       .createQueryBuilder("follow")
