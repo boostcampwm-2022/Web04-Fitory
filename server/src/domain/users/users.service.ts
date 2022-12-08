@@ -1,3 +1,4 @@
+import { Follow } from "./../follows/entities/follow.entity";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { UserProfileDto } from "./dto/user_profile.dto";
 import { HttpResponse } from "@converter/response.converter";
@@ -25,12 +26,16 @@ export class UsersService {
     return !!userExist;
   }
 
-  async getUserInfo(userId: number) {
-    const user = await this.userRepository
+  async getUserInfo(userId: number, followerCount: number, followingCount: number) {
+    const userObject = await this.userRepository
       .createQueryBuilder("user")
       .where("user.id = :userId", { userId })
       .getOne();
-
+    const user = {
+      ...userObject,
+      followerCount,
+      followingCount,
+    };
     if (!user) {
       throw new Exception().userNotFound();
     }

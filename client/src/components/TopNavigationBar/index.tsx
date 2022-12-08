@@ -1,7 +1,7 @@
 import React from "react";
-import logoSrc from "@public/icons/logo.svg";
+import textLogoSrc from "@public/images/img_logo_text.webp";
+import BackButton from "@components/BackButton";
 import * as s from "./style";
-import BackButton from "../BackButton";
 
 export interface TopNavigationBarProps {
   isRoot: boolean;
@@ -20,7 +20,7 @@ const TopNavigationBar = ({
     <s.Wrapper>
       <s.Content>
         <s.LeftItem>{!isRoot && <BackButton onClick={onClickBackButton} />}</s.LeftItem>
-        <s.Title>{isRoot ? <img src={logoSrc} alt="로고" /> : <h1>{title}</h1>}</s.Title>
+        <s.Title>{isRoot ? <img src={textLogoSrc} alt="로고" /> : <h1>{title}</h1>}</s.Title>
         <s.RightItem>{rightItem}</s.RightItem>
       </s.Content>
     </s.Wrapper>

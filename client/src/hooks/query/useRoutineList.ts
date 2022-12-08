@@ -12,7 +12,7 @@ const useRoutineList = (userId: UserId) => {
     },
   );
 
-  return { routineList: data };
+  return { routineList: data } as const;
 };
 
 export default useRoutineList;

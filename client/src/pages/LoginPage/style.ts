@@ -2,17 +2,18 @@ import styled from "styled-components";
 
 export const Background = styled.div`
   top: 0;
+  gap: 50px;
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   max-width: ${({ theme }) => theme.MAX_WIDTH.DEFAULT};
   background-color: #608bff;
 `;
 
 export const Logo = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 250px;
 `;
 
 export const Wrapper = styled.div`
@@ -23,6 +24,17 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+export const TitleWrapper = styled.div`
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & > img {
+    width: 80px;
+  }
 `;
 
 export const Title = styled.h1`
