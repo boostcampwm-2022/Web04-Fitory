@@ -28,7 +28,7 @@ const Calendar = ({ isRoot, setCalendarMonth, setDisplayDate }: CalendarProps) =
 
   return (
     <Paper style={{ width: "100%" }}>
-      <s.Wrapper onClick={() => isRoot && navigate(RoutePath.CALENDAR)}>
+      <s.Wrapper isRoot={isRoot} onClick={() => isRoot && navigate(RoutePath.CALENDAR)}>
         <CalendarHeader date={date} setDate={setDate} />
         <CalendarBody today={date} setDisplayDate={setDisplayDate} />
       </s.Wrapper>

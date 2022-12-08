@@ -24,7 +24,7 @@ const ExerciseHistory = ({ month, displayDate }: { month: number; displayDate: s
         ))
       ) : (
         <s.NoticeContainer>
-          <p>* 해당 일자에 운동 기록이 없어요 :(</p>
+          <p>해당 일자에 운동 기록이 없어요 :(</p>
         </s.NoticeContainer>
       )}
     </s.ExerciseHistoryContainer>
@@ -38,12 +38,14 @@ const CalendarPage = () => {
 
   return (
     <PageTemplate isRoot={false} title="캘린더">
-      <Calendar
-        isRoot={false}
-        setCalendarMonth={setCalendarMonth}
-        setDisplayDate={setDisplayDate}
-      />
-      <ExerciseHistory month={calendarMonth} displayDate={displayDate} />
+      <s.Wrapper>
+        <Calendar
+          isRoot={false}
+          setCalendarMonth={setCalendarMonth}
+          setDisplayDate={setDisplayDate}
+        />
+        <ExerciseHistory month={calendarMonth} displayDate={displayDate} />
+      </s.Wrapper>
     </PageTemplate>
   );
 };

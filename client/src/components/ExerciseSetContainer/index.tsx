@@ -1,63 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import toggleBtn from "@public/images/btn_toggle.svg";
 import exerciseCompleteMark from "@public/icons/mark_exercise_complete.svg";
 import exerciseFailMark from "@public/icons/mark_exercise_fail.svg";
+import Paper from "@components/design/Paper";
+import { ExerciseHistory } from "src/types/exercise";
 import * as s from "./style";
 
-const ExerciseSetContainer = ({ exercise }) => {
+const ExerciseSetContainer = ({ exercise }: { exercise: ExerciseHistory }) => {
   const [visibleState, setVisibleState] = useState(false);
-
-  useEffect(() => {
-    setVisibleState(false);
-  }, [exercise]);
 
   const handleClickEvent = () => {
     setVisibleState((prevState) => !prevState);
   };
 
-  const drawExerciseList = (dayExerciseHistory) => {
-    return (
-      <>
-        <s.HeaderRow>
-          <s.AttributeLabel>세트</s.AttributeLabel>
-          <s.AttributeLabel>무게</s.AttributeLabel>
-          <s.AttributeLabel>회수</s.AttributeLabel>
-          <s.AttributeLabel>완료</s.AttributeLabel>
-        </s.HeaderRow>
-        {drawExerciseSet(dayExerciseHistory)}
-      </>
-    );
-  };
-
-  const drawExerciseSet = (dayExerciseHistory) => {
-    return dayExerciseHistory.map((set, index) => {
-      return (
-        <s.SetRow key={index}>
-          <s.AttributeLabel>{set.index}</s.AttributeLabel>
-          <s.AttributeLabel>{set.kg}</s.AttributeLabel>
-          <s.AttributeLabel>{set.count}</s.AttributeLabel>
-          <s.CheckedImg
-            src={set.check === 1 ? exerciseCompleteMark : exerciseFailMark}
-            alt="운동 완료 여부"
-          />
-        </s.SetRow>
-      );
-    });
-  };
   return (
-    <s.Wrapper>
-      <s.ExerciseHistoryHeader>
-        <button onClick={handleClickEvent}>
-          <s.ToggleButton
-            visibleState={visibleState}
-            src={toggleBtn}
-            alt="운동 세부사항 보기 버튼"
-          />
-        </button>
-        <s.SetNameLabel>{exercise.name}</s.SetNameLabel>
-      </s.ExerciseHistoryHeader>
-      <div>{visibleState ? drawExerciseList(exercise.set) : null}</div>
-    </s.Wrapper>
+    <Paper style={{ width: "100%" }}>
+      <s.Wrapper>
+        <s.ExerciseHistoryHeader>
+          <s.ToggleButton type="button" visibleState={visibleState} onClick={handleClickEvent}>
+            <img src={toggleBtn} alt="운동 세부사항 보기 버튼" />
+          </s.ToggleButton>
+          <s.SetNameLabel>{exercise.name}</s.SetNameLabel>
+        </s.ExerciseHistoryHeader>
+        <s.ExerciseInfoWrapper visibleState={visibleState}>
+          {visibleState && (
+            <>
+              <s.HeaderRow>
+                <s.AttributeLabel>세트</s.AttributeLabel>
+                <s.AttributeLabel>kg</s.AttributeLabel>
+                <s.AttributeLabel>회</s.AttributeLabel>
+              </s.HeaderRow>
+              {exercise.set.map((set) => (
+                <s.SetRow key={set.index}>
+                  <s.AttributeLabel>{set.index}</s.AttributeLabel>
+                  <s.AttributeLabel>{set.kg}</s.AttributeLabel>
+                  <s.AttributeLabel>{set.count}</s.AttributeLabel>
+                  {set.check ? (
+                    <s.CheckedImg src={exerciseCompleteMark} alt="운동 완료 표시" />
+                  ) : (
+                    <s.FailCheckedImg src={exerciseFailMark} alt="운동 미완료 표시" />
+                  )}
+                </s.SetRow>
+              ))}
+            </>
+          )}
+        </s.ExerciseInfoWrapper>
+      </s.Wrapper>
+    </Paper>
   );
 };
 

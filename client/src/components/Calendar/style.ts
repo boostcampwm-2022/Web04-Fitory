@@ -4,15 +4,13 @@ import { DayTypes, ExerciseState } from "@constants/enums";
 
 // index
 export const Wrapper = styled.div`
-  cursor: pointer;
   margin: auto;
   width: 100%;
   border-radius: 20px;
   text-align: center;
   padding: 30px 50px;
-  font-weight: ${({ theme }) => {
-    return theme.FONT_WEIGHT.BOLD;
-  }};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+  cursor: ${({ isRoot }: { isRoot: boolean }) => isRoot && "pointer"};
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
     padding: 20px;
   }
