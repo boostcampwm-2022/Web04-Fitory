@@ -16,6 +16,7 @@ import { JwtStrategy } from "@guard/jwt.strategy";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { User } from "@user/entities/user.entity";
 import { typeormConfig } from "./config/typeorm.config";
+import { EventModule } from "./domain/event/event.module";
 
 @Module({
   imports: [
@@ -31,8 +32,11 @@ import { typeormConfig } from "./config/typeorm.config";
     TypeOrmModule.forRoot(typeormConfig),
     PassportModule,
     TypeOrmModule.forFeature([User]),
+    EventModule,
   ],
 
   providers: [JwtStrategy, { provide: APP_FILTER, useClass: HttpExceptionFilter }],
+
+  controllers: [],
 })
 export class AppModule {}
