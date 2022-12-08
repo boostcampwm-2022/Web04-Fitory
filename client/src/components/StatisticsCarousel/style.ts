@@ -50,7 +50,6 @@ export const NavigationButton = styled.button`
 `;
 
 export const StaticsContainer = styled.div`
-  padding-top: 30px;
   display: flex;
   width: 200%;
   height: 100%;
@@ -61,7 +60,11 @@ export const StaticsContainer = styled.div`
 export const ChartContainer = styled.div`
   width: 50%;
   height: 100%;
-  padding: 0 5vw;
+  padding: 20px 5vw;
   display: flex;
   justify-content: center;
+  & > div {
+    width: 100%;
+    height: 40vh;
+  }
 `;

@@ -5,7 +5,6 @@ import { judColors } from "@components/TierGraph/utils";
 import options from "./option";
 import plugin from "./plugin";
 import mockData from "./mockData";
-import * as s from "./style";
 
 Chart.register(...registerables);
 
@@ -48,11 +47,7 @@ const TierGraph = () => {
     setDataInfo(scores);
   }, []);
 
-  return (
-    <s.Wrapper>
-      <Line data={graphData} plugins={plugin} options={options} />
-    </s.Wrapper>
-  );
+  return <Line data={graphData} plugins={plugin} options={options} />;
 };
 
 export default TierGraph;

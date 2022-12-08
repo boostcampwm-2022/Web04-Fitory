@@ -1,34 +1,29 @@
 import React from "react";
 import { ChartData, ChartOptions } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import * as s from "./style";
 
 const data: ChartData<"bar", number[], string> = {
   labels: [
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
-    "280kg-290kg",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
+    "280",
   ],
   datasets: [
     {
@@ -37,7 +32,8 @@ const data: ChartData<"bar", number[], string> = {
       backgroundColor: "rgb(255, 99, 132)",
       data: [
         33, 9, 44, 55, 60, 22, 65, 23, 123, 56, 6, 23, 33, 9, 44, 55, 60, 22, 65, 23, 123, 56, 6,
-        23,
+        23, 33, 9, 44, 55, 60, 22, 65, 23, 123, 56, 6, 23, 33, 9, 44, 55, 60, 22, 65, 23, 123, 56,
+        6, 23,
       ],
       borderColor: "red",
       borderWidth: 2,
@@ -46,7 +42,6 @@ const data: ChartData<"bar", number[], string> = {
 };
 
 const options: ChartOptions = {
-  indexAxis: "y",
   maintainAspectRatio: false,
   plugins: {
     title: {
@@ -58,11 +53,9 @@ const options: ChartOptions = {
 
 const WeightClassHistogram = () => {
   return (
-    <s.Wrapper>
-      <Bar options={options} data={data}>
-        test
-      </Bar>
-    </s.Wrapper>
+    <Bar options={options} data={data}>
+      test
+    </Bar>
   );
 };
 

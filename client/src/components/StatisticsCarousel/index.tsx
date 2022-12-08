@@ -35,12 +35,16 @@ const StatisticsCarousel = () => {
             티어 변동
           </s.NavigationButton>
         </s.NavigationBar>
-        <s.StaticsContainer ref={slideRef} isHistogram={isHistogram}>
+        <s.StaticsContainer ref={slideRef}>
           <s.ChartContainer>
-            <WeightClassHistogram />
+            <div>
+              <WeightClassHistogram />
+            </div>
           </s.ChartContainer>
           <s.ChartContainer>
-            <TierGraph />
+            <div>
+              <TierGraph />
+            </div>
           </s.ChartContainer>
         </s.StaticsContainer>
       </s.Container>
