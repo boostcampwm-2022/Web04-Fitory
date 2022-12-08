@@ -7,7 +7,13 @@ const useWeightClassStatistics = (weightClassStatisticsRequest: WeightClassStati
   const { data } = useQuery(
     QueryKey.WEIGHT_CLASS_STATISTICS,
     () => StatisticsAPI.getWeightClassStatistics(weightClassStatisticsRequest),
-    { suspense: true },
+    {
+      suspense: true,
+      refetchOnWindowFocus: true,
+      refetchOnMount: true,
+      retry: true,
+      staleTime: 10000,
+    },
   );
 
   let { responseData } = data as WeightClassStatisticsResponse;
