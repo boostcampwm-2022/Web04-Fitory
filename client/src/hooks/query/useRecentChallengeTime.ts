@@ -7,7 +7,7 @@ const useRecentChallengeTime = () => {
   const { data } = useQuery(
     QueryKey.RECENT_CHALLENGE_TIME,
     () => ChallengeAPI.getRecentChallengeTime(),
-    { suspense: true },
+    { suspense: true, refetchOnWindowFocus: true, refetchOnMount: true, retry: true },
   );
 
   const { recentTimeStamp, nowTimeStamp } = data as ChallengeTimestamp;
