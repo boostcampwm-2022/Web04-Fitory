@@ -15,7 +15,6 @@ import { MockModule } from "@mock/mock.module";
 import { JwtStrategy } from "@guard/jwt.strategy";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { User } from "@user/entities/user.entity";
-import { UploadModule } from "./domain/uploads/upload.module";
 import { typeormConfig } from "./config/typeorm.config";
 
 @Module({

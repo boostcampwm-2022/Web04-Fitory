@@ -19,12 +19,12 @@ export class FollowsService {
   async getFollowingUserList(userId: number) {
     const followingUserProfileList = await this.followRepository
       .createQueryBuilder("follow")
-      .select("follow.follower_id", "follower_id")
+      .select("follow.followed_id", "followed_id")
       .addSelect("user.name", "name")
       .addSelect("user.profile_image", "profile_image")
       .addSelect("user.introduce", "introduce")
-      .innerJoin(User, "user", "user.user_id = follow.follower_id")
-      .where("follow.followed_id = :userId", { userId })
+      .innerJoin(User, "user", "user.user_id = follow.followed_id")
+      .where("follow.follower_id = :userId", { userId })
       .andWhere("follow.deleted = false")
       .getRawMany();
     return HttpResponse.success({
@@ -35,12 +35,12 @@ export class FollowsService {
   async getFollowerUserList(userId: number) {
     const followerUserProfileList = await this.followRepository
       .createQueryBuilder("follow")
-      .select("follow.followed_id", "followed_id")
+      .select("follow.follower_id", "follower_id")
       .addSelect("user.name", "name")
       .addSelect("user.profile_image", "profile_image")
       .addSelect("user.introduce", "introduce")
-      .innerJoin(User, "user", "user.user_id = follow.followed_id")
-      .where("follow.follower_id = :userId", { userId })
+      .innerJoin(User, "user", "user.user_id = follow.follower_id")
+      .where("follow.followed_id = :userId", { userId })
       .andWhere("follow.deleted = false")
       .getRawMany();
     return HttpResponse.success({
