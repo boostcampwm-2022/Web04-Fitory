@@ -8,8 +8,6 @@
     "build": "webpack --mode=production --node-env=production",
     "jest:coverage": "jest --watchAll=false --coverage",
     "cypress:open": "cypress open",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
     "prettier": "prettier --write ./src/**/*.{ts,tsx}"
@@ -69,6 +67,7 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "html-webpack-plugin": "^5.5.0",
+    "immer": "^9.0.16",
     "jest": "^29.3.1",
     "prettier": "^2.7.1",
     "terser-webpack-plugin": "^5.3.6",

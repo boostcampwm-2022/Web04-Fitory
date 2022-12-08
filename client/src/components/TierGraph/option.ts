@@ -7,10 +7,10 @@ const options = {
     },
   },
   intersect: false,
-  responsive: true,
   lineTension: 0,
   pointRadius: 3,
   pointHoverRadius: 5,
+  maintainAspectRatio: false,
 
   scales: {
     x: {

@@ -1,10 +1,26 @@
 import React from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
-import useUserInfo from "@hooks/query/useUserInfo";
+import { useNavigate } from "react-router-dom";
+import { PageState, TIER } from "@constants/enums";
+import { getTierColor } from "@utils/getUserTierUtil";
+
+import { UserInfo } from "src/types/user";
 import * as s from "./style";
 
-const MyPageUserProfile = ({ userId, isOwner }: { userId: number; isOwner: boolean }) => {
-  const { userInfo } = useUserInfo(userId);
+const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
+  const navigate = useNavigate();
+
+  const followerMove = () => {
+    navigate(`/follow/${userInfo.id}`, {
+      state: PageState.FOLLOWER,
+    });
+  };
+
+  const followingMove = () => {
+    navigate(`/follow/${userInfo.id}`, {
+      state: PageState.FOLLOWING,
+    });
+  };
 
   return (
     <>
@@ -29,6 +45,30 @@ const MyPageUserProfile = ({ userId, isOwner }: { userId: number; isOwner: boole
           </s.UserInformation>
         </s.UserInfoRow>
       </s.UserInfoContainer>
+      <div>
+        <s.UserNameLabel>{userInfo.name}</s.UserNameLabel>
+        <s.UserIntroduceContainer>{userInfo.introduce}</s.UserIntroduceContainer>
+      </div>
+      <s.Wrapper>
+        <s.ContentContainer>
+          <s.ContentLabel>티어</s.ContentLabel>
+          <s.TierContainer color={getTierColor(userInfo.tier)}>
+            {TIER[userInfo.tier]}
+          </s.TierContainer>
+        </s.ContentContainer>
+        <s.ContentContainer>
+          <s.FollowButton onClick={followingMove}>
+            <s.ContentLabel>팔로잉</s.ContentLabel>
+            <s.FollowContainer>{userInfo.followingCount}</s.FollowContainer>
+          </s.FollowButton>
+        </s.ContentContainer>
+        <s.ContentContainer>
+          <s.FollowButton onClick={followerMove}>
+            <s.ContentLabel>팔로워</s.ContentLabel>
+            <s.FollowContainer>{userInfo.followerCount}</s.FollowContainer>
+          </s.FollowButton>
+        </s.ContentContainer>
+      </s.Wrapper>
     </>
   );
 };

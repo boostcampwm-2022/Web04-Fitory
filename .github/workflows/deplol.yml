@@ -22,4 +22,4 @@ jobs:
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             npm --help
-            /root/deploy.sh
+            /root/Web04-Fitory/deploy.sh
