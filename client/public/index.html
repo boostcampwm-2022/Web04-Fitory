@@ -11,10 +11,12 @@
   <body>
     <div id="root"></div>
     <script type="text/javascript">
-      const subscription = new EventSource(`http://localhost:8080/api/alarms/unread`,{ withCredentials: true } );
-      subscription.onmessage = message => {
-        const {fetchAlarmSign} = JSON.parse(message.data)
-        console.log(fetchAlarmSign)
+      const subscription = new EventSource(`https://fitory.ga/api/alarms/unread`, {
+        withCredentials: true,
+      });
+      subscription.onmessage = (message) => {
+        const { fetchAlarmSign } = JSON.parse(message.data);
+        console.log(fetchAlarmSign);
       };
     </script>
   </body>
