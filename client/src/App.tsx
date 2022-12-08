@@ -23,13 +23,6 @@ const CalendarPage = lazy(() => import("@pages/CalendarPage"));
 const queryClient = new QueryClient();
 
 const App = () => {
-  // //! sse 실행 방법
-  // const userId = 1;
-  // const eventSource = new EventSource(`http://localhost:8080/api/alarms/unread?userId=${userId}`);
-  // eventSource.onmessage = ({ data }) => {
-  //   console.log(`${userId}'s unread alarm: `, JSON.parse(data).unreadAlarmCount);
-  // };
-
   return (
     <BrowserRouter>
       <GlobalStyle />
@@ -44,7 +37,7 @@ const App = () => {
               <Route path={RoutePath.CALENDAR} element={<CalendarPage />} />
               {/* Search */}
               <Route path={RoutePath.SEARCH} element={<SearchPage />} />
-              {/* Statics */}
+              {/* Statistics */}
               <Route path={RoutePath.STATISTICS} element={<StatisticsPage />} />
               {/* Profile */}
               <Route path={RoutePath.PROFILE} element={<ProfilePage />} />

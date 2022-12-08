@@ -1,7 +1,9 @@
+import { Gender } from "@constants/enums";
+
 export type UserId = number;
 export type UserName = string;
 export type UserAge = number;
-export type UserGender = 0 | 1;
+export type UserGender = Gender;
 export type UserHeight = number;
 export type UserWeight = number;
 export type UserIntroduce = string;
