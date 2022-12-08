@@ -4,6 +4,7 @@ import { DayTypes, ExerciseState } from "@constants/enums";
 
 // index
 export const Wrapper = styled.div`
+  cursor: pointer;
   margin: auto;
   width: 100%;
   border-radius: 20px;

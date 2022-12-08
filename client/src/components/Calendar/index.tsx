@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import Paper from "@components/design/Paper";
 import CalendarHeader from "@components/Calendar/CalendarHeader";
 import CalendarBody from "@components/Calendar/CalendarBody";
 import ExerciseAPI from "@api/ExerciseAPI";
+import { RoutePath } from "@constants/enums";
 import * as s from "./style";
 
 const Calendar = ({
@@ -16,6 +18,7 @@ const Calendar = ({
   setHistory: React.Dispatch<React.SetStateAction<{}>>;
   setDisplayDate: React.Dispatch<React.SetStateAction<string>>;
 }) => {
+  const navigate = useNavigate();
   dayjs.extend(weekOfYear);
   const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
 
@@ -31,7 +34,7 @@ const Calendar = ({
 
   return (
     <Paper style={{ width: "100%" }}>
-      <s.Wrapper>
+      <s.Wrapper onClick={() => isRoot && navigate(RoutePath.CALENDAR)}>
         <CalendarHeader date={date} setDate={setDate} />
         <CalendarBody date={date} isRoot={isRoot} setDisplayDate={setDisplayDate} />
       </s.Wrapper>

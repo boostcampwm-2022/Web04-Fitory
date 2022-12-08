@@ -1,7 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
-import { DayTypes, ExerciseState, RoutePath } from "@constants/enums";
-import { useNavigate } from "react-router-dom";
+import { DayTypes, ExerciseState } from "@constants/enums";
 import * as s from "./style";
 
 interface CalendarElementProps {
@@ -19,7 +18,6 @@ const CalendarElement = ({
   isRoot,
   setDisplayDate,
 }: CalendarElementProps) => {
-  const navigate = useNavigate();
   let dayType = null;
 
   if (dayjs().format("YYYYMMDD") === day.format("YYYYMMDD")) {
@@ -31,15 +29,13 @@ const CalendarElement = ({
   }
 
   const handleClickEvent = () => {
-    setDisplayDate(day.format("YYMMDD"));
-  };
-
-  const moveCalendarPageEvent = () => {
-    navigate(RoutePath.CALENDAR);
+    if (!isRoot) {
+      setDisplayDate(day.format("YYMMDD"));
+    }
   };
 
   return (
-    <s.DayContainer dayType={dayType} onClick={!isRoot ? handleClickEvent : moveCalendarPageEvent}>
+    <s.DayContainer dayType={dayType} onClick={handleClickEvent}>
       <s.DayLabel dayType={dayType}>{day.format("D")}</s.DayLabel>
       <s.CompleteDot state={exerciseState} dayType={dayType} />
     </s.DayContainer>
