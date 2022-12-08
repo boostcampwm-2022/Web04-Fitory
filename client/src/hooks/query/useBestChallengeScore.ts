@@ -4,12 +4,8 @@ import { QueryKey } from "@constants/enums";
 import { ChallengeDetail } from "src/types/challenge";
 
 const useBestChallengeScore = () => {
-  const { data } = useQuery(
-    QueryKey.BEST_CHALLENGE_SCORE,
-    () => ChallengeAPI.getBestChallengeScore(),
-    {
-      suspense: true,
-    },
+  const { data } = useQuery(QueryKey.BEST_CHALLENGE_SCORE, () =>
+    ChallengeAPI.getBestChallengeScore(),
   );
   const isEmpty = !Object.keys(data as ChallengeDetail).length;
 

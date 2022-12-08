@@ -1,10 +1,13 @@
-import { Controller, Get, Param, Query, Sse } from "@nestjs/common";
+import { RequestWithUser } from "./../../types/request.d";
+import { JwtAuthGuard } from "@guard/jwt.guard";
+import { Controller, Get, Req, Param, Query, Sse, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Exception } from "@exception/exceptions";
 import { isValidUserId } from "@validation/validation";
 import { UsersService } from "@user/users.service";
 import { interval, map, Observable, switchMap } from "rxjs";
 import { AlarmsService } from "./alarms.service";
+import { GetUserId, NoAuth } from "src/decorator/validate.decorator";
 
 @Controller("api/alarms")
 @ApiTags("ALARM API")
@@ -36,12 +39,18 @@ export class AlarmsController {
     name: "userId",
     type: "number",
   })
-  async sse(@Query("userId") userId: number): Promise<Observable<MessageEvent>> {
+  async sse(@Req() req: RequestWithUser) {
     return interval(1000).pipe(
-      switchMap(async () => await this.alarmService.countUnreadAlarm(userId)),
-      map((prop) => {
+      map(() => {
+        const userId = Number(req.user);
+        console.log(userId, global.alarmBar);
+        let fetchAlarmSign: boolean = false;
+        if (global.alarmBar.has(userId)) {
+          fetchAlarmSign = true;
+          global.alarmBar.delete(userId);
+        }
         return {
-          data: { unreadAlarmCount: prop.response.alarmCount },
+          data: { fetchAlarmSign },
         } as MessageEvent;
       }),
     );
@@ -62,5 +71,10 @@ export class AlarmsController {
   async getAlarmList(@Query("userId") userId: number, @Query("index") index: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.alarmService.getAlarmList(userId, index);
+  }
+
+  @Get("test")
+  async test(@GetUserId() userId: number) {
+    console.log(userId);
   }
 }

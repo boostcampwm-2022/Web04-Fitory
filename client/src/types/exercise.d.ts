@@ -1,4 +1,5 @@
 export interface ExerciseSet {
+  index?: number;
   kg: number;
   count: number;
   check?: 0 | 1;
@@ -28,3 +29,12 @@ export interface RoutineDetailInfo {
 export type ExerciseDate = string[];
 
 export type RoutineList = string[];
+
+export interface ExerciseHistory {
+  name: string;
+  set: ExerciseSet[];
+}
+
+export interface ExerciseHistoryList {
+  [key: string]: ExerciseHistory[];
+}

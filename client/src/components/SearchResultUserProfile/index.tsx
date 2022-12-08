@@ -21,8 +21,8 @@ const SearchResultUserProfile = ({
   profileId,
 }: SearchResultUserProfileProps) => {
   const navigate = useNavigate();
-  const { userInfo } = useUserInfo(authStorage.get());
-  const { id } = userInfo;
+  const { userInfo } = useUserInfo(profileId as number);
+  const id = authStorage.get();
   const handleClickEvent = () => {
     navigate(`${RoutePath.PROFILE}/${profileId}`);
   };
@@ -40,7 +40,7 @@ const SearchResultUserProfile = ({
         </s.UserInfoContainer>
       </s.ProfileContainer>
       <s.ButtonContainer>
-        {profileId !== id && <FollowButton otherUserId={profileId as number} myUserId={id} />}
+        {profileId !== id && <FollowButton userInfo={userInfo} />}
       </s.ButtonContainer>
     </s.Wrapper>
   );

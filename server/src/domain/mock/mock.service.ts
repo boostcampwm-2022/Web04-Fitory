@@ -167,14 +167,30 @@ export class MockService {
     );
   }
 
-  async mockFollow(userNums: number[]) {
+  randomNoRepeats(array: number[]) {
+    let copy = array.slice(0);
+    return () => {
+      if (copy.length < 1) {
+        copy = array.slice(0);
+      }
+      const index = Math.floor(Math.random() * copy.length);
+      const item = copy[index];
+      copy.splice(index, 1);
+      return item;
+    };
+  }
+
+  async mockFollow(pickRandomNoRepeats: () => number) {
+    const follower = pickRandomNoRepeats();
+    const followed = pickRandomNoRepeats();
+
     return this.followRepository
       .createQueryBuilder()
       .insert()
       .into(Follow)
       .values({
-        followedId: faker.helpers.arrayElement(userNums),
-        followerId: faker.helpers.arrayElement(userNums),
+        followedId: followed,
+        followerId: follower,
       })
       .execute();
   }

@@ -3,7 +3,7 @@ import * as s from "./style";
 
 interface ExerciseScoreContainerProp {
   exerciseName: string;
-  exerciseScore: number;
+  exerciseScore: number | string;
 }
 
 const ExerciseScoreContainer = ({ exerciseName, exerciseScore }: ExerciseScoreContainerProp) => {

@@ -17,11 +17,11 @@ export class FollowsService {
   ) {}
 
   async getFollowerCount(userId: number) {
-    return this.followRepository.count({ where: { followedId: userId } });
+    return this.followRepository.count({ where: { followedId: userId, deleted: false } });
   }
 
   async getFollowingCount(userId: number) {
-    return this.followRepository.count({ where: { followerId: userId } });
+    return this.followRepository.count({ where: { followerId: userId, deleted: false } });
   }
 
   async getFollowingUserList(userId: number) {
@@ -60,15 +60,19 @@ export class FollowsService {
     try {
       const followRelation = await this.getFollowRelation(userIds);
       if (!followRelation) {
+        // 첫 팔로우
         await this.followRepository.save({
           followerId: userIds.myUserId,
           followedId: userIds.otherUserId,
           deleted: false,
         });
       } else {
+        // 취소 했지만 다시 팔로우
         followRelation.deleted = false;
         await this.followRepository.save(followRelation);
       }
+      global.alarmBar.add(userIds.otherUserId);
+
       return HttpResponse.success({
         message: "Do Follow Request Success",
       });

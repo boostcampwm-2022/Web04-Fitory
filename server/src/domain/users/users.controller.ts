@@ -1,11 +1,20 @@
-import { FollowsService } from "@follow/follows.service";
-import { Body, Controller, Get, Post, Query, UploadedFiles, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
+import { FilesInterceptor } from "@nestjs/platform-express";
+import { FollowsService } from "@follow/follows.service";
 import { UsersService } from "./users.service";
 import { UserProfileDto } from "./dto/user_profile.dto";
-import { FilesInterceptor } from "@nestjs/platform-express";
 import { multerOptions } from "./options/multer_options";
 import { NoAuth } from "../../decorator/validate.decorator";
 
