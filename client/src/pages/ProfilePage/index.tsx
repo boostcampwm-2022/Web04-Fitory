@@ -8,6 +8,8 @@ import CalendarHeatMap from "@components/CalendarHeatMap";
 import RoutineScroller from "@components/RoutineScroller";
 import useUserInfo from "@hooks/query/useUserInfo";
 import { authStorage } from "src/services/ClientStorage";
+import { useQueryClient } from "react-query";
+import { QueryKey } from "@constants/enums";
 import * as s from "./style";
 
 const ProfilePage = () => {
