@@ -24,11 +24,11 @@ export class MockController {
         return this.mockService.mockFollow(pickRandomNoRepeats);
       }),
     );
-
+    
     // eslint-disable-next-line no-restricted-syntax
     for (const id of userNums) {
       // eslint-disable-next-line no-await-in-loop
-      await this.mockService.mockUsers(id);
+      await this.mockService.mockUsers();
     }
 
     const recordNums = Array.from(Array(12).keys()); // 각 유저가 1년 이내의 무작위 날짜로 12번만큼 챌린지 기록
