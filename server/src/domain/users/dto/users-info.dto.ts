@@ -81,28 +81,6 @@ export class UsersInfoDto {
   tier: number;
 
   @ApiProperty({
-    description: "유저의 팔로워 수",
-    type: Number,
-    minimum: 0,
-    default: 0,
-  })
-  @IsNumber()
-  @Min(0)
-  @Max(5000)
-  follower_count: number;
-
-  @ApiProperty({
-    description: "유저의 팔로잉 수",
-    type: Number,
-    minimum: 0,
-    default: 0,
-  })
-  @IsNumber()
-  @Min(0)
-  @Max(5000)
-  following_count: number;
-
-  @ApiProperty({
     description: "유저의 총 볼륨(무게)",
     type: Number,
     minimum: 0,
