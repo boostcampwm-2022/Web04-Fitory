@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   height: fit-content;
-
   background-color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 
@@ -21,11 +20,10 @@ export const ButtonContainer = styled.div`
 export const BottomWrapper = styled(Wrapper)`
   margin-top: 10px;
   padding-top: 30px;
-`;
-
-export const BottomTitle = styled.h2`
-  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+  padding: 30px 50px;
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    padding: 0;
+  }
 `;
 
 export const ZandiLabel = styled.p`
