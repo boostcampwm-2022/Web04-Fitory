@@ -66,28 +66,24 @@ export class MockService {
     return data;
   }
 
-  async mockUsers(num: number) {
-    return Promise.all(
-      num.map(async (id: number) => {
-        return this.userRepository
-          .createQueryBuilder()
-          .insert()
-          .into(User)
-          .values({
-            name: faker.name.lastName() + faker.name.firstName(),
-            age: faker.datatype.number({ min: 10, max: 60 }),
-            gender: faker.datatype.number({ min: 0, max: 1 }),
-            height: faker.datatype.number({ min: 150, max: 200 }),
-            weight: faker.datatype.number({ min: 50, max: 150 }),
-            introduce: faker.lorem.sentence(),
-            volumeSum: faker.datatype.number({ min: 0, max: 100000 }),
-            tier: faker.datatype.number({ min: 0, max: 6 }),
-            oauthId: faker.datatype.number({ min: 0, max: 999999999 }).toString(),
-            profileImage: "http://default.image",
-          })
-          .execute();
-      }),
-    );
+  async mockUsers() {
+    return this.userRepository
+      .createQueryBuilder()
+      .insert()
+      .into(User)
+      .values({
+        name: faker.name.lastName() + faker.name.firstName(),
+        age: faker.datatype.number({ min: 10, max: 60 }),
+        gender: faker.datatype.number({ min: 0, max: 1 }),
+        height: faker.datatype.number({ min: 150, max: 200 }),
+        weight: faker.datatype.number({ min: 50, max: 150 }),
+        introduce: faker.lorem.sentence(),
+        volumeSum: faker.datatype.number({ min: 0, max: 100000 }),
+        tier: faker.datatype.number({ min: 0, max: 6 }),
+        oauthId: faker.datatype.number({ min: 0, max: 999999999 }).toString(),
+        profileImage: "http://default.image",
+      })
+      .execute();
   }
 
   async mockRecord() {
