@@ -12,11 +12,12 @@ dayjs.extend(weekOfYear);
 
 interface CalendarProps {
   isRoot: boolean;
+  displayDate?: string;
   setCalendarMonth?: Dispatch<SetStateAction<number>>;
   setDisplayDate?: Dispatch<SetStateAction<string>>;
 }
 
-const Calendar = ({ isRoot, setCalendarMonth, setDisplayDate }: CalendarProps) => {
+const Calendar = ({ isRoot, displayDate, setCalendarMonth, setDisplayDate }: CalendarProps) => {
   const navigate = useNavigate();
   const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
 
@@ -30,7 +31,7 @@ const Calendar = ({ isRoot, setCalendarMonth, setDisplayDate }: CalendarProps) =
     <Paper style={{ width: "100%" }}>
       <s.Wrapper isRoot={isRoot} onClick={() => isRoot && navigate(RoutePath.CALENDAR)}>
         <CalendarHeader date={date} setDate={setDate} />
-        <CalendarBody today={date} setDisplayDate={setDisplayDate} />
+        <CalendarBody today={date} displayDate={displayDate} setDisplayDate={setDisplayDate} />
       </s.Wrapper>
     </Paper>
   );

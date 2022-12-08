@@ -7,10 +7,17 @@ interface CalendarElementProps {
   exerciseState: ExerciseState;
   day: dayjs.Dayjs;
   today: dayjs.Dayjs;
+  displayDate?: string;
   setDisplayDate?: Dispatch<SetStateAction<string>>;
 }
 
-const CalendarElement = ({ exerciseState, day, today, setDisplayDate }: CalendarElementProps) => {
+const CalendarElement = ({
+  exerciseState,
+  day,
+  today,
+  displayDate,
+  setDisplayDate,
+}: CalendarElementProps) => {
   let dayType = null;
 
   if (dayjs().format("YYYYMMDD") === day.format("YYYYMMDD")) {
@@ -28,8 +35,10 @@ const CalendarElement = ({ exerciseState, day, today, setDisplayDate }: Calendar
   };
 
   return (
-    <s.DayContainer dayType={dayType} onClick={handleClickEvent}>
-      <s.DayLabel dayType={dayType}>{day.format("D")}</s.DayLabel>
+    <s.DayContainer dayType={dayType} hover={Boolean(setDisplayDate)} onClick={handleClickEvent}>
+      <s.DayLabel dayType={dayType} isActive={displayDate === day.format("YYMMDD")}>
+        {day.format("D")}
+      </s.DayLabel>
       <s.CompleteDot state={exerciseState} dayType={dayType} />
     </s.DayContainer>
   );

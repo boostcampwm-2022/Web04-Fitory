@@ -9,10 +9,11 @@ import * as s from "./style";
 
 interface CalendarBodyProp {
   today: dayjs.Dayjs;
+  displayDate?: string;
   setDisplayDate?: Dispatch<SetStateAction<string>>;
 }
 
-const CalendarBody = ({ today, setDisplayDate }: CalendarBodyProp) => {
+const CalendarBody = ({ today, displayDate, setDisplayDate }: CalendarBodyProp) => {
   const { exerciseDateList } = useAllExerciseDate();
   const exerciseStateList = getExerciseStateForOneYear(today.year(), exerciseDateList);
 
@@ -52,6 +53,7 @@ const CalendarBody = ({ today, setDisplayDate }: CalendarBodyProp) => {
                   exerciseState={exerciseStateList[month][currentDay]}
                   day={day}
                   today={today}
+                  displayDate={displayDate}
                   setDisplayDate={setDisplayDate}
                 />
               );

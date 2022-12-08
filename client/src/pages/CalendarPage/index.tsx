@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import dayjs from "dayjs";
 import PageTemplate from "@pages/PageTemplate";
 import Calendar from "@components/Calendar";
 import ExerciseSetContainer from "@components/ExerciseSetContainer";
-import useRecentChallengeTime from "@hooks/query/useRecentChallengeTime";
 import useSingleMonthExerciseHistory from "@hooks/query/useSingleMonthExerciseHistory";
 import * as s from "./style";
 
@@ -32,9 +32,8 @@ const ExerciseHistory = ({ month, displayDate }: { month: number; displayDate: s
 };
 
 const CalendarPage = () => {
-  const { nowTimeStamp } = useRecentChallengeTime();
-  const [calendarMonth, setCalendarMonth] = useState(nowTimeStamp.getMonth() + 1);
-  const [displayDate, setDisplayDate] = useState<string>("");
+  const [calendarMonth, setCalendarMonth] = useState(new Date().getMonth() + 1);
+  const [displayDate, setDisplayDate] = useState<string>(dayjs().format("YYMMDD"));
 
   return (
     <PageTemplate isRoot={false} title="캘린더">
@@ -42,6 +41,7 @@ const CalendarPage = () => {
         <Calendar
           isRoot={false}
           setCalendarMonth={setCalendarMonth}
+          displayDate={displayDate}
           setDisplayDate={setDisplayDate}
         />
         <ExerciseHistory month={calendarMonth} displayDate={displayDate} />

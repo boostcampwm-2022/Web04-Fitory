@@ -80,14 +80,17 @@ export const DayName = styled.div`
 
 // Element
 export const DayContainer = styled.td`
-  color: ${({ dayType, theme }: { dayType: DayTypes; theme: typeof Theme }) => {
+  ${({ dayType, hover, theme }: { dayType: DayTypes; hover: boolean; theme: typeof Theme }) => {
+    let color: string = theme.COLORS.DEEP_GRAY;
     if (dayType === DayTypes.OTHER_DAYS) {
-      return theme.COLORS.LIGHT_GRAY;
+      color = theme.COLORS.LIGHT_GRAY;
+    } else if (dayType === DayTypes.TODAY) {
+      color = theme.COLORS.WHITE;
     }
-    if (dayType === DayTypes.TODAY) {
-      return theme.COLORS.WHITE;
-    }
-    return theme.COLORS.DEEP_GRAY;
+    return `
+      cursor: ${hover && "pointer"};
+      color: ${color}
+    `;
   }};
 `;
 
@@ -100,8 +103,21 @@ export const DayLabel = styled.div`
   margin: auto;
   padding-bottom: 4px;
   border-radius: 8px;
-  background-color: ${({ dayType, theme }: { dayType: DayTypes; theme: typeof Theme }) => {
-    return dayType === DayTypes.TODAY ? theme.COLORS.LIGHT_BLUE : "transparent";
+  border: 2px solid transparent;
+
+  ${({
+    dayType,
+    isActive,
+    theme,
+  }: {
+    dayType: DayTypes;
+    isActive: boolean;
+    theme: typeof Theme;
+  }) => {
+    return `
+      background-color: ${dayType === DayTypes.TODAY ? theme.COLORS.LIGHT_BLUE : "transparent"};
+      border-color: ${isActive && theme.COLORS.RED};
+    `;
   }};
 `;
 
