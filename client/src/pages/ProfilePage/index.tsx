@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import MyPageUserProfile from "@components/MyPageUserProfile";
 import MyPageEditButton from "@components/MyPageEditButton";
-import useUserInfo from "@hooks/query/useUserInfo";
 import FollowButton from "@components/FollowButton";
+import CalendarHeatMap from "@components/CalendarHeatMap";
+import RoutineScroller from "@components/RoutineScroller";
+import useUserInfo from "@hooks/query/useUserInfo";
+import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
-import { authStorage } from "../../services/ClientStorage";
 
 const ProfilePage = () => {
   const { userId } = useParams();
@@ -27,6 +29,13 @@ const ProfilePage = () => {
           )}
         </s.ButtonContainer>
       </s.MyProfileContainer>
+      <s.BottomWrapper>
+        <s.ZandiLabel>
+          <span>{userInfo.name}</span>님의 파란 잔디
+        </s.ZandiLabel>
+        <CalendarHeatMap />
+        <RoutineScroller userId={authStorage.get()} onClickRoutineItem={(routineName) => {}} />
+      </s.BottomWrapper>
     </PageTemplate>
   );
 };
