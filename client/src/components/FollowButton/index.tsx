@@ -25,7 +25,7 @@ const FollowButton = ({ otherUserId, myUserId }: FollowUserInfo) => {
     })();
   }, [followState]);
   return (
-    <s.ProfileButton type="button" onClick={handleButtonClick}>
+    <s.ProfileButton followState={followState} type="button" onClick={handleButtonClick}>
       {followState ? "팔로우" : "팔로우 취소"}
     </s.ProfileButton>
   );
