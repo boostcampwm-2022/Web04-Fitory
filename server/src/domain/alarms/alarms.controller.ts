@@ -1,8 +1,9 @@
-import { Controller, Get, Query } from "@nestjs/common";
-import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { Controller, Get, Param, Query, Sse } from "@nestjs/common";
+import { ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Exception } from "@exception/exceptions";
 import { isValidUserId } from "@validation/validation";
 import { UsersService } from "@user/users.service";
+import { interval, map, Observable, switchMap } from "rxjs";
 import { AlarmsService } from "./alarms.service";
 
 @Controller("api/alarms")
@@ -23,9 +24,27 @@ export class AlarmsController {
   })
   async getUnreadAlarmCount(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.alarmService.countUnreadAlarm(userId);
+  }
+
+  // sse
+  @Sse("unread")
+  @ApiOperation({
+    summary: "해당 사용자가 읽지 않은 알림 수를 반환",
+  })
+  @ApiQuery({
+    name: "userId",
+    type: "number",
+  })
+  async sse(@Query("userId") userId: number): Promise<Observable<MessageEvent>> {
+    return interval(1000).pipe(
+      switchMap(async () => await this.alarmService.countUnreadAlarm(userId)),
+      map((prop) => {
+        return {
+          data: { unreadAlarmCount: prop.response.alarmCount },
+        } as MessageEvent;
+      }),
+    );
   }
 
   @Get("list")
@@ -36,10 +55,12 @@ export class AlarmsController {
     name: "userId",
     type: "number",
   })
-  async getAlarmList(@Query("userId") userId: number) {
+  @ApiQuery({
+    name: "index",
+    type: "number",
+  })
+  async getAlarmList(@Query("userId") userId: number, @Query("index") index: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
-    return this.alarmService.getAlarmList(userId);
+    return this.alarmService.getAlarmList(userId, index);
   }
 }

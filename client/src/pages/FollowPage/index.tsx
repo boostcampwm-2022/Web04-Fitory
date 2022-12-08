@@ -5,7 +5,7 @@ import { PageState } from "@constants/enums";
 import PageTemplate from "@pages/PageTemplate";
 import SearchUtils from "@utils/SearchUtils";
 import searchIcon from "@public/icons/btn_search.svg";
-import { drawSearchedUserList } from "@utils/drawSearchedUserList";
+import SearchedUserList from "@components/SearchedUserList";
 import * as s from "./style";
 import { SearchedUserInfo } from "../../types/user";
 
@@ -58,7 +58,7 @@ const FollowPage = () => {
             />
           </s.UserSearchBarContainer>
         </s.SearchContainer>
-        {drawSearchedUserList(searchedUser)}
+        {SearchedUserList(searchedUser)}
       </s.Wrapper>
     </PageTemplate>
   );

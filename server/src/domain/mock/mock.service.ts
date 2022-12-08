@@ -130,7 +130,6 @@ export class MockService {
             benchpress,
             SBD_sum: squat + deadlift + benchpress,
             timeStamp: dayjs(randomDateString).format("YYYY-MM-DD HH:mm:ss"),
-            date: dayjs(randomDateString).format("YYMMDD"),
           })
           .insert()
           .execute();

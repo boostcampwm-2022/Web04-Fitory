@@ -4,7 +4,7 @@ import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
 import { RoutinesService } from "./routines.service";
-import { SingleRoutineoDto } from "./dto/single-routine.dto";
+import { RoutineDto } from "./dto/single-routine.dto";
 
 @Controller("api/routines")
 @ApiTags("ROUTINE API")
@@ -24,8 +24,6 @@ export class RoutinesController {
   })
   async findAll(@Query("userId") userId: number) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
     return this.routinesService.findEveryRoutine(userId);
   }
 
@@ -46,17 +44,39 @@ export class RoutinesController {
     @Query("routineName") routineName: string,
   ) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const userExist = await this.usersService.isExistUser(userId);
-    if (!userExist) throw new Exception().userNotFound();
-    // routineName에 대해 검증 추가 필요
     return this.routinesService.getSingleRoutineDetail(userId, routineName);
   }
 
   @Post("save")
   @ApiOperation({
-    summary: "❌ 미구현) 해당 루틴을 저장",
+    summary: "루틴 저장",
   })
-  registerUser(@Body() routineData: SingleRoutineoDto) {
-    return this.routinesService.saveSingleRoutine(routineData);
+  async saveRoutine(@Body() routineData: RoutineDto) {
+    return this.routinesService.saveRoutine(routineData);
+  }
+
+  @Post("update")
+  @ApiOperation({
+    summary: "루틴 수정",
+  })
+  async updateRoutine(@Body() routineData: RoutineDto) {
+    return this.routinesService.updateRoutine(routineData);
+  }
+
+  @Get("delete")
+  @ApiOperation({
+    summary: "해당 루틴 삭제",
+  })
+  @ApiQuery({
+    name: "userId",
+    type: "number",
+  })
+  @ApiQuery({
+    name: "routineName",
+    type: "string",
+  })
+  async deleteRoutine(@Query("userId") userId: number, @Query("routineName") routineName: string) {
+    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+    return this.routinesService.deleteRoutine(userId, routineName);
   }
 }

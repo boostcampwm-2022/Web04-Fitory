@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { gapi } from "gapi-script";
 import { GoogleLogin, GoogleLoginResponse } from "react-google-login";
 import useGoogleLogin from "@hooks/query/useGoogleLogin";
-import googleSignInSrc from "@public/images/btn_google_signin.png";
+import googleSignInSrc from "@public/images/btn_google_signin.webp";
 import * as s from "./style";
 
 const GoogleOAuthButton = () => {

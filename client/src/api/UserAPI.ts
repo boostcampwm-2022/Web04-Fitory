@@ -1,7 +1,6 @@
 import HttpClient from "src/services/HttpClient";
-import Exception from "src/services/Exception";
-import { authStorage } from "src/services/ClientStorage";
 import * as UserType from "src/types/user";
+import { authStorage } from "../services/ClientStorage";
 
 const UserAPI = {
   googleLogin: async ({ access_token }: UserType.LoginUserInfo) => {
@@ -18,23 +17,12 @@ const UserAPI = {
     return response.response as UserType.JoinResponse;
   },
 
-  getUser: async () => {
-    try {
-      const userId = authStorage.get();
+  getUser: async (userId: UserType.UserId) => {
+    const path = `users/get`;
+    const response = await HttpClient.get(path, { userId });
+    const { user } = response.response as { user: UserType.UserInfo };
 
-      if (!userId) {
-        throw new Error();
-      }
-
-      const path = `users/get`;
-      const response = await HttpClient.get(path, { id: userId });
-      const { user } = response.response as { user: UserType.UserInfo };
-
-      return user;
-    } catch {
-      Exception.UserNotFound();
-      return null;
-    }
+    return user;
   },
 
   checkExistUserName: async (userName: string) => {
@@ -42,6 +30,28 @@ const UserAPI = {
     const response = await HttpClient.get(path, { userName });
     const { userExists } = response.response as { userExists: boolean };
     return userExists;
+  },
+
+  getUserList: async () => {
+    const path = "users/profile/list";
+    const response = await HttpClient.get(path);
+    const { userProfileList } = response.response as {
+      userProfileList: UserType.SearchedUserInfo[];
+    };
+
+    return userProfileList;
+  },
+
+  getRecommendUserList: async () => {
+    const userId = authStorage.get();
+    const path = "users/recommand/list";
+    const response = await HttpClient.get(path, { userId });
+    const { recommendWeight, recommendAge } = response.response as {
+      recommendWeight: UserType.SearchedUserInfo[];
+      recommendAge: UserType.SearchedUserInfo[];
+    };
+
+    return [recommendWeight, recommendAge];
   },
 };
 

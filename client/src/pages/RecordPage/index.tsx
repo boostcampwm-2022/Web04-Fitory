@@ -1,72 +1,45 @@
-import React, { useState, useRef, useEffect } from "react";
-import { MdDeleteForever } from "react-icons/md";
-import { AiOutlinePlus } from "react-icons/ai";
+import React, { useEffect, useRef } from "react";
 import PageTemplate from "@pages/PageTemplate";
 import RoutineScroller from "@components/RoutineScroller";
-import ExerciseRecordItem from "@components/ExerciseRecordItem";
+import ExerciseRecordList from "@components/ExerciseRecordList";
+import RoutineSaveButton from "@components/RoutineSaveButton";
 import exerciseStore from "@stores/exerciseStore";
+import useRecordExercise from "@hooks/query/useRecordExercise";
+import ExerciseAPI from "@api/ExerciseAPI";
+import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
 const RecordPage = () => {
-  const { exerciseList, initExerciseList, createExerciseItem, deleteExerciseItem } =
-    exerciseStore();
-  const [prevExersiceCount, setPrevExersiceCount] = useState<number>(1);
+  const { recordExercise } = useRecordExercise();
+  const { exerciseList, initExerciseList, fetchRoutine } = exerciseStore();
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleClickExerciseIncreaseButton = () => {
-    setPrevExersiceCount(exerciseList.length);
-    createExerciseItem();
+  const handleClickExerciseSaveButton = () => {
+    recordExercise(exerciseList);
   };
 
-  const handleClickExerciseDecreaseButton = (index: number) => {
-    setPrevExersiceCount(exerciseList.length);
-    if (exerciseList.length > 1) {
-      deleteExerciseItem(index);
-      return;
-    }
-    initExerciseList();
+  const handleClickRoutineItem = async (routineName: string) => {
+    const routineInfo = await ExerciseAPI.getSingleRoutineInfo(authStorage.get(), routineName);
+    fetchRoutine(routineInfo);
   };
 
   useEffect(() => {
-    if (prevExersiceCount >= exerciseList.length) {
-      return;
-    }
-    const targetElement = scrollRef.current;
-    if (targetElement) {
-      targetElement.scrollTop = targetElement.scrollHeight;
-    }
-  }, [prevExersiceCount, exerciseList]);
+    initExerciseList();
+    return () => initExerciseList();
+  }, [initExerciseList]);
 
   return (
     <PageTemplate title="운동" isRoot={false}>
       <s.Wrapper ref={scrollRef}>
         <s.RoutineWrapper>
-          <RoutineScroller
-            userName="대구사나이김동규"
-            routineList={["등", "가슴", "어께", "하체"]}
-          />
+          <RoutineScroller userId={authStorage.get()} onClickRoutineItem={handleClickRoutineItem} />
         </s.RoutineWrapper>
-        <s.ExerciseListWrapper>
-          {exerciseList.map((_, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <s.ExersiceItem key={i}>
-              <s.ExersiceHeader>
-                <p># {i + 1}</p>
-                <s.ExersiceDecreaseButton onClick={() => handleClickExerciseDecreaseButton(i)}>
-                  <MdDeleteForever size={25} />
-                </s.ExersiceDecreaseButton>
-              </s.ExersiceHeader>
-              <ExerciseRecordItem exerciseId={i} />
-            </s.ExersiceItem>
-          ))}
-          <s.ExerciseIncreaseButton onClick={handleClickExerciseIncreaseButton}>
-            <AiOutlinePlus size={20} />
-            <span>운동 추가</span>
-          </s.ExerciseIncreaseButton>
-        </s.ExerciseListWrapper>
+        <ExerciseRecordList scrollRef={scrollRef} />
         <s.SaveButtonWrapper>
-          <s.RoutineSaveButton>루틴 저장</s.RoutineSaveButton>
-          <s.ExerciseSaveButton>운동 완료</s.ExerciseSaveButton>
+          <RoutineSaveButton />
+          <s.ExerciseSaveButton onClick={handleClickExerciseSaveButton}>
+            운동 완료
+          </s.ExerciseSaveButton>
         </s.SaveButtonWrapper>
       </s.Wrapper>
     </PageTemplate>

@@ -14,14 +14,14 @@ const ExerciseSetItem = ({ exerciseId, setId }: ExerciseSetItemProps) => {
   const { exerciseList, updateExerciseSetList } = exerciseStore();
 
   const hadleChangeTextField = (e: ChangeEvent<HTMLInputElement>) => {
-    const setItem = exerciseList[exerciseId].setInfo[setId];
+    const setItem = exerciseList[exerciseId].setList[setId];
     const matchedArray = e.target.value.match(NUMBER_REGEX);
     const numberValue = matchedArray ? +matchedArray[0] : 0;
 
     if (e.target.name === "weight") {
       updateExerciseSetList(exerciseId, setId, {
         ...setItem,
-        weight: numberValue,
+        kg: numberValue,
       });
       return;
     }
@@ -33,11 +33,11 @@ const ExerciseSetItem = ({ exerciseId, setId }: ExerciseSetItemProps) => {
   };
 
   const handleClickCompleteButton = () => {
-    const setItem = exerciseList[exerciseId].setInfo[setId];
+    const setItem = exerciseList[exerciseId].setList[setId];
 
     updateExerciseSetList(exerciseId, setId, {
       ...setItem,
-      isComplete: !setItem.isComplete,
+      check: !setItem.check ? 1 : 0,
     });
   };
 
@@ -46,17 +46,17 @@ const ExerciseSetItem = ({ exerciseId, setId }: ExerciseSetItemProps) => {
       <s.WeightInfoTextField
         name="weight"
         placeholder="0"
-        value={exerciseList[exerciseId].setInfo[setId].weight || ""}
+        value={exerciseList[exerciseId].setList[setId].kg || ""}
         onChange={(e) => hadleChangeTextField(e)}
       />
       <s.WeightInfoTextField
         name="count"
         placeholder="0"
-        value={exerciseList[exerciseId].setInfo[setId].count || ""}
+        value={exerciseList[exerciseId].setList[setId].count || ""}
         onChange={(e) => hadleChangeTextField(e)}
       />
       <s.CompleteToggleButton onClick={handleClickCompleteButton}>
-        {exerciseList[exerciseId].setInfo[setId].isComplete ? (
+        {exerciseList[exerciseId].setList[setId].check ? (
           <img src={exerciseCompleteSrc} alt="운동 완료 해제 버튼" />
         ) : (
           <img src={exerciseFailSrc} alt="운동 완료 버튼" />

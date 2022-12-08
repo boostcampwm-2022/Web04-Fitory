@@ -44,7 +44,8 @@
       "@record/*": ["src/domain/sbd_records/*"],
       "@statistics/*": ["src/domain/sbd_statistics/*"],
       "@user/*": ["src/domain/users/*"],
-      "@mock/*": ["src/domain/mock/*"]
+      "@mock/*": ["src/domain/mock/*"],
+      "@guard/*": ["src/guard/*"]
     },
     "esModuleInterop": true, // 모든 import에 대한  CommonJS와 ES 모듈 간의 상호 운용성을 설정
 

@@ -15,7 +15,7 @@ export class Routine {
   @Column({ name: "exercise_string", length: 135 })
   exerciseString!: string;
 
-  @Column({ name: "deleted" })
+  @Column({ name: "deleted", default: false })
   deleted!: boolean;
 
   // FK

@@ -35,10 +35,13 @@ export class Exception {
   }
 
   Unauthorized(): HttpException {
-    const response = HttpResponse.failed(HttpStatus.UNAUTHORIZED, "Unauthorized");
+    const response = HttpResponse.failed(
+      HttpStatus.UNAUTHORIZED,
+      "Unauthorized, Access Token Error",
+    );
     return new UnauthorizedException(response);
   }
-  
+
   invalidFileType(): HttpException {
     const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid File Type");
     return new ForbiddenException(response);
@@ -52,5 +55,18 @@ export class Exception {
   invalidDelete(): HttpException {
     const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Invalid Delete Error");
     return new ForbiddenException(response);
+  }
+
+  routineNameDuplicate(): HttpException {
+    const response = HttpResponse.failed(HttpStatus.FORBIDDEN, "Routine Name Duplicate");
+    return new ForbiddenException(response);
+  }
+
+  guardError(): HttpException {
+    const response = HttpResponse.failed(
+      HttpStatus.UNAUTHORIZED,
+      "Auth Guard Error, Invalid User Id",
+    );
+    return new UnauthorizedException(response);
   }
 }
