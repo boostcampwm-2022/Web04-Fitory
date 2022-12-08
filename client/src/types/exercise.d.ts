@@ -38,3 +38,18 @@ export interface ExerciseHistory {
 export interface ExerciseHistoryList {
   [key: string]: ExerciseHistory[];
 }
+
+export interface SDBRecordHistory {
+  index: number;
+  squat: number;
+  deadlift: number;
+  benchpress: number;
+  SBD_sum: number;
+  timeStamp: Date;
+  userWeight: number;
+}
+
+export interface SDBRecordHistoryArray {
+  index: number;
+  record: SDBRecordHistory;
+}

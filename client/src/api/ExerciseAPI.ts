@@ -84,6 +84,16 @@ const ExerciseAPI = {
 
     return historyList;
   },
+
+  getEveryDayHistory: async () => {
+    const path = `record/every`;
+    const userId = authStorage.get();
+    const response = await HttpClient.get(path, { userId });
+    const { recordList } = response.response as {
+      recordList: ExerciseType.SDBRecordHistoryArray[];
+    };
+    return recordList;
+  },
 };
 
 export default ExerciseAPI;

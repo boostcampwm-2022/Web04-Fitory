@@ -1,5 +1,7 @@
 import theme from "@styles/Theme";
 import { Chart } from "chart.js";
+import { AnyObject } from "immer/dist/types/types-internal";
+import options from "./option";
 
 const drawColorGraph = (chart: Chart) => {
   const { ctx } = chart;
@@ -43,13 +45,14 @@ const drawColorGraph = (chart: Chart) => {
   ctx.restore();
 };
 
-const drawTierLine = (chart: any) => {
+const drawTierLine = (chart: Chart) => {
   const yAxis = chart.scales.y;
   const { ctx } = chart;
-  if (chart.options.horizontalLine) {
-    for (let index = 0; index < chart.options.horizontalLine.length; index += 1) {
+  const option = chart.options as typeof options;
+  if (option.horizontalLine) {
+    for (let index = 0; index < option.horizontalLine.length; index += 1) {
       ctx.save();
-      const line = chart.options.horizontalLine[index];
+      const line = option.horizontalLine[index];
       const style = line.style ? line.style : theme.COLORS.LIGHT_BLUE;
       const yValue = line.y ? yAxis.getPixelForValue(line.y) : 0;
       ctx.lineWidth = 1;
@@ -78,7 +81,7 @@ const plugin = [
     afterLayout: (chart: Chart) => {
       drawColorGraph(chart);
     },
-  },
+  } as AnyObject,
 ];
 
 export default plugin;
