@@ -8,7 +8,7 @@ const useExerciseProfile = () => {
     suspense: true,
   });
 
-  return { exerciseProfile: data as ExerciseProfile };
+  return { exerciseProfile: data as ExerciseProfile } as const;
 };
 
 export default useExerciseProfile;

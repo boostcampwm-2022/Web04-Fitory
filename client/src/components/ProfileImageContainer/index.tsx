@@ -11,6 +11,13 @@ export interface ProfileImageContainerProps {
 const ProfileImageContainer = ({ isModified, profileImgUrl }: ProfileImageContainerProps) => {
   const [image, setImage] = useState<string>(profileImgUrl || defaultProfileImage);
   const imgRef = useRef<HTMLInputElement>(null);
+
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    if (e.target instanceof HTMLImageElement) {
+      e.target.src = defaultProfileImage;
+    }
+  };
+
   const handleChange = () => {
     const fileReader = new FileReader();
     const file = imgRef.current?.files as FileList;
@@ -22,7 +29,7 @@ const ProfileImageContainer = ({ isModified, profileImgUrl }: ProfileImageContai
   return (
     <s.Wrapper>
       <s.ProfileImgContainer>
-        <s.ProfileImg src={image} />
+        <s.ProfileImg src={image} alt="프로필 사진" onError={handleImgError} />
         <s.EditProfileImgContainer>
           <s.EditProfileImg
             src={editableProfileImage}
