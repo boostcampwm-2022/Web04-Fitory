@@ -3,17 +3,30 @@ import PageTemplate from "@pages/PageTemplate";
 import ExerciseScoreContainer from "@components/ExerciseScoreContainer";
 import StatisticsUserInfoContainer from "@components/StatisticsUserInfoContainer";
 import StatisticsCarousel from "@components/StatisticsCarousel";
+import useBestChallengeScore from "@hooks/query/useBestChallengeScore";
+import { Powerlifting } from "@constants/enums";
 import * as s from "./style";
 
 const StatisticsPage = () => {
+  const { bestChallengeScore } = useBestChallengeScore();
+
   return (
     <PageTemplate isRoot>
       <s.Wrapper>
         <s.UserInfoContainer>
           <s.ScoreContainer>
-            <ExerciseScoreContainer exerciseName="스쿼트" exerciseScore={140} />
-            <ExerciseScoreContainer exerciseName="벤치프레스" exerciseScore={140} />
-            <ExerciseScoreContainer exerciseName="데드리프트" exerciseScore={140} />
+            <ExerciseScoreContainer
+              exerciseName={Powerlifting.SQUAT}
+              exerciseScore={bestChallengeScore?.squat || "-"}
+            />
+            <ExerciseScoreContainer
+              exerciseName={Powerlifting.BENCH_PRESS}
+              exerciseScore={bestChallengeScore?.benchpress || "-"}
+            />
+            <ExerciseScoreContainer
+              exerciseName={Powerlifting.DEADLIFT}
+              exerciseScore={bestChallengeScore?.deadlift || "-"}
+            />
           </s.ScoreContainer>
           <StatisticsUserInfoContainer />
         </s.UserInfoContainer>

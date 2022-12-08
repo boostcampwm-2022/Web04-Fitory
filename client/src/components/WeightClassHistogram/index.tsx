@@ -29,13 +29,13 @@ const data: ChartData<"bar", number[], string> = {
     {
       type: "bar",
       label: "인원 수",
-      backgroundColor: "rgb(255, 99, 132)",
+      backgroundColor: "#ffb3c2",
       data: [
         33, 9, 44, 55, 60, 22, 65, 23, 123, 56, 6, 23, 33, 9, 44, 55, 60, 22, 65, 23, 123, 56, 6,
         23, 33, 9, 44, 55, 60, 22, 65, 23, 123, 56, 6, 23, 33, 9, 44, 55, 60, 22, 65, 23, 123, 56,
         6, 23,
       ],
-      borderColor: "red",
+      borderColor: "#ff6384",
       borderWidth: 2,
     },
   ],

@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   text-align: center;
-  padding-top: 50px;
+  padding-top: 70px;
 `;
 
 export const Container = styled.div`
