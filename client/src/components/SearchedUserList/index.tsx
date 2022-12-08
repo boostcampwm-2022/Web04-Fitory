@@ -1,7 +1,5 @@
 import SearchResultUserProfile from "@components/SearchResultUserProfile";
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { RoutePath } from "@constants/enums";
 import * as s from "./style";
 import { SearchedUserInfo } from "../../types/user";
 

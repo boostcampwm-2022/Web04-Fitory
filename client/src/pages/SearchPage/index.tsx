@@ -11,8 +11,8 @@ import { drawRecommendUserList } from "./utils";
 
 const SearchPage = () => {
   const [userList, setUserList] = useState<SearchedUserInfo[]>([]);
-  const [recommendAgeUserList, setRecommendAgeUserList] = useState([]);
-  const [recommendWeightUserList, setRecommendWeightUserList] = useState([]);
+  const [recommendAgeUserList, setRecommendAgeUserList] = useState<SearchedUserInfo[]>([]);
+  const [recommendWeightUserList, setRecommendWeightUserList] = useState<SearchedUserInfo[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>([]);
 
