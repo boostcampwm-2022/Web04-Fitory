@@ -22,35 +22,32 @@ export let options = {
 let timeToFirstByte = new Trend("time_to_first_byte", true);
 
 export default function () {
+  const userId = Math.round(randomIntBetween(1, 5000));
+
   group("main page", function () {
     group("API", function () {
       let res = http.batch([
         {
           method: "GET",
-          url: "https://fitory.ga/api/users/get?userId=" + Math.round(randomIntBetween(1, 5000)),
+          url: "https://fitory.ga/api/users/get?userId=" + userId,
           body: {},
           params: { tags: { API: "yes" } },
         },
         {
           method: "GET",
-          url:
-            "https://fitory.ga/api/record/recent?userId=" + Math.round(randomIntBetween(1, 5000)),
+          url: "https://fitory.ga/api/record/recent?userId=" + userId,
           body: {},
           params: { tags: { API: "yes" } },
         },
         {
           method: "GET",
-          url:
-            "https://fitory.ga/api/exercise/everyDate?userId=" +
-            Math.round(randomIntBetween(1, 5000)),
+          url: "https://fitory.ga/api/exercise/everyDate?userId=" + userId,
           body: {},
           params: { tags: { API: "yes" } },
         },
         {
           method: "GET",
-          url:
-            "https://fitory.ga/api/exercise/profile?userId=" +
-            Math.round(randomIntBetween(1, 5000)),
+          url: "https://fitory.ga/api/exercise/profile?userId=" + userId,
           body: {},
           params: { tags: { API: "yes" } },
         },
@@ -104,7 +101,6 @@ export default function () {
         check(res[i], {
           "main page status was 200": (res) => res.status === 200,
         });
-
 
         // Record time to first byte and tag it with the URL to be able to filter the results in Insights
         timeToFirstByte.add(res[i].timings.waiting, { ttfbURL: res[i].url, staticAsset: "yes" });
