@@ -20,16 +20,17 @@ const StaticsPage = lazy(() => import("@pages/StaticsPage"));
 const SearchPage = lazy(() => import("@pages/SearchPage"));
 const CalendarPage = lazy(() => import("@pages/CalendarPage"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      retry: false,
+    },
+  },
+});
 
 const App = () => {
-  // //! sse 실행 방법
-  // const userId = 1;
-  // const eventSource = new EventSource(`http://localhost:8080/api/alarms/unread?userId=${userId}`);
-  // eventSource.onmessage = ({ data }) => {
-  //   console.log(`${userId}'s unread alarm: `, JSON.parse(data).unreadAlarmCount);
-  // };
-
   return (
     <BrowserRouter>
       <GlobalStyle />
