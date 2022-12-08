@@ -10,14 +10,5 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="text/javascript">
-      const subscription = new EventSource(`https://fitory.ga/api/alarms/unread`, {
-        withCredentials: true,
-      });
-      subscription.onmessage = (message) => {
-        const { fetchAlarmSign } = JSON.parse(message.data);
-        console.log(fetchAlarmSign);
-      };
-    </script>
   </body>
 </html>
