@@ -24,31 +24,33 @@ const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
 
   return (
     <>
-      <s.PageLabel>마이페이지</s.PageLabel>
       <s.UserInfoContainer>
         <s.UserProfileImgContainer>
           <ProfileImageContainer isModified profileImgUrl={userInfo.profileImage as string} />
         </s.UserProfileImgContainer>
         <s.UserInfoRow>
           <s.UserInformation>
-            <s.InfoLabel>나이</s.InfoLabel> {userInfo.age}
+            <s.InfoLabel>나이</s.InfoLabel>
+            <p>{userInfo.age}</p>
           </s.UserInformation>
           <s.UserInformation>
             <s.InfoLabel>성별</s.InfoLabel>
             {userInfo.gender === 0 ? "남" : "여"}
           </s.UserInformation>
           <s.UserInformation>
-            <s.InfoLabel>신장</s.InfoLabel> {userInfo.height}cm
+            <s.InfoLabel>신장</s.InfoLabel>
+            <p>{userInfo.height}cm</p>
           </s.UserInformation>
           <s.UserInformation>
-            <s.InfoLabel>체중</s.InfoLabel> {userInfo.weight}kg
+            <s.InfoLabel>체중</s.InfoLabel>
+            <p>{userInfo.weight}kg</p>
           </s.UserInformation>
         </s.UserInfoRow>
       </s.UserInfoContainer>
-      <div>
+      <s.UserNameWrapper>
         <s.UserNameLabel>{userInfo.name}</s.UserNameLabel>
         <s.UserIntroduceContainer>{userInfo.introduce}</s.UserIntroduceContainer>
-      </div>
+      </s.UserNameWrapper>
       <s.Wrapper>
         <s.ContentContainer>
           <s.ContentLabel>티어</s.ContentLabel>
