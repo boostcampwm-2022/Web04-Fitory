@@ -69,18 +69,6 @@ export class MockService {
   async mockUsers(num: number[]) {
     return Promise.all(
       num.map(async (id: number) => {
-        const following = await this.followRepository
-          .createQueryBuilder()
-          .where("follower_id = :id", { id })
-          .select("follower_id")
-          .getRawMany();
-
-        const follower = await this.followRepository
-          .createQueryBuilder()
-          .where("followed_id = :id", { id })
-          .select("followed_id")
-          .getRawMany();
-
         return this.userRepository
           .createQueryBuilder()
           .insert()
@@ -94,8 +82,6 @@ export class MockService {
             introduce: faker.lorem.sentence(),
             volumeSum: faker.datatype.number({ min: 0, max: 100000 }),
             tier: faker.datatype.number({ min: 0, max: 6 }),
-            followerCount: follower.length,
-            followingCount: following.length,
             oauthId: faker.datatype.number({ min: 0, max: 999999999 }).toString(),
             profileImage: "http://default.image",
           })

@@ -1,14 +1,7 @@
+/* eslint-disable no-param-reassign */
 import create from "zustand";
-import updateOneElementFromArray from "@utils/updateOneElementFromArray";
+import produce from "immer";
 import { Exercise, ExerciseSet, RoutineDetailInfo } from "src/types/exercise";
-
-const getInitialExercise = (): Exercise => {
-  return { exerciseName: "", setList: [{ kg: 0, count: 0, check: 0 }] };
-};
-
-const getInitalExerciseSet = (): ExerciseSet => {
-  return { kg: 0, count: 0, check: 0 };
-};
 
 interface ExerciseState {
   exerciseList: Exercise[];
@@ -22,72 +15,77 @@ interface ExerciseState {
   fetchRoutine: (routineInfo: RoutineDetailInfo[]) => void;
 }
 
+const getInitialExercise = (): Exercise => {
+  return { exerciseName: "", setList: [{ kg: 0, count: 0, check: 0 }] };
+};
+
 const exerciseStore = create<ExerciseState>((set) => ({
   exerciseList: [getInitialExercise()],
 
   initExerciseList: () => set({ exerciseList: [getInitialExercise()] }),
 
   createExerciseItem: () => {
-    set(({ exerciseList }) => ({ exerciseList: [...exerciseList, getInitialExercise()] }));
+    set(
+      produce(({ exerciseList }: ExerciseState) => {
+        exerciseList.push(getInitialExercise());
+      }),
+    );
   },
 
   deleteExerciseItem: (exerciseId: number) => {
-    set(({ exerciseList }) => ({
-      exerciseList: updateOneElementFromArray(exerciseList, exerciseId),
-    }));
+    set(
+      produce(({ exerciseList }: ExerciseState) => {
+        exerciseList.splice(exerciseId, 1);
+      }),
+    );
   },
 
   createExerciseSetItem: (exerciseId: number) => {
-    set(({ exerciseList }) => ({
-      exerciseList: updateOneElementFromArray(exerciseList, exerciseId, {
-        ...exerciseList[exerciseId],
-        setList: [...exerciseList[exerciseId].setList, getInitalExerciseSet()],
+    set(
+      produce(({ exerciseList }: ExerciseState) => {
+        const { setList } = exerciseList[exerciseId];
+        setList.push(setList[setList.length - 1]);
       }),
-    }));
+    );
   },
 
   deleteExerciseSetItem: (exerciseId: number) => {
-    set(({ exerciseList }) => ({
-      exerciseList: updateOneElementFromArray(exerciseList, exerciseId, {
-        ...exerciseList[exerciseId],
-        setList: [
-          ...exerciseList[exerciseId].setList.slice(0, exerciseList[exerciseId].setList.length - 1),
-        ],
+    set(
+      produce(({ exerciseList }: ExerciseState) => {
+        exerciseList[exerciseId].setList.pop();
       }),
-    }));
+    );
   },
 
   updateExerciseName: (exerciseId: number, exerciseName: string) => {
-    set(({ exerciseList }) => ({
-      exerciseList: updateOneElementFromArray(exerciseList, exerciseId, {
-        ...exerciseList[exerciseId],
-        exerciseName,
+    set(
+      produce(({ exerciseList }: ExerciseState) => {
+        exerciseList[exerciseId].exerciseName = exerciseName;
       }),
-    }));
+    );
   },
 
   updateExerciseSetList: (exerciseId: number, setId: number, setItem: ExerciseSet) => {
-    set(({ exerciseList }) => ({
-      exerciseList: updateOneElementFromArray(exerciseList, exerciseId, {
-        ...exerciseList[exerciseId],
-        setList: updateOneElementFromArray(exerciseList[exerciseId].setList, setId, {
-          ...setItem,
-        }),
+    set(
+      produce(({ exerciseList }: ExerciseState) => {
+        exerciseList[exerciseId].setList[setId] = setItem;
       }),
-    }));
+    );
   },
 
   fetchRoutine: (routineInfo: RoutineDetailInfo[]) => {
-    set({
-      exerciseList: routineInfo.map(({ name, set: setList }) => ({
-        exerciseName: name,
-        setList: setList.map(({ kg, count }) => ({
-          kg,
-          count,
-          check: 0,
-        })),
-      })),
-    });
+    set(
+      produce((draft: ExerciseState) => {
+        draft.exerciseList = routineInfo.map(({ exerciseName, set: setList }) => ({
+          exerciseName,
+          setList: setList.map(({ kg, count }) => ({
+            kg,
+            count,
+            check: 0,
+          })),
+        }));
+      }),
+    );
   },
 }));
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import challengeSrc from "@public/images/btn_challenge.jpeg";
+import challengeSrc from "@public/images/btn_challenge.webp";
 import { DefaultButton } from "@styles/Components";
 
 export const Wrapper = styled.div`

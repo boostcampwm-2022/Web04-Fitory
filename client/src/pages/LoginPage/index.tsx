@@ -1,21 +1,27 @@
 import React from "react";
-import PageTemplate from "@pages/PageTemplate";
+import MainContainer from "@components/MainContainer";
 import Paper from "@components/design/Paper";
 import GoogleOAuthButton from "@components/GoogleOAuthButton";
+import mainLogoSrc from "@public/images/img_logo_main.webp";
+import textLogoSrc from "@public/images/img_logo_text.webp";
 import * as s from "./style";
 
 const LoginPage = () => {
   return (
-    <PageTemplate isRoot>
+    <MainContainer isRoot={false}>
       <s.Background>
-        <Paper style={{ width: "100%" }}>
+        <s.Logo src={mainLogoSrc} alt="Fitory 메인 로고" />
+        <Paper style={{ width: "80%" }}>
           <s.Wrapper>
-            <s.Title>로그인</s.Title>
+            <s.TitleWrapper>
+              <img src={textLogoSrc} alt="Fitory 텍스트 로고" />
+              <s.Title>로그인</s.Title>
+            </s.TitleWrapper>
             <GoogleOAuthButton />
           </s.Wrapper>
         </Paper>
       </s.Background>
-    </PageTemplate>
+    </MainContainer>
   );
 };
 

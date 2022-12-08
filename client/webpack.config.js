@@ -1,9 +1,35 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const Dotenv = require("dotenv-webpack");
 
+const loadPlugin = () => {
+  const plugins = [
+    new HtmlWebpackPlugin({
+      template: "/public/index.html",
+      minify:
+        process.env.NODE_ENV === "production"
+          ? {
+              collapseWhitespace: true,
+              removeComments: true,
+            }
+          : false,
+    }),
+    new Dotenv(),
+  ];
+
+  if (process.env.BUNDLE) {
+    plugins.push(new BundleAnalyzerPlugin());
+  }
+
+  return plugins;
+};
+
 module.exports = {
+  mode: "development",
+
   entry: {
     index: path.resolve(__dirname, "./src/index"),
   },
@@ -11,12 +37,12 @@ module.exports = {
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
-    clean: true, // CleanWebpackPlugin 대체
+    clean: true,
   },
 
   optimization: {
     minimize: true,
-    minimizer: [new TerserPlugin()], // output으로 나오는 파일의 사이즈를 줄여줌
+    minimizer: [new TerserPlugin()],
     splitChunks: {
       chunks: "all",
     },
@@ -25,12 +51,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/, // .ts 에 한하여 ts-loader를 이용하여 transpiling
+        test: /\.tsx?$/,
         exclude: /node_module/,
-        loader: "babel-loader", // 'babel-loader' 만으로 'ts-loader' 대체 가능
+        loader: "babel-loader",
       },
       {
-        test: /\.(png|jpe?g|gif|svg|ico)$/i,
+        test: /\.(webp|png|jpe?g|gif|svg|ico)$/i,
         type: "asset/resource",
         generator: {
           filename: "images/[name][ext][query]",
@@ -51,14 +77,23 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     plugins: [
-      // tsconfig.json 파일의 paths를 참조하여 alias 자동 설정
       new TsconfigPathsPlugin({
         configFile: path.resolve(__dirname, "./tsconfig.json"),
       }),
     ],
   },
 
-  plugins: [
-    new Dotenv(), // 별도의 import 없이 process.env.[이름]으로 dotenv 사용 가능
-  ],
+  plugins: loadPlugin(),
+
+  performance: {
+    hints: false,
+  },
+
+  devServer: {
+    static: path.resolve(__dirname, "dist"),
+    port: 3000,
+    open: true,
+    hot: true,
+    historyApiFallback: true,
+  },
 };

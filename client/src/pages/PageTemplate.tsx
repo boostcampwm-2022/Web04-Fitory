@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect, Suspense } from "react";
 import TopNavigationBar from "@components/TopNavigationBar";
 import MainContainer from "@components/MainContainer";
 import BottomNavigationBar from "@components/BottomNavigationBar";
+import Loading from "@components/Loading";
+import { authStorage } from "src/services/ClientStorage";
+import Exception from "src/services/Exception";
 
 interface PageTemplateProps {
   isRoot: boolean;
   title?: string;
+  ignoreException?: boolean;
   topNavRightItem?: JSX.Element;
   onClickBackButton?: () => void;
   children: React.ReactNode;
@@ -14,10 +18,17 @@ interface PageTemplateProps {
 const PageTemplate = ({
   isRoot,
   title,
+  ignoreException,
   topNavRightItem,
   onClickBackButton,
   children,
 }: PageTemplateProps) => {
+  useEffect(() => {
+    if (!ignoreException && !authStorage.has()) {
+      Exception.UserNotFound();
+    }
+  });
+
   return (
     <>
       <TopNavigationBar
@@ -26,7 +37,9 @@ const PageTemplate = ({
         rightItem={topNavRightItem}
         onClickBackButton={onClickBackButton}
       />
-      <MainContainer isRoot={isRoot}>{children}</MainContainer>
+      <Suspense fallback={<Loading />}>
+        <MainContainer isRoot={isRoot}>{children}</MainContainer>
+      </Suspense>
       {isRoot && <BottomNavigationBar />}
     </>
   );

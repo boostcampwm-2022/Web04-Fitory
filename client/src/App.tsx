@@ -1,51 +1,67 @@
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ErrorBoundary } from "react-error-boundary";
 
 import GlobalStyle from "@styles/GlobalStyle";
 import { RoutePath } from "@constants/enums";
+import Loading from "@components/Loading";
+import ErrorFallback from "@components/ErrorFallback";
+import NotFoundPage from "@pages/NotFountPage";
 
-import HomePage from "@pages/HomePage";
-import ChallengePage from "@pages/ChallengePage";
-import RecordPage from "@pages/RecordPage";
-import ProfilePage from "@pages/ProfilePage";
-import LoginPage from "@pages/LoginPage";
-import JoinPage from "@pages/JoinPage";
-import SearchPage from "@pages/SearchPage";
-import FollowPage from "@pages/FollowPage";
-import StaticsPage from "@pages/StaticsPage";
+const HomePage = lazy(() => import("@pages/HomePage"));
+const ChallengePage = lazy(() => import("@pages/ChallengePage"));
+const RecordPage = lazy(() => import("@pages/RecordPage"));
+const ProfilePage = lazy(() => import("@pages/ProfilePage"));
+const FollowPage = lazy(() => import("@pages/FollowPage"));
+const LoginPage = lazy(() => import("@pages/LoginPage"));
+const JoinPage = lazy(() => import("@pages/JoinPage"));
+const StaticsPage = lazy(() => import("@pages/StaticsPage"));
+const SearchPage = lazy(() => import("@pages/SearchPage"));
+const CalendarPage = lazy(() => import("@pages/CalendarPage"));
 
 const queryClient = new QueryClient();
 
 const App = () => {
+  // //! sse 실행 방법
+  // const userId = 1;
+  // const eventSource = new EventSource(`http://localhost:8080/api/alarms/unread?userId=${userId}`);
+  // eventSource.onmessage = ({ data }) => {
+  //   console.log(`${userId}'s unread alarm: `, JSON.parse(data).unreadAlarmCount);
+  // };
+
   return (
     <BrowserRouter>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<div>loading..</div>}>
-          <Routes>
-            {/* Home */}
-            <Route path={RoutePath.HOME} element={<HomePage />} />
-            <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
-            <Route path={RoutePath.RECORD} element={<RecordPage />} />
-            {/* Search */}
-            <Route path={RoutePath.SEARCH} element={<SearchPage />} />
-            {/* Statics */}
-            <Route path={RoutePath.STATICS} element={<StaticsPage />} />
-            {/* Profile */}
-            <Route path={RoutePath.PROFILE}>
-              <Route path=":userId" element={<ProfilePage />} />
-              <Route path="" element={<ProfilePage />} />
-            </Route>
-            <Route path={RoutePath.LOGIN} element={<LoginPage />} />
-            <Route path={RoutePath.JOIN} element={<JoinPage />} />
-            <Route path={RoutePath.SEARCH} element={<SearchPage />} />
-            <Route path={RoutePath.FOLLOW}>
-              <Route path=":userId" element={<FollowPage />} />
-              <Route path="" element={<FollowPage />} />
-            </Route>
-          </Routes>
-        </Suspense>
+        <ErrorBoundary fallback={<ErrorFallback />}>
+          <Suspense fallback={<Loading isLazy />}>
+            <Routes>
+              {/* Home */}
+              <Route path={RoutePath.HOME} element={<HomePage />} />
+              <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
+              <Route path={RoutePath.RECORD} element={<RecordPage />} />
+              <Route path={RoutePath.CALENDAR} element={<CalendarPage />} />
+              {/* Search */}
+              <Route path={RoutePath.SEARCH} element={<SearchPage />} />
+              {/* Statics */}
+              <Route path={RoutePath.STATICS} element={<StaticsPage />} />
+              {/* Profile */}
+              <Route path={RoutePath.PROFILE}>
+                <Route path=":userId" element={<ProfilePage />} />
+                <Route path="" element={<ProfilePage />} />
+              </Route>
+              <Route path={RoutePath.LOGIN} element={<LoginPage />} />
+              <Route path={RoutePath.JOIN} element={<JoinPage />} />
+              <Route path={RoutePath.SEARCH} element={<SearchPage />} />
+              <Route path={RoutePath.FOLLOW}>
+                <Route path=":userId" element={<FollowPage />} />
+                <Route path="" element={<FollowPage />} />
+              </Route>
+              <Route path="/*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </QueryClientProvider>
     </BrowserRouter>
   );

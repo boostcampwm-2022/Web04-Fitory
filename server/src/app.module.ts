@@ -15,8 +15,6 @@ import { MockModule } from "@mock/mock.module";
 import { JwtStrategy } from "@guard/jwt.strategy";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { User } from "@user/entities/user.entity";
-import { UserIdGuard } from "@guard/auth.guard";
-import { UploadModule } from "./domain/uploads/upload.module";
 import { typeormConfig } from "./config/typeorm.config";
 
 @Module({
@@ -30,23 +28,11 @@ import { typeormConfig } from "./config/typeorm.config";
     SbdStatisticsModule,
     FollowsModule,
     MockModule,
-    UploadModule,
     TypeOrmModule.forRoot(typeormConfig),
     PassportModule,
     TypeOrmModule.forFeature([User]),
   ],
 
-  providers: [
-    JwtStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: UserIdGuard,
-    },
-    { provide: APP_FILTER, useClass: HttpExceptionFilter },
-  ],
+  providers: [JwtStrategy, { provide: APP_FILTER, useClass: HttpExceptionFilter }],
 })
 export class AppModule {}
