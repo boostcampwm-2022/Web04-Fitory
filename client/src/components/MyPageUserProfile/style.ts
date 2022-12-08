@@ -7,27 +7,38 @@ export const PageLabel = styled.label`
 `;
 
 export const UserInfoContainer = styled.div`
-  margin: 30px 0;
-  display: flex;
+  margin-bottom: 4%;
   width: 100%;
   height: 100px;
+  display: flex;
+  align-items: center;
 `;
 
 export const UserProfileImgContainer = styled.div`
   width: 30%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & img {
+    width: 80%;
+  }
 `;
 
 export const UserInfoRow = styled.div`
-  margin-left: 10%;
-  width: 50%;
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
   color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
+  flex-grow: 1;
+  gap: 15px;
+  display: flex;
+  justify-content: space-around;
 `;
 
 export const UserInformation = styled.div`
   height: 25%;
+  gap: 10px;
   display: flex;
+  flex-direction: column;
   align-items: center;
 `;
 
@@ -35,11 +46,11 @@ export const InfoLabel = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
-  margin-right: 30px;
 `;
+
 export const UserNameLabel = styled.label`
   width: 100%;
-  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
 `;
@@ -47,17 +58,21 @@ export const UserNameLabel = styled.label`
 export const UserIntroduceContainer = styled.div`
   height: 40px;
   line-height: 40px;
-  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
-  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
+export const UserNameWrapper = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.COLORS.PLACEHOLDER_GRAY};
+`;
+
 export const Wrapper = styled.div`
   display: flex;
   text-align: center;
+  padding-top: 20px;
 `;
 
 export const ContentContainer = styled.div`
@@ -76,7 +91,7 @@ export const ContentLabel = styled.div`
   line-height: 30px;
   width: 100%;
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
-  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
 `;
 
