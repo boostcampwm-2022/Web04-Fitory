@@ -10,11 +10,7 @@
   <body>
     <div id="root"></div>
     <script type="text/javascript">
-      const subscription = new EventSource(`http://localhost:8080/api/alarms/unread`,{
-        body: {
-                    'access_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUwMDMsImlhdCI6MTY3MDQxODYxNiwiZXhwIjoxNzAxOTU0NjE2fQ.O0f3BTup_QDYPey7_hjtuBIxqNQfA9xow5Ad2iyuh4U",
-                }
-      });
+      const subscription = new EventSource(`http://localhost:8080/api/alarms/unread`,{ withCredentials: true } );
       subscription.onmessage = message => {
         const {fetchAlarmSign} = JSON.parse(message.data)
         console.log(fetchAlarmSign)

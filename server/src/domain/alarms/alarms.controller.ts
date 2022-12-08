@@ -1,3 +1,4 @@
+import { RequestWithUser } from "./../../types/request.d";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { Controller, Get, Req, Param, Query, Sse, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
@@ -38,16 +39,16 @@ export class AlarmsController {
     name: "userId",
     type: "number",
   })
-  async sse(@Res() res: Response) {
+  async sse(@Req() req: RequestWithUser) {
     return interval(1000).pipe(
       map(() => {
-        // console.log(userId, global.alarmBar);
-        console.log(res);
+        const userId = Number(req.user);
+        console.log(userId, global.alarmBar);
         let fetchAlarmSign: boolean = false;
-        // if (global.alarmBar.has(userId)) {
-        //   fetchAlarmSign = true;
-        //   global.alarmBar.delete(userId);
-        // }
+        if (global.alarmBar.has(userId)) {
+          fetchAlarmSign = true;
+          global.alarmBar.delete(userId);
+        }
         return {
           data: { fetchAlarmSign },
         } as MessageEvent;
