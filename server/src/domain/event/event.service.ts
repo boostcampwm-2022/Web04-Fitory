@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable, Scope } from "@nestjs/common";
 import EventEmitter from "events";
 import { fromEvent } from "rxjs";
 
@@ -16,8 +16,11 @@ export class EventService {
 
   emit(userIdList: Array<number>) {
     userIdList.map((userId) => {
-      console.log("🎯🎯 Send Event To ", userId);
-      this.emitter.emit(`${userId}ch`, { data: "true" });
+      const isUserConnect = this.emitter.listeners(`${userId}ch`).length;
+      console.log("🎯🎯 Send Event To ", userId, ", connected: ", Boolean(isUserConnect));
+      if (Boolean(isUserConnect)) {
+        this.emitter.emit(`${userId}ch`, { data: "true" });
+      }
     });
   }
 }
