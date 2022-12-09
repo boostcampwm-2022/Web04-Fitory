@@ -6,6 +6,7 @@ import MyPageEditButton from "@components/MyPageEditButton";
 import FollowButton from "@components/FollowButton";
 import CalendarHeatMap from "@components/CalendarHeatMap";
 import RoutineScroller from "@components/RoutineScroller";
+import LogoutButton from "@components/LogoutButton";
 import useUserInfo from "@hooks/query/useUserInfo";
 import { RoutePath, QueryKey } from "@constants/enums";
 import { authStorage } from "src/services/ClientStorage";
@@ -51,6 +52,7 @@ const ProfilePage = () => {
             navigate(RoutePath.RECORD, { state: { routineName } });
           }}
         />
+        {isOwner && <LogoutButton />}
       </s.BottomWrapper>
     </PageTemplate>
   );
