@@ -45,7 +45,7 @@ const ProfilePage = () => {
         <s.ZandiLabel>
           <span>{userInfo.name}</span>님의 파란 잔디
         </s.ZandiLabel>
-        <CalendarHeatMap />
+        <CalendarHeatMap userId={profileUserId} />
         <RoutineScroller
           userId={profileUserId}
           onClickRoutineItem={(routineName) => {

@@ -1,12 +1,12 @@
 import { useQueryClient } from "react-query";
 import ExerciseAPI from "@api/ExerciseAPI";
-import { QUERY_KEY } from "@constants/enums";
+import { QueryKey } from "@constants/enums";
 
 const useDeleteRoutine = (routineName: string) => {
   const queryClient = useQueryClient();
 
   ExerciseAPI.deleteRoutine(routineName).then(() => {
-    queryClient.invalidateQueries(QUERY_KEY.ROUTINE_LIST);
+    queryClient.invalidateQueries(QueryKey.ROUTINE_LIST);
   });
 };
 

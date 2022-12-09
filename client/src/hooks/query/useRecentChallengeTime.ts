@@ -1,13 +1,14 @@
 import { useQuery } from "react-query";
 import { QueryKey } from "@constants/enums";
 import ChallengeAPI from "@api/ChallengeAPI";
+import { NO_STALE_TIME } from "@constants/consts";
 import { ChallengeTimestamp } from "src/types/challenge";
 
 const useRecentChallengeTime = () => {
   const { data } = useQuery(
     QueryKey.RECENT_CHALLENGE_TIME,
     () => ChallengeAPI.getRecentChallengeTime(),
-    { refetchOnWindowFocus: true, refetchOnMount: true, retry: true },
+    { staleTime: NO_STALE_TIME },
   );
 
   const { recentTimeStamp, nowTimeStamp } = data as ChallengeTimestamp;
