@@ -9,7 +9,6 @@ export class EventController {
 
   @Sse("register")
   events(@Req() req: any) {
-    console.log("🧡 userId: ", req.query.user_id);
     const userId = req.query.user_id;
     return this.eventService.subscribe(userId);
   }
