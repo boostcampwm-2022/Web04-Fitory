@@ -17,6 +17,11 @@ const UserAPI = {
     return response.response as UserType.JoinResponse;
   },
 
+  logout: async () => {
+    const path = "oauth/google/logout";
+    await HttpClient.get(path);
+  },
+
   getUser: async (userId: UserType.UserId) => {
     const path = `users/get`;
     const response = await HttpClient.get(path, { userId });
