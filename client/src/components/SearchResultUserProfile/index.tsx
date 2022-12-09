@@ -1,7 +1,7 @@
 import React from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import FollowButton from "@components/FollowButton";
-import useUserInfo from "@hooks/query/useUserInfo";
+import useUserInfo from "@hooks/query/user/useUserInfo";
 import { RoutePath } from "@constants/enums";
 import { useNavigate } from "react-router-dom";
 import * as s from "./style";

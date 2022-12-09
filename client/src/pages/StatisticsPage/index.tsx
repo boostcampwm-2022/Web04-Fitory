@@ -3,7 +3,7 @@ import PageTemplate from "@pages/PageTemplate";
 import ExerciseScoreContainer from "@components/ExerciseScoreContainer";
 import StatisticsUserInfoContainer from "@components/StatisticsUserInfoContainer";
 import StatisticsCarousel from "@components/StatisticsCarousel";
-import useBestChallengeScore from "@hooks/query/useBestChallengeScore";
+import useBestChallengeScore from "@hooks/query/challenge/useBestChallengeScore";
 import { Powerlifting } from "@constants/enums";
 import * as s from "./style";
 

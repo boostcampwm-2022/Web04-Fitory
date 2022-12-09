@@ -19,7 +19,7 @@ const ExerciseAPI = {
     const path = `exercise/everyDate`;
     const response = await HttpClient.get(path, { userId });
     const { dateList } = response.response as { dateList: ExerciseType.ExerciseDate };
-    console.log("test");
+
     return dateList;
   },
 

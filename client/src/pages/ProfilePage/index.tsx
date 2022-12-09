@@ -7,7 +7,7 @@ import FollowButton from "@components/FollowButton";
 import CalendarHeatMap from "@components/CalendarHeatMap";
 import RoutineScroller from "@components/RoutineScroller";
 import LogoutButton from "@components/LogoutButton";
-import useUserInfo from "@hooks/query/useUserInfo";
+import useUserInfo from "@hooks/query/user/useUserInfo";
 import { RoutePath, QueryKey } from "@constants/enums";
 import { authStorage } from "src/services/ClientStorage";
 import { useQueryClient } from "react-query";

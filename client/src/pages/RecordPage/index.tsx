@@ -5,7 +5,7 @@ import RoutineScroller from "@components/RoutineScroller";
 import ExerciseRecordList from "@components/ExerciseRecordList";
 import RoutineSaveButton from "@components/RoutineSaveButton";
 import exerciseStore from "@stores/exerciseStore";
-import useRecordExercise from "@hooks/query/useRecordExercise";
+import useRecordExercise from "@hooks/query/exercise/useRecordExercise";
 import ExerciseAPI from "@api/ExerciseAPI";
 import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";

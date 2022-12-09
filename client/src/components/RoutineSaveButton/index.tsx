@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Modal from "@components/design/Modal";
 import modalStore from "@stores/modalStore";
 import exerciseStore from "@stores/exerciseStore";
-import useSaveRoutine from "@hooks/query/useSaveRoutine";
-import useRoutineList from "@hooks/query/useRoutineList";
+import useSaveRoutine from "@hooks/query/routine/useSaveRoutine";
+import useRoutineList from "@hooks/query/routine/useRoutineList";
 import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
