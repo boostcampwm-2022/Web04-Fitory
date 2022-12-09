@@ -15,7 +15,7 @@ import * as s from "./style";
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const profileUserId = userId ? parseInt(userId as string, 10) : authStorage.get();
+  const profileUserId = userId ? +userId : authStorage.get();
   const { userInfo } = useUserInfo(profileUserId);
   const isOwner = profileUserId === authStorage.get();
   const { id } = userInfo;
@@ -46,7 +46,7 @@ const ProfilePage = () => {
         </s.ZandiLabel>
         <CalendarHeatMap />
         <RoutineScroller
-          userId={authStorage.get()}
+          userId={profileUserId}
           onClickRoutineItem={(routineName) => {
             navigate(RoutePath.RECORD, { state: { routineName } });
           }}
