@@ -5,6 +5,7 @@ import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import { NUMBER_OF_DAYS } from "@constants/consts";
 import { DateTypes, FormatDay } from "@constants/enums";
 import useAllExerciseDate from "@hooks/query/useAllExerciseDate";
+import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
 interface CalendarBodyProp {
@@ -14,7 +15,7 @@ interface CalendarBodyProp {
 }
 
 const CalendarBody = ({ today, displayDate, setDisplayDate }: CalendarBodyProp) => {
-  const { exerciseDateList } = useAllExerciseDate();
+  const { exerciseDateList } = useAllExerciseDate(authStorage.get());
   const exerciseStateList = getExerciseStateForOneYear(today.year(), exerciseDateList);
 
   const firstWeek = today.clone().startOf(DateTypes.MONTH).week();

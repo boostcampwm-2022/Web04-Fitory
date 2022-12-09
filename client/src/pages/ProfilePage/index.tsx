@@ -17,8 +17,9 @@ const ProfilePage = () => {
   const { userId } = useParams();
   const profileUserId = userId ? parseInt(userId as string, 10) : authStorage.get();
   const { userInfo } = useUserInfo(profileUserId);
-  const { id } = userInfo;
   const isOwner = profileUserId === authStorage.get();
+  const { id } = userInfo;
+
   const queryClient = useQueryClient();
 
   useEffect(() => {

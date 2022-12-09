@@ -21,7 +21,7 @@ const UserAPI = {
     const path = `users/get`;
     const response = await HttpClient.get(path, { userId });
     const { user } = response.response as { user: UserType.UserInfo };
-
+    console.log(user);
     return user;
   },
 
