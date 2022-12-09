@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import cancelSrc from "@public/icons/btn_cancel.svg";
 import modalStore from "@stores/modalStore";
 import * as s from "./style";
@@ -8,9 +9,13 @@ export interface ModalProps {
 }
 
 const Modal = ({ children }: ModalProps) => {
-  const { isShowModal, closeModal } = modalStore((state) => state);
+  const { modalRef, isShowModal, closeModal } = modalStore((state) => state);
 
-  return (
+  if (!modalRef || !modalRef.current) {
+    return null;
+  }
+
+  return createPortal(
     <s.Wrapper isShow={isShowModal}>
       <s.Overlay onClick={closeModal} />
       <s.Window>
@@ -19,7 +24,8 @@ const Modal = ({ children }: ModalProps) => {
         </s.CloseButton>
         {children}
       </s.Window>
-    </s.Wrapper>
+    </s.Wrapper>,
+    modalRef.current,
   );
 };
 
