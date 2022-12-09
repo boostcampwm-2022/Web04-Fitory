@@ -145,3 +145,9 @@ export const StatusCode = {
   NOT_FOUND: 404,
 } as const;
 export type StatusCode = typeof StatusCode[keyof typeof StatusCode];
+
+export const ExerciseRecord = {
+  WEIGHT_MAX: 1000,
+  COUNT_MAX: 100,
+};
+export type ExerciseRecord = typeof ExerciseRecord[keyof typeof ExerciseRecord];
