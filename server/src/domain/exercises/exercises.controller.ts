@@ -67,6 +67,6 @@ export class ExercisesController {
   @ApiBody({ type: () => ExerciseDataDto })
   async submitExercise(@Body() exerciseData: ExerciseDataDto) {
     await this.alarmsService.sendExerciseAlarm(exerciseData.userId);
-    return this.exercisesService.submitSingleSBDRecord(exerciseData);
+    return this.exercisesService.submitExercise(exerciseData);
   }
 }
