@@ -6,7 +6,7 @@ import { AnyObject } from "immer/dist/types/types-internal";
 import ExerciseAPI from "@api/ExerciseAPI";
 import options from "./option";
 import plugin from "./plugin";
-import { SDBRecordHistory, SDBRecordHistoryArray } from "../../types/exercise";
+import { SDBRecordHistoryArray } from "../../types/exercise";
 import * as s from "./style";
 
 Chart.register(...registerables);
