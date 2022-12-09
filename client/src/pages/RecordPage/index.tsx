@@ -25,7 +25,10 @@ const RecordPage = () => {
   );
 
   const checkFetchOtherRoutine = useCallback(() => {
-    return location.state && location.state.userId && location.state.routineName;
+    if (location.state && location.state.userId && location.state.routineName) {
+      return location.state.userId !== authStorage.get();
+    }
+    return false;
   }, [location.state]);
 
   const handleClickExerciseSaveButton = () => {
@@ -56,7 +59,9 @@ const RecordPage = () => {
         </s.RoutineWrapper>
         <ExerciseRecordList scrollRef={scrollRef} />
         <s.SaveButtonWrapper>
-          <RoutineSaveButton otherRoutineName={location.state.routineName} />
+          <RoutineSaveButton
+            otherRoutineName={checkFetchOtherRoutine() && location.state.routineName}
+          />
           {!checkFetchOtherRoutine() && (
             <s.ExerciseSaveButton onClick={handleClickExerciseSaveButton}>
               운동 완료
