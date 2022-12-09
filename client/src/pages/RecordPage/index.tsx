@@ -24,6 +24,10 @@ const RecordPage = () => {
     [fetchRoutine],
   );
 
+  const checkFetchOtherRoutine = useCallback(() => {
+    return location.state && location.state.userId && location.state.routineName;
+  }, [location.state]);
+
   const handleClickExerciseSaveButton = () => {
     recordExercise(exerciseList);
   };
@@ -33,11 +37,11 @@ const RecordPage = () => {
   };
 
   useEffect(() => {
-    if (location.state && location.state.userId && location.state.routineName) {
+    if (checkFetchOtherRoutine()) {
       const { userId, routineName } = location.state;
       handleFetchRoutine(userId, routineName);
     }
-  }, [handleFetchRoutine, location]);
+  }, [handleFetchRoutine, checkFetchOtherRoutine, location.state]);
 
   useEffect(() => {
     initExerciseList();
@@ -52,10 +56,12 @@ const RecordPage = () => {
         </s.RoutineWrapper>
         <ExerciseRecordList scrollRef={scrollRef} />
         <s.SaveButtonWrapper>
-          <RoutineSaveButton />
-          <s.ExerciseSaveButton onClick={handleClickExerciseSaveButton}>
-            운동 완료
-          </s.ExerciseSaveButton>
+          <RoutineSaveButton otherRoutineName={location.state.routineName} />
+          {!checkFetchOtherRoutine() && (
+            <s.ExerciseSaveButton onClick={handleClickExerciseSaveButton}>
+              운동 완료
+            </s.ExerciseSaveButton>
+          )}
         </s.SaveButtonWrapper>
       </s.Wrapper>
     </PageTemplate>
