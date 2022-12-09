@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import RoutineScroller from "@components/RoutineScroller";
 import ExerciseRecordList from "@components/ExerciseRecordList";
@@ -10,18 +11,32 @@ import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
 const RecordPage = () => {
+  const location = useLocation();
   const { recordExercise } = useRecordExercise();
   const { exerciseList, initExerciseList, fetchRoutine } = exerciseStore();
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleFetchRoutine = useCallback(
+    async (routineName: string) => {
+      const routineInfo = await ExerciseAPI.getSingleRoutineInfo(authStorage.get(), routineName);
+      fetchRoutine(routineInfo);
+    },
+    [fetchRoutine],
+  );
 
   const handleClickExerciseSaveButton = () => {
     recordExercise(exerciseList);
   };
 
-  const handleClickRoutineItem = async (routineName: string) => {
-    const routineInfo = await ExerciseAPI.getSingleRoutineInfo(authStorage.get(), routineName);
-    fetchRoutine(routineInfo);
+  const handleClickRoutineItem = (routineName: string) => {
+    handleFetchRoutine(routineName);
   };
+
+  useEffect(() => {
+    if (location.state && location.state.routineName) {
+      handleFetchRoutine(location.state.routineName);
+    }
+  }, [handleFetchRoutine, location]);
 
   useEffect(() => {
     initExerciseList();

@@ -33,7 +33,7 @@ const ChallengeAPI = {
     const userId = authStorage.get();
     const path = "record/recent";
     const response = await HttpClient.get(path, { userId });
-    console.log(response);
+
     return response.response as ChallengeType.ChallengeTimestamp;
   },
 };

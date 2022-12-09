@@ -19,10 +19,10 @@ export const ButtonContainer = styled.div`
 
 export const BottomWrapper = styled(Wrapper)`
   margin-top: 10px;
-  padding-top: 30px;
   padding: 30px 50px;
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
     padding: 0;
+    padding-top: 30px;
   }
 `;
 
