@@ -49,7 +49,12 @@ const ProfilePage = () => {
         <RoutineScroller
           userId={profileUserId}
           onClickRoutineItem={(routineName) => {
-            navigate(RoutePath.RECORD, { state: { routineName } });
+            navigate(RoutePath.RECORD, {
+              state: {
+                userId: profileUserId,
+                routineName,
+              },
+            });
           }}
         />
         {isOwner && <LogoutButton />}

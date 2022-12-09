@@ -17,8 +17,8 @@ const RecordPage = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleFetchRoutine = useCallback(
-    async (routineName: string) => {
-      const routineInfo = await ExerciseAPI.getSingleRoutineInfo(authStorage.get(), routineName);
+    async (userId: number, routineName: string) => {
+      const routineInfo = await ExerciseAPI.getSingleRoutineInfo(userId, routineName);
       fetchRoutine(routineInfo);
     },
     [fetchRoutine],
@@ -29,12 +29,13 @@ const RecordPage = () => {
   };
 
   const handleClickRoutineItem = (routineName: string) => {
-    handleFetchRoutine(routineName);
+    handleFetchRoutine(authStorage.get(), routineName);
   };
 
   useEffect(() => {
-    if (location.state && location.state.routineName) {
-      handleFetchRoutine(location.state.routineName);
+    if (location.state && location.state.userId && location.state.routineName) {
+      const { userId, routineName } = location.state;
+      handleFetchRoutine(userId, routineName);
     }
   }, [handleFetchRoutine, location]);
 
