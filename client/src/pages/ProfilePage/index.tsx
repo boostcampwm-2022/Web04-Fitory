@@ -8,8 +8,6 @@ import CalendarHeatMap from "@components/CalendarHeatMap";
 import RoutineScroller from "@components/RoutineScroller";
 import useUserInfo from "@hooks/query/useUserInfo";
 import { authStorage } from "src/services/ClientStorage";
-import { useQueryClient } from "react-query";
-import { QueryKey } from "@constants/enums";
 import * as s from "./style";
 
 const ProfilePage = () => {
@@ -18,15 +16,9 @@ const ProfilePage = () => {
   const { userInfo } = useUserInfo(profileUserId);
   const { id } = userInfo;
   const isOwner = profileUserId === authStorage.get();
-  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    (() => {
-      return queryClient.invalidateQueries([QueryKey.USER_INFO, id]);
-    })();
-  }, []);
   return (
-    <PageTemplate isRoot={isOwner}>
+    <PageTemplate isRoot={isOwner} title="프로필">
       <s.MyProfileContainer>
         <MyPageUserProfile userInfo={userInfo} />
         <s.ButtonContainer>
