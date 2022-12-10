@@ -107,3 +107,9 @@ export const FollowContainer = styled.div`
   color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
   line-height: 30px;
 `;
+
+export const ButtonContainer = styled.div`
+  height: 50px;
+  width: 100%;
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+`;

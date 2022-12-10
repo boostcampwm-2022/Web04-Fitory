@@ -34,7 +34,7 @@ const HomePage = () => {
         </s.ChallengeButton>
         <CalendarHeatMap />
         <Calendar isRoot />
-        <s.RecordButton type="button" onClick={() => navigate(RoutePath.RECORD)}>
+        <s.RecordButton type="button" onClick={() => navigate(RoutePath.EDIT)}>
           운동 기록하기
         </s.RecordButton>
       </s.Wrapper>

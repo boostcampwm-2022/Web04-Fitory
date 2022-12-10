@@ -9,6 +9,7 @@ import { DEFAULT_STALE_TIME } from "@constants/consts";
 import Loading from "@components/Loading";
 import ErrorFallback from "@components/ErrorFallback";
 import NotFoundPage from "@pages/NotFountPage";
+import ProfileEditPage from "@pages/ProfileEditPage";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 const ChallengePage = lazy(() => import("@pages/ChallengePage"));
@@ -51,6 +52,7 @@ const App = () => {
               {/* Profile */}
               <Route path={RoutePath.PROFILE}>
                 <Route path=":userId" element={<ProfilePage />} />
+                <Route path="edit" element={<ProfileEditPage />} />
                 <Route path="" element={<ProfilePage />} />
               </Route>
               <Route path={RoutePath.LOGIN} element={<LoginPage />} />
