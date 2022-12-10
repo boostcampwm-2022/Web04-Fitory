@@ -1,4 +1,3 @@
-import React from "react";
 import routineSrc1 from "@public/images/btn_routine_1.webp";
 import routineSrc2 from "@public/images/btn_routine_2.webp";
 import routineSrc3 from "@public/images/btn_routine_3.webp";
@@ -6,11 +5,15 @@ import routineSrc4 from "@public/images/btn_routine_4.webp";
 import routineSrc5 from "@public/images/btn_routine_5.webp";
 import routineSrc6 from "@public/images/btn_routine_6.webp";
 import cancelSrc from "@public/icons/btn_cancel.svg";
+
+import React from "react";
 import Paper from "@components/design/Paper";
+import Modal from "@components/design/Modal";
 import CardsScroller from "@components/design/CardsScroller";
 import useUserInfo from "@hooks/query/useUserInfo";
 import useRoutineList from "@hooks/query/useRoutineList";
-import ExerciseAPI from "@api/ExerciseAPI";
+import useDeleteRoutine from "@hooks/query/useDeleteRoutine";
+import modalStore from "@stores/modalStore";
 import theme from "@styles/Theme";
 import { authStorage } from "src/services/ClientStorage";
 import { UserId } from "src/types/user";
@@ -33,12 +36,12 @@ const routineSrcList = [
 const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) => {
   const { userInfo } = useUserInfo(userId);
   const { routineList } = useRoutineList(userId);
+  const { deleteRoutine } = useDeleteRoutine();
+  const { openModal } = modalStore();
 
   const handleClickRoutineDeleteButton = (routineName: string) => {
-    // eslint-disable-next-line no-alert
-    if (window.confirm("해당 루틴을 정말로 삭제하시겠습니까?")) {
-      ExerciseAPI.deleteRoutine(routineName);
-    }
+    openModal();
+    // deleteRoutine(routineName);
   };
 
   return (
@@ -76,6 +79,7 @@ const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) =
       ) : (
         <s.RoutineListAltText>저장한 운동 루틴이 없습니다.</s.RoutineListAltText>
       )}
+      <Modal>test</Modal>
     </s.Wrapper>
   );
 };

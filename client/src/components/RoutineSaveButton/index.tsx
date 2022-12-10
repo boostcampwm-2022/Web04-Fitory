@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { error } from "@constants/message";
 import Modal from "@components/design/Modal";
 import modalStore from "@stores/modalStore";
 import exerciseStore from "@stores/exerciseStore";
@@ -8,7 +10,7 @@ import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
 const RoutineSaveButton = () => {
-  const { saveRoutine } = useSaveRoutine();
+  const { saveRoutine, isSussess } = useSaveRoutine();
   const { routineList } = useRoutineList(authStorage.get());
 
   const { openModal, closeModal } = modalStore();
@@ -16,13 +18,18 @@ const RoutineSaveButton = () => {
   const [routineName, setRoutineName] = useState("");
 
   const handleClickRoutineSaveButton = () => {
-    if (routineList?.includes(routineName)) {
-      // eslint-disable-next-line no-alert
-      alert("이미 존재하는 루틴 이름입니다.");
+    if (routineList.includes(routineName)) {
+      toast.error(error.SAVE_ROUTINE_DUPLICATE);
+      return;
+    }
+    if (!routineName && exerciseList.find(({ exerciseName }) => !exerciseName)) {
+      toast.error(error.SAVE_ROUTINE_EMPTY);
       return;
     }
     saveRoutine({ routineName, exerciseList });
-    closeModal();
+    if (isSussess) {
+      closeModal();
+    }
   };
 
   return (

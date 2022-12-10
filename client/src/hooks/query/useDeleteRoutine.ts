@@ -1,13 +1,14 @@
-import { useQueryClient } from "react-query";
+import { useQueryClient, useMutation } from "react-query";
 import ExerciseAPI from "@api/ExerciseAPI";
-import { QUERY_KEY } from "@constants/enums";
+import { QueryKey } from "@constants/enums";
 
-const useDeleteRoutine = (routineName: string) => {
+const useDeleteRoutine = () => {
   const queryClient = useQueryClient();
-
-  ExerciseAPI.deleteRoutine(routineName).then(() => {
-    queryClient.invalidateQueries(QUERY_KEY.ROUTINE_LIST);
+  const { mutate } = useMutation((routineName: string) => ExerciseAPI.deleteRoutine(routineName), {
+    onSuccess: () => queryClient.invalidateQueries(QueryKey.ROUTINE_LIST),
   });
+
+  return { deleteRoutine: mutate };
 };
 
 export default useDeleteRoutine;
