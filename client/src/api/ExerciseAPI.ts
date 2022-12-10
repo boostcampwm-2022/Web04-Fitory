@@ -83,7 +83,7 @@ const ExerciseAPI = {
       return routine;
     } catch {
       toast.error(error.GET_SINGLE_ROUTINE);
-      return false;
+      return null;
     }
   },
 

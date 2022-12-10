@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { error } from "@constants/message";
+import { ModalKey } from "@constants/enums";
 import Modal from "@components/design/Modal";
 import modalStore from "@stores/modalStore";
 import exerciseStore from "@stores/exerciseStore";
@@ -34,10 +35,13 @@ const RoutineSaveButton = ({ otherRoutineName }: { otherRoutineName?: string }) 
 
   return (
     <>
-      <s.RoutineSaveButton isOtherRoutine={Boolean(otherRoutineName)} onClick={() => openModal()}>
+      <s.RoutineSaveButton
+        isOtherRoutine={Boolean(otherRoutineName)}
+        onClick={() => openModal(ModalKey.SAVE_ROUTINE)}
+      >
         루틴 저장
       </s.RoutineSaveButton>
-      <Modal>
+      <Modal modalKey={ModalKey.SAVE_ROUTINE}>
         <s.RoutineNameLabel>루틴 이름을 입력해주세요.</s.RoutineNameLabel>
         <s.RoutineNameTextField
           value={routineName}

@@ -1,20 +1,43 @@
+/* eslint-disable no-param-reassign */
 import create from "zustand";
-import { RefObject } from "react";
+import produce from "immer";
+
+interface ModalList {
+  [key: string]: boolean;
+}
 
 interface ModalState {
-  modalRef: RefObject<HTMLDivElement> | null;
-  isShowModal: boolean;
-  setModalRef: (targetRef: RefObject<HTMLDivElement>) => void;
-  openModal: () => void;
+  modalList: ModalList;
+  setModalList: (key: string) => void;
+  openModal: (key: string) => void;
   closeModal: () => void;
 }
 
 const modalStore = create<ModalState>((set) => ({
-  modalRef: null,
-  isShowModal: false,
-  setModalRef: (targetRef: RefObject<HTMLDivElement>) => set({ modalRef: targetRef }),
-  openModal: () => set({ isShowModal: true }),
-  closeModal: () => set({ isShowModal: false }),
+  modalList: {},
+  setModalList: (key: string) => {
+    set(
+      produce(({ modalList }: ModalState) => {
+        modalList[key] = false;
+      }),
+    );
+  },
+  openModal: (key: string) => {
+    set(
+      produce(({ modalList }: ModalState) => {
+        modalList[key] = true;
+      }),
+    );
+  },
+  closeModal: () => {
+    set(
+      produce(({ modalList }: ModalState) => {
+        Object.keys(modalList).forEach((key) => {
+          modalList[key] = false;
+        });
+      }),
+    );
+  },
 }));
 
 export default modalStore;

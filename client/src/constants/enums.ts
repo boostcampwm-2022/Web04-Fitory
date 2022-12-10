@@ -151,3 +151,9 @@ export const ExerciseRecord = {
   COUNT_MAX: 100,
 };
 export type ExerciseRecord = typeof ExerciseRecord[keyof typeof ExerciseRecord];
+
+export const ModalKey = {
+  SAVE_ROUTINE: "saveRoutine",
+  DELETE_ROUTINE: "deleteRoutine",
+  LOGOUT: "logout",
+};

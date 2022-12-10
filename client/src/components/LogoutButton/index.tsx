@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import UserAPI from "@api/UserAPI";
-import { RoutePath } from "@constants/enums";
+import { RoutePath, ModalKey } from "@constants/enums";
 import Modal from "@components/design/Modal";
 import modalStore from "@stores/modalStore";
 import { authStorage } from "src/services/ClientStorage";
@@ -12,7 +12,7 @@ const LogoutButton = () => {
   const { openModal } = modalStore();
 
   const handleOpenLogoutModal = () => {
-    openModal();
+    openModal(ModalKey.LOGOUT);
   };
 
   const handleClickLogoutButton = async () => {
@@ -24,7 +24,7 @@ const LogoutButton = () => {
   return (
     <s.Wrapper>
       <s.Button onClick={handleOpenLogoutModal}>로그아웃</s.Button>
-      <Modal>
+      <Modal modalKey={ModalKey.LOGOUT}>
         <s.LogoutTitle>정말로 로그아웃 하시겠어요?</s.LogoutTitle>
         <s.ConfirmButton onClick={handleClickLogoutButton}>로그아웃</s.ConfirmButton>
       </Modal>
