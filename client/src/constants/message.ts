@@ -31,6 +31,10 @@ export const error = {
   GET_FOLLOWING: "팔로잉 리스트 요청에 실패하였습니다.",
   GET_RECOMMAND_USER_LIST: "추천 사용자 리스트 요청에 실패하였습니다.",
   CHECK_USER_NAME: "이미 존재하는 사용자 이름입니다.",
+
+  // Notification
+  GET_NOTIFICATION_COUNT: "알림 수 요청에 실패하였습니다.",
+  GET_NOTIFICATION_LIST: "알림 내역 요청에 실패하였습니다.",
 } as const;
 
 export const success = {

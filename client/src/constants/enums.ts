@@ -137,6 +137,7 @@ export const QueryKey = {
   SINGLE_MONTH_EXERCISE_HISTORY: "singleMonthExerciseHistory",
   WEIGHT_CLASS_STATISTICS: "weightClassStatistics",
   NOTIFICATION_COUNT: "notificationCount",
+  NOTIFICATION_HISTORY: "notifiactionHistory",
 } as const;
 export type QueryKey = typeof QueryKey[keyof typeof QueryKey];
 
@@ -160,7 +161,13 @@ export const ModalKey = {
   LOGOUT: "logout",
 };
 export const NotificationState = {
-  EXERCISE: "exercise",
-  FOLLOW: "follow",
+  EXERCISE: 0,
+  FOLLOW: 1,
 } as const;
 export type NotificationState = typeof NotificationState[keyof typeof NotificationState];
+
+export const NotificationRead = {
+  read: 1,
+  unread: 0,
+};
+export type NotificationRead = typeof NotificationRead[keyof typeof NotificationRead];

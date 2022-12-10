@@ -1,9 +1,11 @@
-import { NotificationState } from "@constants/enums";
+import { NotificationState, NotificationRead } from "@constants/enums";
 
 export interface Notification {
-  senderUserId: number;
-  userName: string;
-  profileImage: string;
-  alarmType: NotificationState;
-  timestamp: string;
+  index: number;
+  check: NotificationRead;
+  name: string;
+  sender_user_id: number;
+  profile_image: string;
+  alarm_type: NotificationState;
+  time_stamp: string;
 }
