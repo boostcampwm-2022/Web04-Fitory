@@ -2,9 +2,9 @@ import React from "react";
 import { ChartData, ChartOptions, ScriptableContext, ChartTypeRegistry } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import styled from "styled-components";
-import useUserInfo from "@hooks/query/useUserInfo";
-import useBestChallengeScore from "@hooks/query/useBestChallengeScore";
-import useWeightClassStatistics from "@hooks/query/useWeightClassStatistics";
+import useUserInfo from "@hooks/query/user/useUserInfo";
+import useBestChallengeScore from "@hooks/query/challenge/useBestChallengeScore";
+import useWeightClassStatistics from "@hooks/query/statistics/useWeightClassStatistics";
 import { WEIGHT_CLASS_STATISTICS_RANGE } from "@constants/consts";
 import { authStorage } from "src/services/ClientStorage";
 

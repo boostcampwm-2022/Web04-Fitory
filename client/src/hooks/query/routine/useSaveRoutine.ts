@@ -2,6 +2,7 @@ import { useQueryClient, useMutation } from "react-query";
 import ExerciseAPI from "@api/ExerciseAPI";
 import { QueryKey } from "@constants/enums";
 import { Routine } from "src/types/exercise";
+import { authStorage } from "src/services/ClientStorage";
 
 const useSaveRoutine = () => {
   const queryClient = useQueryClient();
@@ -20,7 +21,7 @@ const useSaveRoutine = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(QueryKey.ROUTINE_LIST);
+        queryClient.invalidateQueries([QueryKey.ROUTINE_LIST, authStorage.get()]);
       },
     },
   );

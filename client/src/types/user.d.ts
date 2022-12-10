@@ -14,12 +14,6 @@ export interface LoginResponse {
 }
 
 export interface JoinResponse {
-  myUserId: UserId;
-  otherUserId: UserId;
-  register: "success";
-}
-
-export interface FollowResponse {
   userId: UserId;
   register: "success";
 }

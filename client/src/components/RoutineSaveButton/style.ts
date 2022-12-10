@@ -6,6 +6,7 @@ export const RoutineSaveButton = styled(DefaultButton)`
   padding-right: 20px;
   border-radius: 7px;
   background-color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
+  ${({ isOtherRoutine }: { isOtherRoutine: boolean }) => isOtherRoutine && "width: 100%"};
   &:hover {
     background-color: #7c7d84;
   }
