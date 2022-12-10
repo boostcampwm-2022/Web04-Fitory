@@ -37,6 +37,26 @@ export const RoutineButton = styled.button`
   }
 `;
 
+export const RoutineDeleteButton = styled.button`
+  padding: 1px;
+  margin: 8px 8px 0 0;
+  width: 17px;
+  height: 17px;
+  border-radius: 100%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.COLORS.RED};
+  & > img {
+    width: 80%;
+    filter: invert(1);
+  }
+  &:hover {
+    filter: contrast(0.8);
+  }
+  display: ${({ visible }: { visible: boolean }) => (visible ? "flex" : "none")};
+`;
+
 export const RoutineListAltText = styled.p`
   padding: 30px;
   text-align: center;

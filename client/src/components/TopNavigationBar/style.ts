@@ -29,6 +29,10 @@ export const Title = styled.div`
   color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
   color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
+
+  & > img {
+    width: 80px;
+  }
 `;
 
 export const LeftItem = styled.div`

@@ -1,38 +1,64 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
-import { PageState, RoutePath } from "@constants/enums";
 import MyPageUserProfile from "@components/MyPageUserProfile";
-import { authStorage } from "../../services/ClientStorage";
+import MyPageEditButton from "@components/MyPageEditButton";
+import FollowButton from "@components/FollowButton";
+import CalendarHeatMap from "@components/CalendarHeatMap";
+import RoutineScroller from "@components/RoutineScroller";
+import LogoutButton from "@components/LogoutButton";
+import useUserInfo from "@hooks/query/user/useUserInfo";
+import { RoutePath, QueryKey } from "@constants/enums";
+import { authStorage } from "src/services/ClientStorage";
+import { useQueryClient } from "react-query";
+import * as s from "./style";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const followerMove = () => {
-    navigate("/follow", {
-      state: PageState.FOLLOWER,
-    });
-  };
+  const { userId } = useParams();
+  const profileUserId = userId ? +userId : authStorage.get();
+  const { userInfo } = useUserInfo(profileUserId);
+  const isOwner = profileUserId === authStorage.get();
+  const { id } = userInfo;
 
-  const followingMove = () => {
-    navigate("/follow", {
-      state: PageState.FOLLOWING,
-    });
-  };
-  // useEffect(() => {
-  //   if (!authStorage.get()) {
-  //     navigate(RoutePath.LOGIN, { replace: true });
-  //   }
-  // }, [navigate]);
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    (() => {
+      return queryClient.invalidateQueries([QueryKey.USER_INFO, id]);
+    })();
+  }, []);
 
   return (
-    <PageTemplate isRoot>
-      <MyPageUserProfile />
-      <button onClick={followingMove}>
-        <p>팔로잉</p>
-      </button>
-      <button onClick={followerMove}>
-        <p>팔로워</p>
-      </button>
+    <PageTemplate isRoot={isOwner}>
+      <s.MyProfileContainer>
+        <MyPageUserProfile userInfo={userInfo} />
+        <s.ButtonContainer>
+          {isOwner ? (
+            <MyPageEditButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
+          ) : (
+            <FollowButton userInfo={userInfo} />
+          )}
+        </s.ButtonContainer>
+      </s.MyProfileContainer>
+      <s.BottomWrapper>
+        <s.ZandiLabel>
+          <span>{userInfo.name}</span>님의 파란 잔디
+        </s.ZandiLabel>
+        <CalendarHeatMap userId={profileUserId} />
+        <RoutineScroller
+          userId={profileUserId}
+          onClickRoutineItem={(routineName) => {
+            navigate(RoutePath.RECORD, {
+              state: {
+                userId: profileUserId,
+                routineName,
+              },
+            });
+          }}
+        />
+        {isOwner && <LogoutButton />}
+      </s.BottomWrapper>
     </PageTemplate>
   );
 };

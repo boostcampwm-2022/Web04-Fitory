@@ -17,6 +17,11 @@ const UserAPI = {
     return response.response as UserType.JoinResponse;
   },
 
+  logout: async () => {
+    const path = "oauth/google/logout";
+    await HttpClient.get(path);
+  },
+
   getUser: async (userId: UserType.UserId) => {
     const path = `users/get`;
     const response = await HttpClient.get(path, { userId });
@@ -42,17 +47,41 @@ const UserAPI = {
     return userProfileList;
   },
 
+  getFollowerUser: async (userId: number) => {
+    const path = "follow/follower";
+    const response = await HttpClient.get(path, { userId });
+    const { followerUserProfileList } = response.response as {
+      followerUserProfileList: UserType.SearchedUserInfo[];
+    };
+
+    return followerUserProfileList;
+  },
+
+  getFollowingUser: async (userId: number) => {
+    const path = "follow/following";
+    const response = await HttpClient.get(path, { userId });
+    const { followingUserProfileList } = response.response as {
+      followingUserProfileList: UserType.SearchedUserInfo[];
+    };
+
+    return followingUserProfileList;
+  },
+
   getRecommendUserList: async () => {
     const userId = authStorage.get();
-    if (!userId) {
-      throw new Error();
-    }
     const path = "users/recommand/list";
     const response = await HttpClient.get(path, { userId });
-    return [response.response.recommendWeight, response.response.recommendAge] as [
-      UserType.SearchedUserInfo[],
-      UserType.SearchedUserInfo[],
-    ];
+    const { recommendWeight, recommendAge } = response.response as {
+      recommendWeight: UserType.SearchedUserInfo[];
+      recommendAge: UserType.SearchedUserInfo[];
+    };
+
+    return [recommendWeight, recommendAge];
+  },
+
+  getFollowerList: async (userId: number, path: string) => {
+    const response = await HttpClient.get(path, { userId });
+    console.log(response);
   },
 };
 

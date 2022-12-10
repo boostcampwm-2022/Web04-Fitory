@@ -27,19 +27,21 @@ export class AlarmsService {
     });
   }
 
-  async getAlarmList(userId: number) {
+  async getAlarmList(userId: number, index: number) {
     const alarmObject = await this.alarmRepository
       .createQueryBuilder("alarm")
-      .select("alarm.sender_user_id", "sender_user_id")
+      .select("alarm.id", "index")
+      .addSelect("alarm.sender_user_id", "sender_user_id")
       .addSelect("user.name", "name")
       .addSelect("user.profile_image", "profile_image")
       .addSelect("alarm.check", "check")
-      .addSelect("alarm.sender_user_id", "sender_user_id")
       .addSelect("alarm.alarm_type", "alarm_type")
       .addSelect("alarm.time_stamp", "time_stamp")
       .innerJoin(User, "user", "user.user_id = alarm.sender_user_id")
       .where("alarm.user_id = :userId", { userId })
+      .andWhere("alarm.id > :index", { index })
       .andWhere("DATE(alarm.time_stamp) >= DATE_ADD(NOW(), INTERVAL -1 MONTH)")
+      .limit(10)
       .getRawMany();
     await this.checkToReadAlarm(userId);
     return HttpResponse.success({
@@ -80,6 +82,8 @@ export class AlarmsService {
       .getRawMany();
     await Promise.all(
       followerList.map(async (row) => {
+        global.alarmBar.add(row.follower_id);
+
         await this.alarmRepository.save({
           senderUserId,
           alarmType: 0,

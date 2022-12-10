@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import dayjs from "dayjs";
 import { DayTypes, ExerciseState } from "@constants/enums";
 import * as s from "./style";
@@ -7,9 +7,17 @@ interface CalendarElementProps {
   exerciseState: ExerciseState;
   day: dayjs.Dayjs;
   today: dayjs.Dayjs;
+  displayDate?: string;
+  setDisplayDate?: Dispatch<SetStateAction<string>>;
 }
 
-const CalendarElement = ({ exerciseState, day, today }: CalendarElementProps) => {
+const CalendarElement = ({
+  exerciseState,
+  day,
+  today,
+  displayDate,
+  setDisplayDate,
+}: CalendarElementProps) => {
   let dayType = null;
 
   if (dayjs().format("YYYYMMDD") === day.format("YYYYMMDD")) {
@@ -20,9 +28,17 @@ const CalendarElement = ({ exerciseState, day, today }: CalendarElementProps) =>
     dayType = DayTypes.THIS_DAYS;
   }
 
+  const handleClickEvent = () => {
+    if (setDisplayDate) {
+      setDisplayDate(day.format("YYMMDD"));
+    }
+  };
+
   return (
-    <s.DayContainer dayType={dayType}>
-      <s.DayLabel dayType={dayType}>{day.format("D")}</s.DayLabel>
+    <s.DayContainer dayType={dayType} hover={Boolean(setDisplayDate)} onClick={handleClickEvent}>
+      <s.DayLabel dayType={dayType} isActive={displayDate === day.format("YYMMDD")}>
+        {day.format("D")}
+      </s.DayLabel>
       <s.CompleteDot state={exerciseState} dayType={dayType} />
     </s.DayContainer>
   );

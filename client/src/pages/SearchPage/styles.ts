@@ -15,6 +15,7 @@ export const SearchContainer = styled.div`
   height: ${({ isText }: { isText: boolean }) => {
     return isText ? "800px" : "60px";
   }};
+  margin-top: 20px;
   position: absolute;
   padding: 1.3rem 3vw;
   transition: 0.25s linear;
@@ -75,4 +76,11 @@ export const RecommendLabel = styled.p`
     return theme.FONT_SIZE.MEDIUM;
   }};
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
+`;
+
+export const Notice = styled.div`
+  width: 100%;
+  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
+  text-align: center;
+  margin-top: 90px;
 `;

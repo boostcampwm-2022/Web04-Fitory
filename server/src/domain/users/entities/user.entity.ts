@@ -32,12 +32,6 @@ export class User {
   @Column({ default: 0 })
   tier!: number;
 
-  @Column({ name: "follower_count", default: 0 })
-  followerCount!: number;
-
-  @Column({ name: "following_count", default: 0 })
-  followingCount!: number;
-
   @Column({ name: "volume_sum", default: 0 })
   volumeSum!: number;
 }

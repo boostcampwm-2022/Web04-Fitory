@@ -2,8 +2,8 @@ import React, { ChangeEvent } from "react";
 import useInputFocus from "@hooks/useInputFocus";
 import { Gender, UserAge } from "@constants/enums";
 import { NUMBER_REGEX } from "@constants/consts";
-import maleSymbolSrc from "@public/images/img_male_symbol.png";
-import femaleSymbolSrc from "@public/images/img_female_symbol.png";
+import maleSymbolSrc from "@public/images/img_male_symbol.webp";
+import femaleSymbolSrc from "@public/images/img_female_symbol.webp";
 import * as UserType from "src/types/user";
 import * as s from "./style";
 

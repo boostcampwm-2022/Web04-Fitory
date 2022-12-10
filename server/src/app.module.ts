@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { APP_FILTER, APP_GUARD } from "@nestjs/core";
+import { APP_FILTER } from "@nestjs/core";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AlarmsModule } from "@alarm/alarms.module";
@@ -13,11 +13,9 @@ import { SbdStatisticsModule } from "@statistics/sbd_statistics.module";
 import { UsersModule } from "@user/users.module";
 import { MockModule } from "@mock/mock.module";
 import { JwtStrategy } from "@guard/jwt.strategy";
-import { JwtAuthGuard } from "@guard/jwt.guard";
 import { User } from "@user/entities/user.entity";
-import { UserIdGuard } from "@guard/auth.guard";
-import { UploadModule } from "./domain/uploads/upload.module";
 import { typeormConfig } from "./config/typeorm.config";
+import { EventModule } from "./domain/event/event.module";
 
 @Module({
   imports: [
@@ -30,23 +28,14 @@ import { typeormConfig } from "./config/typeorm.config";
     SbdStatisticsModule,
     FollowsModule,
     MockModule,
-    UploadModule,
     TypeOrmModule.forRoot(typeormConfig),
     PassportModule,
     TypeOrmModule.forFeature([User]),
+    EventModule,
   ],
 
-  providers: [
-    JwtStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: UserIdGuard,
-    },
-    { provide: APP_FILTER, useClass: HttpExceptionFilter },
-  ],
+  providers: [JwtStrategy, { provide: APP_FILTER, useClass: HttpExceptionFilter }],
+
+  controllers: [],
 })
 export class AppModule {}

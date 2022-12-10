@@ -18,13 +18,18 @@ export class MockController {
     // 실행 순서 중요함
     const userNums = Array.from({ length: num }, (_, i) => i + 1); // 유저 수
     const followNums = Array.from(Array(num * 2).keys()); // 무작위 num*2 만큼의 팔로우<->팔로잉 관계 생성
+    const pickRandomNoRepeats = this.mockService.randomNoRepeats(userNums); // userNums에서 중복 되지 않게 무작위 하나를 pick
     await Promise.all(
       followNums.map(() => {
-        return this.mockService.mockFollow(userNums);
+        return this.mockService.mockFollow(pickRandomNoRepeats);
       }),
     );
-
-    await this.mockService.mockUsers(userNums);
+    
+    // eslint-disable-next-line no-restricted-syntax
+    for (const id of userNums) {
+      // eslint-disable-next-line no-await-in-loop
+      await this.mockService.mockUsers();
+    }
 
     const recordNums = Array.from(Array(12).keys()); // 각 유저가 1년 이내의 무작위 날짜로 12번만큼 챌린지 기록
     await Promise.all(
@@ -33,7 +38,7 @@ export class MockController {
       }),
     );
 
-    // await this.mockService.mockStatistics();
+    await this.mockService.mockStatistics();
 
     await this.mockService.mockRoutine();
 

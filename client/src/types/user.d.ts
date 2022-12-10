@@ -1,7 +1,9 @@
+import { Gender } from "@constants/enums";
+
 export type UserId = number;
 export type UserName = string;
 export type UserAge = number;
-export type UserGender = 0 | 1;
+export type UserGender = Gender;
 export type UserHeight = number;
 export type UserWeight = number;
 export type UserIntroduce = string;
@@ -29,6 +31,7 @@ export interface JoinUserInfo extends LoginUserInfo {
 }
 
 export interface UserInfo extends JoinUserInfo {
+  id: number;
   profileImage: string;
   introduce: string;
   tier: number;
@@ -44,4 +47,9 @@ export interface SearchedUserInfo {
   profile_image?: string;
   follower_id?: UserId;
   followed_id?: UserId;
+}
+
+export interface FollowUserInfo {
+  myUserId: UserId;
+  otherUserId: UserId;
 }

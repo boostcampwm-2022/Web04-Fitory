@@ -6,7 +6,7 @@ import NicknameTextField from "@components/NicknameTextField";
 import AgeGenderInputSet from "@components/AgeGenderInputSet";
 import BodyInfoInputSet from "@components/BodyInfoInputSet";
 import UserValidation from "@utils/UserValidation";
-import useJoinUser from "@hooks/query/useJoinUser";
+import useJoinUser from "@hooks/query/user/useJoinUser";
 import UserAPI from "@api/UserAPI";
 import * as UserType from "src/types/user";
 import * as s from "./style";
@@ -116,7 +116,11 @@ const JoinPage = () => {
   }, [location, navigate, userInfo]);
 
   return (
-    <PageTemplate isRoot={false} onClickBackButton={step ? handleClickBackButton : undefined}>
+    <PageTemplate
+      ignoreException
+      isRoot={false}
+      onClickBackButton={step ? handleClickBackButton : undefined}
+    >
       <s.Wrapper>
         <s.Title>{joinProcess[step].title}</s.Title>
         <s.ContentWrapper>

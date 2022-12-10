@@ -1,15 +1,21 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import dayjs from "dayjs";
 import CalendarElement from "@components/Calendar/CalendarElement";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import { NUMBER_OF_DAYS } from "@constants/consts";
 import { DateTypes, FormatDay } from "@constants/enums";
-import useAllExerciseDate from "@hooks/query/useAllExerciseDate";
+import useAllExerciseDate from "@hooks/query/exercise/useAllExerciseDate";
+import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
-const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
-  const today = date;
-  const { exerciseDateList } = useAllExerciseDate();
+interface CalendarBodyProp {
+  today: dayjs.Dayjs;
+  displayDate?: string;
+  setDisplayDate?: Dispatch<SetStateAction<string>>;
+}
+
+const CalendarBody = ({ today, displayDate, setDisplayDate }: CalendarBodyProp) => {
+  const { exerciseDateList } = useAllExerciseDate(authStorage.get());
   const exerciseStateList = getExerciseStateForOneYear(today.year(), exerciseDateList);
 
   const firstWeek = today.clone().startOf(DateTypes.MONTH).week();
@@ -48,6 +54,8 @@ const CalendarBody = ({ date }: { date: dayjs.Dayjs }) => {
                   exerciseState={exerciseStateList[month][currentDay]}
                   day={day}
                   today={today}
+                  displayDate={displayDate}
+                  setDisplayDate={setDisplayDate}
                 />
               );
             })}
