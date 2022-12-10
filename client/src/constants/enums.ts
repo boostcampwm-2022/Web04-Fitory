@@ -136,6 +136,7 @@ export const QueryKey = {
   ROUTINE_INFO: "routineInfo",
   SINGLE_MONTH_EXERCISE_HISTORY: "singleMonthExerciseHistory",
   WEIGHT_CLASS_STATISTICS: "weightClassStatistics",
+  NOTIFICATION_COUNT: "notificationCount",
 } as const;
 export type QueryKey = typeof QueryKey[keyof typeof QueryKey];
 
@@ -158,3 +159,8 @@ export const ModalKey = {
   DELETE_ROUTINE: "deleteRoutine",
   LOGOUT: "logout",
 };
+export const NotificationState = {
+  EXERCISE: "exercise",
+  FOLLOW: "follow",
+} as const;
+export type NotificationState = typeof NotificationState[keyof typeof NotificationState];
