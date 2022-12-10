@@ -39,7 +39,7 @@ const RoutineSaveButton = ({ otherRoutineName }: { otherRoutineName?: string }) 
         isOtherRoutine={Boolean(otherRoutineName)}
         onClick={() => openModal(ModalKey.SAVE_ROUTINE)}
       >
-        루틴 저장
+        {otherRoutineName ? "내 루틴으로 저장" : "루틴 저장"}
       </s.RoutineSaveButton>
       <Modal modalKey={ModalKey.SAVE_ROUTINE}>
         <s.RoutineNameLabel>루틴 이름을 입력해주세요.</s.RoutineNameLabel>
