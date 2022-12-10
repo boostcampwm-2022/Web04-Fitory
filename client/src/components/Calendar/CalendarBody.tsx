@@ -4,7 +4,7 @@ import CalendarElement from "@components/Calendar/CalendarElement";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import { NUMBER_OF_DAYS } from "@constants/consts";
 import { DateTypes, FormatDay } from "@constants/enums";
-import useAllExerciseDate from "@hooks/query/useAllExerciseDate";
+import useAllExerciseDate from "@hooks/query/exercise/useAllExerciseDate";
 import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 

@@ -6,8 +6,8 @@ import squatSrc from "@public/images/img_squat.webp";
 import benchpressSrc from "@public/images/img_benchpress.webp";
 import deadliftSrc from "@public/images/img_deadlift.webp";
 import useDecreaseTime from "@hooks/useDecreaseTime";
-import useSubmitChallenge from "@hooks/query/useSubmitChallenge";
-import useRecentChallengeTime from "@hooks/query/useRecentChallengeTime";
+import useSubmitChallenge from "@hooks/query/challenge/useSubmitChallenge";
+import useRecentChallengeTime from "@hooks/query/challenge/useRecentChallengeTime";
 import addZeroPaddingToNumber from "@utils/addZeroPaddingToNumber";
 import * as s from "./style";
 

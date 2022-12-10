@@ -20,9 +20,8 @@ const ExerciseAPI = {
     }
   },
 
-  getAllExerciseDate: async () => {
+  getAllExerciseDate: async (userId: UserId) => {
     try {
-      const userId = authStorage.get();
       const path = `exercise/everyDate`;
       const response = await HttpClient.get(path, { userId });
       const { dateList } = response.response as { dateList: ExerciseType.ExerciseDate };

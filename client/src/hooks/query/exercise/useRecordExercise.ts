@@ -16,15 +16,9 @@ const useRecordExercise = () => {
         if (!isSuccess) {
           return;
         }
-        queryClient.invalidateQueries([QueryKey.EXERCISE_DATE_LIST, authStorage.get()], {
-          refetchInactive: true,
-        });
-        queryClient.invalidateQueries(QueryKey.EXERCISE_PROFILE, {
-          refetchInactive: true,
-        });
-        queryClient.invalidateQueries(QueryKey.SINGLE_MONTH_EXERCISE_HISTORY, {
-          refetchInactive: true,
-        });
+        queryClient.invalidateQueries([QueryKey.EXERCISE_DATE_LIST, authStorage.get()]);
+        queryClient.invalidateQueries(QueryKey.EXERCISE_PROFILE);
+        queryClient.invalidateQueries(QueryKey.SINGLE_MONTH_EXERCISE_HISTORY);
         navigate(RoutePath.HOME, { replace: true });
       },
     },
