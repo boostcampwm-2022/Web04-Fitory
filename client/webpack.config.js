@@ -56,6 +56,10 @@ module.exports = {
         loader: "babel-loader",
       },
       {
+        test: /\.(sa|sc|c)ss$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
         test: /\.(webp|png|jpe?g|gif|svg|ico)$/i,
         type: "asset/resource",
         generator: {

@@ -1,11 +1,12 @@
-import React, { useEffect, Suspense, useRef } from "react";
+import React, { useEffect, Suspense } from "react";
+import { ToastContainer } from "react-toastify";
 import TopNavigationBar from "@components/TopNavigationBar";
 import MainContainer from "@components/MainContainer";
 import BottomNavigationBar from "@components/BottomNavigationBar";
 import Loading from "@components/Loading";
-import modalStore from "@stores/modalStore";
 import { authStorage } from "src/services/ClientStorage";
 import Exception from "src/services/Exception";
+import "react-toastify/dist/ReactToastify.css";
 
 interface PageTemplateProps {
   isRoot: boolean;
@@ -24,18 +25,11 @@ const PageTemplate = ({
   onClickBackButton,
   children,
 }: PageTemplateProps) => {
-  const { setModalRef } = modalStore();
-  const modalRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     if (!ignoreException && !authStorage.has()) {
       Exception.UserNotFound();
     }
   });
-
-  useEffect(() => {
-    setModalRef(modalRef);
-  }, [setModalRef]);
 
   return (
     <>
@@ -49,7 +43,7 @@ const PageTemplate = ({
         <MainContainer isRoot={isRoot}>{children}</MainContainer>
       </Suspense>
       {isRoot && <BottomNavigationBar />}
-      <div ref={modalRef} style={{ zIndex: 2 }} />
+      <ToastContainer position="bottom-center" />
     </>
   );
 };
