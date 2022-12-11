@@ -11,7 +11,6 @@ import "react-toastify/dist/ReactToastify.css";
 interface PageTemplateProps {
   isRoot: boolean;
   title?: string;
-  ignoreException?: boolean;
   topNavRightItem?: JSX.Element;
   onClickBackButton?: () => void;
   children: React.ReactNode;
@@ -20,13 +19,12 @@ interface PageTemplateProps {
 const PageTemplate = ({
   isRoot,
   title,
-  ignoreException,
   topNavRightItem,
   onClickBackButton,
   children,
 }: PageTemplateProps) => {
   useEffect(() => {
-    if (!ignoreException && !authStorage.has()) {
+    if (!authStorage.has()) {
       Exception.UserNotFound();
     }
   });

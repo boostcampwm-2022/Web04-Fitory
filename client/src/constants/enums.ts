@@ -165,9 +165,3 @@ export const NotificationState = {
   FOLLOW: 1,
 } as const;
 export type NotificationState = typeof NotificationState[keyof typeof NotificationState];
-
-export const NotificationRead = {
-  read: 1,
-  unread: 0,
-};
-export type NotificationRead = typeof NotificationRead[keyof typeof NotificationRead];

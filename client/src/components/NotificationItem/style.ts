@@ -25,6 +25,11 @@ export const TextWrapper = styled.div`
   justify-content: space-around;
 `;
 
+export const SenderNameButton = styled.button`
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+`;
+
 export const NotiState = styled.h3`
   color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
@@ -33,9 +38,6 @@ export const NotiState = styled.h3`
 
 export const NotiContent = styled.p`
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
-  & > span {
-    font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
-  }
 `;
 
 export const NotiTime = styled.p`

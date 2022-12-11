@@ -17,10 +17,11 @@ const NotificationPage = () => {
       <s.Wrapper>
         <s.NotiList>
           {notificationHistory.map(
-            ({ index, name, profile_image, time_stamp, alarm_type, check }) => (
+            ({ index, name, profile_image, time_stamp, alarm_type, check, sender_user_id }) => (
               <NotificationItem
                 key={index}
                 isRead={Boolean(check)}
+                senderId={sender_user_id}
                 senderName={name}
                 senderProfileImage={profile_image}
                 timeStamp={time_stamp}
