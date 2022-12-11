@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import PageTemplate from "@pages/PageTemplate";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import toggleBtn from "@public/images/btn_toggle.svg";
+import UserAPI from "@api/UserAPI";
 import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
+import * as UserType from "../../types/user";
 
 const ProfileEditPage = () => {
   const { userInfo } = useUserInfo(authStorage.get());
@@ -14,11 +16,38 @@ const ProfileEditPage = () => {
     setVisibleState((prevState) => !prevState);
   };
 
-  const submitInformation = () => {};
+  const submitInformation = async (e) => {
+    e.preventDefault();
+    console.log({
+      userId: authStorage.get(),
+      name: e.target.name.value as string,
+      age: e.target.age.value as number,
+      gender: e.target.gender.value as number,
+      height: e.target.height.value as number,
+      weight: e.target.weight.value as number,
+      introduce: e.target.introduce.value as string,
+    });
+
+    const submit = await UserAPI.updateUserInfo({
+      userId: authStorage.get(),
+      name: e.target.name.value,
+      age: parseInt(e.target.age.value, 10),
+      gender: e.target.gender.value === "남" ? 0 : 1,
+      height: parseInt(e.target.height.value, 10),
+      weight: parseInt(e.target.weight.value, 10),
+      introduce: e.target.introduce.value,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+
+    console.log(submit);
+  };
 
   return (
     <PageTemplate isRoot={false} title="프로필 편집">
-      <s.ProfileEditWrapper>
+      <s.ProfileEditForm onSubmit={submitInformation}>
         <s.EditProfileImgButton>
           <ProfileImageContainer isModified={false} profileImgUrl={userInfo.profileImage} />
         </s.EditProfileImgButton>
@@ -26,6 +55,7 @@ const ProfileEditPage = () => {
           <s.ProfileEditLabel>이름</s.ProfileEditLabel>
           <s.ProfileEditInput
             type="text"
+            name="name"
             placeholder="이름을 입력해주세요."
             defaultValue={userInfo.name}
           />
@@ -34,6 +64,7 @@ const ProfileEditPage = () => {
           <s.ProfileEditLabel>자기소개</s.ProfileEditLabel>
           <s.ProfileEditInput
             type="text"
+            name="introduce"
             placeholder="자기소개를 입력해주세요."
             defaultValue={userInfo.introduce}
           />
@@ -50,6 +81,7 @@ const ProfileEditPage = () => {
               <s.ProfileEditLabel>나이</s.ProfileEditLabel>
               <s.ProfileEditInput
                 type="text"
+                name="age"
                 placeholder="만 나이를 입력해주세요."
                 defaultValue={userInfo.age}
               />
@@ -58,6 +90,7 @@ const ProfileEditPage = () => {
               <s.ProfileEditLabel>성별</s.ProfileEditLabel>
               <s.ProfileEditInput
                 type="text"
+                name="gender"
                 placeholder="성별을 입력해주세요."
                 defaultValue={userInfo.gender === 0 ? "남" : "여"}
               />
@@ -66,6 +99,7 @@ const ProfileEditPage = () => {
               <s.ProfileEditLabel>신장</s.ProfileEditLabel>
               <s.ProfileEditInput
                 type="text"
+                name="height"
                 placeholder="신장을 입력해주세요."
                 defaultValue={userInfo.height}
               />
@@ -74,14 +108,15 @@ const ProfileEditPage = () => {
               <s.ProfileEditLabel>체중</s.ProfileEditLabel>
               <s.ProfileEditInput
                 type="text"
+                name="weight"
                 placeholder="체중을 입력해주세요."
                 defaultValue={userInfo.weight}
               />
             </s.ProfileEditInputContainer>
           </s.PrivateInfoContainer>
         </s.PrivateInfoWrapper>
-        <s.SubmitButton onClick={submitInformation}> 수정 완료 </s.SubmitButton>
-      </s.ProfileEditWrapper>
+        <s.SubmitButton type="submit"> 수정 완료 </s.SubmitButton>
+      </s.ProfileEditForm>
     </PageTemplate>
   );
 };

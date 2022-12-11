@@ -6,7 +6,7 @@ export const EditProfileImgButton = styled.div`
   width: 200px;
 `;
 
-export const ProfileEditWrapper = styled.div`
+export const ProfileEditForm = styled.form`
   text-align: center;
   padding: 5vw;
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
