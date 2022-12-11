@@ -2,15 +2,15 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 100px;
-  padding: 25px 70px;
+  height: fit-content;
+  padding: 15px 70px;
   gap: 15px;
   line-height: 22px;
   display: flex;
   align-items: center;
   ${({ isRead }: { isRead: boolean }) => !isRead && `background-color: aliceblue;`}
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    padding: 40px 20px;
+    padding: 10px 20px;
   }
 `;
 

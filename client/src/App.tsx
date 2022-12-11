@@ -9,6 +9,7 @@ import { DEFAULT_STALE_TIME } from "@constants/consts";
 import Loading from "@components/Loading";
 import ErrorFallback from "@components/ErrorFallback";
 import NotFoundPage from "@pages/NotFountPage";
+import { EventSourceProvider } from "./contexts/EventSourceContext";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 const ChallengePage = lazy(() => import("@pages/ChallengePage"));
@@ -37,35 +38,37 @@ const App = () => {
     <BrowserRouter>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
-        <ErrorBoundary fallback={<ErrorFallback />}>
-          <Suspense fallback={<Loading isLazy />}>
-            <Routes>
-              {/* Home */}
-              <Route path={RoutePath.HOME} element={<HomePage />} />
-              <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
-              <Route path={RoutePath.RECORD} element={<RecordPage />} />
-              <Route path={RoutePath.CALENDAR} element={<CalendarPage />} />
-              <Route path={RoutePath.NOTIFICATION} element={<NotificationPage />} />
-              {/* Search */}
-              <Route path={RoutePath.SEARCH} element={<SearchPage />} />
-              {/* Statistics */}
-              <Route path={RoutePath.STATISTICS} element={<StatisticsPage />} />
-              {/* Profile */}
-              <Route path={RoutePath.PROFILE}>
-                <Route path=":userId" element={<ProfilePage />} />
-                <Route path="" element={<ProfilePage />} />
-              </Route>
-              <Route path={RoutePath.LOGIN} element={<LoginPage />} />
-              <Route path={RoutePath.JOIN} element={<JoinPage />} />
-              <Route path={RoutePath.SEARCH} element={<SearchPage />} />
-              <Route path={RoutePath.FOLLOW}>
-                <Route path=":userId" element={<FollowPage />} />
-                <Route path="" element={<FollowPage />} />
-              </Route>
-              <Route path="/*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
-        </ErrorBoundary>
+        <EventSourceProvider>
+          <ErrorBoundary fallback={<ErrorFallback />}>
+            <Suspense fallback={<Loading isLazy />}>
+              <Routes>
+                {/* Home */}
+                <Route path={RoutePath.HOME} element={<HomePage />} />
+                <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
+                <Route path={RoutePath.RECORD} element={<RecordPage />} />
+                <Route path={RoutePath.CALENDAR} element={<CalendarPage />} />
+                <Route path={RoutePath.NOTIFICATION} element={<NotificationPage />} />
+                {/* Search */}
+                <Route path={RoutePath.SEARCH} element={<SearchPage />} />
+                {/* Statistics */}
+                <Route path={RoutePath.STATISTICS} element={<StatisticsPage />} />
+                {/* Profile */}
+                <Route path={RoutePath.PROFILE}>
+                  <Route path=":userId" element={<ProfilePage />} />
+                  <Route path="" element={<ProfilePage />} />
+                </Route>
+                <Route path={RoutePath.LOGIN} element={<LoginPage />} />
+                <Route path={RoutePath.JOIN} element={<JoinPage />} />
+                <Route path={RoutePath.SEARCH} element={<SearchPage />} />
+                <Route path={RoutePath.FOLLOW}>
+                  <Route path=":userId" element={<FollowPage />} />
+                  <Route path="" element={<FollowPage />} />
+                </Route>
+                <Route path="/*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
+        </EventSourceProvider>
       </QueryClientProvider>
     </BrowserRouter>
   );

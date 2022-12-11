@@ -1,34 +1,42 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQueryClient, useQuery } from "react-query";
 import NotificationAPI from "@api/NotificationAPI";
 import { QueryKey } from "@constants/enums";
 import { Notification } from "src/types/notification";
-import { NO_STALE_TIME } from "@constants/consts";
 
 const useNotificationHistory = () => {
-  const [notificationHistory, setNotificationHistory] = useState<Notification[]>([]);
-  const [notiIndex, setNotiIndex] = useState(0);
+  const queryClient = useQueryClient();
 
-  const { data } = useQuery(
+  const [notificationHistory, setNotificationHistory] = useState<Notification[]>([]);
+  const [notiIndex, setNotiIndex] = useState<number | null>(null);
+
+  const { data, isLoading } = useQuery(
     [QueryKey.NOTIFICATION_HISTORY, notiIndex],
     () => NotificationAPI.getNotificationHistoryList(notiIndex),
-    { staleTime: NO_STALE_TIME },
+    { staleTime: 0 },
   );
 
-  const fetchTenMoreNotification = () => {
-    if (data?.length) {
+  const fetchTenMoreNotification = async () => {
+    if (data?.length && notificationHistory.length) {
       setNotiIndex(notificationHistory[notificationHistory.length - 1].index);
     }
   };
 
   useEffect(() => {
-    if (data) {
-      setNotificationHistory([...notificationHistory, ...data]);
+    if (!data?.length) {
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+    if (!notificationHistory.length) {
+      queryClient.invalidateQueries(QueryKey.NOTIFICATION_COUNT);
+    } else if (
+      data[data.length - 1].index === notificationHistory[notificationHistory.length - 1].index
+    ) {
+      return;
+    }
+    setNotificationHistory([...notificationHistory, ...data]);
+  }, [data, notificationHistory, queryClient]);
 
-  return { notificationHistory, fetchTenMoreNotification };
+  return { notificationHistory, fetchTenMoreNotification, isLoading };
 };
 
 export default useNotificationHistory;

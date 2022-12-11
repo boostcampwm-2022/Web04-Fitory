@@ -40,7 +40,7 @@ const NotificationItem = ({
             </>
           )}
         </s.NotiContent>
-        <s.NotiTime>1시간 전</s.NotiTime>
+        <s.NotiTime>{timeStamp}</s.NotiTime>
       </s.TextWrapper>
     </s.Wrapper>
   );

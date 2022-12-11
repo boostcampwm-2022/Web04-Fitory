@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { RoutePath } from "@constants/enums";
 import notificationSrc from "@public/icons/btn_notification.svg";
 import useNotificationCount from "@hooks/query/notification/useNotificationCount";

@@ -18,7 +18,7 @@ const NotificationAPI = {
     }
   },
 
-  getNotificationHistoryList: async (notificationIndex: number) => {
+  getNotificationHistoryList: async (notificationIndex: number | null) => {
     try {
       const userId = authStorage.get();
       const path = "alarms/list";
