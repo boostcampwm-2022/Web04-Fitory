@@ -20,7 +20,6 @@ const FollowButton = ({ userInfo }: { userInfo: UserInfo }) => {
       return FollowAPI.unFollow({ myUserId, otherUserId });
     })();
     setFollowState(!followState);
-    console.log("되는거냐");
     return queryClient.invalidateQueries([QueryKey.USER_INFO, otherUserId]);
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import UserInfoSummary from "@components/UserInfoSummary";
@@ -6,8 +6,6 @@ import CalendarHeatMap from "@components/CalendarHeatMap";
 import arrowRightSrc from "@public/icons/mark_arrow_right.svg";
 import { RoutePath } from "@constants/enums";
 import Calendar from "@components/Calendar";
-// import useUserInfo from "@hooks/query/useUserInfo";
-// import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
 const HomePage = () => {
