@@ -82,7 +82,6 @@ export class UsersController {
     @Body() userProfileData: UserProfileDto,
   ) {
     const { userId } = userProfileData;
-    console.log(userId);
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     const userIdExist = await this.usersService.isExistUser(userId);
     if (!userIdExist) throw new Exception().userNotFound();
