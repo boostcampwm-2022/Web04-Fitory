@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import defaultProfileSrc from "@public/images/img_default_profile.svg";
 import { NotificationState, RoutePath } from "@constants/enums";
 import { DEFAULT_IMAGE_SRC } from "@constants/consts";
+import useRecentChallengeTime from "@hooks/query/challenge/useRecentChallengeTime";
+import getLastDateText from "@utils/getLastDateText";
 import * as s from "./style";
 
 interface NotificationItemProps {
@@ -10,7 +12,7 @@ interface NotificationItemProps {
   senderId: number;
   senderName: string;
   senderProfileImage: string;
-  timeStamp: string;
+  timestamp: string;
   alarmType: NotificationState;
 }
 
@@ -19,10 +21,12 @@ const NotificationItem = ({
   senderId,
   senderName,
   senderProfileImage,
-  timeStamp,
+  timestamp,
   alarmType,
 }: NotificationItemProps) => {
   const navigate = useNavigate();
+  const { nowTimeStamp } = useRecentChallengeTime();
+
   const handleClickSenderName = () => {
     navigate(`${RoutePath.PROFILE}/${senderId}`);
   };
@@ -50,7 +54,7 @@ const NotificationItem = ({
             </>
           )}
         </s.NotiContent>
-        <s.NotiTime>{timeStamp}</s.NotiTime>
+        <s.NotiTime>{getLastDateText(new Date(timestamp), nowTimeStamp)}</s.NotiTime>
       </s.TextWrapper>
     </s.Wrapper>
   );

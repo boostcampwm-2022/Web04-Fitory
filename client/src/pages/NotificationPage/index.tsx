@@ -24,7 +24,7 @@ const NotificationPage = () => {
                 senderId={sender_user_id}
                 senderName={name}
                 senderProfileImage={profile_image}
-                timeStamp={time_stamp}
+                timestamp={time_stamp}
                 alarmType={alarm_type}
               />
             ),
