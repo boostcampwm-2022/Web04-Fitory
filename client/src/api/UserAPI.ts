@@ -98,7 +98,6 @@ const UserAPI = {
       weight,
       introduce,
     };
-    console.log(userInfo);
     const response = await HttpClient.post(path, userInfo);
     return response.response as { message: string };
   },

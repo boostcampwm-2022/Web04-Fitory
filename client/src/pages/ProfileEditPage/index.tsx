@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import PageTemplate from "@pages/PageTemplate";
 import useUserInfo from "@hooks/query/user/useUserInfo";
@@ -6,7 +6,6 @@ import toggleBtn from "@public/images/btn_toggle.svg";
 import UserAPI from "@api/UserAPI";
 import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
-import * as UserType from "../../types/user";
 
 const ProfileEditPage = () => {
   const { userInfo } = useUserInfo(authStorage.get());
@@ -16,33 +15,20 @@ const ProfileEditPage = () => {
     setVisibleState((prevState) => !prevState);
   };
 
-  const submitInformation = async (e) => {
+  const submitInformation = async (e: SubmitEvent & { target: HTMLFormElement }) => {
     e.preventDefault();
-    console.log({
-      userId: authStorage.get(),
-      name: e.target.name.value as string,
-      age: e.target.age.value as number,
-      gender: e.target.gender.value as number,
-      height: e.target.height.value as number,
-      weight: e.target.weight.value as number,
-      introduce: e.target.introduce.value as string,
-    });
-
-    const submit = await UserAPI.updateUserInfo({
-      userId: authStorage.get(),
-      name: e.target.name.value,
-      age: parseInt(e.target.age.value, 10),
-      gender: e.target.gender.value === "남" ? 0 : 1,
-      height: parseInt(e.target.height.value, 10),
-      weight: parseInt(e.target.weight.value, 10),
-      introduce: e.target.introduce.value,
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-
-    console.log(submit);
+    if (e.target) {
+      await UserAPI.updateUserInfo({
+        userId: authStorage.get(),
+        name: e.target.name.value as string,
+        age: parseInt(e.target.age.value, 10),
+        gender: e.target.gender.value === "남" ? 0 : 1,
+        height: parseInt(e.target.height.value, 10),
+        weight: parseInt(e.target.weight.value, 10),
+        introduce: e.target.introduce.value,
+      });
+      alert("수정이 완료되었습니다!");
+    }
   };
 
   return (
