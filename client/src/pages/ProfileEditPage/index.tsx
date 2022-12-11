@@ -4,10 +4,13 @@ import PageTemplate from "@pages/PageTemplate";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import toggleBtn from "@public/images/btn_toggle.svg";
 import UserAPI from "@api/UserAPI";
+import { QueryKey } from "@constants/enums";
+import { useQueryClient } from "react-query";
 import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
 
 const ProfileEditPage = () => {
+  const queryClient = useQueryClient();
   const { userInfo } = useUserInfo(authStorage.get());
   const [visibleState, setVisibleState] = useState(false);
 
@@ -20,13 +23,14 @@ const ProfileEditPage = () => {
     if (e.target) {
       await UserAPI.updateUserInfo({
         userId: authStorage.get(),
-        name: e.target.name.value as string,
+        name: e.target.userName.value,
         age: parseInt(e.target.age.value, 10),
         gender: e.target.gender.value === "남" ? 0 : 1,
         height: parseInt(e.target.height.value, 10),
         weight: parseInt(e.target.weight.value, 10),
         introduce: e.target.introduce.value,
       });
+      await queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
       alert("수정이 완료되었습니다!");
     }
   };
@@ -41,7 +45,7 @@ const ProfileEditPage = () => {
           <s.ProfileEditLabel>이름</s.ProfileEditLabel>
           <s.ProfileEditInput
             type="text"
-            name="name"
+            name="userName"
             placeholder="이름을 입력해주세요."
             defaultValue={userInfo.name}
           />
