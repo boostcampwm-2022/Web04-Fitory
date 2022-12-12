@@ -111,21 +111,6 @@ const ExerciseAPI = {
       return null;
     }
   },
-
-  getEveryDayHistory: async () => {
-    try {
-      const path = `record/every`;
-      const userId = authStorage.get();
-      const response = await HttpClient.get(path, { userId });
-      const { recordList } = response.response as {
-        recordList: ExerciseType.SDBRecordHistoryArray[];
-      };
-      return recordList;
-    } catch {
-      toast.error(error.GET_EXERCISE_INFO);
-      return null;
-    }
-  },
 };
 
 export default ExerciseAPI;

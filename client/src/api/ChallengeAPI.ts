@@ -44,6 +44,21 @@ const ChallengeAPI = {
       return null;
     }
   },
+
+  getEveryDayHistory: async () => {
+    try {
+      const path = `record/every`;
+      const userId = authStorage.get();
+      const response = await HttpClient.get(path, { userId });
+      const { recordList } = response.response as {
+        recordList: ChallengeType.ChallengeHistoryList[];
+      };
+      return recordList;
+    } catch {
+      toast.error(error.GET_CHALLENGE_INFO);
+      return null;
+    }
+  },
 };
 
 export default ChallengeAPI;
