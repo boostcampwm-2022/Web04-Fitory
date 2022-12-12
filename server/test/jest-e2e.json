@@ -1,9 +1,5 @@
 {
-  "moduleFileExtensions": [
-    "js",
-    "json",
-    "ts"
-  ],
+  "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": ".",
   "moduleNameMapper": {
     "^@utils/(.*)$": "<rootDir>/../src/utils/$1",
