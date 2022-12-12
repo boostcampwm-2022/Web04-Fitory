@@ -40,10 +40,6 @@ const ProfileEditPage = () => {
       alert("수정이 완료되었습니다!");
     }
   };
-  const handleChange = (e: React.ChangeEvent) => {
-    const target = e.target as HTMLInputElement;
-    if (target.files) setProfileImg(target.files[0]);
-  };
 
   return (
     <PageTemplate isRoot={false} title="프로필 편집">
@@ -72,7 +68,6 @@ const ProfileEditPage = () => {
             placeholder="자기소개를 입력해주세요."
             defaultValue={userInfo.introduce}
           />
-          <input type="file" accept="image/*" name="profile_img" onChange={handleChange} />
         </s.ProfileEditInputContainer>
         <s.PrivateInfoWrapper>
           <s.PrivateInfoToggleHeader>
