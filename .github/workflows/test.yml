@@ -9,7 +9,7 @@ on:
 
 jobs:
   check:
-    name: lint + build checking
+    name: Test
     runs-on: ubuntu-latest
     outputs:
         frontend: ${{steps.filter.outputs.frontend}}
@@ -20,9 +20,9 @@ jobs:
           with:
               filters: |
                   frontend:
-                    - 'frontend/**'
+                    - 'client/**'
                   backend:
-                    - 'backend/**'
+                    - 'server/**'
 
   backend:
     runs-on: ubuntu-latest
