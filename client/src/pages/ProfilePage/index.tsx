@@ -10,7 +10,6 @@ import LogoutButton from "@components/LogoutButton";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import { RoutePath, QueryKey } from "@constants/enums";
 import { authStorage } from "src/services/ClientStorage";
-import { useQueryClient } from "react-query";
 import * as s from "./style";
 
 const ProfilePage = () => {
@@ -19,18 +18,9 @@ const ProfilePage = () => {
   const profileUserId = userId ? +userId : authStorage.get();
   const { userInfo } = useUserInfo(profileUserId);
   const isOwner = profileUserId === authStorage.get();
-  const { id } = userInfo;
-
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    (() => {
-      return queryClient.invalidateQueries([QueryKey.USER_INFO, id]);
-    })();
-  }, []);
 
   return (
-    <PageTemplate isRoot={isOwner}>
+    <PageTemplate isRoot={isOwner} title="프로필">
       <s.MyProfileContainer>
         <MyPageUserProfile userInfo={userInfo} />
         <s.ButtonContainer>
