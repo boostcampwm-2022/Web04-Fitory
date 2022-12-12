@@ -32,14 +32,23 @@ jobs:
         node-version: [16]
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
+      
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
+
+    - name: Cache backend node modules
+      id: cache-backend
+      uses: actions/cache@v3
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        path: server/node_modules
+        key: npm-packages-server-${{hashFiles('**/package-lock.json')}}
+        restore-keys: |
+          npm-packages-server-
         
-    - name: Install dependencies
+    - name: Install backend dependencies
+      if: ${{steps.cache-backend.outputs.cache-hit != 'true'}}
       run: cd server && npm install
       
     - name: Run Jest:e2e
