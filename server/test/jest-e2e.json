@@ -16,7 +16,8 @@
     "^@statistics/(.*)$": "<rootDir>/../src/domain/sbd_statistics/$1",
     "^@user/(.*)$": "<rootDir>/../src/domain/users/$1",
     "^@mock/(.*)$": "<rootDir>/../src/domain/mock/$1",
-    "^@guard/(.*)$": "<rootDir>/../src/guard/$1"
+    "^@guard/(.*)$": "<rootDir>/../src/guard/$1",
+    "^@decorator/(.*)$": "<rootDir>/../src/decorator/$1"
   },
   "testEnvironment": "node",
   "testRegex": ".e2e-spec.ts$",
