@@ -6,7 +6,7 @@ import { Exercise } from "@exercise/entities/exercise.entity";
 import { Routine } from "@routine/entities/routine.entity";
 import { User } from "@user/entities/user.entity";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { DB_HOST, DB_PORT, DB_USER, DB_PWD, DB_NAME } from "@env";
+import { DB_HOST, DB_PORT, DB_USER, DB_PWD, DB_NAME } from "@utils/env";
 
 export const typeormConfig: TypeOrmModuleOptions = {
   type: "mysql",
