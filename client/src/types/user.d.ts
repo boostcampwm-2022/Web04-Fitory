@@ -19,7 +19,7 @@ export interface JoinResponse {
 }
 
 export interface LoginUserInfo {
-  access_token: string;
+  access_token?: string;
 }
 
 export interface JoinUserInfo extends LoginUserInfo {
@@ -54,12 +54,6 @@ export interface FollowUserInfo {
   otherUserId: UserId;
 }
 
-export interface UpdateUserInfo {
-  userId: number;
+export interface UpdateUserInfo extends JoinUserInfo {
   introduce: string;
-  name: UserName;
-  age: UserAge;
-  gender: UserGender;
-  height: UserHeight;
-  weight: UserWeight;
 }

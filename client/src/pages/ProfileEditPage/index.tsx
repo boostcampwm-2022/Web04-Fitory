@@ -1,37 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent, ChangeEvent } from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import PageTemplate from "@pages/PageTemplate";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import toggleBtn from "@public/images/btn_toggle.svg";
 import UserAPI from "@api/UserAPI";
-import { QueryKey } from "@constants/enums";
-import { useQueryClient } from "react-query";
+import { Gender, UserName, UserIntroduce, UserAge, UserHeight, UserWeight } from "@constants/enums";
+import { NICKNAME_REGEX, NUMBER_REGEX } from "@constants/consts";
+import { authStorage } from "src/services/ClientStorage";
+import * as UserType from "src/types/user";
 import * as s from "./style";
-import { authStorage } from "../../services/ClientStorage";
 
 const ProfileEditPage = () => {
-  const queryClient = useQueryClient();
   const { userInfo } = useUserInfo(authStorage.get());
   const [visibleState, setVisibleState] = useState(false);
+
+  const [inputValues, setinputValues] = useState<UserType.UpdateUserInfo>({
+    name: userInfo.name,
+    introduce: userInfo.introduce,
+    age: userInfo.age,
+    gender: userInfo.gender,
+    height: userInfo.height,
+    weight: userInfo.weight,
+  });
 
   const openPrivateInfoEdit = () => {
     setVisibleState((prevState) => !prevState);
   };
 
-  const submitInformation = async (e: SubmitEvent & { target: HTMLFormElement }) => {
+  const submitInformation = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (e.target) {
-      await UserAPI.updateUserInfo({
-        userId: authStorage.get(),
-        name: e.target.userName.value,
-        age: parseInt(e.target.age.value, 10),
-        gender: e.target.gender.value === "남" ? 0 : 1,
-        height: parseInt(e.target.height.value, 10),
-        weight: parseInt(e.target.weight.value, 10),
-        introduce: e.target.introduce.value,
-      });
-      await queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
-      alert("수정이 완료되었습니다!");
+    // if (e.target) {
+    //   await UserAPI.updateUserInfo({
+    //     userId: authStorage.get(),
+    //     name: e.target.userName.value,
+    //     age: parseInt(e.target.age.value, 10),
+    //     gender: e.target.gender.value === "남" ? 0 : 1,
+    //     height: parseInt(e.target.height.value, 10),
+    //     weight: parseInt(e.target.weight.value, 10),
+    //     introduce: e.target.introduce.value,
+    //   });
+    //   await queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
+    //   window.history.back();
+    // }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const matchedArray = e.target.value.match(NUMBER_REGEX);
+    const numberValue = matchedArray ? +matchedArray[0] : 0;
+
+    switch (e.target.name) {
+      case "userName":
+        if (e.target.value.match(NICKNAME_REGEX) && e.target.value.length <= UserName.MAX) {
+          setinputValues({ ...inputValues, name: e.target.value });
+        }
+        break;
+      case "introduce":
+        if (e.target.value.length <= UserIntroduce.MAX) {
+          setinputValues({ ...inputValues, introduce: e.target.value });
+        }
+        break;
+      case "age":
+        if (numberValue <= UserAge.MAX) {
+          setinputValues({ ...inputValues, age: numberValue });
+        }
+        break;
+      case "height":
+        if (numberValue <= UserHeight.MAX) {
+          setinputValues({ ...inputValues, height: numberValue });
+        }
+        break;
+      case "weight":
+        if (numberValue <= UserWeight.MAX) {
+          setinputValues({ ...inputValues, weight: numberValue });
+        }
+        break;
+      default:
     }
   };
 
@@ -47,7 +90,8 @@ const ProfileEditPage = () => {
             type="text"
             name="userName"
             placeholder="이름을 입력해주세요."
-            defaultValue={userInfo.name}
+            value={inputValues.name}
+            onChange={handleChange}
           />
         </s.ProfileEditInputContainer>
         <s.ProfileEditInputContainer>
@@ -56,7 +100,8 @@ const ProfileEditPage = () => {
             type="text"
             name="introduce"
             placeholder="자기소개를 입력해주세요."
-            defaultValue={userInfo.introduce}
+            value={inputValues.introduce}
+            onChange={handleChange}
           />
         </s.ProfileEditInputContainer>
         <s.PrivateInfoWrapper>
@@ -73,7 +118,8 @@ const ProfileEditPage = () => {
                 type="text"
                 name="age"
                 placeholder="만 나이를 입력해주세요."
-                defaultValue={userInfo.age}
+                value={inputValues.age}
+                onChange={handleChange}
               />
             </s.ProfileEditInputContainer>
             <s.ProfileEditInputContainer>
@@ -82,7 +128,8 @@ const ProfileEditPage = () => {
                 type="text"
                 name="gender"
                 placeholder="성별을 입력해주세요."
-                defaultValue={userInfo.gender === 0 ? "남" : "여"}
+                value={inputValues.gender === Gender.MALE ? "남" : "여"}
+                onChange={handleChange}
               />
             </s.ProfileEditInputContainer>
             <s.ProfileEditInputContainer>
@@ -91,7 +138,8 @@ const ProfileEditPage = () => {
                 type="text"
                 name="height"
                 placeholder="신장을 입력해주세요."
-                defaultValue={userInfo.height}
+                value={inputValues.height}
+                onChange={handleChange}
               />
             </s.ProfileEditInputContainer>
             <s.ProfileEditInputContainer>
@@ -100,7 +148,8 @@ const ProfileEditPage = () => {
                 type="text"
                 name="weight"
                 placeholder="체중을 입력해주세요."
-                defaultValue={userInfo.weight}
+                value={inputValues.weight}
+                onChange={handleChange}
               />
             </s.ProfileEditInputContainer>
           </s.PrivateInfoContainer>
