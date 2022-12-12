@@ -46,6 +46,29 @@ jobs:
         key: npm-packages-server-${{hashFiles('**/package-lock.json')}}
         restore-keys: |
           npm-packages-server-
+
+    - name: Generate Environment Variables File for Server
+      run: |
+        echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+        echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+        echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+        echo "DB_PWD=${{ secrets.DB_PWD }}" >> .env
+        echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+        echo "ACCESS_TOKEN_SECRETKEY=${{ secrets.ACCESS_TOKEN_SECRETKEY }}" >> .env
+        echo "ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }}" >> .env
+        echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+        echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+        cat .env
+      env:
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PWD: ${{ secrets.DB_PWD }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        ACCESS_TOKEN_SECRETKEY: ${{ secrets.ACCESS_TOKEN_SECRETKEY }}
+        ACCESS_TOKEN_EXPIRESIN: ${{ secrets.ACCESS_TOKEN_EXPIRESIN }}
+        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
         
     - name: Install backend dependencies
       if: ${{steps.cache-backend.outputs.cache-hit != 'true'}}
