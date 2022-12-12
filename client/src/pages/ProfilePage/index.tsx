@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import MyPageUserProfile from "@components/MyPageUserProfile";
@@ -8,9 +8,8 @@ import CalendarHeatMap from "@components/CalendarHeatMap";
 import RoutineScroller from "@components/RoutineScroller";
 import LogoutButton from "@components/LogoutButton";
 import useUserInfo from "@hooks/query/user/useUserInfo";
-import { RoutePath, QueryKey } from "@constants/enums";
+import { RoutePath } from "@constants/enums";
 import { authStorage } from "src/services/ClientStorage";
-import { useQueryClient } from "react-query";
 import * as s from "./style";
 
 const ProfilePage = () => {
@@ -20,14 +19,6 @@ const ProfilePage = () => {
   const { userInfo } = useUserInfo(profileUserId);
   const isOwner = profileUserId === authStorage.get();
   const { id } = userInfo;
-
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    (() => {
-      return queryClient.invalidateQueries([QueryKey.USER_INFO, id]);
-    })();
-  }, []);
 
   return (
     <PageTemplate isRoot={isOwner}>
