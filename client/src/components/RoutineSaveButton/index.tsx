@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { error } from "@constants/message";
+import { ModalKey } from "@constants/enums";
 import Modal from "@components/design/Modal";
 import modalStore from "@stores/modalStore";
 import exerciseStore from "@stores/exerciseStore";
@@ -8,7 +11,7 @@ import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
 const RoutineSaveButton = ({ otherRoutineName }: { otherRoutineName?: string }) => {
-  const { saveRoutine } = useSaveRoutine();
+  const { saveRoutine, isSussess } = useSaveRoutine();
   const { routineList } = useRoutineList(authStorage.get());
 
   const { openModal, closeModal } = modalStore();
@@ -16,21 +19,29 @@ const RoutineSaveButton = ({ otherRoutineName }: { otherRoutineName?: string }) 
   const [routineName, setRoutineName] = useState(otherRoutineName || "");
 
   const handleClickRoutineSaveButton = () => {
-    if (routineList?.includes(routineName)) {
-      // eslint-disable-next-line no-alert
-      alert("이미 존재하는 루틴 이름입니다.");
+    if (routineList.includes(routineName)) {
+      toast.error(error.SAVE_ROUTINE_DUPLICATE);
+      return;
+    }
+    if (!routineName && exerciseList.find(({ exerciseName }) => !exerciseName)) {
+      toast.error(error.SAVE_ROUTINE_EMPTY);
       return;
     }
     saveRoutine({ routineName, exerciseList });
-    closeModal();
+    if (isSussess) {
+      closeModal();
+    }
   };
 
   return (
     <>
-      <s.RoutineSaveButton isOtherRoutine={Boolean(otherRoutineName)} onClick={() => openModal()}>
-        루틴 저장
+      <s.RoutineSaveButton
+        isOtherRoutine={Boolean(otherRoutineName)}
+        onClick={() => openModal(ModalKey.SAVE_ROUTINE)}
+      >
+        {otherRoutineName ? "내 루틴으로 저장" : "루틴 저장"}
       </s.RoutineSaveButton>
-      <Modal>
+      <Modal modalKey={ModalKey.SAVE_ROUTINE}>
         <s.RoutineNameLabel>루틴 이름을 입력해주세요.</s.RoutineNameLabel>
         <s.RoutineNameTextField
           value={routineName}

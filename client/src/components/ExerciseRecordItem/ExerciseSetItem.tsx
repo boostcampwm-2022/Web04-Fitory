@@ -3,6 +3,7 @@ import exerciseCompleteSrc from "@public/icons/btn_exercise_complete.svg";
 import exerciseFailSrc from "@public/icons/btn_exercise_fail.svg";
 import exerciseStore from "@stores/exerciseStore";
 import { NUMBER_REGEX } from "@constants/consts";
+import { ExerciseRecord } from "@constants/enums";
 import * as s from "./style";
 
 interface ExerciseSetItemProps {
@@ -18,7 +19,7 @@ const ExerciseSetItem = ({ exerciseId, setId }: ExerciseSetItemProps) => {
     const matchedArray = e.target.value.match(NUMBER_REGEX);
     const numberValue = matchedArray ? +matchedArray[0] : 0;
 
-    if (e.target.name === "weight") {
+    if (e.target.name === "weight" && numberValue <= ExerciseRecord.WEIGHT_MAX) {
       updateExerciseSetList(exerciseId, setId, {
         ...setItem,
         kg: numberValue,
@@ -26,10 +27,12 @@ const ExerciseSetItem = ({ exerciseId, setId }: ExerciseSetItemProps) => {
       return;
     }
 
-    updateExerciseSetList(exerciseId, setId, {
-      ...setItem,
-      count: numberValue,
-    });
+    if (numberValue <= ExerciseRecord.COUNT_MAX) {
+      updateExerciseSetList(exerciseId, setId, {
+        ...setItem,
+        count: numberValue,
+      });
+    }
   };
 
   const handleClickCompleteButton = () => {

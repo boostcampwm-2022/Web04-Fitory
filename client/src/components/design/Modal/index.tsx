@@ -1,22 +1,22 @@
-import React from "react";
-import { createPortal } from "react-dom";
+import React, { useEffect } from "react";
 import cancelSrc from "@public/icons/btn_cancel.svg";
 import modalStore from "@stores/modalStore";
 import * as s from "./style";
 
 export interface ModalProps {
+  modalKey: string;
   children: React.ReactNode;
 }
 
-const Modal = ({ children }: ModalProps) => {
-  const { modalRef, isShowModal, closeModal } = modalStore((state) => state);
+const Modal = ({ modalKey: key, children }: ModalProps) => {
+  const { modalList, setModalList, closeModal } = modalStore((state) => state);
 
-  if (!modalRef || !modalRef.current) {
-    return null;
-  }
+  useEffect(() => {
+    setModalList(key);
+  }, [key, setModalList]);
 
-  return createPortal(
-    <s.Wrapper isShow={isShowModal}>
+  return (
+    <s.Wrapper isShow={modalList[key]}>
       <s.Overlay onClick={closeModal} />
       <s.Window>
         <s.CloseButton onClick={closeModal}>
@@ -24,8 +24,7 @@ const Modal = ({ children }: ModalProps) => {
         </s.CloseButton>
         {children}
       </s.Window>
-    </s.Wrapper>,
-    modalRef.current,
+    </s.Wrapper>
   );
 };
 

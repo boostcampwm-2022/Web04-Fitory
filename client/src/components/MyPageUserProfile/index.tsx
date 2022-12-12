@@ -59,7 +59,7 @@ const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
         <s.ContentContainer>
           <s.ContentLabel>티어</s.ContentLabel>
           <s.TierContainer color={getTierColor(userInfo.tier)}>
-            {TIER[userInfo.tier]}
+            {TIER[userInfo.tier] || "-"}
           </s.TierContainer>
         </s.ContentContainer>
         <s.ContentContainer>

@@ -21,6 +21,7 @@ const JoinPage = lazy(() => import("@pages/JoinPage"));
 const StatisticsPage = lazy(() => import("@pages/StatisticsPage"));
 const SearchPage = lazy(() => import("@pages/SearchPage"));
 const CalendarPage = lazy(() => import("@pages/CalendarPage"));
+const NotificationPage = lazy(() => import("@pages/NotificationPage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,6 +46,7 @@ const App = () => {
               <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
               <Route path={RoutePath.RECORD} element={<RecordPage />} />
               <Route path={RoutePath.CALENDAR} element={<CalendarPage />} />
+              <Route path={RoutePath.NOTIFICATION} element={<NotificationPage />} />
               {/* Search */}
               <Route path={RoutePath.SEARCH} element={<SearchPage />} />
               {/* Statistics */}

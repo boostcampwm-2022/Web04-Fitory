@@ -19,7 +19,9 @@ const RecordPage = () => {
   const handleFetchRoutine = useCallback(
     async (userId: number, routineName: string) => {
       const routineInfo = await ExerciseAPI.getSingleRoutineInfo(userId, routineName);
-      fetchRoutine(routineInfo);
+      if (routineInfo) {
+        fetchRoutine(routineInfo);
+      }
     },
     [fetchRoutine],
   );

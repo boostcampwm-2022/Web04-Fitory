@@ -11,3 +11,5 @@ export const WEIGHT_CLASS_STATISTICS_RANGE = 10;
 
 export const DEFAULT_STALE_TIME = 300000;
 export const NO_STALE_TIME = 1000;
+
+export const DEFAULT_IMAGE_SRC = "http://default.image";

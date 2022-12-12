@@ -11,6 +11,7 @@ export const RoutePath = {
   JOIN: "/join",
   FOLLOW: "/follow",
   CALENDAR: "/calendar",
+  NOTIFICATION: "/notification",
 } as const;
 export type RoutePath = typeof RoutePath[keyof typeof RoutePath];
 
@@ -136,6 +137,8 @@ export const QueryKey = {
   ROUTINE_INFO: "routineInfo",
   SINGLE_MONTH_EXERCISE_HISTORY: "singleMonthExerciseHistory",
   WEIGHT_CLASS_STATISTICS: "weightClassStatistics",
+  NOTIFICATION_COUNT: "notificationCount",
+  NOTIFICATION_HISTORY: "notifiactionHistory",
 } as const;
 export type QueryKey = typeof QueryKey[keyof typeof QueryKey];
 
@@ -146,3 +149,20 @@ export const StatusCode = {
   NOT_FOUND: 404,
 } as const;
 export type StatusCode = typeof StatusCode[keyof typeof StatusCode];
+
+export const ExerciseRecord = {
+  WEIGHT_MAX: 1000,
+  COUNT_MAX: 100,
+};
+export type ExerciseRecord = typeof ExerciseRecord[keyof typeof ExerciseRecord];
+
+export const ModalKey = {
+  SAVE_ROUTINE: "saveRoutine",
+  DELETE_ROUTINE: "deleteRoutine",
+  LOGOUT: "logout",
+};
+export const NotificationState = {
+  EXERCISE: 0,
+  FOLLOW: 1,
+} as const;
+export type NotificationState = typeof NotificationState[keyof typeof NotificationState];
