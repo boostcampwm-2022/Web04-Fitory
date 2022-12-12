@@ -14,17 +14,17 @@ jobs:
     name: Path Filter
     runs-on: ubuntu-latest
     outputs:
-        frontend: ${{steps.filter.outputs.frontend}}
-        backend: ${{steps.filter.outputs.backend}}
+      frontend: ${{steps.filter.outputs.frontend}}
+      backend: ${{steps.filter.outputs.backend}}
     steps:
-        - uses: dorny/paths-filter@v2
-          id: filter
-          with:
-              filters: |
-                  frontend:
-                    - 'client/**'
-                  backend:
-                    - 'server/**'
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'client/**'
+            backend:
+              - 'server/**'
 
   backend:
     name: Test Backend
@@ -39,7 +39,7 @@ jobs:
     - name: Node.js Setup
       uses: actions/setup-node@v3
 
-    - name: Cache backend node modules
+    - name: Cache Backend node_modules
       id: cache-backend
       uses: actions/cache@v3
       with:
@@ -55,7 +55,7 @@ jobs:
         echo "${{ secrets.ENV_FILE }}" >> .env
         cat .env
         
-    - name: Install backend dependencies
+    - name: Install Backend Dependencies
       if: ${{steps.cache-backend.outputs.cache-hit != 'true'}}
       run: cd server && npm install
       
