@@ -1,4 +1,4 @@
-name: Naver Cloud Deploy
+name: CD [Naver]
 
 on:
   push:
