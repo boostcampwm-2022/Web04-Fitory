@@ -1,13 +1,17 @@
 import React from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import { useNavigate } from "react-router-dom";
-import { PageState, TIER } from "@constants/enums";
+import { PageState, RoutePath, TIER } from "@constants/enums";
 import { getTierColor } from "@utils/getUserTierUtil";
 
 import { UserInfo } from "src/types/user";
+import MyPageEditButton from "@components/MyPageEditButton";
+import FollowButton from "@components/FollowButton";
 import * as s from "./style";
+import { authStorage } from "../../services/ClientStorage";
 
 const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
+  const isOwner = userInfo.id === authStorage.get();
   const navigate = useNavigate();
 
   const followerMove = () => {
@@ -71,6 +75,9 @@ const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
           </s.FollowButton>
         </s.ContentContainer>
       </s.Wrapper>
+      <s.ButtonContainer>
+        {isOwner ? <MyPageEditButton /> : <FollowButton userInfo={userInfo} />}
+      </s.ButtonContainer>
     </>
   );
 };

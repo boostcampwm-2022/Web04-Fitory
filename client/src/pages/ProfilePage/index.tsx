@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import MyPageUserProfile from "@components/MyPageUserProfile";
-import MyPageEditButton from "@components/MyPageEditButton";
-import FollowButton from "@components/FollowButton";
 import CalendarHeatMap from "@components/CalendarHeatMap";
 import RoutineScroller from "@components/RoutineScroller";
 import LogoutButton from "@components/LogoutButton";
 import useUserInfo from "@hooks/query/user/useUserInfo";
-import { RoutePath, QueryKey } from "@constants/enums";
+import { RoutePath } from "@constants/enums";
 import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
@@ -23,13 +21,6 @@ const ProfilePage = () => {
     <PageTemplate isRoot={isOwner} title="프로필">
       <s.MyProfileContainer>
         <MyPageUserProfile userInfo={userInfo} />
-        <s.ButtonContainer>
-          {isOwner ? (
-            <MyPageEditButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
-          ) : (
-            <FollowButton userInfo={userInfo} />
-          )}
-        </s.ButtonContainer>
       </s.MyProfileContainer>
       <s.BottomWrapper>
         <s.ZandiLabel>
