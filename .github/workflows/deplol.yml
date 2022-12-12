@@ -1,8 +1,12 @@
-name: nCloud Deploy
+name: Naver Cloud Deploy
 
 on:
   push:
-    branches: [main]
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
 
 jobs:  
   deploy:
@@ -16,8 +20,8 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
-          timeout: 10m
-          command_timeout: 10m
+          timeout: 15m
+          command_timeout: 15m
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
