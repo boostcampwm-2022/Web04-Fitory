@@ -15,13 +15,15 @@ export const UserInfoContainer = styled.div`
 `;
 
 export const UserProfileImgContainer = styled.div`
-  width: 30%;
-  height: 100%;
+  width: 100px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   & img {
     width: 80%;
+    height: 80%;
+    margin: 10%;
   }
 `;
 

@@ -10,4 +10,7 @@ export const ProfileButton = styled.button`
   border-radius: 50px;
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+  @media screen and (max-width: 500px) {
+    font-size: ${({ theme }) => theme.FONT_SIZE.TINY_SMALL};
+  }
 `;

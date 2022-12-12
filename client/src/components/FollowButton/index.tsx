@@ -4,7 +4,7 @@ import UserAPI from "@api/UserAPI";
 import { useQueryClient } from "react-query";
 import { QueryKey } from "@constants/enums";
 import * as s from "./style";
-import { UserInfo } from "../../types/user";
+import { SearchedUserInfo, UserInfo } from "../../types/user";
 import { authStorage } from "../../services/ClientStorage";
 
 const FollowButton = ({ userInfo }: { userInfo: UserInfo }) => {
@@ -26,12 +26,14 @@ const FollowButton = ({ userInfo }: { userInfo: UserInfo }) => {
   useEffect(() => {
     (async () => {
       const ownerFollowList = await UserAPI.getFollowingUser(myUserId);
-      ownerFollowList.map((user) => {
-        if ((user.follower_id || user.followed_id) === otherUserId) {
-          return setFollowState(false);
-        }
-        return true;
-      });
+      if (ownerFollowList) {
+        ownerFollowList.map((user) => {
+          if ((user.follower_id || user.followed_id) === otherUserId) {
+            return setFollowState(false);
+          }
+          return true;
+        });
+      }
     })();
   }, []);
   return (
