@@ -5,9 +5,13 @@ import { PageState, TierName } from "@constants/enums";
 import { getTierColor } from "@utils/getUserTierUtil";
 
 import { UserInfo } from "src/types/user";
+import MyPageEditButton from "@components/MyPageEditButton";
+import FollowButton from "@components/FollowButton";
 import * as s from "./style";
+import { authStorage } from "../../services/ClientStorage";
 
 const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
+  const isOwner = userInfo.id === authStorage.get();
   const navigate = useNavigate();
 
   const followerMove = () => {
@@ -55,7 +59,7 @@ const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
         <s.ContentContainer>
           <s.ContentLabel>티어</s.ContentLabel>
           <s.TierContainer color={getTierColor(userInfo.tier)}>
-            {TierName[userInfo.tier]}
+            {TierName[userInfo.tier] || "-"}
           </s.TierContainer>
         </s.ContentContainer>
         <s.ContentContainer>
@@ -71,6 +75,9 @@ const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
           </s.FollowButton>
         </s.ContentContainer>
       </s.Wrapper>
+      <s.ButtonContainer>
+        {isOwner ? <MyPageEditButton /> : <FollowButton userInfo={userInfo} />}
+      </s.ButtonContainer>
     </>
   );
 };

@@ -23,7 +23,6 @@ const FollowButton = ({ userInfo }: { userInfo: UserInfo }) => {
     return queryClient.invalidateQueries([QueryKey.USER_INFO, otherUserId]);
   };
 
-
   useEffect(() => {
     (async () => {
       const ownerFollowList = await UserAPI.getFollowingUser(myUserId);

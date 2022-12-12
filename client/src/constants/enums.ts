@@ -4,6 +4,7 @@ export const RoutePath = {
   STATISTICS: "/statistics",
   SEARCH: "/search",
   PROFILE: "/profile",
+  EDIT: "/profile/edit",
   CHALLENGE: "/challenge",
   RECORD: "/record",
   LOGIN: "/login",
