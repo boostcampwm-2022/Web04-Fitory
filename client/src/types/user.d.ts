@@ -53,14 +53,3 @@ export interface FollowUserInfo {
   myUserId: UserId;
   otherUserId: UserId;
 }
-
-export interface UpdateUserInfo {
-  userId: number;
-  introduce: string;
-  name: UserName;
-  age: UserAge;
-  gender: UserGender;
-  height: UserHeight;
-  weight: UserWeight;
-  images: any;
-}
