@@ -52,7 +52,7 @@ jobs:
       run: cd server && npm install
       
     - name: Run Jest:e2e
-      run: npm run test:e2e
+      run: cd server && npm run test:e2e
       
     
 
