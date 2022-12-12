@@ -25,6 +25,8 @@ jobs:
                     - 'server/**'
 
   backend:
+    needs: check
+    if: ${{needs.check.outputs.backend=='true'}}
     runs-on: ubuntu-latest
 
     strategy:
