@@ -48,7 +48,8 @@ jobs:
 
     - name: Generate Environment Variables File for Server
       run: |
-        touch ./server/.env
+        cd server
+        touch .env
         echo "${{ secrets.ENV_FILE }}" >> .env
         cat .env
         
