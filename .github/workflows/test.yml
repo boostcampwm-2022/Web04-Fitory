@@ -5,7 +5,9 @@ name: CI [Test]
 
 on:
   pull_request:
-    branches: [ "dev" ]
+    branches:
+      - "dev"
+      - "main"
 
 jobs:
   paths-filter:
