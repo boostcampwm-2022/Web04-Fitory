@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import PageTemplate from "@pages/PageTemplate";
 import Calendar from "@components/Calendar";
 import ExerciseSetContainer from "@components/ExerciseSetContainer";
-import useSingleMonthExerciseHistory from "@hooks/query/useSingleMonthExerciseHistory";
+import useSingleMonthExerciseHistory from "@hooks/query/exercise/useSingleMonthExerciseHistory";
 import * as s from "./style";
 
 const ExerciseHistory = ({ month, displayDate }: { month: number; displayDate: string }) => {

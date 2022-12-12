@@ -14,6 +14,7 @@ const COLORS = {
   LIGHT_PURPLE: "#B4BEE0",
 
   RED: "#FF5858",
+  HOVER_RED: "#ff5858b8",
 
   FILTER_GRAY: "invert(79%) sepia(1%) saturate(0%) hue-rotate(95deg) brightness(97%) contrast(95%)",
   FILTER_BLUE:

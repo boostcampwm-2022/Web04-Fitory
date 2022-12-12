@@ -1,6 +1,6 @@
 import React from "react";
-import useUserInfo from "@hooks/query/useUserInfo";
-import useBestChallengeScore from "@hooks/query/useBestChallengeScore";
+import useUserInfo from "@hooks/query/user/useUserInfo";
+import useBestChallengeScore from "@hooks/query/challenge/useBestChallengeScore";
 import { Gender } from "@constants/enums";
 import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";

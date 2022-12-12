@@ -1,15 +1,21 @@
 import { authStorage } from "src/services/ClientStorage";
+import { toast } from "react-toastify";
+import { error } from "@constants/message";
 import HttpClient from "src/services/HttpClient";
 import * as ChallengeType from "src/types/challenge";
 
 const ChallengeAPI = {
   getBestChallengeScore: async () => {
-    const userId = authStorage.get();
-    const path = `record/best`;
-    const response = await HttpClient.get(path, { userId });
-    const { bestRecord } = response.response as { bestRecord: ChallengeType.ChallengeDetail };
-
-    return bestRecord;
+    try {
+      const userId = authStorage.get();
+      const path = `record/best`;
+      const response = await HttpClient.get(path, { userId });
+      const { bestRecord } = response.response as { bestRecord: ChallengeType.ChallengeDetail };
+      return bestRecord;
+    } catch {
+      toast.error(error.GET_CHALLENGE_INFO);
+      return null;
+    }
   },
 
   submitChallengeScore: async (SBDWeight: ChallengeType.Challenge) => {
@@ -20,21 +26,23 @@ const ChallengeAPI = {
         ...SBDWeight,
         userId,
       });
-
       return response.response;
-    } catch (e) {
-      // eslint-disable-next-line no-alert
-      alert("올바르지 않은 입력입니다.");
+    } catch {
+      toast.error(error.SUBMIT_CHALLENGE);
       return null;
     }
   },
 
   getRecentChallengeTime: async () => {
-    const userId = authStorage.get();
-    const path = "record/recent";
-    const response = await HttpClient.get(path, { userId });
-    console.log(response);
-    return response.response as ChallengeType.ChallengeTimestamp;
+    try {
+      const userId = authStorage.get();
+      const path = "record/recent";
+      const response = await HttpClient.get(path, { userId });
+      return response.response as ChallengeType.ChallengeTimestamp;
+    } catch {
+      toast.error(error.GET_DATE_INFO);
+      return null;
+    }
   },
 };
 

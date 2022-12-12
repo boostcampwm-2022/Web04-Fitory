@@ -4,16 +4,8 @@ import StatisticsAPI from "@api/StatisticsAPI";
 import { WeightClassStatisticsRequest, WeightClassStatisticsResponse } from "src/types/statistics";
 
 const useWeightClassStatistics = (weightClassStatisticsRequest: WeightClassStatisticsRequest) => {
-  const { data } = useQuery(
-    QueryKey.WEIGHT_CLASS_STATISTICS,
-    () => StatisticsAPI.getWeightClassStatistics(weightClassStatisticsRequest),
-    {
-      suspense: true,
-      refetchOnWindowFocus: true,
-      refetchOnMount: true,
-      retry: true,
-      staleTime: 10000,
-    },
+  const { data } = useQuery(QueryKey.WEIGHT_CLASS_STATISTICS, () =>
+    StatisticsAPI.getWeightClassStatistics(weightClassStatisticsRequest),
   );
 
   let { responseData } = data as WeightClassStatisticsResponse;

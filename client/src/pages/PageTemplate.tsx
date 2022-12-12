@@ -1,10 +1,12 @@
 import React, { useEffect, Suspense } from "react";
+import { ToastContainer } from "react-toastify";
 import TopNavigationBar from "@components/TopNavigationBar";
 import MainContainer from "@components/MainContainer";
 import BottomNavigationBar from "@components/BottomNavigationBar";
 import Loading from "@components/Loading";
 import { authStorage } from "src/services/ClientStorage";
 import Exception from "src/services/Exception";
+import "react-toastify/dist/ReactToastify.css";
 
 interface PageTemplateProps {
   isRoot: boolean;
@@ -41,6 +43,7 @@ const PageTemplate = ({
         <MainContainer isRoot={isRoot}>{children}</MainContainer>
       </Suspense>
       {isRoot && <BottomNavigationBar />}
+      <ToastContainer position="bottom-center" />
     </>
   );
 };

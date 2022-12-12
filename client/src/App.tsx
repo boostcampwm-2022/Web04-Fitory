@@ -5,6 +5,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import GlobalStyle from "@styles/GlobalStyle";
 import { RoutePath } from "@constants/enums";
+import { DEFAULT_STALE_TIME } from "@constants/consts";
 import Loading from "@components/Loading";
 import ErrorFallback from "@components/ErrorFallback";
 import NotFoundPage from "@pages/NotFountPage";
@@ -24,9 +25,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       suspense: true,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
       retry: false,
+      staleTime: DEFAULT_STALE_TIME,
     },
   },
 });

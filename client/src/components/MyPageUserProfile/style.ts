@@ -77,7 +77,7 @@ export const Wrapper = styled.div`
 
 export const ContentContainer = styled.div`
   width: calc(100% / 3);
-  height: 100px;
+  margin-bottom: 20px;
 `;
 
 export const FollowButton = styled.button`
@@ -96,16 +96,14 @@ export const ContentLabel = styled.div`
 `;
 
 export const TierContainer = styled.div`
-  font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
-  height: 50px;
-  line-height: 50px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
+  line-height: 30px;
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
   color: ${(props) => props.color};
 `;
 
 export const FollowContainer = styled.div`
-  font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
+  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
   color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
-  height: 50px;
-  line-height: 50px;
+  line-height: 30px;
 `;

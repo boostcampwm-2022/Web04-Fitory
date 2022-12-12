@@ -23,7 +23,9 @@ axiosInstance.interceptors.response.use(
   (error: AxiosError) => {
     if ((error.response?.data as HttpFailed).statusCode === StatusCode.UNAUTHORIZED) {
       Exception.UserNotFound();
+      return;
     }
+    throw error;
   },
 );
 
