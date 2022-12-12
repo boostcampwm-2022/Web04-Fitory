@@ -119,27 +119,16 @@ const UserAPI = {
     }
   },
 
-  updateUserInfo: async ({
-    userId,
-    name,
-    age,
-    gender,
-    height,
-    weight,
-    introduce,
-  }: UserType.UpdateUserInfo) => {
-    const path = "users/update";
-    const userInfo = {
-      userId,
-      name,
-      age,
-      gender,
-      height,
-      weight,
-      introduce,
-    };
-    const response = await HttpClient.post(path, userInfo);
-    return response.response as { message: string };
+  updateUserInfo: async (updatedUserInfo: UserType.UpdateUserInfo) => {
+    try {
+      const path = "users/update";
+      await HttpClient.post(path, {
+        userId: authStorage.get(),
+        ...updatedUserInfo,
+      });
+    } catch {
+      toast.error(error.UPDATE_USER);
+    }
   },
 };
 

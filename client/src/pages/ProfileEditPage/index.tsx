@@ -5,15 +5,17 @@ import useUserInfo from "@hooks/query/user/useUserInfo";
 import toggleBtn from "@public/images/btn_toggle.svg";
 import { Gender, UserName, UserIntroduce, UserAge, UserHeight, UserWeight } from "@constants/enums";
 import { NICKNAME_REGEX, NUMBER_REGEX } from "@constants/consts";
+import useUserUpdate from "@hooks/query/user/useUserUpdate";
 import { authStorage } from "src/services/ClientStorage";
-import * as UserType from "src/types/user";
+import { UpdateUserInfo } from "src/types/user";
 import * as s from "./style";
 
 const ProfileEditPage = () => {
+  const { updateUser } = useUserUpdate();
   const { userInfo } = useUserInfo(authStorage.get());
   const [visibleState, setVisibleState] = useState(false);
 
-  const [inputValues, setinputValues] = useState<UserType.UpdateUserInfo>({
+  const [inputValues, setinputValues] = useState<UpdateUserInfo>({
     name: userInfo.name,
     introduce: userInfo.introduce,
     age: userInfo.age,
@@ -28,19 +30,8 @@ const ProfileEditPage = () => {
 
   const submitInformation = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // if (e.target) {
-    //   await UserAPI.updateUserInfo({
-    //     userId: authStorage.get(),
-    //     name: e.target.userName.value,
-    //     age: parseInt(e.target.age.value, 10),
-    //     gender: e.target.gender.value === "남" ? 0 : 1,
-    //     height: parseInt(e.target.height.value, 10),
-    //     weight: parseInt(e.target.weight.value, 10),
-    //     introduce: e.target.introduce.value,
-    //   });
-    //   await queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
-    //   window.history.back();
-    // }
+    updateUser(inputValues);
+    window.history.back();
   };
 
   const checkIsActiveSubmitButton = () => {
