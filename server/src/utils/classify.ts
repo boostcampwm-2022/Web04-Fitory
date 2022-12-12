@@ -17,7 +17,7 @@ export function classifyToTier(weight: number, volume: number) {
     return weight > cur ? index + 1 : acc;
   }, 0);
   const tier = volumeGradeList[weightGrade].reduce((acc, cur, index) => {
-    return volume > cur ? index + 1 : acc;
-  }, 0);
+    return volume > cur ? index + 2 : acc;
+  }, 1);
   return tier;
 }
