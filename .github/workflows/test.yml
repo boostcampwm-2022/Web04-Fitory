@@ -10,7 +10,6 @@ on:
 jobs:
   backend:
     name: Test Backend
-    if: ${{needs.paths-filter.outputs.backend=='true'}}
     runs-on: ubuntu-latest
 
     steps:
