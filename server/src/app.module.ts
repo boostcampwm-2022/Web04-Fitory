@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { APP_FILTER } from "@nestjs/core";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -16,6 +16,7 @@ import { JwtStrategy } from "@guard/jwt.strategy";
 import { typeormConfig } from "./config/typeorm.config";
 import { EventModule } from "./domain/event/event.module";
 
+@Global()
 @Module({
   imports: [
     GoogleOauthModule,

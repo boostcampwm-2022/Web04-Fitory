@@ -6,7 +6,7 @@ import { JwtModule, JwtService } from "@nestjs/jwt";
 import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY } from "../src/utils/env";
 import cookieParser from "cookie-parser";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { datasourceConfig, typeormConfig } from "../src/config/typeorm.config";
+import { typeormConfig } from "../src/config/typeorm.config";
 import { faker } from "@faker-js/faker/locale/ko";
 import { GoogleOauthService } from "../src/domain/oauth/google-oauth/google-oauth.service";
 import { GoogleUserInfoDto } from "../src/domain/oauth/google-oauth/dto/google-user-info.dto";
@@ -28,16 +28,6 @@ const registerUser = async (
   return await googleOauthService.findUserIdByOAuthId(userInfo.oauthId).then((user) => {
     return user?.id;
   });
-};
-
-const deleteUser = async (userId: number) => {
-  const AppDataSource = new DataSource(typeormConfig as DataSourceOptions);
-  await AppDataSource.getRepository(User)
-    .createQueryBuilder()
-    .delete()
-    .from(User)
-    .where("user_id = :id", { id: userId })
-    .execute();
 };
 
 describe("RoutinesController (e2e)", () => {
@@ -160,7 +150,138 @@ describe("RoutinesController (e2e)", () => {
     });
   });
 
-  afterAll(async () => {
-    await deleteUser(userId);
+  describe("/api/users/update (POST)", () => {
+    it("POST", () => {
+      const updateUser = {
+        userId: 0,
+        name: "Jest",
+        age: faker.datatype.number({ min: 10, max: 60 }),
+        gender: faker.datatype.number({ min: 0, max: 1 }),
+        height: faker.datatype.number({ min: 150, max: 200 }),
+        weight: faker.datatype.number({ min: 50, max: 150 }),
+        introduce: "Hi! Im from Jest",
+      };
+      return request(app.getHttpServer())
+        .post(`/api/users/update`)
+        .send(updateUser)
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it("POST", () => {
+      const updateUser = {
+        userId: 0,
+        name: "Jest",
+        age: faker.datatype.number({ min: 10, max: 60 }),
+        gender: faker.datatype.number({ min: 0, max: 1 }),
+        height: "height",
+        weight: faker.datatype.number({ min: 50, max: 150 }),
+        introduce: "Hi! Im from Jest",
+      };
+      return request(app.getHttpServer())
+        .post(`/api/users/update`)
+        .send(updateUser)
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it("POST", () => {
+      const updateUser = {
+        userId: userId,
+        age: faker.datatype.number({ min: 10, max: 60 }),
+        gender: faker.datatype.number({ min: 0, max: 1 }),
+        height: faker.datatype.number({ min: 150, max: 200 }),
+        weight: faker.datatype.number({ min: 50, max: 150 }),
+        introduce: "Hi! Im from Jest",
+      };
+      return request(app.getHttpServer())
+        .post(`/api/users/update`)
+        .send(updateUser)
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it("POST", () => {
+      const updateUser = {
+        userId: 0,
+        name: "Jest",
+        age: 0,
+        gender: faker.datatype.number({ min: 0, max: 1 }),
+        height: faker.datatype.number({ min: 150, max: 200 }),
+        weight: faker.datatype.number({ min: 50, max: 150 }),
+        introduce: "Hi! Im from Jest",
+      };
+      return request(app.getHttpServer())
+        .post(`/api/users/update`)
+        .send(updateUser)
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it("POST", () => {
+      const updateUser = {
+        userId: 0,
+        name: "Jest",
+        height: faker.datatype.number({ min: 150, max: 200 }),
+        weight: faker.datatype.number({ min: 50, max: 150 }),
+        introduce: "Hi! Im from Jest",
+      };
+      return request(app.getHttpServer())
+        .post(`/api/users/update`)
+        .send(updateUser)
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it("POST", () => {
+      const updateUser = {
+        userId: 0,
+        name: "Jest",
+        age: faker.datatype.number({ min: 10, max: 60 }),
+        gender: faker.datatype.number({ min: 0, max: 1 }),
+        height: 0,
+        weight: faker.datatype.number({ min: 50, max: 150 }),
+        introduce: "Hi! Im from Jest",
+      };
+      return request(app.getHttpServer())
+        .post(`/api/users/update`)
+        .send(updateUser)
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it("POST", () => {
+      const updateUser = {
+        userId: 0,
+        name: "Jest",
+        age: faker.datatype.number({ min: 10, max: 60 }),
+        gender: faker.datatype.number({ min: 0, max: 1 }),
+        height: faker.datatype.number({ min: 150, max: 200 }),
+        weight: 999,
+        introduce: "Hi! Im from Jest",
+      };
+      return request(app.getHttpServer())
+        .post(`/api/users/update`)
+        .send(updateUser)
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it("POST", () => {
+      const updateUser = {
+        userId: 0,
+        name: "Jest",
+        age: faker.datatype.number({ min: 10, max: 60 }),
+        gender: faker.datatype.number({ min: 0, max: 1 }),
+        height: faker.datatype.number({ min: 150, max: 200 }),
+        weight: "weight",
+        introduce: "Hi! Im from Jest",
+      };
+      return request(app.getHttpServer())
+        .post(`/api/users/update`)
+        .send(updateUser)
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.BAD_REQUEST);
+    });
   });
 });
