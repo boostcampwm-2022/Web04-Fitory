@@ -3,29 +3,49 @@ import { HttpStatus, INestApplication, ValidationPipe } from "@nestjs/common";
 import request from "supertest";
 import { AppModule } from "../src/app.module";
 import { JwtModule, JwtService } from "@nestjs/jwt";
-import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY, GOOGLE_CLIENT_ID } from "../src/utils/env";
+import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY } from "../src/utils/env";
 import cookieParser from "cookie-parser";
-import { User } from "../src/domain/users/entities/user.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { typeormConfig } from "../src/config/typeorm.config";
-import { HttpResponse } from "../src/converter/response.converter";
+import { faker } from "@faker-js/faker/locale/ko";
+import { GoogleOauthService } from "../src/domain/oauth/google-oauth/google-oauth.service";
+import { GoogleUserInfoDto } from "../src/domain/oauth/google-oauth/dto/google-user-info.dto";
+import { User } from "../src/domain/users/entities/user.entity";
 
-const getAccessToken = async (moduleFixture: TestingModule): Promise<[number, string]> => {
+const getAccessToken = async (moduleFixture: TestingModule, userId: number): Promise<string> => {
   const jwtService = moduleFixture.get<JwtService>(JwtService);
-  const userId = Math.floor(Math.random() * 5000) + 1;
-  const accessToken = jwtService.sign({ userId: userId }); // jsonwebtoken 패키지 로직을 테스트하는 꼴이 됨
+  return jwtService.sign({ userId: userId });
+};
 
-  return [userId, accessToken];
+const registerUser = async (
+  moduleFixture: TestingModule,
+  userInfo: GoogleUserInfoDto,
+): Promise<number> => {
+  const googleOauthService = moduleFixture.get<GoogleOauthService>(GoogleOauthService);
+  await googleOauthService.registerUser(userInfo);
+
+  return await googleOauthService.findUserIdByOAuthId(userInfo.oauthId).then((user) => {
+    return user?.id;
+  });
 };
 
 describe("RoutinesController (e2e)", () => {
   let app: INestApplication;
   let accessToken: string;
   let userId: number;
+  let userInfo = {
+    name: faker.name.lastName() + faker.name.firstName(),
+    age: faker.datatype.number({ min: 10, max: 60 }),
+    gender: faker.datatype.number({ min: 0, max: 1 }),
+    height: faker.datatype.number({ min: 150, max: 200 }),
+    weight: faker.datatype.number({ min: 50, max: 150 }),
+    oauthId: faker.datatype.number({ min: 0, max: 999999999 }).toString(),
+  };
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
+        TypeOrmModule.forFeature([User]),
         TypeOrmModule.forRoot(typeormConfig),
         AppModule,
         JwtModule.register({
@@ -33,10 +53,12 @@ describe("RoutinesController (e2e)", () => {
           signOptions: { expiresIn: ACCESS_TOKEN_EXPIRESIN },
         }),
       ],
-      providers: [JwtService],
+      providers: [JwtService, GoogleOauthService],
     }).compile();
 
-    [userId, accessToken] = await getAccessToken(moduleFixture);
+    userId = await registerUser(moduleFixture, userInfo);
+
+    accessToken = await getAccessToken(moduleFixture, userId);
 
     app = moduleFixture.createNestApplication();
 
@@ -82,23 +104,48 @@ describe("RoutinesController (e2e)", () => {
     });
   });
 
-  describe("/api/users/update (POST)", () => {
-    const updateUser = {
-      userId: 2,
-      name: "Jest",
-      age: 20,
-      gender: 0,
-      height: 180,
-      weight: 70,
-      introduce: "Hi im Jest",
-    };
+  describe("/api/users/checkName (GET)", () => {
+    it("GET", () => {
+      return request(app.getHttpServer())
+        .get("/api/users/checkName")
+        .query({ userName: "Jest" })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          expect(res.body.userExists === false);
+        });
+    });
+  });
 
+  describe("/api/users/update (POST)", () => {
     it("POST", () => {
+      const updateUser = {
+        userId: Number(userId),
+        name: "Jest",
+        age: faker.datatype.number({ min: 10, max: 60 }),
+        gender: faker.datatype.number({ min: 0, max: 1 }),
+        height: faker.datatype.number({ min: 150, max: 200 }),
+        weight: faker.datatype.number({ min: 50, max: 150 }),
+        introduce: "Hi! Im from Jest",
+      };
       return request(app.getHttpServer())
         .post(`/api/users/update`)
         .send(updateUser)
         .set({ access_token: accessToken, user_id: userId })
         .expect(HttpStatus.CREATED);
+    });
+  });
+
+  describe("/api/users/checkName (GET)", () => {
+    it("GET", () => {
+      return request(app.getHttpServer())
+        .get("/api/users/checkName")
+        .query({ userName: "Jest" })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          expect(res.body.userExists === true);
+        });
     });
   });
 });
