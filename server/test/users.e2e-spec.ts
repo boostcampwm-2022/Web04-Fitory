@@ -6,11 +6,12 @@ import { JwtModule, JwtService } from "@nestjs/jwt";
 import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY } from "../src/utils/env";
 import cookieParser from "cookie-parser";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { typeormConfig } from "../src/config/typeorm.config";
+import { datasourceConfig, typeormConfig } from "../src/config/typeorm.config";
 import { faker } from "@faker-js/faker/locale/ko";
 import { GoogleOauthService } from "../src/domain/oauth/google-oauth/google-oauth.service";
 import { GoogleUserInfoDto } from "../src/domain/oauth/google-oauth/dto/google-user-info.dto";
 import { User } from "../src/domain/users/entities/user.entity";
+import { DataSource, DataSourceOptions } from "typeorm";
 
 const getAccessToken = async (moduleFixture: TestingModule, userId: number): Promise<string> => {
   const jwtService = moduleFixture.get<JwtService>(JwtService);
@@ -27,6 +28,16 @@ const registerUser = async (
   return await googleOauthService.findUserIdByOAuthId(userInfo.oauthId).then((user) => {
     return user?.id;
   });
+};
+
+const deleteUser = async (userId: number) => {
+  const AppDataSource = new DataSource(typeormConfig as DataSourceOptions);
+  await AppDataSource.getRepository(User)
+    .createQueryBuilder()
+    .delete()
+    .from(User)
+    .where("user_id = :id", { id: userId })
+    .execute();
 };
 
 describe("RoutinesController (e2e)", () => {
@@ -147,5 +158,9 @@ describe("RoutinesController (e2e)", () => {
           expect(res.body.userExists === true);
         });
     });
+  });
+
+  afterAll(async () => {
+    await deleteUser(userId);
   });
 });
