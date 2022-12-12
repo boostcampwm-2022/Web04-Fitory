@@ -75,34 +75,6 @@ const UserAPI = {
     }
   },
 
-  getFollowerUser: async (userId: number) => {
-    try {
-      const path = "follow/follower";
-      const response = await HttpClient.get(path, { userId });
-      const { followerUserProfileList } = response.response as {
-        followerUserProfileList: UserType.SearchedUserInfo[];
-      };
-      return followerUserProfileList;
-    } catch {
-      toast.error(error.GET_FOLLOWER);
-      return null;
-    }
-  },
-
-  getFollowingUser: async (userId: number) => {
-    try {
-      const path = "follow/following";
-      const response = await HttpClient.get(path, { userId });
-      const { followingUserProfileList } = response.response as {
-        followingUserProfileList: UserType.SearchedUserInfo[];
-      };
-      return followingUserProfileList;
-    } catch {
-      toast.error(error.GET_FOLLOWING);
-      return null;
-    }
-  },
-
   getRecommendUserList: async () => {
     try {
       const userId = authStorage.get();
@@ -117,11 +89,6 @@ const UserAPI = {
       toast.error(error.GET_RECOMMAND_USER_LIST);
       return null;
     }
-  },
-
-  getFollowerList: async (userId: number, path: string) => {
-    const response = await HttpClient.get(path, { userId });
-    console.log(response);
   },
 };
 

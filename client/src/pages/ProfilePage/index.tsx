@@ -15,10 +15,11 @@ import * as s from "./style";
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
+
   const profileUserId = userId ? +userId : authStorage.get();
-  const { userInfo } = useUserInfo(profileUserId);
   const isOwner = profileUserId === authStorage.get();
-  const { id } = userInfo;
+
+  const { userInfo } = useUserInfo(profileUserId);
 
   return (
     <PageTemplate isRoot={isOwner}>
@@ -26,9 +27,9 @@ const ProfilePage = () => {
         <MyPageUserProfile userInfo={userInfo} />
         <s.ButtonContainer>
           {isOwner ? (
-            <MyPageEditButton userId={profileUserId} ownerId={id} isOwner={isOwner} />
+            <MyPageEditButton userId={profileUserId} ownerId={userInfo.id} isOwner={isOwner} />
           ) : (
-            <FollowButton userInfo={userInfo} />
+            <FollowButton profileId={userInfo.id} />
           )}
         </s.ButtonContainer>
       </s.MyProfileContainer>
