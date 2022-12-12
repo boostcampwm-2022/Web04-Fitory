@@ -4,12 +4,30 @@
 name: CI [Test]
 
 on:
-  push:
+  pull_request:
     branches: [ "dev" ]
 
 jobs:
+  paths-filter:
+    name: Path Filter
+    runs-on: ubuntu-latest
+    outputs:
+        frontend: ${{steps.filter.outputs.frontend}}
+        backend: ${{steps.filter.outputs.backend}}
+    steps:
+        - uses: dorny/paths-filter@v2
+          id: filter
+          with:
+              filters: |
+                  frontend:
+                    - 'client/**'
+                  backend:
+                    - 'server/**'
+
   backend:
     name: Test Backend
+    needs: paths-filter
+    if: ${{needs.paths-filter.outputs.backend=='true'}}
     runs-on: ubuntu-latest
 
     steps:
