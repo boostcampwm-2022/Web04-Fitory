@@ -1,4 +1,4 @@
-import { UserId } from "./user";
+import { UserId, UserTier } from "./user";
 
 export interface Challenge {
   squat: number;
@@ -17,4 +17,8 @@ export interface ChallengeSubmission extends Challenge {
 export interface ChallengeTimestamp {
   nowTimeStamp: string;
   recentTimeStamp: string;
+}
+
+export interface ChallegeSubmitResponse {
+  tier: UserTier;
 }

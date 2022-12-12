@@ -73,6 +73,6 @@ export class ExercisesController {
     await this.alarmsService.sendExerciseAlarm(exerciseData.userId);
     const followerUserIdList = await this.followService.getFollowerUserIdList(exerciseData.userId);
     this.eventService.emit(followerUserIdList);
-    return this.exercisesService.submitSingleSBDRecord(exerciseData);
+    return this.exercisesService.submitExercise(exerciseData);
   }
 }

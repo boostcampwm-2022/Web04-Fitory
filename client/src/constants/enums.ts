@@ -59,8 +59,16 @@ export const ExerciseState = {
 } as const;
 export type ExerciseState = typeof ExerciseState[keyof typeof ExerciseState];
 
-export const TIER = [null, "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "CHAMPION"] as const;
-export type TIER = typeof TIER[keyof typeof TIER];
+export const TierName = {
+  0: null,
+  1: "BRONZE",
+  2: "SILVER",
+  3: "GOLD",
+  4: "PLATINUM",
+  5: "DIAMOND",
+  6: "CHAMPION",
+} as const;
+export type TierName = typeof TierName[keyof typeof TierName];
 
 export const DayTypes = {
   TODAY: "today",
@@ -159,6 +167,7 @@ export const ModalKey = {
   SAVE_ROUTINE: "saveRoutine",
   DELETE_ROUTINE: "deleteRoutine",
   LOGOUT: "logout",
+  CHALLENGE_TIER: "challengeTier",
 };
 export const NotificationState = {
   EXERCISE: 0,
