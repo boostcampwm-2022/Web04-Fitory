@@ -6,7 +6,6 @@ on:
       - main
       - dev
 
-
 jobs:
   paths-filter:
     name: Path Filter
