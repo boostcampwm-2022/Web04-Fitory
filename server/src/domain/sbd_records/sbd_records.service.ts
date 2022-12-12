@@ -79,6 +79,7 @@ export class SbdRecordsService {
       await this.userRepository.save(userObject);
       return HttpResponse.success({
         message: "Record Submit Success",
+        tier: userObject.tier,
       });
     } catch (error) {
       throw new Exception().invalidSubmit();
