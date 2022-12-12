@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DefaultButton } from "@styles/Components";
 
 export const EditProfileImgButton = styled.div`
   margin: auto;
@@ -8,10 +9,14 @@ export const EditProfileImgButton = styled.div`
 
 export const ProfileEditForm = styled.form`
   text-align: center;
-  padding: 5vw;
+  padding: 50px 150px;
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
   background: ${({ theme }) => theme.COLORS.WHITE};
   font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    padding: 20px;
+  }
 `;
 
 export const ProfileEditInputContainer = styled.div`
@@ -34,13 +39,11 @@ export const ProfileEditInput = styled.input`
   border-left: none;
   border-right: none;
   border-bottom: 1px solid ${({ theme }) => theme.COLORS.PLACEHOLDER_GRAY};
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
 `;
 
-export const SubmitButton = styled.button`
-  background: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
-  color: ${({ theme }) => theme.COLORS.WHITE};
-  width: 80%;
-  height: 50px;
+export const SubmitButton = styled(DefaultButton)`
+  width: 100%;
   border-radius: 50px;
   margin-top: 50px;
 `;
@@ -48,7 +51,10 @@ export const SubmitButton = styled.button`
 export const PrivateInfoToggleHeader = styled.div`
   display: flex;
   align-items: center;
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.DEFAULT};
 `;
+
 export const ToggleButton = styled.button`
   height: 13px;
   width: 30%;
