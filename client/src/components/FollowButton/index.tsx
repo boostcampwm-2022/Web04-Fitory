@@ -4,13 +4,12 @@ import UserAPI from "@api/UserAPI";
 import { useQueryClient } from "react-query";
 import { QueryKey } from "@constants/enums";
 import * as s from "./style";
-import { UserInfo } from "../../types/user";
 import { authStorage } from "../../services/ClientStorage";
 
-const FollowButton = ({ userInfo }: { userInfo: UserInfo }) => {
+const FollowButton = ({ userId }: { userId: number }) => {
   const [followState, setFollowState] = useState(true);
   const myUserId = authStorage.get();
-  const otherUserId = userInfo.id;
+  const otherUserId = userId;
   const queryClient = useQueryClient();
   const handleButtonClick = async () => {
     await (() => {
