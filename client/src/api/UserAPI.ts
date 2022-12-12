@@ -84,7 +84,7 @@ const UserAPI = {
         recommendWeight: UserType.SearchedUserInfo[];
         recommendAge: UserType.SearchedUserInfo[];
       };
-      return [recommendWeight, recommendAge];
+      return { recommendWeight, recommendAge };
     } catch {
       toast.error(error.GET_RECOMMAND_USER_LIST);
       return null;

@@ -9,15 +9,18 @@ export const Wrapper = styled.div`
 `;
 
 export const SearchContainer = styled.div`
-  border-radius: 20px;
+  z-index: 1;
+  border-radius: 10px;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   width: 100%;
   height: ${({ isText }: { isText: boolean }) => {
-    return isText ? "800px" : "60px";
+    return isText ? "800px" : "auto";
   }};
-  margin-top: 20px;
   position: absolute;
-  padding: 1.3rem 3vw;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   transition: 0.25s linear;
 `;
 
@@ -65,16 +68,24 @@ export const SearchResultContainer = styled.div`
 `;
 
 export const RecommendListContainer = styled.div`
-  padding-top: 100px;
-  height: 300px;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding-bottom: 50px;
+`;
+
+export const RecommendItem = styled.div`
   -ms-overflow-style: none;
 `;
 
 export const RecommendLabel = styled.p`
-  padding: 0 20px;
-  font-size: ${({ theme }) => {
-    return theme.FONT_SIZE.MEDIUM;
-  }};
+  padding: 0 30px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
 `;
 

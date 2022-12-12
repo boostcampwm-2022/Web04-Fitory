@@ -138,6 +138,8 @@ export const QueryKey = {
   CHALLENGE_HISTORY: "challengeHistory",
   FOLLOWERLIST: "followerList",
   FOLLOWINGLIST: "followingList",
+  RECOMMAND_LIST: "recommandList",
+  ALL_USER_LIST: "allUserList",
 } as const;
 export type QueryKey = typeof QueryKey[keyof typeof QueryKey];
 
