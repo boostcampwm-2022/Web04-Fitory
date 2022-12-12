@@ -25,9 +25,11 @@ const FollowPage = () => {
   useEffect(() => {
     (async () => {
       if (pageState === PageState.FOLLOWER) {
-        setSearchedUser(await UserAPI.getFollowerUser(profileUserId));
+        const searchedUserList = await UserAPI.getFollowerUser(profileUserId);
+        setSearchedUser(searchedUserList as SearchedUserInfo[]);
       } else {
-        setSearchedUser(await UserAPI.getFollowingUser(profileUserId));
+        const searchedUserList = await UserAPI.getFollowingUser(profileUserId);
+        setSearchedUser(searchedUserList as SearchedUserInfo[]);
       }
     })();
   }, []);

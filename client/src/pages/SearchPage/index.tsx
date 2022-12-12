@@ -53,11 +53,12 @@ const SearchPage = () => {
 
   useEffect(() => {
     (async () => {
-      const [recommendWeight, recommendAge] = await UserAPI.getRecommendUserList();
+      const [recommendWeight, recommendAge] =
+        (await UserAPI.getRecommendUserList()) as SearchedUserInfo[][];
       setRecommendAgeUserList(recommendAge);
       setRecommendWeightUserList(recommendWeight);
       const allUserList = await UserAPI.getUserList();
-      setUserList(allUserList);
+      setUserList(allUserList as SearchedUserInfo[]);
     })();
   }, []);
 
