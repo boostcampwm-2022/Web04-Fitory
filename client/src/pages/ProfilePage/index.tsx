@@ -16,6 +16,8 @@ const ProfilePage = () => {
   const profileUserId = userId ? +userId : authStorage.get();
   const { userInfo } = useUserInfo(profileUserId);
   const isOwner = profileUserId === authStorage.get();
+  console.log(userInfo.profileImage);
+  console.log(userInfo.profileImage);
 
   return (
     <PageTemplate isRoot={isOwner} title="프로필">

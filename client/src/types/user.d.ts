@@ -62,4 +62,5 @@ export interface UpdateUserInfo {
   gender: UserGender;
   height: UserHeight;
   weight: UserWeight;
+  images: any;
 }
