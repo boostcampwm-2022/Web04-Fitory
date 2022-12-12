@@ -3,7 +3,6 @@ import ProfileImageContainer from "@components/ProfileImageContainer";
 import PageTemplate from "@pages/PageTemplate";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import toggleBtn from "@public/images/btn_toggle.svg";
-import UserAPI from "@api/UserAPI";
 import { Gender, UserName, UserIntroduce, UserAge, UserHeight, UserWeight } from "@constants/enums";
 import { NICKNAME_REGEX, NUMBER_REGEX } from "@constants/consts";
 import { authStorage } from "src/services/ClientStorage";
@@ -42,6 +41,13 @@ const ProfileEditPage = () => {
     //   await queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
     //   window.history.back();
     // }
+  };
+
+  const checkIsActiveSubmitButton = () => {
+    const { name, introduce, age, gender, height, weight } = userInfo;
+    const originValues = [name, introduce, age, gender, height, weight];
+    const newValues = Object.values(inputValues);
+    return originValues.findIndex((_, i) => originValues[i] !== newValues[i]) > -1;
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -124,13 +130,20 @@ const ProfileEditPage = () => {
             </s.ProfileEditInputContainer>
             <s.ProfileEditInputContainer>
               <s.ProfileEditLabel>성별</s.ProfileEditLabel>
-              <s.ProfileEditInput
-                type="text"
-                name="gender"
-                placeholder="성별을 입력해주세요."
-                value={inputValues.gender === Gender.MALE ? "남" : "여"}
-                onChange={handleChange}
-              />
+              <s.profileGenderButtonWrapper>
+                <s.profileGenderButton
+                  isSelected={inputValues.gender === Gender.MALE}
+                  onClick={() => setinputValues({ ...inputValues, gender: Gender.MALE })}
+                >
+                  남
+                </s.profileGenderButton>
+                <s.profileGenderButton
+                  isSelected={inputValues.gender === Gender.FEMALE}
+                  onClick={() => setinputValues({ ...inputValues, gender: Gender.FEMALE })}
+                >
+                  여
+                </s.profileGenderButton>
+              </s.profileGenderButtonWrapper>
             </s.ProfileEditInputContainer>
             <s.ProfileEditInputContainer>
               <s.ProfileEditLabel>신장</s.ProfileEditLabel>
@@ -154,7 +167,9 @@ const ProfileEditPage = () => {
             </s.ProfileEditInputContainer>
           </s.PrivateInfoContainer>
         </s.PrivateInfoWrapper>
-        <s.SubmitButton type="submit"> 수정 완료 </s.SubmitButton>
+        <s.SubmitButton type="submit" disabled={!checkIsActiveSubmitButton()}>
+          수정 완료
+        </s.SubmitButton>
       </s.ProfileEditForm>
     </PageTemplate>
   );
