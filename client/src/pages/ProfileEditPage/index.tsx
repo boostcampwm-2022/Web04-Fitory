@@ -123,12 +123,14 @@ const ProfileEditPage = () => {
               <s.ProfileEditLabel>성별</s.ProfileEditLabel>
               <s.profileGenderButtonWrapper>
                 <s.profileGenderButton
+                  type="button"
                   isSelected={inputValues.gender === Gender.MALE}
                   onClick={() => setinputValues({ ...inputValues, gender: Gender.MALE })}
                 >
                   남
                 </s.profileGenderButton>
                 <s.profileGenderButton
+                  type="button"
                   isSelected={inputValues.gender === Gender.FEMALE}
                   onClick={() => setinputValues({ ...inputValues, gender: Gender.FEMALE })}
                 >
