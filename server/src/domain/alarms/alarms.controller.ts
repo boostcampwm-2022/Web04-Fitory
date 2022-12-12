@@ -67,8 +67,9 @@ export class AlarmsController {
   @ApiQuery({
     name: "index",
     type: "number",
+    required: false,
   })
-  async getAlarmList(@Query("userId") userId: number, @Query("index") index: number) {
+  async getAlarmList(@Query("userId") userId: number, @Query("index") index: number | null) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.alarmService.getAlarmList(userId, index);
   }
