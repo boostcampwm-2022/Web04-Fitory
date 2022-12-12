@@ -8,7 +8,7 @@ on:
     branches: [ "dev" ]
 
 jobs:
-  check:
+  paths-filter:
     name: Test
     runs-on: ubuntu-latest
     outputs:
@@ -25,13 +25,9 @@ jobs:
                     - 'server/**'
 
   backend:
-    needs: check
-    if: ${{needs.check.outputs.backend=='true'}}
+    needs: paths-filter
+    if: ${{needs.paths-filter.outputs.backend=='true'}}
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16]
 
     steps:
     - name: Checkout
