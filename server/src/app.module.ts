@@ -13,7 +13,6 @@ import { SbdStatisticsModule } from "@statistics/sbd_statistics.module";
 import { UsersModule } from "@user/users.module";
 import { MockModule } from "@mock/mock.module";
 import { JwtStrategy } from "@guard/jwt.strategy";
-import { User } from "@user/entities/user.entity";
 import { typeormConfig } from "./config/typeorm.config";
 import { EventModule } from "./domain/event/event.module";
 
@@ -30,7 +29,6 @@ import { EventModule } from "./domain/event/event.module";
     MockModule,
     TypeOrmModule.forRoot(typeormConfig),
     PassportModule,
-    TypeOrmModule.forFeature([User]),
     EventModule,
   ],
 
