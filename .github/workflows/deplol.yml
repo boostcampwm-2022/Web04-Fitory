@@ -5,26 +5,70 @@ on:
     branches: [main]
 
 jobs:
-  backend-test:
+  paths-filter:
+    name: Test
+    runs-on: ubuntu-latest
+    outputs:
+        frontend: ${{steps.filter.outputs.frontend}}
+        backend: ${{steps.filter.outputs.backend}}
+    steps:
+        - uses: dorny/paths-filter@v2
+          id: filter
+          with:
+              filters: |
+                  frontend:
+                    - 'client/**'
+                  backend:
+                    - 'server/**'
+  backend:
+    needs: paths-filter
+    if: ${{needs.paths-filter.outputs.backend=='true'}}
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16]
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Node.js Setup
       uses: actions/setup-node@v3
+
+    - name: Cache backend node modules
+      id: cache-backend
+      uses: actions/cache@v3
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        path: server/node_modules
+        key: npm-packages-server-${{hashFiles('**/package-lock.json')}}
+        restore-keys: |
+          npm-packages-server-
+    - name: Generate Environment Variables File for Server
+      run: |
+        echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+        echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+        echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+        echo "DB_PWD=${{ secrets.DB_PWD }}" >> .env
+        echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+        echo "ACCESS_TOKEN_SECRETKEY=${{ secrets.ACCESS_TOKEN_SECRETKEY }}" >> .env
+        echo "ACCESS_TOKEN_EXPIRESIN=${{ secrets.ACCESS_TOKEN_EXPIRESIN }}" >> .env
+        echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+        echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+        cat .env
+      env:
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PWD: ${{ secrets.DB_PWD }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        ACCESS_TOKEN_SECRETKEY: ${{ secrets.ACCESS_TOKEN_SECRETKEY }}
+        ACCESS_TOKEN_EXPIRESIN: ${{ secrets.ACCESS_TOKEN_EXPIRESIN }}
+        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
         
-    - name: Install dependencies
+    - name: Install backend dependencies
+      if: ${{steps.cache-backend.outputs.cache-hit != 'true'}}
       run: cd server && npm install
       
     - name: Run Jest:e2e
-      run: npm run test:e2e
+      run: cd server && npm run test:e2ee
       
   deploy:
     runs-on: ubuntu-latest
