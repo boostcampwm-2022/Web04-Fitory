@@ -85,7 +85,10 @@ export class UsersController {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     const userIdExist = await this.usersService.isExistUser(userId);
     if (!userIdExist) throw new Exception().userNotFound();
-    const filePath = await this.usersService.uploadFiles(file[0], userId);
+    let filePath;
+    if (file) {
+      filePath = await this.usersService.uploadFiles(file[0], userId);
+    }
     return this.usersService.updateUserProfile(userProfileData, filePath);
   }
 }

@@ -24,6 +24,6 @@ export const RoutineNameLabel = styled.h2`
 `;
 
 export const RoutineNameSaveButton = styled(DefaultButton)`
-  margin: auto;
+  width: 100%;
   border-radius: 7px;
 `;
