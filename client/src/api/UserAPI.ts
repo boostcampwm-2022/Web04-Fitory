@@ -119,9 +119,27 @@ const UserAPI = {
     }
   },
 
-  getFollowerList: async (userId: number, path: string) => {
-    const response = await HttpClient.get(path, { userId });
-    console.log(response);
+  updateUserInfo: async ({
+    userId,
+    name,
+    age,
+    gender,
+    height,
+    weight,
+    introduce,
+  }: UserType.UpdateUserInfo) => {
+    const path = "users/update";
+    const userInfo = {
+      userId,
+      name,
+      age,
+      gender,
+      height,
+      weight,
+      introduce,
+    };
+    const response = await HttpClient.post(path, userInfo);
+    return response.response as { message: string };
   },
 };
 

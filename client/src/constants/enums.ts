@@ -4,12 +4,14 @@ export const RoutePath = {
   STATISTICS: "/statistics",
   SEARCH: "/search",
   PROFILE: "/profile",
+  EDIT: "/profile/edit",
   CHALLENGE: "/challenge",
   RECORD: "/record",
   LOGIN: "/login",
   JOIN: "/join",
   FOLLOW: "/follow",
   CALENDAR: "/calendar",
+  NOTIFICATION: "/notification",
 } as const;
 export type RoutePath = typeof RoutePath[keyof typeof RoutePath];
 
@@ -135,6 +137,8 @@ export const QueryKey = {
   ROUTINE_INFO: "routineInfo",
   SINGLE_MONTH_EXERCISE_HISTORY: "singleMonthExerciseHistory",
   WEIGHT_CLASS_STATISTICS: "weightClassStatistics",
+  NOTIFICATION_COUNT: "notificationCount",
+  NOTIFICATION_HISTORY: "notifiactionHistory",
 } as const;
 export type QueryKey = typeof QueryKey[keyof typeof QueryKey];
 
@@ -157,3 +161,8 @@ export const ModalKey = {
   DELETE_ROUTINE: "deleteRoutine",
   LOGOUT: "logout",
 };
+export const NotificationState = {
+  EXERCISE: 0,
+  FOLLOW: 1,
+} as const;
+export type NotificationState = typeof NotificationState[keyof typeof NotificationState];

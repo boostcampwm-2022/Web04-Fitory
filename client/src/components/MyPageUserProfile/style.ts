@@ -56,13 +56,9 @@ export const UserNameLabel = styled.label`
 `;
 
 export const UserIntroduceContainer = styled.div`
-  height: 40px;
-  line-height: 40px;
+  margin: 10px 0;
+  line-height: 20px;
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `;
 
 export const UserNameWrapper = styled.div`
@@ -106,4 +102,10 @@ export const FollowContainer = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
   color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
   line-height: 30px;
+`;
+
+export const ButtonContainer = styled.div`
+  height: 50px;
+  width: 100%;
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
 `;

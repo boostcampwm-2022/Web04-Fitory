@@ -1,31 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
-import UserInfoSummary from "@components/UserInfoSummary";
-import CalendarHeatMap from "@components/CalendarHeatMap";
 import arrowRightSrc from "@public/icons/mark_arrow_right.svg";
 import { RoutePath } from "@constants/enums";
+import UserInfoSummary from "@components/UserInfoSummary";
+import CalendarHeatMap from "@components/CalendarHeatMap";
 import Calendar from "@components/Calendar";
-// import useUserInfo from "@hooks/query/useUserInfo";
-// import { authStorage } from "src/services/ClientStorage";
+import NotificationButton from "@components/NotificationButton";
 import * as s from "./style";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  // const { userInfo } = useUserInfo(authStorage.get());
-  // useEffect(() => {
-  //   const userId = userInfo.id;
-  //   const subscription = new EventSource(
-  //     `http://localhost:8080/api/event/register?user_id=${userId}`,
-  //     { withCredentials: true },
-  //   );
-  //   subscription.onmessage = (message) => {
-  //     console.log(JSON.parse(message.data));
-  //   };
-  // }, []);
 
   return (
-    <PageTemplate isRoot>
+    <PageTemplate topNavRightItem={<NotificationButton />} isRoot>
       <s.Wrapper>
         <UserInfoSummary />
         <s.ChallengeButton type="button" onClick={() => navigate(RoutePath.CHALLENGE)}>

@@ -50,7 +50,7 @@ export class ExercisesService {
     });
   }
 
-  async submitSingleSBDRecord(exerciseData: ExerciseDataDto) {
+  async submitExercise(exerciseData: ExerciseDataDto) {
     try {
       await Promise.all(
         exerciseData.exerciseList.map(async (exercise) => {

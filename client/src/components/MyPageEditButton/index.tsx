@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import UserAPI from "@api/UserAPI";
+import { RoutePath } from "@constants/enums";
+import { useNavigate } from "react-router-dom";
 import * as s from "./style";
+import { UserInfo } from "../../types/user";
 
-interface MyPageButtonProp {
-  userId: number;
-  ownerId: number;
-  isOwner: boolean;
-}
-
-const MyPageEditButton = ({ userId, ownerId, isOwner }: MyPageButtonProp) => {
-  const [editState, setEditState] = useState(true);
-  useEffect(() => {
-    (async () => {})();
-  }, [editState]);
+const MyPageEditButton = () => {
+  const navigate = useNavigate();
   return (
     <s.Wrapper>
-      <s.ProfileButton>{isOwner ? "마이페이지 수정" : "수정 완료"}</s.ProfileButton>
+      <s.ProfileButton onClick={() => navigate(RoutePath.EDIT)}>마이페이지 수정</s.ProfileButton>
     </s.Wrapper>
   );
 };

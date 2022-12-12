@@ -9,6 +9,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { SBD_record } from "./entities/sbd_record.entity";
 import { User } from "@user/entities/user.entity";
+import { classifyToTier } from "src/utils/classify";
 
 @Injectable()
 export class SbdRecordsService {
@@ -66,14 +67,19 @@ export class SbdRecordsService {
         .where("user.user_id = :userId", { userId: sbdData.userId })
         .getOne();
       const recordObject = this.recordsRepository.create(sbdData);
+      const { weight } = userObject;
+      const SBD_sum = sbdData.squat + sbdData.benchpress + sbdData.deadlift;
       await this.recordsRepository.save({
         ...recordObject,
-        SBD_sum: sbdData.squat + sbdData.benchpress + sbdData.deadlift,
+        SBD_sum,
         userWeight: userObject.weight,
-        user: userObject,
+        user: { id: sbdData.userId },
       });
+      userObject.tier = classifyToTier(weight, SBD_sum);
+      await this.userRepository.save(userObject);
       return HttpResponse.success({
         message: "Record Submit Success",
+        tier: userObject.tier,
       });
     } catch (error) {
       throw new Exception().invalidSubmit();
