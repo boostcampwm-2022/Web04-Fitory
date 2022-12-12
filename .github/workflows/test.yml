@@ -34,8 +34,6 @@ jobs:
         touch .env
         echo "${{ secrets.ENV_FILE }}" >> .env
         cat .env
-        echo "Trick to echo GitHub Actions Secret:  "
-        echo ${ {secrets.ENV_FILE }} | sed 's/./& /g'
         
     - name: Install backend dependencies
       if: ${{steps.cache-backend.outputs.cache-hit != 'true'}}
