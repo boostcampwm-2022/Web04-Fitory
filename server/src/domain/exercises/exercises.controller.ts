@@ -1,12 +1,12 @@
 import { FollowsService } from "@follow/follows.service";
 import { Exception } from "@exception/exceptions";
-import { ExercisesService } from "./exercises.service";
 import { Body, Controller, Get, Inject, Post, Query } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidMonth, isValidUserId } from "@validation/validation";
-import { ExerciseDataDto } from "./dto/exercise.dto";
 import { UsersService } from "@user/users.service";
 import { AlarmsService } from "@alarm/alarms.service";
+import { ExerciseDataDto } from "./dto/exercise.dto";
+import { ExercisesService } from "./exercises.service";
 import { EventService } from "../event/event.service";
 
 @Controller("api/exercise")
@@ -73,6 +73,6 @@ export class ExercisesController {
     await this.alarmsService.sendExerciseAlarm(exerciseData.userId);
     const followerUserIdList = await this.followService.getFollowerUserIdList(exerciseData.userId);
     this.eventService.emit(followerUserIdList);
-    return this.exercisesService.submitSingleSBDRecord(exerciseData);
+    return this.exercisesService.submitExercise(exerciseData);
   }
 }
