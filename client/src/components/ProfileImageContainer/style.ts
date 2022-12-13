@@ -33,4 +33,5 @@ export const EditProfileImg = styled.img`
   height: 100%;
   width: 100%;
   opacity: 0.5;
+  cursor: pointer;
 `;
