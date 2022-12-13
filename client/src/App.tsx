@@ -9,6 +9,7 @@ import { DEFAULT_STALE_TIME } from "@constants/consts";
 import Loading from "@components/Loading";
 import ErrorFallback from "@components/ErrorFallback";
 import NotFoundPage from "@pages/NotFountPage";
+import ProfileEditPage from "@pages/ProfileEditPage";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 const ChallengePage = lazy(() => import("@pages/ChallengePage"));
@@ -20,6 +21,7 @@ const JoinPage = lazy(() => import("@pages/JoinPage"));
 const StatisticsPage = lazy(() => import("@pages/StatisticsPage"));
 const SearchPage = lazy(() => import("@pages/SearchPage"));
 const CalendarPage = lazy(() => import("@pages/CalendarPage"));
+const NotificationPage = lazy(() => import("@pages/NotificationPage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,6 +46,7 @@ const App = () => {
               <Route path={RoutePath.CHALLENGE} element={<ChallengePage />} />
               <Route path={RoutePath.RECORD} element={<RecordPage />} />
               <Route path={RoutePath.CALENDAR} element={<CalendarPage />} />
+              <Route path={RoutePath.NOTIFICATION} element={<NotificationPage />} />
               {/* Search */}
               <Route path={RoutePath.SEARCH} element={<SearchPage />} />
               {/* Statistics */}
@@ -51,6 +54,7 @@ const App = () => {
               {/* Profile */}
               <Route path={RoutePath.PROFILE}>
                 <Route path=":userId" element={<ProfilePage />} />
+                <Route path="edit" element={<ProfileEditPage />} />
                 <Route path="" element={<ProfilePage />} />
               </Route>
               <Route path={RoutePath.LOGIN} element={<LoginPage />} />

@@ -2,8 +2,6 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PageTemplate from "@pages/PageTemplate";
 import MyPageUserProfile from "@components/MyPageUserProfile";
-import MyPageEditButton from "@components/MyPageEditButton";
-import FollowButton from "@components/FollowButton";
 import CalendarHeatMap from "@components/CalendarHeatMap";
 import RoutineScroller from "@components/RoutineScroller";
 import LogoutButton from "@components/LogoutButton";
@@ -22,16 +20,9 @@ const ProfilePage = () => {
   const { userInfo } = useUserInfo(profileUserId);
 
   return (
-    <PageTemplate isRoot={isOwner}>
+    <PageTemplate isRoot={isOwner} title="프로필">
       <s.MyProfileContainer>
         <MyPageUserProfile userInfo={userInfo} />
-        <s.ButtonContainer>
-          {isOwner ? (
-            <MyPageEditButton userId={profileUserId} ownerId={userInfo.id} isOwner={isOwner} />
-          ) : (
-            <FollowButton profileId={userInfo.id} />
-          )}
-        </s.ButtonContainer>
       </s.MyProfileContainer>
       <s.BottomWrapper>
         <s.ZandiLabel>

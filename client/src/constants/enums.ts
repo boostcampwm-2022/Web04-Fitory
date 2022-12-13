@@ -4,12 +4,14 @@ export const RoutePath = {
   STATISTICS: "/statistics",
   SEARCH: "/search",
   PROFILE: "/profile",
+  EDIT: "/profile/edit",
   CHALLENGE: "/challenge",
   RECORD: "/record",
   LOGIN: "/login",
   JOIN: "/join",
   FOLLOW: "/follow",
   CALENDAR: "/calendar",
+  NOTIFICATION: "/notification",
 } as const;
 export type RoutePath = typeof RoutePath[keyof typeof RoutePath];
 
@@ -63,7 +65,8 @@ export type TIER = typeof TIER[keyof typeof TIER];
 
 export const DayTypes = {
   TODAY: "today",
-  OTHER_DAYS: "otherDays",
+  PREV_DAYS: "prevDays",
+  NEXT_DAYS: "nextDays",
   THIS_DAYS: "thisDays",
 } as const;
 export type DayTypes = typeof DayTypes[keyof typeof DayTypes];
@@ -140,6 +143,8 @@ export const QueryKey = {
   FOLLOWINGLIST: "followingList",
   RECOMMAND_LIST: "recommandList",
   ALL_USER_LIST: "allUserList",
+  NOTIFICATION_COUNT: "notificationCount",
+  NOTIFICATION_HISTORY: "notifiactionHistory",
 } as const;
 export type QueryKey = typeof QueryKey[keyof typeof QueryKey];
 
@@ -162,3 +167,8 @@ export const ModalKey = {
   DELETE_ROUTINE: "deleteRoutine",
   LOGOUT: "logout",
 };
+export const NotificationState = {
+  EXERCISE: 0,
+  FOLLOW: 1,
+} as const;
+export type NotificationState = typeof NotificationState[keyof typeof NotificationState];

@@ -90,6 +90,14 @@ const UserAPI = {
       return null;
     }
   },
+
+  updateUserInfo: async (formData: FormData) => {
+    const path = "users/update";
+    const response = await HttpClient.post(path, formData, {
+      "content-type": "multipart/form-data",
+    });
+    return response.response as { message: string };
+  },
 };
 
 export default UserAPI;

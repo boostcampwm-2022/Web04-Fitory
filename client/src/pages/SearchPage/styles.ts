@@ -22,6 +22,7 @@ export const SearchContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   transition: 0.25s linear;
+  z-index: 10;
 `;
 
 export const UserSearchBarContainer = styled.div`

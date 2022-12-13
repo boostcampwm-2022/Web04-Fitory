@@ -2,10 +2,10 @@ import { HttpResponse } from "@converter/response.converter";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Exception } from "src/exception/exceptions";
+import { Exception } from "@exception/exceptions";
+import { User } from "@user/entities/user.entity";
 import { Exercise } from "./entities/exercise.entity";
 import { exerciseConverter } from "./converter/exercise.converter";
-import { User } from "../users/entities/user.entity";
 import { ExerciseDataDto } from "./dto/exercise.dto";
 import dayjs from "dayjs";
 
@@ -50,7 +50,7 @@ export class ExercisesService {
     });
   }
 
-  async submitSingleSBDRecord(exerciseData: ExerciseDataDto) {
+  async submitExercise(exerciseData: ExerciseDataDto) {
     try {
       await Promise.all(
         exerciseData.exerciseList.map(async (exercise) => {

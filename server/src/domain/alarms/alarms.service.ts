@@ -27,8 +27,8 @@ export class AlarmsService {
     });
   }
 
-  async getAlarmList(userId: number, index: number) {
-    const alarmObject = await this.alarmRepository
+  async getAlarmList(userId: number, index: number | null) {
+    let alarmQueryBuilder = this.alarmRepository
       .createQueryBuilder("alarm")
       .select("alarm.id", "index")
       .addSelect("alarm.sender_user_id", "sender_user_id")
@@ -39,14 +39,19 @@ export class AlarmsService {
       .addSelect("alarm.time_stamp", "time_stamp")
       .innerJoin(User, "user", "user.user_id = alarm.sender_user_id")
       .where("alarm.user_id = :userId", { userId })
-      .andWhere("alarm.id > :index", { index })
       .andWhere("DATE(alarm.time_stamp) >= DATE_ADD(NOW(), INTERVAL -1 MONTH)")
-      .limit(10)
-      .getRawMany();
+      .orderBy("alarm.id", "DESC")
+      .limit(10);
+
+    if (index) {
+      alarmQueryBuilder = alarmQueryBuilder.andWhere("alarm.id < :index", { index });
+    }
+
+    const alarmObject = await alarmQueryBuilder.getRawMany();
+
     await this.checkToReadAlarm(userId);
-    return HttpResponse.success({
-      alarmObject,
-    });
+
+    return HttpResponse.success({ alarmObject });
   }
 
   async checkToReadAlarm(userId: number) {
