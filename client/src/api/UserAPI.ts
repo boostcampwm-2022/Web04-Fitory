@@ -102,11 +102,10 @@ const UserAPI = {
     }
   },
 
-  searchUserByKeyword: async ({ userName }: { userName: string }) => {
+  searchUserByKeyword: async (userName: string) => {
     try {
       const path = "users/search";
-      const response = await HttpClient.get(path, userName);
-      console.log(response);
+      const response = await HttpClient.get(path, { userName });
       const { userProfileList } = response.response as {
         userProfileList: UserType.SearchedUserInfo[];
       };
