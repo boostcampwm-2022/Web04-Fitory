@@ -16,7 +16,13 @@ const getAccessToken = async (moduleFixture: TestingModule, userId: number): Pro
   return jwtService.sign({ userId: userId });
 };
 
+declare global {
+  var alarmBar: Set<number>;
+}
+
 describe("ExerciseController (e2e)", () => {
+  global.alarmBar = new Set();
+
   let app: INestApplication;
   let accessToken: string;
   const userId: number = Math.floor(Math.random() * 5000) + 1;
@@ -137,5 +143,90 @@ describe("ExerciseController (e2e)", () => {
           expect(response).toHaveProperty("totalExerciseDate");
         });
     });
+  });
+
+  describe("Submit Exercise (POST)", () => {
+    const [followedUserId, followerUserId, exFollowerUserId] = [777, 100, 200];
+    const exercise = {
+      userId: followedUserId,
+      exerciseList: [
+        {
+          exerciseName: "Jest Exercise A",
+          setList: [
+            { kg: 50, count: 7, check: 1 },
+            { kg: 50, count: 7, check: 1 },
+            { kg: 50, count: 7, check: 1 },
+          ],
+        },
+        {
+          exerciseName: "Jest Exercise B",
+          setList: [
+            { kg: 100, count: 9, check: 1 },
+            { kg: 100, count: 9, check: 0 },
+            { kg: 100, count: 9, check: 0 },
+          ],
+        },
+      ],
+    };
+    it("Exercise Alarm To Follower Test", async () => {
+      const prevAlarmCountOfFollower = await request(app.getHttpServer())
+        .get("/api/alarms/static/unread")
+        .query({ userId: followerUserId })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          return res.body.response.alarmCount;
+        });
+
+      await request(app.getHttpServer())
+        .post("/api/exercise/submit")
+        .send(exercise)
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.CREATED);
+
+      const currAlarmCountOfFollower = await request(app.getHttpServer())
+        .get("/api/alarms/static/unread")
+        .query({ userId: followerUserId })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          return res.body.response.alarmCount;
+        });
+
+      expect(currAlarmCountOfFollower - prevAlarmCountOfFollower).toBe(1);
+    });
+
+    it("Exercise Alarm To Ex Follower Test", async () => {
+      const prevAlarmCountOfExFollower = await request(app.getHttpServer())
+        .get("/api/alarms/static/unread")
+        .query({ userId: exFollowerUserId })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          return res.body.response.alarmCount;
+        });
+
+      await request(app.getHttpServer())
+        .post("/api/exercise/submit")
+        .send(exercise)
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.CREATED);
+
+      const currAlarmCountOfExFollower = await request(app.getHttpServer())
+        .get("/api/alarms/static/unread")
+        .query({ userId: exFollowerUserId })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          return res.body.response.alarmCount;
+        });
+
+      expect(currAlarmCountOfExFollower - prevAlarmCountOfExFollower).toBe(0);
+    });
+  });
+
+  afterAll((done) => {
+    app.close();
+    done();
   });
 });
