@@ -10,7 +10,7 @@ import * as s from "./style";
 
 const UserName = () => {
   const { userInfo } = useUserInfo(authStorage.get());
-  return <s.UserName>{userInfo.name}</s.UserName>;
+  return <s.UserName data-testid="user-name">{userInfo.name}</s.UserName>;
 };
 
 const UserTier = () => {
@@ -18,7 +18,7 @@ const UserTier = () => {
   return (
     <s.RecordInfo>
       <p>티어</p>
-      <s.Tier tier={userInfo.tier ? TierName[userInfo.tier] : null}>
+      <s.Tier tier={userInfo.tier ? TierName[userInfo.tier] : null} data-testid="user-tier">
         {userInfo.tier ? TierName[userInfo.tier] : "-"}
       </s.Tier>
     </s.RecordInfo>
