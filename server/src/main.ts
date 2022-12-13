@@ -10,6 +10,8 @@ import path from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { AppModule } from "./app.module";
+import { GlobalService } from "./middleware/zero-downtime-deploy/is-disable-keep-alive.global";
+import { SetResponseHeader } from "./middleware/zero-downtime-deploy/set-response-header.middleware";
 
 declare global {
   // eslint-disable-next-line no-var,vars-on-top
@@ -66,6 +68,7 @@ async function bootstrap() {
 
   await app.listen(PORT as string, () => {
     process.send("ready");
+    // eslint-disable-next-line no-console
     console.log(`application is listening on port ${PORT}`);
   });
 }

@@ -7,6 +7,7 @@ export class GracefulShutdown implements OnApplicationShutdown {
     if (signal === "SIGINT") {
       GlobalService.isDisableKeepAlive = true;
 
+      // eslint-disable-next-line no-console
       console.log("server closed");
     }
   }
