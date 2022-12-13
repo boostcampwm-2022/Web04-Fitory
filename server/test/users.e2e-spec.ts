@@ -92,12 +92,38 @@ describe("RoutinesController (e2e)", () => {
         .expect(HttpStatus.OK);
     });
 
-    it("Recommend User List Of User", () => {
-      return request(app.getHttpServer())
+    it("Recommend User List Of User", async () => {
+      await request(app.getHttpServer())
         .get("/api/users/recommand/list")
         .query({ userId })
         .set({ access_token: accessToken, user_id: userId })
-        .expect(HttpStatus.OK);
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          const { recommendWeight, recommendAge } = res.body.response;
+          Object.entries(recommendAge).map(async (item) => {
+            const recommendUserId = JSON.parse(JSON.stringify(item[1])).user_id;
+            await request(app.getHttpServer())
+              .get("/api/users/get")
+              .query({ userId: recommendUserId })
+              .set({ access_token: accessToken, user_id: userId })
+              .then((res) => {
+                const recommendedAge = JSON.parse(JSON.stringify(res.body.response.user)).age;
+                expect(Math.abs(userInfo.age - recommendedAge)).toBeLessThanOrEqual(1);
+              });
+          });
+
+          Object.entries(recommendWeight).map(async (item) => {
+            const recommendUserId = JSON.parse(JSON.stringify(item[1])).user_id;
+            await request(app.getHttpServer())
+              .get("/api/users/get")
+              .query({ userId: recommendUserId })
+              .set({ access_token: accessToken, user_id: userId })
+              .then((res) => {
+                const recommendedWeight = JSON.parse(JSON.stringify(res.body.response.user)).weight;
+                expect(Math.abs(userInfo.weight - recommendedWeight)).toBeLessThanOrEqual(5);
+              });
+          });
+        });
     });
   });
 
@@ -195,5 +221,10 @@ describe("RoutinesController (e2e)", () => {
         .set({ access_token: accessToken, user_id: userId })
         .expect(HttpStatus.BAD_REQUEST);
     });
+  });
+
+  afterAll((done) => {
+    app.close();
+    done();
   });
 });
