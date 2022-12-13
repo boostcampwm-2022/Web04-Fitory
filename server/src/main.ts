@@ -34,7 +34,7 @@ async function bootstrap() {
 
   const reflector = app.get(Reflector);
 
-  if (process.argv[2] === "guard") {
+  if (!(process.argv[2] === "noguard")) {
     app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
   }
 
