@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
-import { DEPLOY_HOST, DEPLOY_HOST_WWW, LOCAL_HOST, PORT } from "@utils/env";
+import { DEPLOY_HOST, DEPLOY_HOST_WWW, PORT } from "@utils/env";
 import express from "express";
 import path from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
