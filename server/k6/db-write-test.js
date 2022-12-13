@@ -31,7 +31,7 @@ export default function () {
 
   const jar = http.cookieJar();
   jar.set("http://localhost:8080", "access_token", access_token, {
-    domain: "localhost",
+    domain: "fitory.ga",
     path: "/api",
     secure: true,
     max_age: 900,
@@ -46,7 +46,7 @@ export default function () {
     group("USER API", function () {
       const response = http.batch([
         {
-          method: "GET",
+          method: "POST",
           url: `http://localhost:8080/api/users/get?userId=${userId}`,
           body: {},
           params: params,
@@ -61,41 +61,31 @@ export default function () {
         // Record time to first byte and tag it with the URL to be able to filter the results in Insights
         timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
       }
-
-      sleep(1);
     });
 
     group("ROUTINE API", function () {
-      const response = http.get(`http://localhost:8080/api/routines/list?userId=${userId}`, {
-        params,
-      });
-
-      const body = JSON.parse(response.body);
-
-      let routineName = body.response.routineList[0];
-
-      check(response, {
-        "main page status was 200": (res) => res.status === 200,
-      });
-
-      // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-      timeToFirstByte.add(response.timings.waiting, { ttfbURL: response.url, API: "yes" });
-
-      if (routineName) {
-        const response = http.get(
-          `http://localhost:8080/api/routines/single?userId=${userId}&routineName=${routineName}`,
-          params,
-        );
-
-        check(response, {
+      const response = http.batch([
+        {
+          method: "GET",
+          url: `http://localhost:8080/api/routine/list?userId=${userId}`,
+          body: {},
+          params: params,
+        },
+        {
+          method: "GET",
+          url: `http://localhost:8080/api/routine/single?userId=${userId}&routineName=${userId.toString()}`,
+          body: {},
+          params: params,
+        },
+      ]);
+      for (let i = 0; i < response.length; i += 1) {
+        check(response[i], {
           "main page status was 200": (res) => res.status === 200,
         });
 
         // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-        timeToFirstByte.add(response.timings.waiting, { ttfbURL: response.url, API: "yes" });
+        timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
       }
-
-      sleep(1);
     });
 
     group("EXERCISE API", function () {
@@ -109,7 +99,7 @@ export default function () {
         {
           method: "GET",
           url: `http://localhost:8080/api/exercise/singleMonth?userId=${userId}&month=${Math.round(
-            randomIntBetween(6, 12),
+            randomIntBetween(1, 12),
           )}`,
           body: {},
           params: params,
@@ -129,8 +119,6 @@ export default function () {
         // Record time to first byte and tag it with the URL to be able to filter the results in Insights
         timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
       }
-
-      sleep(1);
     });
 
     group("ALARM API", function () {
@@ -162,8 +150,6 @@ export default function () {
         // Record time to first byte and tag it with the URL to be able to filter the results in Insights
         timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
       }
-
-      sleep(1);
     });
 
     group("RECORD API", function () {
@@ -195,8 +181,6 @@ export default function () {
         // Record time to first byte and tag it with the URL to be able to filter the results in Insights
         timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
       }
-
-      sleep(1);
     });
 
     group("STATISTICS API", function () {
@@ -218,8 +202,6 @@ export default function () {
         // Record time to first byte and tag it with the URL to be able to filter the results in Insights
         timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
       }
-
-      sleep(1);
     });
 
     group("FOLLOW API", function () {
@@ -245,8 +227,6 @@ export default function () {
         // Record time to first byte and tag it with the URL to be able to filter the results in Insights
         timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
       }
-
-      sleep(1);
     });
   });
 }
