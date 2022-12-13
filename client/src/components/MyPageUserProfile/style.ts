@@ -68,6 +68,7 @@ export const UserIntroduceContainer = styled.div`
 
 export const UserNameWrapper = styled.div`
   flex-grow: 1;
+  width: 1px;
   border-bottom: 1px solid ${({ theme }) => theme.COLORS.PLACEHOLDER_GRAY};
 `;
 

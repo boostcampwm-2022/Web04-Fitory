@@ -18,8 +18,8 @@ const UserTier = () => {
   return (
     <s.RecordInfo>
       <p>티어</p>
-      <s.Tier tier={userInfo.tier ? TIER[userInfo.tier] : null}>
-        {userInfo.tier ? TIER[userInfo.tier] : "-"}
+      <s.Tier tier={userInfo.tier ? TierName[userInfo.tier] : null}>
+        {userInfo.tier ? TierName[userInfo.tier] : "-"}
       </s.Tier>
     </s.RecordInfo>
   );
