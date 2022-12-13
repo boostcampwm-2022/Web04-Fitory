@@ -43,14 +43,12 @@ export class UsersService {
     });
   }
 
-  async getEveryUserProfile() {
+  async searchUserByName(userName: string) {
     const userProfileList = await this.userRepository
       .createQueryBuilder("user")
-      .select("user.user_id", "user_id")
-      .addSelect("user.name", "name")
-      .addSelect("user.introduce", "introduce")
-      .addSelect("user.profile_image", "profile_image")
-      .getRawMany();
+      .select(["user.user_id", "user.name", "user.introduce", "user.profileImage"])
+      .where(`MATCH(user.name) AGAINST ("+${userName}" IN BOOLEAN MODE)`)
+      .getMany();
 
     return HttpResponse.success({
       userProfileList,

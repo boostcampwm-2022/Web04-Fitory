@@ -9,17 +9,18 @@ import RecommandUserListContianer from "./RecommedUserList";
 import * as s from "./styles";
 
 const SearchContainer = () => {
-  const { allUserList } = useAllUserList();
+  // const { allUserList } = useAllUserList();
   const [searchValue, setSearchValue] = useState<string>("");
-  const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>(allUserList);
+  const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
   useEffect(() => {
-    return SearchUtils.searchUser(searchValue, allUserList, setSearchedUser);
-  }, [allUserList, searchValue]);
+    // return SearchUtils.searchUser(searchValue, allUserList, setSearchedUser);
+    return SearchUtils.searchUserByKeyword(searchValue, setSearchedUser);
+  }, [ searchValue ]);
 
   return (
     <s.SearchContainer isText={searchValue.length !== 0}>
