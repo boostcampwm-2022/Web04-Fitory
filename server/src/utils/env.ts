@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: path.join(process.env.PWD as string, ".env") });
 
 export const {
   ACCESS_TOKEN_SECRETKEY,
