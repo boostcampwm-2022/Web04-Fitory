@@ -143,7 +143,7 @@ export class UsersService {
   async uploadFiles(file: Express.Multer.File, userId: number) {
     const uploadFolder = "user_profiles";
     try {
-      const newFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(file.buffer)).toString();
+      const newFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(file.buffer.toString())).toString();
       const existFileName = await this.getExistProfileImageLink(userId);
 
       if (!existsSync(uploadFolder)) {
@@ -157,7 +157,9 @@ export class UsersService {
 
       let existFileHash: string;
       if (existFileBuffer) {
-        existFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(existFileBuffer)).toString();
+        existFileHash = CryptoJS.MD5(
+          CryptoJS.enc.Utf8.parse(existFileBuffer.toString()),
+        ).toString();
       }
 
       let newFileName;
