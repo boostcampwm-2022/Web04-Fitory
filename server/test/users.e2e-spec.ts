@@ -285,8 +285,8 @@ describe("RoutinesController (e2e)", () => {
     });
   });
 
-  afterAll(async (done) => {
-    await app.close();
+  afterAll((done) => {
+    app.close();
     done();
   });
 });
