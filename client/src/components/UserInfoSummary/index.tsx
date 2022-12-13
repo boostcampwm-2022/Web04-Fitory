@@ -18,8 +18,8 @@ const UserTier = () => {
   return (
     <s.RecordInfo>
       <p>티어</p>
-      <s.Tier tier={userInfo.tier ? TIER[userInfo.tier] : null}>
-        {userInfo.tier ? TIER[userInfo.tier] : "-"}
+      <s.Tier tier={userInfo.tier ? TierName[userInfo.tier] : null}>
+        {userInfo.tier ? TierName[userInfo.tier] : "-"}
       </s.Tier>
     </s.RecordInfo>
   );
@@ -56,11 +56,12 @@ const UserExerciseInfo = () => {
 const AuxiliaryExplanation = () => {
   const { bestChallengeScore } = useBestChallengeScore();
   return (
-    <div>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
       {!bestChallengeScore && (
         <s.ChallengeRequestText>* 3대 챌린지 완료 시 티어가 부여됩니다.</s.ChallengeRequestText>
       )}
-    </div>
+    </>
   );
 };
 

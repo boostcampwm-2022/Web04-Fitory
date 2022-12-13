@@ -9,10 +9,10 @@ import express from "express";
 import path from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { JwtAuthGuard } from "@guard/jwt.guard";
-import { initDatabase } from "./utils/initDB";
 import { AppModule } from "./app.module";
 
 declare global {
+  // eslint-disable-next-line no-var,vars-on-top
   var alarmBar: Set<number>;
 }
 
@@ -38,8 +38,10 @@ async function bootstrap() {
 
   app.use(passport.initialize());
 
-  const reflector = app.get(Reflector);
-  app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+  if (!(process.argv[2] === "noguard")) {
+    const reflector = app.get(Reflector);
+    app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+  }
 
   app.useGlobalPipes(
     new ValidationPipe({

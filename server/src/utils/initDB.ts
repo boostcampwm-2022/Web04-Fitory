@@ -7,7 +7,7 @@ export function initDatabase() {
       await queryRunner.dropDatabase("mock", true);
       await queryRunner.createDatabase("mock", true);
     })
-    .catch((err) => {
+    .catch(() => {
       throw new Error("Database Not Exist");
     });
 }

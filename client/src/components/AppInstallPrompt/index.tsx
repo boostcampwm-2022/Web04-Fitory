@@ -11,7 +11,6 @@ import * as s from "./style";
 const AppInstallPrompt = () => {
   const { openModal, closeModal } = modalStore();
   const { installApp, isInstallPromptDeferred } = useAppInstall();
-  const [isInstallPromptHide, setIsInstallPromptHide] = useState(false);
 
   const isShowPrompt = checkIsIOS() || isInstallPromptDeferred;
 
@@ -21,14 +20,10 @@ const AppInstallPrompt = () => {
   };
 
   useEffect(() => {
-    const isHide = appInstallPromptCookie.get();
-    if (isHide) {
-      setIsInstallPromptHide(true);
-    }
-    if (!isInstallPromptHide && isShowPrompt) {
+    if (!appInstallPromptCookie.get() && isShowPrompt) {
       openModal(ModalKey.APP_INSALL);
     }
-  }, [isInstallPromptHide, isShowPrompt, openModal]);
+  }, [isShowPrompt, openModal]);
 
   return (
     <Modal modalKey={ModalKey.APP_INSALL}>

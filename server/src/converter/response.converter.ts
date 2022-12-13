@@ -1,7 +1,7 @@
 import { HttpStatus } from "@nestjs/common";
 
 export const HttpResponse = {
-  success: (response: any) => {
+  success: (response: unknown) => {
     return {
       ok: true,
       statusCode: HttpStatus.OK,
@@ -12,7 +12,7 @@ export const HttpResponse = {
   failed: (statusCode: number, message: string) => {
     return {
       ok: false,
-      statusCode: statusCode,
+      statusCode,
       response: message,
     };
   },

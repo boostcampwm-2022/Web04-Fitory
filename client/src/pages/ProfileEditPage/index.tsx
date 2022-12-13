@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
+import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import PageTemplate from "@pages/PageTemplate";
 import useUserInfo from "@hooks/query/user/useUserInfo";
@@ -14,8 +14,7 @@ const ProfileEditPage = () => {
   const { updateUser } = useUserUpdate();
   const { userInfo } = useUserInfo(authStorage.get());
   const [visibleState, setVisibleState] = useState(false);
-  const [profileImg, setProfileImg] = useState<Blob>();
-
+  const [profileImage, setProfileImage] = useState<Blob>();
   const [inputValues, setinputValues] = useState<UpdateUserInfo>({
     name: userInfo.name,
     introduce: userInfo.introduce,
@@ -23,6 +22,7 @@ const ProfileEditPage = () => {
     gender: userInfo.gender,
     height: userInfo.height,
     weight: userInfo.weight,
+    profileImage: null,
   });
 
   const openPrivateInfoEdit = () => {
@@ -31,18 +31,14 @@ const ProfileEditPage = () => {
 
   const submitInformation = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (profileImg) {
-      formData.append("images", profileImg);
-    }
     updateUser(inputValues);
-    window.history.back();
   };
 
   const checkIsActiveSubmitButton = () => {
     const { name, introduce, age, gender, height, weight } = userInfo;
     const originValues = [name, introduce, age, gender, height, weight];
     const newValues = Object.values(inputValues);
-    return originValues.findIndex((_, i) => originValues[i] !== newValues[i]) > -1;
+    return originValues.findIndex((_, i) => originValues[i] !== newValues[i]) > -1 || profileImage;
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +75,12 @@ const ProfileEditPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (profileImage && profileImage !== inputValues.profileImage) {
+      setinputValues({ ...inputValues, profileImage });
+    }
+  }, [inputValues, profileImage]);
+
   return (
     <PageTemplate isRoot={false} title="프로필 편집">
       <s.ProfileEditForm onSubmit={submitInformation}>
@@ -86,7 +88,7 @@ const ProfileEditPage = () => {
           <ProfileImageContainer
             isModified={false}
             profileImgUrl={userInfo.profileImage}
-            setProfileImg={setProfileImg}
+            setProfileImg={setProfileImage}
           />
         </s.EditProfileImgButton>
         <s.ProfileEditInputContainer>

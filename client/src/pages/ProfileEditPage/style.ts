@@ -1,7 +1,6 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { DefaultButton, DefaultTextField } from "@styles/Components";
 import Theme from "@styles/Theme";
-import styled, { keyframes } from "styled-components";
 
 const boxOpenAnimation = keyframes` 
   0% {
