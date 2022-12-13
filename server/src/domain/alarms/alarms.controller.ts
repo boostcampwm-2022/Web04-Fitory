@@ -1,7 +1,5 @@
 import { Controller, Get, Req, Query, Sse } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { Exception } from "@exception/exceptions";
-import { isValidUserId } from "@validation/validation";
 import { interval, map } from "rxjs";
 import { RequestWithUser } from "@type/request";
 import { AlarmsService } from "./alarms.service";
@@ -20,7 +18,6 @@ export class AlarmsController {
     type: "number",
   })
   async getUnreadAlarmCount(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.alarmService.countUnreadAlarm(userId);
   }
 
@@ -63,7 +60,6 @@ export class AlarmsController {
     required: false,
   })
   async getAlarmList(@Query("userId") userId: number, @Query("index") index: number | null) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.alarmService.getAlarmList(userId, index);
   }
 }

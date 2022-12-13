@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Post, Query, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
-import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { FollowsService } from "@follow/follows.service";
@@ -23,7 +22,6 @@ export class UsersController {
     type: "number",
   })
   async getUserInfo(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     const followerCount = await this.followService.getFollowerCount(userId);
     const followingCount = await this.followService.getFollowingCount(userId);
     return this.usersService.getUserInfo(userId, followerCount, followingCount);
@@ -46,7 +44,6 @@ export class UsersController {
     type: "number",
   })
   async getRecommandUserList(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.usersService.getRecommandUserList(userId);
   }
 
@@ -73,7 +70,6 @@ export class UsersController {
     @Body() userProfileData: UserProfileDto,
   ) {
     const { userId } = userProfileData;
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
 
     const userIdExist = await this.usersService.isExistUser(userId);
     if (!userIdExist) throw new Exception().userNotFound();

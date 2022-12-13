@@ -2,7 +2,6 @@ import { UsersService } from "@user/users.service";
 import { FollowsService } from "@follow/follows.service";
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
 import { AlarmsService } from "@alarm/alarms.service";
 import { FollowUserIdDto } from "./dto/follow.dto";
@@ -27,7 +26,6 @@ export class FollowsController {
     type: "number",
   })
   async getFollowingUserList(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.followService.getFollowingUserList(userId);
   }
 
@@ -40,7 +38,6 @@ export class FollowsController {
     type: "number",
   })
   async getFollowerUserList(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.followService.getFollowerUserList(userId);
   }
 
