@@ -70,10 +70,6 @@ export default function () {
         params,
       });
 
-      const body = JSON.parse(response.body);
-
-      let routineName = body.response.routineList[0];
-
       check(response, {
         "main page status was 200": (res) => res.status === 200,
       });
@@ -81,18 +77,23 @@ export default function () {
       // Record time to first byte and tag it with the URL to be able to filter the results in Insights
       timeToFirstByte.add(response.timings.waiting, { ttfbURL: response.url, API: "yes" });
 
-      if (routineName) {
-        const response = http.get(
-          `http://localhost:8080/api/routines/single?userId=${userId}&routineName=${routineName}`,
-          params,
-        );
+      const body = JSON.parse(response.body);
+      if (body) {
+        let routineName = body.response.routineList[0];
 
-        check(response, {
-          "main page status was 200": (res) => res.status === 200,
-        });
+        if (routineName) {
+          const response = http.get(
+            `http://localhost:8080/api/routines/single?userId=${userId}&routineName=${routineName}`,
+            params,
+          );
 
-        // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-        timeToFirstByte.add(response.timings.waiting, { ttfbURL: response.url, API: "yes" });
+          check(response, {
+            "main page status was 200": (res) => res.status === 200,
+          });
+
+          // Record time to first byte and tag it with the URL to be able to filter the results in Insights
+          timeToFirstByte.add(response.timings.waiting, { ttfbURL: response.url, API: "yes" });
+        }
       }
 
       sleep(1);
