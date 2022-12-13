@@ -57,4 +57,5 @@ export interface FollowUserInfo {
 
 export interface UpdateUserInfo extends JoinUserInfo {
   introduce: string;
+  profileImage: Blob | null;
 }

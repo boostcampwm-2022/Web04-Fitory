@@ -91,12 +91,11 @@ const UserAPI = {
     }
   },
 
-  updateUserInfo: async (updatedUserInfo: UserType.UpdateUserInfo) => {
+  updateUserInfo: async (updatedUserInfoFormData: FormData) => {
     try {
       const path = "users/update";
-      await HttpClient.post(path, {
-        userId: authStorage.get(),
-        ...updatedUserInfo,
+      await HttpClient.post(path, updatedUserInfoFormData, {
+        "content-type": "multipart/form-data",
       });
     } catch {
       toast.error(error.UPDATE_USER);
