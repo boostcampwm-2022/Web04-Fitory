@@ -74,4 +74,54 @@ describe("ExerciseController (e2e)", () => {
     });
   });
 
+  describe("Get Exercise Of Single Month (GET)", () => {
+    it("ok", () => {
+      const month = Math.floor(Math.random() * 12) + 1;
+      return request(app.getHttpServer())
+        .get("/api/exercise/singleMonth")
+        .query({ month, userId })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          const { historyList } = res.body.response;
+          Object.entries(historyList).map((item) => {
+            const date = item[0];
+            expect(date).toMatch(/^\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/);
+
+            const exerciseObject = JSON.parse(JSON.stringify(item[1]))[0];
+            expect(exerciseObject).toHaveProperty("name");
+
+            const { set } = exerciseObject;
+            Object.entries(set).map((setItem) => {
+              expect(setItem[1]).toHaveProperty("index");
+              expect(setItem[1]).toHaveProperty("kg");
+              expect(setItem[1]).toHaveProperty("count");
+              expect(setItem[1]).toHaveProperty("check");
+            });
+          });
+        });
+    });
+
+    it("Invalid Month", () => {
+      return request(app.getHttpServer())
+        .get("/api/exercise/singleMonth")
+        .query({ month: 13, userId })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it("Invalid User Id", () => {
+      const month = Math.floor(Math.random() * 12) + 1;
+      return request(app.getHttpServer())
+        .get("/api/exercise/singleMonth")
+        .query({ month, userId: 0 })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          const { historyList } = res.body.response;
+          expect(historyList).toStrictEqual({});
+        });
+    });
+  });
+
 });
