@@ -1,7 +1,7 @@
 import React from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import { useNavigate } from "react-router-dom";
-import { PageState, RoutePath, TIER } from "@constants/enums";
+import { PageState, TierName } from "@constants/enums";
 import { getTierColor } from "@utils/getUserTierUtil";
 
 import { UserInfo } from "src/types/user";
@@ -32,34 +32,34 @@ const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
         <s.UserProfileImgContainer>
           <ProfileImageContainer isModified profileImgUrl={userInfo.profileImage as string} />
         </s.UserProfileImgContainer>
-        <s.UserInfoRow>
-          <s.UserInformation>
-            <s.InfoLabel>나이</s.InfoLabel>
-            <p>{userInfo.age}</p>
-          </s.UserInformation>
-          <s.UserInformation>
-            <s.InfoLabel>성별</s.InfoLabel>
-            {userInfo.gender === 0 ? "남" : "여"}
-          </s.UserInformation>
-          <s.UserInformation>
-            <s.InfoLabel>신장</s.InfoLabel>
-            <p>{userInfo.height}cm</p>
-          </s.UserInformation>
-          <s.UserInformation>
-            <s.InfoLabel>체중</s.InfoLabel>
-            <p>{userInfo.weight}kg</p>
-          </s.UserInformation>
-        </s.UserInfoRow>
+        <s.UserNameWrapper>
+          <s.UserNameLabel>{userInfo.name}</s.UserNameLabel>
+          <s.UserIntroduceContainer>{userInfo.introduce}</s.UserIntroduceContainer>
+        </s.UserNameWrapper>
       </s.UserInfoContainer>
-      <s.UserNameWrapper>
-        <s.UserNameLabel>{userInfo.name}</s.UserNameLabel>
-        <s.UserIntroduceContainer>{userInfo.introduce}</s.UserIntroduceContainer>
-      </s.UserNameWrapper>
+      <s.UserInfoRow>
+        <s.UserInformation>
+          <s.InfoLabel>나이</s.InfoLabel>
+          <p>{userInfo.age}</p>
+        </s.UserInformation>
+        <s.UserInformation>
+          <s.InfoLabel>성별</s.InfoLabel>
+          {userInfo.gender === 0 ? "남" : "여"}
+        </s.UserInformation>
+        <s.UserInformation>
+          <s.InfoLabel>신장</s.InfoLabel>
+          <p>{userInfo.height}cm</p>
+        </s.UserInformation>
+        <s.UserInformation>
+          <s.InfoLabel>체중</s.InfoLabel>
+          <p>{userInfo.weight}kg</p>
+        </s.UserInformation>
+      </s.UserInfoRow>
       <s.Wrapper>
         <s.ContentContainer>
           <s.ContentLabel>티어</s.ContentLabel>
           <s.TierContainer color={getTierColor(userInfo.tier)}>
-            {TIER[userInfo.tier] || "-"}
+            {TierName[userInfo.tier] || "-"}
           </s.TierContainer>
         </s.ContentContainer>
         <s.ContentContainer>
@@ -76,7 +76,7 @@ const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
         </s.ContentContainer>
       </s.Wrapper>
       <s.ButtonContainer>
-        {isOwner ? <MyPageEditButton /> : <FollowButton userInfo={userInfo} />}
+        {isOwner ? <MyPageEditButton /> : <FollowButton profileId={userInfo.id} />}
       </s.ButtonContainer>
     </>
   );

@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import UserAPI from "@api/UserAPI";
+import React from "react";
 import { RoutePath } from "@constants/enums";
 import { useNavigate } from "react-router-dom";
 import * as s from "./style";
-import { UserInfo } from "../../types/user";
 
 const MyPageEditButton = () => {
   const navigate = useNavigate();

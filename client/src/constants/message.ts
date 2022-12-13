@@ -2,7 +2,8 @@ export const error = {
   // Challenge
   GET_CHALLENGE_INFO: "챌린지 기록 요청에 실패하였습니다.",
   GET_DATE_INFO: "서버 시간 요청에 실패하였습니다.",
-  SUBMIT_CHALLENGE: "올바르지 않은 입력입니다.",
+  SUBMIT_CHALLENGE_EMPTY: "올바르지 않은 입력입니다.",
+  SUBMIT_CHALLENGE_TIME_LIMIT: "최근 챌린지 후 24시간 내 이용할 수 없습니다.",
 
   // Exercise
   GET_EXERCISE_INFO: "운동 정보 요청에 실패하였습니다.",

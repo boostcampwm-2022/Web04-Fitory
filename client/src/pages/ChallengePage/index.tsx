@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { error } from "@constants/message";
 import PageTemplate from "@pages/PageTemplate";
 import ChallengeItem from "@components/ChallengeItem";
-import { Powerlifting } from "@constants/enums";
+import Modal from "@components/design/Modal";
+import { Powerlifting, TierName, ModalKey } from "@constants/enums";
 import squatSrc from "@public/images/img_squat.webp";
 import benchpressSrc from "@public/images/img_benchpress.webp";
 import deadliftSrc from "@public/images/img_deadlift.webp";
@@ -9,6 +12,7 @@ import useDecreaseTime from "@hooks/useDecreaseTime";
 import useSubmitChallenge from "@hooks/query/challenge/useSubmitChallenge";
 import useRecentChallengeTime from "@hooks/query/challenge/useRecentChallengeTime";
 import addZeroPaddingToNumber from "@utils/addZeroPaddingToNumber";
+import modalStore from "@stores/modalStore";
 import * as s from "./style";
 
 interface SBDWeightState {
@@ -17,16 +21,19 @@ interface SBDWeightState {
   deadlift: number;
 }
 
+const initSBDWeight = {
+  squat: 0,
+  benchpress: 0,
+  deadlift: 0,
+};
+
 const ChallengePage = () => {
-  const { submitChallenge } = useSubmitChallenge();
+  const { openModal } = modalStore();
+  const { submitChallenge, challengeResult } = useSubmitChallenge();
   const { nowTimeStamp, targetTimeStamp } = useRecentChallengeTime();
   const remaingingTime = useDecreaseTime(targetTimeStamp, nowTimeStamp);
 
-  const [SBDWeight, setSBDWeight] = useState<SBDWeightState>({
-    squat: 0,
-    benchpress: 0,
-    deadlift: 0,
-  });
+  const [SBDWeight, setSBDWeight] = useState<SBDWeightState>(initSBDWeight);
 
   const PowerliftingInfo = [
     {
@@ -58,16 +65,16 @@ const ChallengePage = () => {
 
   const handleClickSubmitButton = () => {
     if (remaingingTime) {
-      // eslint-disable-next-line no-alert
-      alert("최근 챌린지 후 24시간 내 이용할 수 없습니다.");
+      toast.error(error.SUBMIT_CHALLENGE_TIME_LIMIT);
       return;
     }
     if (!checkSBDWeightValidation()) {
-      // eslint-disable-next-line no-alert
-      alert("올바르지 않은 입력입니다.");
+      toast.error(error.SUBMIT_CHALLENGE_EMPTY);
       return;
     }
     submitChallenge(SBDWeight);
+    openModal(ModalKey.CHALLENGE_TIER);
+    setSBDWeight(initSBDWeight);
   };
 
   return (
@@ -94,6 +101,12 @@ const ChallengePage = () => {
           )}
         </s.SubmitButton>
       </s.Wrapper>
+      <Modal modalKey={ModalKey.CHALLENGE_TIER} isCenter>
+        <s.TierDescroption>티어를 획득했습니다!</s.TierDescroption>
+        <s.TierWrapper>
+          <s.Tier tierName={TierName[challengeResult]}>{TierName[challengeResult]}</s.Tier>
+        </s.TierWrapper>
+      </Modal>
     </PageTemplate>
   );
 };

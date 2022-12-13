@@ -1,0 +1,85 @@
+name: Build & ESLint Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  paths-filter:
+    name: Path Filter
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{steps.filter.outputs.frontend}}
+      backend: ${{steps.filter.outputs.backend}}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'client/**'
+            backend:
+              - 'server/**'
+  frontend:
+    name: Frontend Build & ESLint Check
+    needs: paths-filter
+    if: ${{needs.check.outputs.frontend=='true'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Nodejs Setup
+        uses: actions/setup-node@v2
+
+      - name: Cache Frontend node_modules
+        id: cache-frontend
+        uses: actions/cache@v3
+        with:
+          path: client/node_modules
+          key: npm-packages-frontend-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+              npm-packages-frontend-
+
+      - name: Install Frontend Dependencies
+        if: ${{steps.cache-frontend.outputs.cache-hit != 'true'}}
+        run: cd client && npm install --legacy-peer-deps
+
+      - name: Check Client ESLint
+        run:  cd client && npm run lint
+
+      - name: Check Frontend Build
+        run: cd client && npm run build
+
+  backend:
+    name: Backend Build & ESLint Check
+    needs: paths-filter
+    if: ${{needs.check.outputs.backend=='true'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Nodejs Setup
+        uses: actions/setup-node@v2
+
+      - name: Cache Backend node_modules
+        id: cache-backend
+        uses: actions/cache@v3
+        with:
+          path: server/node_modules
+          key: npm-packages-backend-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+            npm-packages-backend-
+            
+      - name: Install Backend Dependencies
+        if: ${{steps.cache-backend.outputs.cache-hit != 'true'}}
+        run: cd server && npm install
+
+      - name: Check Backend ESLint
+        run: cd server && npm run lint
+
+      - name: Check Backend Build
+        run: cd server && npm run build

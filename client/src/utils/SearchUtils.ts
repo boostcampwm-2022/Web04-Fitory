@@ -2,7 +2,11 @@ import React from "react";
 import { SearchedUserInfo } from "../types/user";
 
 const SearchUtils = {
-  searchEvent: (word: string, userList: any[], setSearchedUser: any) => {
+  searchEvent: (
+    word: string,
+    userList: SearchedUserInfo[],
+    setSearchedUser: (searchResult: SearchedUserInfo[]) => void,
+  ) => {
     if (word.length === 0) {
       return [];
     }
@@ -12,13 +16,14 @@ const SearchUtils = {
     setSearchedUser(searchResult);
     return searchResult;
   },
+
   searchUserDebounce: (
     searchValue: string,
-    userList: any[],
+    userList: SearchedUserInfo[],
     setSearchedUser: React.Dispatch<React.SetStateAction<SearchedUserInfo[]>>,
   ) => {
     const debounce = setTimeout(() => {
-      if (searchValue.length !== 0) SearchUtils.searchEvent(searchValue, userList, setSearchedUser);
+      if (searchValue) SearchUtils.searchEvent(searchValue, userList, setSearchedUser);
       else setSearchedUser([]);
     }, 250);
     return () => {
@@ -28,7 +33,7 @@ const SearchUtils = {
 
   searchUser: (
     searchValue: string,
-    userList: any[],
+    userList: SearchedUserInfo[],
     setSearchedUser: React.Dispatch<React.SetStateAction<SearchedUserInfo[]>>,
   ) => {
     const timer = setTimeout(() => {

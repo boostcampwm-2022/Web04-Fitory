@@ -1,7 +1,17 @@
 import styled from "styled-components";
 import { DefaultButton, DefaultTextField } from "@styles/Components";
 import Theme from "@styles/Theme";
+import styled, { keyframes } from "styled-components";
 
+const boxOpenAnimation = keyframes` 
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -10%, 0);
+  } 
+  to {
+    opacity: 1;transform: translateZ(0);
+  }
+`;
 export const EditProfileImgButton = styled.div`
   margin: auto;
   height: 150px;
@@ -78,6 +88,8 @@ export const ToggleButton = styled.button`
 
 export const PrivateInfoContainer = styled.div`
   display: ${({ visibleState }: { visibleState: boolean }) => (visibleState ? "block" : "none")};
+      animation: ${boxOpenAnimation} 1s;
+}
 `;
 
 export const PrivateInfoWrapper = styled.div`

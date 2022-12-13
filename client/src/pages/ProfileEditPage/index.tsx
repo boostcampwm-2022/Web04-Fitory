@@ -14,6 +14,7 @@ const ProfileEditPage = () => {
   const { updateUser } = useUserUpdate();
   const { userInfo } = useUserInfo(authStorage.get());
   const [visibleState, setVisibleState] = useState(false);
+  const [profileImg, setProfileImg] = useState<Blob>();
 
   const [inputValues, setinputValues] = useState<UpdateUserInfo>({
     name: userInfo.name,
@@ -30,6 +31,9 @@ const ProfileEditPage = () => {
 
   const submitInformation = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (profileImg) {
+      formData.append("images", profileImg);
+    }
     updateUser(inputValues);
     window.history.back();
   };
@@ -79,7 +83,11 @@ const ProfileEditPage = () => {
     <PageTemplate isRoot={false} title="프로필 편집">
       <s.ProfileEditForm onSubmit={submitInformation}>
         <s.EditProfileImgButton>
-          <ProfileImageContainer isModified={false} profileImgUrl={userInfo.profileImage} />
+          <ProfileImageContainer
+            isModified={false}
+            profileImgUrl={userInfo.profileImage}
+            setProfileImg={setProfileImg}
+          />
         </s.EditProfileImgButton>
         <s.ProfileEditInputContainer>
           <s.ProfileEditLabel>이름</s.ProfileEditLabel>
