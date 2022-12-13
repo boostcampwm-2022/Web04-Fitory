@@ -25,12 +25,14 @@ const FollowButton = ({ userId }: { userId: number }) => {
   useEffect(() => {
     (async () => {
       const ownerFollowList = await UserAPI.getFollowingUser(myUserId);
-      ownerFollowList.map((user) => {
-        if ((user.follower_id || user.followed_id) === otherUserId) {
-          return setFollowState(false);
-        }
-        return true;
-      });
+      if (ownerFollowList) {
+        ownerFollowList.map((user) => {
+          if ((user.follower_id || user.followed_id) === otherUserId) {
+            return setFollowState(false);
+          }
+          return true;
+        });
+      }
     })();
   }, []);
   return (

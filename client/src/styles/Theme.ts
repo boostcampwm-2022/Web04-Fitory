@@ -24,6 +24,7 @@ const COLORS = {
 } as const;
 
 const FONT_SIZE = {
+  TINY_SMALL: "1rem",
   EXTRA_SMALL: "1.2rem",
   SMALL: "1.4rem",
   MEDIUM: "1.6rem",
