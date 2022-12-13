@@ -4,7 +4,7 @@ import request from "supertest";
 import { AppModule } from "../src/app.module";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { ACCESS_TOKEN_EXPIRESIN, ACCESS_TOKEN_SECRETKEY } from "../src/utils/env";
-import cookieParser from "cookie-parser";
+import cookieParser = require("cookie-parser");
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { typeormConfig } from "../src/config/typeorm.config";
 import { faker } from "@faker-js/faker/locale/ko";

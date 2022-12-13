@@ -6,11 +6,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { extname } from "path";
+import CryptoJS from "crypto-js";
 import { User } from "./entities/user.entity";
 import { UserProfileDto } from "./dto/user_profile.dto";
-import { Follow } from "../follows/entities/follow.entity";
-
-const CryptoJS = require("crypto-js");
 
 @Injectable()
 export class UsersService {

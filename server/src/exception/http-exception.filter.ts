@@ -13,12 +13,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse<Response>();
     const req = ctx.getRequest<Request>();
+    let newException;
 
     if (!(exception instanceof HttpException)) {
-      exception = new InternalServerErrorException();
+      newException = new InternalServerErrorException();
     }
 
-    const response = (exception as HttpException).getResponse();
+    const response = (newException as HttpException).getResponse();
 
     const log = {
       timestamp: new Date().toLocaleDateString(),
@@ -26,8 +27,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
       response,
     };
 
+    // eslint-disable-next-line no-console
     console.log(log);
 
-    res.status((exception as HttpException).getStatus()).json(response);
+    res.status((newException as HttpException).getStatus()).json(response);
   }
 }

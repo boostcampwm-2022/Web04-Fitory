@@ -1,7 +1,7 @@
 import { UsersService } from "@user/users.service";
 import { FollowsService } from "@follow/follows.service";
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
-import { ApiBody, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
 import { AlarmsService } from "@alarm/alarms.service";

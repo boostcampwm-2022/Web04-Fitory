@@ -1,7 +1,7 @@
 import { HttpStatus } from "@nestjs/common";
 
 export const HttpResponse = {
-  success: (response: any) => {
+  success: (response: unknown) => {
     return {
       ok: true,
       statusCode: HttpStatus.OK,
