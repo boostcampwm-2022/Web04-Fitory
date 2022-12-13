@@ -38,8 +38,10 @@ async function bootstrap() {
 
   app.use(passport.initialize());
 
-  const reflector = app.get(Reflector);
-  app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+  if (!(process.argv[2] === "noguard")) {
+    const reflector = app.get(Reflector);
+    app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+  }
 
   app.useGlobalPipes(
     new ValidationPipe({
