@@ -57,6 +57,16 @@ async function bootstrap() {
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerDocumentBuilder);
   SwaggerModule.setup("api", app, swaggerDocument);
 
-  await app.listen(PORT as string);
+  GlobalService.isDisableKeepAlive = false;
+
+  app.use(SetResponseHeader);
+
+  // Starts listening to shutdown hooks
+  app.enableShutdownHooks();
+
+  await app.listen(PORT as string, () => {
+    process.send("ready");
+    console.log(`application is listening on port ${PORT}`);
+  });
 }
 bootstrap();
