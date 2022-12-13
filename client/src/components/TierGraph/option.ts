@@ -35,10 +35,10 @@ const drawChartOption = (scores: number[], weight: number) => {
   const maxScore = scores.length !== 0 ? Math.max(...scores) : 1000;
   const minScore = scores.length !== 0 ? Math.min(...scores) : 0;
 
-  const minLine = judLine(minScore, weight);
+  const minLine = judLine(minScore, weight) === 0 ? 0 : judLine(minScore, weight) - 1;
   const maxLine = judLine(maxScore, weight);
 
-  const line = setHorizontalLineLine(weight).slice(minLine - 1, maxLine + 2);
+  const line = setHorizontalLineLine(weight).slice(minLine, maxLine + 2);
 
   return {
     plugins: {
@@ -62,7 +62,7 @@ const drawChartOption = (scores: number[], weight: number) => {
         grid: {
           display: false,
         },
-        min: minScore - 50,
+        min: minScore - 50 < 0 ? 0 : minScore - 50,
         max: maxScore + 100,
       },
     },
