@@ -7,7 +7,6 @@ import { Repository } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { extname } from "path";
 import CryptoJS from "crypto-js";
-import { DEPLOY_HOST } from "@utils/env";
 import { User } from "./entities/user.entity";
 import { UserProfileDto } from "./dto/user_profile.dto";
 
@@ -44,14 +43,12 @@ export class UsersService {
     });
   }
 
-  async getEveryUserProfile() {
+  async searchUserByName(userName: string) {
     const userProfileList = await this.userRepository
       .createQueryBuilder("user")
-      .select("user.user_id", "user_id")
-      .addSelect("user.name", "name")
-      .addSelect("user.introduce", "introduce")
-      .addSelect("user.profile_image", "profile_image")
-      .getRawMany();
+      .select(["user.id", "user.name", "user.introduce", "user.profileImage"])
+      .where(`MATCH(user.name) AGAINST ("+${userName}" IN BOOLEAN MODE)`)
+      .getMany();
 
     return HttpResponse.success({
       userProfileList,
@@ -173,7 +170,7 @@ export class UsersService {
 
       let filePath;
       if (newFileName) {
-        const serverAddress = DEPLOY_HOST;
+        const serverAddress = "http://localhost:8080";
         filePath = `${serverAddress}/user_profiles/${newFileName}`;
       }
       return filePath;
