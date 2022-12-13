@@ -13,10 +13,12 @@ export const options = {
     { duration: "1m", target: 90 },
     { duration: "1m", target: 120 },
     { duration: "1m", target: 150 },
+    { duration: "1m", target: 200 },
+    { duration: "1m", target: 250 },
   ],
   thresholds: {
     http_req_failed: ["rate<0.01"], // http 오류는 1% 미만이어야 함
-    http_req_duration: ["p(95)<200"], // 요청의 95%는 200ms 미만으로 응답해야 함
+    http_req_duration: ["p(95)<300"], // 요청의 95%는 300ms 미만으로 응답해야 함
     checks: ["rate>0.99"], // check()의 성공률이 99% 이상이여야 함
   },
 };
