@@ -2,7 +2,8 @@ export const error = {
   // Challenge
   GET_CHALLENGE_INFO: "챌린지 기록 요청에 실패하였습니다.",
   GET_DATE_INFO: "서버 시간 요청에 실패하였습니다.",
-  SUBMIT_CHALLENGE: "올바르지 않은 입력입니다.",
+  SUBMIT_CHALLENGE_EMPTY: "올바르지 않은 입력입니다.",
+  SUBMIT_CHALLENGE_TIME_LIMIT: "최근 챌린지 후 24시간 내 이용할 수 없습니다.",
 
   // Exercise
   GET_EXERCISE_INFO: "운동 정보 요청에 실패하였습니다.",
@@ -31,6 +32,7 @@ export const error = {
   GET_FOLLOWING: "팔로잉 리스트 요청에 실패하였습니다.",
   GET_RECOMMAND_USER_LIST: "추천 사용자 리스트 요청에 실패하였습니다.",
   CHECK_USER_NAME: "이미 존재하는 사용자 이름입니다.",
+  UPDATE_USER: "프로필 수정에 실패하였습니다.",
 
   // Notification
   GET_NOTIFICATION_COUNT: "알림 수 요청에 실패하였습니다.",

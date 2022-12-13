@@ -84,6 +84,7 @@ export class AlarmsService {
       .createQueryBuilder("follow")
       .select("follow.follower_id", "follower_id")
       .where("follow.followed_id = :senderUserId", { senderUserId })
+      .andWhere("follow.deleted = false")
       .getRawMany();
     await Promise.all(
       followerList.map(async (row) => {

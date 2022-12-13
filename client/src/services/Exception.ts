@@ -2,7 +2,9 @@ import { RoutePath } from "@constants/enums";
 
 const Exception = {
   UserNotFound: () => {
-    window.location.replace(RoutePath.LOGIN);
+    if (window.location.pathname !== RoutePath.LOGIN) {
+      window.location.replace(RoutePath.LOGIN);
+    }
   },
 };
 

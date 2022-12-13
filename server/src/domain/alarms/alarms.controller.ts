@@ -17,9 +17,9 @@ export class AlarmsController {
     private readonly usersService: UsersService,
   ) {}
 
-  @Get("everyDate")
+  @Get("static/unread")
   @ApiOperation({
-    summary: "해당 사용자가 읽지 않은 알림 수를 반환",
+    summary: "해당 사용자가 읽지 않은 알림 수를 정적으로 반환",
   })
   @ApiQuery({
     name: "userId",
@@ -33,7 +33,7 @@ export class AlarmsController {
   // sse
   @Sse("unread")
   @ApiOperation({
-    summary: "해당 사용자가 읽지 않은 알림 수를 반환",
+    summary: "해당 사용자가 읽지 않은 알림 수를 SSE로 반환",
   })
   @ApiQuery({
     name: "userId",
@@ -72,10 +72,5 @@ export class AlarmsController {
   async getAlarmList(@Query("userId") userId: number, @Query("index") index: number | null) {
     if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.alarmService.getAlarmList(userId, index);
-  }
-
-  @Get("test")
-  async test(@GetUserId() userId: number) {
-    console.log(userId);
   }
 }

@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   gap: 20px;
   flex-direction: column;
   align-items: center;
-  padding: 1.3rem 3vw;
+  padding: 20px;
 `;
 
 export const SearchContainer = styled.div`
