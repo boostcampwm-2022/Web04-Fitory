@@ -1,22 +1,12 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Query,
-  UploadedFiles,
-  UseGuards,
-  UseInterceptors,
-} from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
-import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { FollowsService } from "@follow/follows.service";
+import { NoAuth } from "@decorator/validate.decorator";
 import { UsersService } from "./users.service";
 import { UserProfileDto } from "./dto/user_profile.dto";
 import { multerOptions } from "./options/multer_options";
-import { NoAuth } from "../../decorator/validate.decorator";
 
 @Controller("api/users")
 @ApiTags("USER API")
@@ -32,7 +22,6 @@ export class UsersController {
     type: "number",
   })
   async getUserInfo(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     const followerCount = await this.followService.getFollowerCount(userId);
     const followingCount = await this.followService.getFollowingCount(userId);
     return this.usersService.getUserInfo(userId, followerCount, followingCount);
@@ -55,7 +44,6 @@ export class UsersController {
     type: "number",
   })
   async getRecommandUserList(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.usersService.getRecommandUserList(userId);
   }
 
@@ -82,10 +70,14 @@ export class UsersController {
     @Body() userProfileData: UserProfileDto,
   ) {
     const { userId } = userProfileData;
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
+
     const userIdExist = await this.usersService.isExistUser(userId);
     if (!userIdExist) throw new Exception().userNotFound();
-    const filePath = await this.usersService.uploadFiles(file[0], userId);
+    let filePath;
+
+    if (file !== undefined && file.length > 0) {
+      filePath = await this.usersService.uploadFiles(file[0], userId);
+    }
     return this.usersService.updateUserProfile(userProfileData, filePath);
   }
 }

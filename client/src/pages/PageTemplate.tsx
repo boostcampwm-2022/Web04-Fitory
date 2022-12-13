@@ -1,15 +1,14 @@
-import React, { useEffect, Suspense } from "react";
+import React, { Suspense } from "react";
+import { ToastContainer } from "react-toastify";
 import TopNavigationBar from "@components/TopNavigationBar";
 import MainContainer from "@components/MainContainer";
 import BottomNavigationBar from "@components/BottomNavigationBar";
 import Loading from "@components/Loading";
-import { authStorage } from "src/services/ClientStorage";
-import Exception from "src/services/Exception";
+import "react-toastify/dist/ReactToastify.css";
 
 interface PageTemplateProps {
   isRoot: boolean;
   title?: string;
-  ignoreException?: boolean;
   topNavRightItem?: JSX.Element;
   onClickBackButton?: () => void;
   children: React.ReactNode;
@@ -18,17 +17,10 @@ interface PageTemplateProps {
 const PageTemplate = ({
   isRoot,
   title,
-  ignoreException,
   topNavRightItem,
   onClickBackButton,
   children,
 }: PageTemplateProps) => {
-  useEffect(() => {
-    if (!ignoreException && !authStorage.has()) {
-      Exception.UserNotFound();
-    }
-  });
-
   return (
     <>
       <TopNavigationBar
@@ -41,6 +33,7 @@ const PageTemplate = ({
         <MainContainer isRoot={isRoot}>{children}</MainContainer>
       </Suspense>
       {isRoot && <BottomNavigationBar />}
+      <ToastContainer position="bottom-center" />
     </>
   );
 };

@@ -28,7 +28,7 @@ export const RoutineButton = styled.button`
 
 export const SaveButtonWrapper = styled.div`
   margin: auto;
-  margin-top: 80px;
+  margin-top: 60px;
   width: 460px;
   gap: 30px;
   display: flex;

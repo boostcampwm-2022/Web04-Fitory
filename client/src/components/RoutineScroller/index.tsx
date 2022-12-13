@@ -1,4 +1,3 @@
-import React from "react";
 import routineSrc1 from "@public/images/btn_routine_1.webp";
 import routineSrc2 from "@public/images/btn_routine_2.webp";
 import routineSrc3 from "@public/images/btn_routine_3.webp";
@@ -6,11 +5,16 @@ import routineSrc4 from "@public/images/btn_routine_4.webp";
 import routineSrc5 from "@public/images/btn_routine_5.webp";
 import routineSrc6 from "@public/images/btn_routine_6.webp";
 import cancelSrc from "@public/icons/btn_cancel.svg";
+
+import React, { useState } from "react";
 import Paper from "@components/design/Paper";
+import Modal from "@components/design/Modal";
 import CardsScroller from "@components/design/CardsScroller";
-import useUserInfo from "@hooks/query/useUserInfo";
-import useRoutineList from "@hooks/query/useRoutineList";
-import ExerciseAPI from "@api/ExerciseAPI";
+import useUserInfo from "@hooks/query/user/useUserInfo";
+import useRoutineList from "@hooks/query/routine/useRoutineList";
+import useDeleteRoutine from "@hooks/query/routine/useDeleteRoutine";
+import modalStore from "@stores/modalStore";
+import { ModalKey } from "@constants/enums";
 import theme from "@styles/Theme";
 import { authStorage } from "src/services/ClientStorage";
 import { UserId } from "src/types/user";
@@ -33,12 +37,19 @@ const routineSrcList = [
 const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) => {
   const { userInfo } = useUserInfo(userId);
   const { routineList } = useRoutineList(userId);
+  const { deleteRoutine } = useDeleteRoutine();
 
-  const handleClickRoutineDeleteButton = (routineName: string) => {
-    // eslint-disable-next-line no-alert
-    if (window.confirm("해당 루틴을 정말로 삭제하시겠습니까?")) {
-      ExerciseAPI.deleteRoutine(routineName);
-    }
+  const [deleteRoutineName, setDeleteRoutineName] = useState("");
+  const { openModal, closeModal } = modalStore();
+
+  const handleOpenDeleteRoutineModal = (routineName: string) => {
+    openModal(ModalKey.DELETE_ROUTINE);
+    setDeleteRoutineName(routineName);
+  };
+
+  const handleClickDeleteRoutineButton = () => {
+    deleteRoutine(deleteRoutineName);
+    closeModal();
   };
 
   return (
@@ -62,7 +73,7 @@ const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) =
             >
               <s.RoutineDeleteButton
                 visible={userId === authStorage.get()}
-                onClick={() => handleClickRoutineDeleteButton(routineName)}
+                onClick={() => handleOpenDeleteRoutineModal(routineName)}
               >
                 <img src={cancelSrc} alt="루틴 삭제 버튼" />
               </s.RoutineDeleteButton>
@@ -72,6 +83,10 @@ const RoutineScroller = ({ userId, onClickRoutineItem }: RoutineScrollerProps) =
               </s.RoutineButton>
             </Paper>
           ))}
+          <Modal modalKey={ModalKey.DELETE_ROUTINE}>
+            <s.DeleteRoutineTitle>정말로 선택한 루틴을 삭제하시겠어요?</s.DeleteRoutineTitle>
+            <s.ConfirmButton onClick={handleClickDeleteRoutineButton}>삭제</s.ConfirmButton>
+          </Modal>
         </CardsScroller>
       ) : (
         <s.RoutineListAltText>저장한 운동 루틴이 없습니다.</s.RoutineListAltText>

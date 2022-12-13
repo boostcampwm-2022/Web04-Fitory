@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-dotenv.config({ path: "/root/Web04-Fitory/server/.env" });
+dotenv.config();
 
 export const {
   ACCESS_TOKEN_SECRETKEY,

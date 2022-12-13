@@ -1,11 +1,13 @@
+import { FollowsService } from "@follow/follows.service";
 import { Exception } from "@exception/exceptions";
-import { ExercisesService } from "./exercises.service";
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { isValidMonth, isValidUserId } from "@validation/validation";
-import { ExerciseDataDto } from "./dto/exercise.dto";
+import { isValidMonth } from "@validation/validation";
 import { UsersService } from "@user/users.service";
 import { AlarmsService } from "@alarm/alarms.service";
+import { ExerciseDataDto } from "./dto/exercise.dto";
+import { ExercisesService } from "./exercises.service";
+import { EventService } from "../event/event.service";
 
 @Controller("api/exercise")
 @ApiTags("EXERCISE API")
@@ -14,6 +16,8 @@ export class ExercisesController {
     private readonly exercisesService: ExercisesService,
     private readonly usersService: UsersService,
     private readonly alarmsService: AlarmsService,
+    private readonly followService: FollowsService,
+    private readonly eventService: EventService,
   ) {}
 
   @Get("everyDate")
@@ -25,7 +29,6 @@ export class ExercisesController {
     type: "number",
   })
   async getEveryExerciseDate(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.exercisesService.findEveryExerciseDate(userId);
   }
 
@@ -43,7 +46,6 @@ export class ExercisesController {
   })
   async getExerciseHistoryOfMonth(@Query("month") month: number, @Query("userId") userId: number) {
     if (!isValidMonth(month)) throw new Exception().invalidMonthError();
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.exercisesService.findExerciseHistoryOfMonth(month, userId);
   }
 
@@ -56,7 +58,6 @@ export class ExercisesController {
     type: "number",
   })
   async getInfoForProfile(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.exercisesService.getProfileData(userId);
   }
 
@@ -67,6 +68,8 @@ export class ExercisesController {
   @ApiBody({ type: () => ExerciseDataDto })
   async submitExercise(@Body() exerciseData: ExerciseDataDto) {
     await this.alarmsService.sendExerciseAlarm(exerciseData.userId);
-    return this.exercisesService.submitSingleSBDRecord(exerciseData);
+    const followerUserIdList = await this.followService.getFollowerUserIdList(exerciseData.userId);
+    this.eventService.emit(followerUserIdList);
+    return this.exercisesService.submitExercise(exerciseData);
   }
 }

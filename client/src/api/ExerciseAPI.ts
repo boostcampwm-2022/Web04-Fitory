@@ -1,6 +1,7 @@
-/* eslint-disable no-alert */
 import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 import { StatusCode } from "@constants/enums";
+import { success, error } from "@constants/message";
 import { authStorage } from "src/services/ClientStorage";
 import HttpClient from "src/services/HttpClient";
 import { UserId } from "src/types/user";
@@ -8,20 +9,27 @@ import * as ExerciseType from "src/types/exercise";
 
 const ExerciseAPI = {
   getExerciseProfile: async () => {
-    const userId = authStorage.get();
-    const path = `exercise/profile`;
-    const response = await HttpClient.get(path, { userId });
-
-    return response.response as ExerciseType.ExerciseProfile;
+    try {
+      const userId = authStorage.get();
+      const path = `exercise/profile`;
+      const response = await HttpClient.get(path, { userId });
+      return response.response as ExerciseType.ExerciseProfile;
+    } catch {
+      toast.error(error.GET_EXERCISE_INFO);
+      return null;
+    }
   },
 
-  getAllExerciseDate: async () => {
-    const userId = authStorage.get();
-    const path = `exercise/everyDate`;
-    const response = await HttpClient.get(path, { userId });
-    const { dateList } = response.response as { dateList: ExerciseType.ExerciseDate };
-
-    return dateList;
+  getAllExerciseDate: async (userId: UserId) => {
+    try {
+      const path = `exercise/everyDate`;
+      const response = await HttpClient.get(path, { userId });
+      const { dateList } = response.response as { dateList: ExerciseType.ExerciseDate };
+      return dateList;
+    } catch {
+      toast.error(error.GET_EXERCISE_INFO);
+      return null;
+    }
   },
 
   recordExercise: async (exerciseList: ExerciseType.Exercise[]) => {
@@ -29,10 +37,10 @@ const ExerciseAPI = {
       const userId = authStorage.get();
       const path = "exercise/submit";
       await HttpClient.post(path, { userId, exerciseList });
-      alert("오늘의 운동 완료!");
+      toast.success(success.RECORD_EXERCISE);
       return true;
     } catch {
-      alert("운동 이름과 횟수가 모두 채워져 있는지 확인해주세요.");
+      toast.error(error.RECORD_EXERCISE);
       return false;
     }
   },
@@ -42,57 +50,66 @@ const ExerciseAPI = {
       const userId = authStorage.get();
       const path = "routines/save";
       await HttpClient.post(path, { userId, routineName, exerciseList });
-      alert("루틴 저장이 완료되었습니다!");
+      toast.success(success.SAVE_ROUTINE);
+      return true;
     } catch (e) {
       if ((e as AxiosError).response?.status === StatusCode.BAD_REQUEST) {
-        alert("운동 이름과 루틴 이름이 모두 채워져 있는지 확인해주세요.");
+        toast.error(error.SAVE_ROUTINE_EMPTY);
       }
       if ((e as AxiosError).request.status === StatusCode.FORBIDDEN) {
-        alert("이미 존재하는 루틴 이름입니다.");
+        toast.error(error.SAVE_ROUTINE_DUPLICATE);
       }
+      return false;
     }
   },
 
   getRoutineList: async (userId: UserId) => {
-    const path = `routines/list`;
-    const response = await HttpClient.get(path, { userId });
-    const { routineList } = response.response as { routineList: ExerciseType.RoutineList };
-
-    return routineList;
+    try {
+      const path = `routines/list`;
+      const response = await HttpClient.get(path, { userId });
+      const { routineList } = response.response as { routineList: ExerciseType.RoutineList };
+      return routineList;
+    } catch {
+      toast.error(error.GET_ROUTINE_LIST);
+      return false;
+    }
   },
 
   getSingleRoutineInfo: async (userId: UserId, routineName: string) => {
-    const path = `routines/single`;
-    const response = await HttpClient.get(path, { userId, routineName });
-    const { routine } = response.response as { routine: ExerciseType.RoutineDetailInfo[] };
-
-    return routine;
+    try {
+      const path = `routines/single`;
+      const response = await HttpClient.get(path, { userId, routineName });
+      const { routine } = response.response as { routine: ExerciseType.RoutineDetailInfo[] };
+      return routine;
+    } catch {
+      toast.error(error.GET_SINGLE_ROUTINE);
+      return null;
+    }
   },
 
   deleteRoutine: async (routineName: string) => {
-    const path = `routines/delete`;
-    const userId = authStorage.get();
-
-    await HttpClient.get(path, { userId, routineName });
+    try {
+      const path = `routines/delete`;
+      const userId = authStorage.get();
+      await HttpClient.get(path, { userId, routineName });
+    } catch {
+      toast.error(error.DELETE_ROUTINE);
+    }
   },
 
   getSingleMonthHistory: async (month: number) => {
-    const path = `exercise/singleMonth`;
-    const userId = authStorage.get();
-    const response = await HttpClient.get(path, { month, userId });
-    const { historyList } = response.response as { historyList: ExerciseType.ExerciseHistoryList };
-
-    return historyList;
-  },
-
-  getEveryDayHistory: async () => {
-    const path = `record/every`;
-    const userId = authStorage.get();
-    const response = await HttpClient.get(path, { userId });
-    const { recordList } = response.response as {
-      recordList: ExerciseType.SDBRecordHistoryArray[];
-    };
-    return recordList;
+    try {
+      const path = `exercise/singleMonth`;
+      const userId = authStorage.get();
+      const response = await HttpClient.get(path, { month, userId });
+      const { historyList } = response.response as {
+        historyList: ExerciseType.ExerciseHistoryList;
+      };
+      return historyList;
+    } catch {
+      toast.error(error.GET_EXERCISE_HISTORY);
+      return null;
+    }
   },
 };
 

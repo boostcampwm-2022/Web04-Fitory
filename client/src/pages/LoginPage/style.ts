@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
 export const Background = styled.div`
-  top: 0;
-  gap: 50px;
-  position: absolute;
+  padding: 50px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,29 +14,26 @@ export const Logo = styled.img`
   width: 250px;
 `;
 
-export const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 50px;
-  gap: 30px;
+export const ExampleWrapper = styled.div`
+  width: 330px;
+  padding: 30px;
+  border-radius: 20px;
+  gap: 20px;
+  background-color: ${({ theme }) => theme.COLORS.WHITE};
   display: flex;
   flex-direction: column;
-  align-items: center;
-`;
-
-export const TitleWrapper = styled.div`
-  width: 100%;
-  gap: 10px;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  & > img {
-    width: 80px;
-  }
+  align-items: center;
 `;
 
-export const Title = styled.h1`
-  color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
-  font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
+export const ExampleDescription = styled.p`
+  color: ${({ theme }) => theme.COLORS.DEEP_GRAY};
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
+`;
+
+export const ExampleImage = styled.img`
+  width: 150px;
+  border-radius: 20px;
+  box-shadow: rgb(0 0 0 / 20%) 2px 4px 12px;
 `;

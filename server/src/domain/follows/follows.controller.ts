@@ -1,11 +1,11 @@
 import { UsersService } from "@user/users.service";
 import { FollowsService } from "@follow/follows.service";
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
-import { ApiBody, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { isValidUserId } from "@validation/validation";
+import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Exception } from "@exception/exceptions";
-import { FollowUserIdDto } from "./dto/follow.dto";
 import { AlarmsService } from "@alarm/alarms.service";
+import { FollowUserIdDto } from "./dto/follow.dto";
+import { EventService } from "../event/event.service";
 
 @Controller("api/follow")
 @ApiTags("FOLLOW API")
@@ -14,6 +14,7 @@ export class FollowsController {
     private readonly followService: FollowsService,
     private readonly usersService: UsersService,
     private readonly alarmsService: AlarmsService,
+    private readonly eventService: EventService,
   ) {}
 
   @Get("following")
@@ -25,7 +26,6 @@ export class FollowsController {
     type: "number",
   })
   async getFollowingUserList(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.followService.getFollowingUserList(userId);
   }
 
@@ -38,7 +38,6 @@ export class FollowsController {
     type: "number",
   })
   async getFollowerUserList(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.followService.getFollowerUserList(userId);
   }
 
@@ -51,6 +50,7 @@ export class FollowsController {
     const otherUserIdExist = await this.usersService.isExistUser(userIds.otherUserId);
     if (!myUserIdExist || !otherUserIdExist) throw new Exception().userNotFound();
     await this.alarmsService.sendFollowAlarm(userIds.myUserId, userIds.otherUserId);
+    this.eventService.emit([userIds.otherUserId]);
     return this.followService.doFollow(userIds);
   }
 

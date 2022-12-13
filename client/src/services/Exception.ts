@@ -2,8 +2,9 @@ import { RoutePath } from "@constants/enums";
 
 const Exception = {
   UserNotFound: () => {
-    window.history.replaceState(null, "", RoutePath.LOGIN);
-    window.location.reload();
+    if (window.location.pathname !== RoutePath.LOGIN) {
+      window.location.replace(RoutePath.LOGIN);
+    }
   },
 };
 

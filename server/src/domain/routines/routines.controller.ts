@@ -1,8 +1,6 @@
 import { UsersService } from "@user/users.service";
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { isValidUserId } from "@validation/validation";
-import { Exception } from "@exception/exceptions";
 import { RoutinesService } from "./routines.service";
 import { RoutineDto } from "./dto/single-routine.dto";
 
@@ -23,7 +21,6 @@ export class RoutinesController {
     type: "number",
   })
   async findAll(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.routinesService.findEveryRoutine(userId);
   }
 
@@ -43,7 +40,6 @@ export class RoutinesController {
     @Query("userId") userId: number,
     @Query("routineName") routineName: string,
   ) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.routinesService.getSingleRoutineDetail(userId, routineName);
   }
 
@@ -76,7 +72,6 @@ export class RoutinesController {
     type: "string",
   })
   async deleteRoutine(@Query("userId") userId: number, @Query("routineName") routineName: string) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.routinesService.deleteRoutine(userId, routineName);
   }
 }

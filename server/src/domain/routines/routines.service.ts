@@ -3,7 +3,6 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Exception } from "@exception/exceptions";
-import { exerciseConverter } from "@exercise/converter/exercise.converter";
 import { Routine } from "./entities/routine.entity";
 import { routineConverter } from "./converter/routines.converter";
 import { RoutineDto } from "./dto/single-routine.dto";
@@ -75,7 +74,6 @@ export class RoutinesService {
         }),
       );
     } catch (error) {
-      console.log(error);
       throw new Exception().invalidSubmit();
     }
   }

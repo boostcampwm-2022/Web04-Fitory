@@ -15,6 +15,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const req = ctx.getRequest<Request>();
 
     if (!(exception instanceof HttpException)) {
+      // eslint-disable-next-line no-param-reassign
       exception = new InternalServerErrorException();
     }
 
@@ -26,6 +27,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       response,
     };
 
+    // eslint-disable-next-line no-console
     console.log(log);
 
     res.status((exception as HttpException).getStatus()).json(response);

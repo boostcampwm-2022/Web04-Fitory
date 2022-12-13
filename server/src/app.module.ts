@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { APP_FILTER } from "@nestjs/core";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -13,9 +13,10 @@ import { SbdStatisticsModule } from "@statistics/sbd_statistics.module";
 import { UsersModule } from "@user/users.module";
 import { MockModule } from "@mock/mock.module";
 import { JwtStrategy } from "@guard/jwt.strategy";
-import { User } from "@user/entities/user.entity";
 import { typeormConfig } from "./config/typeorm.config";
+import { EventModule } from "./domain/event/event.module";
 
+@Global()
 @Module({
   imports: [
     GoogleOauthModule,
@@ -29,9 +30,11 @@ import { typeormConfig } from "./config/typeorm.config";
     MockModule,
     TypeOrmModule.forRoot(typeormConfig),
     PassportModule,
-    TypeOrmModule.forFeature([User]),
+    EventModule,
   ],
 
   providers: [JwtStrategy, { provide: APP_FILTER, useClass: HttpExceptionFilter }],
+
+  controllers: [],
 })
 export class AppModule {}

@@ -16,8 +16,3 @@ export const multerOptions = {
 
   storage: memoryStorage(),
 };
-
-export const createImageURL = (file: Express.Multer.File): string => {
-  const serverAddress: string = "http://localhost:8080";
-  return `${serverAddress}/user_profiles/${file.filename}`;
-};

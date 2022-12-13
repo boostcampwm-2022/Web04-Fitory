@@ -12,17 +12,12 @@ export const MyProfileContainer = styled(Wrapper)`
   }
 `;
 
-export const ButtonContainer = styled.div`
-  height: 50px;
-  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
-`;
-
 export const BottomWrapper = styled(Wrapper)`
   margin-top: 10px;
-  padding-top: 30px;
   padding: 30px 50px;
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
     padding: 0;
+    padding-top: 30px;
   }
 `;
 

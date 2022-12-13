@@ -9,8 +9,9 @@ import { FormatMonth, ExerciseState } from "@constants/enums";
 import getCalendarHeatMapArray from "@utils/getCalendarHeatMapArray";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import Paper from "@components/design/Paper";
-import useAllExerciseDate from "@hooks/query/useAllExerciseDate";
-import useRecentChallengeTime from "@hooks/query/useRecentChallengeTime";
+import useAllExerciseDate from "@hooks/query/exercise/useAllExerciseDate";
+import { authStorage } from "src/services/ClientStorage";
+import { UserId } from "src/types/user";
 import * as s from "./style";
 
 interface HeatItemProps {
@@ -31,16 +32,16 @@ const HeatItem = ({ exerciseState, x, y }: HeatItemProps) => {
   );
 };
 
-const CalendarHeatMap = () => {
-  const { nowTimeStamp } = useRecentChallengeTime();
-  const { exerciseDateList } = useAllExerciseDate();
+const CalendarHeatMap = ({ userId }: { userId?: UserId }) => {
+  const currDate = new Date();
+  const { exerciseDateList } = useAllExerciseDate(userId || authStorage.get());
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const heatMapArray = getCalendarHeatMapArray(nowTimeStamp);
+  const heatMapArray = getCalendarHeatMapArray(new Date());
   const exerciseStateList = [
-    ...getExerciseStateForOneYear(nowTimeStamp.getFullYear() - 1, exerciseDateList, nowTimeStamp),
-    ...getExerciseStateForOneYear(nowTimeStamp.getFullYear(), exerciseDateList, nowTimeStamp),
+    ...getExerciseStateForOneYear(currDate.getFullYear() - 1, exerciseDateList, currDate),
+    ...getExerciseStateForOneYear(currDate.getFullYear(), exerciseDateList, currDate),
   ];
 
   const isNeedMonthLabel = (i: number) => {

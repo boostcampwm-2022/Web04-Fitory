@@ -16,12 +16,14 @@ export const ProfileContainer = styled.div`
 `;
 
 export const ProfileImgContainer = styled.div`
-  height: 100%;
+  height: 60px;
+  width: 60px;
 `;
 
 export const UserInfoContainer = styled.div`
   margin-left: 20px;
-  width: 70%;
+  flex-grow: 1;
+  width: 1px;
 `;
 
 export const UserNameContainer = styled.div`
@@ -46,6 +48,5 @@ export const UserMessageContainer = styled.p`
 
 export const ButtonContainer = styled.div`
   width: 20%;
-  height: 40px;
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
 `;

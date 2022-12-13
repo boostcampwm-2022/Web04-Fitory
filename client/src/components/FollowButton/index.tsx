@@ -1,43 +1,32 @@
 import React, { useEffect, useState } from "react";
-import FollowAPI from "@api/FollowAPI";
-import UserAPI from "@api/UserAPI";
-import { useQueryClient } from "react-query";
-import { QueryKey } from "@constants/enums";
+import useFollowUserList from "@hooks/query/follow/useFollowUserList";
+import useFollow from "@hooks/query/follow/useFollow";
+import useUnfollow from "@hooks/query/follow/useUnfollow";
+import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
-import { UserInfo } from "../../types/user";
-import { authStorage } from "../../services/ClientStorage";
 
-const FollowButton = ({ userInfo }: { userInfo: UserInfo }) => {
-  const [followState, setFollowState] = useState(true);
-  const myUserId = authStorage.get();
-  const otherUserId = userInfo.id;
-  const queryClient = useQueryClient();
-  const handleButtonClick = async () => {
-    await (() => {
-      if (followState) {
-        return FollowAPI.follow({ myUserId, otherUserId });
-      }
-      return FollowAPI.unFollow({ myUserId, otherUserId });
-    })();
-    setFollowState(!followState);
-    return queryClient.invalidateQueries([QueryKey.USER_INFO, otherUserId]);
+const FollowButton = ({ profileId }: { profileId: number }) => {
+  const { followList } = useFollowUserList(authStorage.get(), false);
+  const { follow } = useFollow();
+  const { unfollow } = useUnfollow();
+  const [isFollowed, setIsFollowed] = useState(false);
+
+  const handleClickFollowButton = () => {
+    if (isFollowed) {
+      unfollow(profileId);
+      return;
+    }
+    follow(profileId);
   };
 
-
   useEffect(() => {
-    (async () => {
-      const ownerFollowList = await UserAPI.getFollowingUser(myUserId);
-      ownerFollowList.map((user) => {
-        if ((user.follower_id || user.followed_id) === otherUserId) {
-          return setFollowState(false);
-        }
-        return true;
-      });
-    })();
-  }, []);
+    const foundUser = followList.find(({ followed_id }) => followed_id === profileId);
+    setIsFollowed(Boolean(foundUser));
+  }, [followList, profileId]);
+
   return (
-    <s.ProfileButton followState={followState} type="button" onClick={handleButtonClick}>
-      {followState ? "팔로우" : "팔로우 취소"}
+    <s.ProfileButton isFollowed={isFollowed} type="button" onClick={handleClickFollowButton}>
+      {isFollowed ? "팔로잉" : "팔로우"}
     </s.ProfileButton>
   );
 };

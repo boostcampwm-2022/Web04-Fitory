@@ -1,11 +1,11 @@
-import { FollowUserIdDto } from "./dto/follow.dto";
 import { Exception } from "@exception/exceptions";
-import { User } from "./../users/entities/user.entity";
 import { HttpResponse } from "@converter/response.converter";
 import { Follow } from "@follow/entities/follow.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { User } from "../users/entities/user.entity";
+import { FollowUserIdDto } from "./dto/follow.dto";
 
 @Injectable()
 export class FollowsService {
@@ -22,6 +22,15 @@ export class FollowsService {
 
   async getFollowingCount(userId: number) {
     return this.followRepository.count({ where: { followerId: userId, deleted: false } });
+  }
+
+  async getFollowerUserIdList(userId: number) {
+    const followerUserIdList = await this.followRepository
+      .createQueryBuilder("follow")
+      .select("follow.follower_id", "follower_id")
+      .where("follow.followed_id = :userId", { userId })
+      .getRawMany();
+    return followerUserIdList.map((item) => item.follower_id);
   }
 
   async getFollowingUserList(userId: number) {

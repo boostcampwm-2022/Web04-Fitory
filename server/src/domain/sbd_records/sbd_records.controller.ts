@@ -1,18 +1,12 @@
-import { SingleSBDDataDto } from "./dto/single_sbd_data.dto";
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { Exception } from "@exception/exceptions";
-import { isValidUserId } from "@validation/validation";
+import { SingleSBDDataDto } from "./dto/single_sbd_data.dto";
 import { SbdRecordsService } from "./sbd_records.service";
-import { UsersService } from "@user/users.service";
 
 @Controller("api/record")
 @ApiTags("RECORD API")
 export class SbdRecordsController {
-  constructor(
-    private readonly recordsService: SbdRecordsService,
-    private readonly usersService: UsersService,
-  ) {}
+  constructor(private readonly recordsService: SbdRecordsService) {}
 
   @Get("every")
   @ApiOperation({
@@ -23,7 +17,6 @@ export class SbdRecordsController {
     type: "number",
   })
   async getEverySBDRecord(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.recordsService.findEverySBDRecord(userId);
   }
 
@@ -36,7 +29,6 @@ export class SbdRecordsController {
     type: "number",
   })
   async getBestSBDRecord(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.recordsService.findBestSBDRecord(userId);
   }
 
@@ -50,7 +42,6 @@ export class SbdRecordsController {
     type: "number",
   })
   async getRecentRecordTime(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.recordsService.getRecentRecordTime(userId);
   }
 

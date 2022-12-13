@@ -4,17 +4,15 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
-import { DEPLOY_HOST, DEPLOY_HOST_WWW, LOCAL_HOST, PORT } from "@env";
+import { DEPLOY_HOST, DEPLOY_HOST_WWW, LOCAL_HOST, PORT } from "@utils/env";
 import express from "express";
 import path from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { JwtAuthGuard } from "@guard/jwt.guard";
-import { initDatabase } from "./utils/initDB";
 import { AppModule } from "./app.module";
-import { SetResponseHeader } from "./middleware/zero-downtime-deploy/set-response-header.middleware";
-import { GlobalService } from "./middleware/zero-downtime-deploy/is-disable-keep-alive.global";
 
 declare global {
+  // eslint-disable-next-line no-var,vars-on-top
   var alarmBar: Set<number>;
 }
 
@@ -34,15 +32,16 @@ async function bootstrap() {
     origin: [DEPLOY_HOST, DEPLOY_HOST_WWW],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
-    allowedHeaders: "Content-Type,user_id",
   });
 
   app.use(cookieParser());
 
   app.use(passport.initialize());
 
-  const reflector = app.get(Reflector);
-  app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+  if (!(process.argv[2] === "noguard")) {
+    const reflector = app.get(Reflector);
+    app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+  }
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -60,16 +59,6 @@ async function bootstrap() {
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerDocumentBuilder);
   SwaggerModule.setup("api", app, swaggerDocument);
 
-  GlobalService.isDisableKeepAlive = false;
-
-  app.use(SetResponseHeader);
-
-  // Starts listening to shutdown hooks
-  app.enableShutdownHooks();
-
-  await app.listen(PORT as string, () => {
-    process.send("ready");
-    console.log(`application is listening on port ${PORT}`);
-  });
+  await app.listen(PORT as string);
 }
 bootstrap();
