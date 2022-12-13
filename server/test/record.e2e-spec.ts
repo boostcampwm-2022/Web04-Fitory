@@ -16,7 +16,7 @@ const getAccessToken = async (moduleFixture: TestingModule, userId: number): Pro
   return jwtService.sign({ userId: userId });
 };
 
-describe("RoutinesController (e2e)", () => {
+describe("Record Controller (e2e)", () => {
   let app: INestApplication;
   let accessToken: string;
   const userId: number = Math.floor(Math.random() * 5000) + 1;
