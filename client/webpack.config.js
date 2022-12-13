@@ -10,6 +10,8 @@ const loadPlugin = () => {
   const plugins = [
     new HtmlWebpackPlugin({
       template: "/public/index.html",
+      hash: true,
+      favicon: "public/appImages/launchericon-64.png",
       minify:
         process.env.NODE_ENV === "production"
           ? {

@@ -42,7 +42,7 @@ const TierGraph = () => {
     const scores: number[] = [];
     challengeHistory.forEach((item: ChallengeHistoryList) => {
       const { timeStamp, userWeight, SBD_sum: SBDSum } = item.record;
-      const date = new Date(timeStamp).toISOString().substring(0, 10).replace(/-/g, "");
+      const date = new Date(timeStamp).toISOString().substring(2, 10).replace(/-/g, "");
       dates.push(date);
       scores.push(SBDSum);
       backgroundColorArray.push(judColors(SBDSum, userWeight));
