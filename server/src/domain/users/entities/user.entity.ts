@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "user" })
 export class User {
@@ -11,6 +11,7 @@ export class User {
   @Column({ name: "profile_image", length: 180, default: "http://profile.image" }) // default value 추후 수정 필요
   profileImage!: string;
 
+  @Index({ fulltext: true })
   @Column({ length: 45 })
   name!: string;
 

@@ -3,23 +3,23 @@ import PageTemplate from "@pages/PageTemplate";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchedUserList from "@components/SearchedUserList";
 import SearchUtils from "@utils/SearchUtils";
-import useAllUserList from "@hooks/query/user/useAllUserList";
 import { SearchedUserInfo } from "src/types/user";
 import RecommandUserListContianer from "./RecommedUserList";
 import * as s from "./styles";
 
 const SearchContainer = () => {
-  const { allUserList } = useAllUserList();
+  // const { allUserList } = useAllUserList();
   const [searchValue, setSearchValue] = useState<string>("");
-  const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>(allUserList);
+  const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
   useEffect(() => {
-    return SearchUtils.searchUser(searchValue, allUserList, setSearchedUser);
-  }, [allUserList, searchValue]);
+    // return SearchUtils.searchUser(searchValue, allUserList, setSearchedUser);
+    return SearchUtils.searchUserByKeyword(searchValue, setSearchedUser);
+  }, [searchValue]);
 
   return (
     <s.SearchContainer isText={searchValue.length !== 0}>
