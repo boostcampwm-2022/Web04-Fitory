@@ -9,10 +9,10 @@ import express from "express";
 import path from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { JwtAuthGuard } from "@guard/jwt.guard";
-import { initDatabase } from "./utils/initDB";
 import { AppModule } from "./app.module";
 
 declare global {
+  // eslint-disable-next-line no-var,vars-on-top
   var alarmBar: Set<number>;
 }
 

@@ -5,8 +5,8 @@ import { Alarm } from "@alarm/entities/alram.entity";
 import { Exercise } from "@exercise/entities/exercise.entity";
 import { Routine } from "@routine/entities/routine.entity";
 import { User } from "@user/entities/user.entity";
-import { DB_HOST, DB_PORT, DB_USER, DB_PWD, DB_NAME } from "../utils/env";
 import { DataSource } from "typeorm";
+import { DB_HOST, DB_PORT, DB_USER, DB_PWD, DB_NAME } from "../utils/env";
 
 export const AppDataSource = new DataSource({
   type: "mysql",

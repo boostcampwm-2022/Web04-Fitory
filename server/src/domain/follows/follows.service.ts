@@ -1,11 +1,11 @@
-import { FollowUserIdDto } from "./dto/follow.dto";
 import { Exception } from "@exception/exceptions";
-import { User } from "./../users/entities/user.entity";
 import { HttpResponse } from "@converter/response.converter";
 import { Follow } from "@follow/entities/follow.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { User } from "../users/entities/user.entity";
+import { FollowUserIdDto } from "./dto/follow.dto";
 
 @Injectable()
 export class FollowsService {

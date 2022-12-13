@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 
 @Entity({ name: "SBD_record" })
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export class SBD_record {
   @PrimaryGeneratedColumn()
   id!: number;
