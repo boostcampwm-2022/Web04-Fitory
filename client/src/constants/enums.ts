@@ -73,7 +73,8 @@ export type TierName = typeof TierName[keyof typeof TierName];
 
 export const DayTypes = {
   TODAY: "today",
-  OTHER_DAYS: "otherDays",
+  PREV_DAYS: "prevDays",
+  NEXT_DAYS: "nextDays",
   THIS_DAYS: "thisDays",
 } as const;
 export type DayTypes = typeof DayTypes[keyof typeof DayTypes];
@@ -145,6 +146,11 @@ export const QueryKey = {
   ROUTINE_INFO: "routineInfo",
   SINGLE_MONTH_EXERCISE_HISTORY: "singleMonthExerciseHistory",
   WEIGHT_CLASS_STATISTICS: "weightClassStatistics",
+  CHALLENGE_HISTORY: "challengeHistory",
+  FOLLOWERLIST: "followerList",
+  FOLLOWINGLIST: "followingList",
+  RECOMMAND_LIST: "recommandList",
+  ALL_USER_LIST: "allUserList",
   NOTIFICATION_COUNT: "notificationCount",
   NOTIFICATION_HISTORY: "notifiactionHistory",
 } as const;

@@ -1,7 +1,8 @@
-import { EventService } from "./event.service";
-import { Controller, Get, Post, Req, Sse } from "@nestjs/common";
+import { Controller, Req, Sse } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { NoAuth } from "src/decorator/validate.decorator";
+import { NoAuth } from "@decorator/validate.decorator";
+import { Request } from "express";
+import { EventService } from "./event.service";
 
 @Controller("api/event")
 @ApiTags("EVENT API")
@@ -10,8 +11,8 @@ export class EventController {
 
   @NoAuth()
   @Sse("register")
-  events(@Req() req: any) {
-    const userId = req.query.user_id;
-    return this.eventService.subscribe(userId);
+  events(@Req() req: Request) {
+    const userId = req.query.user_id as string;
+    return this.eventService.subscribe(Number(userId));
   }
 }

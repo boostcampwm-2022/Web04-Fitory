@@ -13,23 +13,29 @@ const ProfileEditPage = () => {
   const queryClient = useQueryClient();
   const { userInfo } = useUserInfo(authStorage.get());
   const [visibleState, setVisibleState] = useState(false);
+  const [profileImg, setProfileImg] = useState<Blob>();
 
   const openPrivateInfoEdit = () => {
     setVisibleState((prevState) => !prevState);
   };
 
-  const submitInformation = async (e: SubmitEvent & { target: HTMLFormElement }) => {
+  const submitInformation = async (
+    e: React.FormEvent<HTMLFormElement> & { target: HTMLFormElement },
+  ) => {
     e.preventDefault();
     if (e.target) {
-      await UserAPI.updateUserInfo({
-        userId: authStorage.get(),
-        name: e.target.userName.value,
-        age: parseInt(e.target.age.value, 10),
-        gender: e.target.gender.value === "남" ? 0 : 1,
-        height: parseInt(e.target.height.value, 10),
-        weight: parseInt(e.target.weight.value, 10),
-        introduce: e.target.introduce.value,
-      });
+      const formData = new FormData();
+      formData.append("userId", authStorage.get().toString());
+      formData.append("name", e.target.userName.value);
+      formData.append("age", e.target.age.value);
+      formData.append("gender", e.target.gender.value === "남" ? "0" : "1");
+      formData.append("height", e.target.height.value);
+      formData.append("weight", e.target.weight.value);
+      formData.append("introduce", e.target.introduce.value);
+      if (profileImg) {
+        formData.append("images", profileImg);
+      }
+      await UserAPI.updateUserInfo(formData);
       await queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
       alert("수정이 완료되었습니다!");
     }
@@ -39,7 +45,11 @@ const ProfileEditPage = () => {
     <PageTemplate isRoot={false} title="프로필 편집">
       <s.ProfileEditForm onSubmit={submitInformation}>
         <s.EditProfileImgButton>
-          <ProfileImageContainer isModified={false} profileImgUrl={userInfo.profileImage} />
+          <ProfileImageContainer
+            isModified={false}
+            profileImgUrl={userInfo.profileImage}
+            setProfileImg={setProfileImg}
+          />
         </s.EditProfileImgButton>
         <s.ProfileEditInputContainer>
           <s.ProfileEditLabel>이름</s.ProfileEditLabel>

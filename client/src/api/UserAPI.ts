@@ -75,34 +75,6 @@ const UserAPI = {
     }
   },
 
-  getFollowerUser: async (userId: number) => {
-    try {
-      const path = "follow/follower";
-      const response = await HttpClient.get(path, { userId });
-      const { followerUserProfileList } = response.response as {
-        followerUserProfileList: UserType.SearchedUserInfo[];
-      };
-      return followerUserProfileList;
-    } catch {
-      toast.error(error.GET_FOLLOWER);
-      return null;
-    }
-  },
-
-  getFollowingUser: async (userId: number) => {
-    try {
-      const path = "follow/following";
-      const response = await HttpClient.get(path, { userId });
-      const { followingUserProfileList } = response.response as {
-        followingUserProfileList: UserType.SearchedUserInfo[];
-      };
-      return followingUserProfileList;
-    } catch {
-      toast.error(error.GET_FOLLOWING);
-      return null;
-    }
-  },
-
   getRecommendUserList: async () => {
     try {
       const userId = authStorage.get();
@@ -112,33 +84,18 @@ const UserAPI = {
         recommendWeight: UserType.SearchedUserInfo[];
         recommendAge: UserType.SearchedUserInfo[];
       };
-      return [recommendWeight, recommendAge];
+      return { recommendWeight, recommendAge };
     } catch {
       toast.error(error.GET_RECOMMAND_USER_LIST);
       return null;
     }
   },
 
-  updateUserInfo: async ({
-    userId,
-    name,
-    age,
-    gender,
-    height,
-    weight,
-    introduce,
-  }: UserType.UpdateUserInfo) => {
+  updateUserInfo: async (formData: FormData) => {
     const path = "users/update";
-    const userInfo = {
-      userId,
-      name,
-      age,
-      gender,
-      height,
-      weight,
-      introduce,
-    };
-    const response = await HttpClient.post(path, userInfo);
+    const response = await HttpClient.post(path, formData, {
+      "content-type": "multipart/form-data",
+    });
     return response.response as { message: string };
   },
 };
