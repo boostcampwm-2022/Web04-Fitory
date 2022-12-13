@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Overlay = styled.div`
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
   position: fixed;
   top: 0;
   left: 0;
@@ -22,8 +22,8 @@ export const Wrapper = styled(Overlay)`
 `;
 
 export const Window = styled.div`
-  z-index: 1;
-  width: ${({ isCenter }: { isCenter: boolean }) => (isCenter ? "300px" : "100%")};
+  z-index: 2;
+  width: 100%;
   padding: 50px;
   padding-bottom: 100px;
   border-top-left-radius: 20px;

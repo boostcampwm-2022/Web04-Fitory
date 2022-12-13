@@ -179,6 +179,7 @@ export const ModalKey = {
   SAVE_ROUTINE: "saveRoutine",
   DELETE_ROUTINE: "deleteRoutine",
   LOGOUT: "logout",
+  APP_INSALL: "appInstall",
   CHALLENGE_TIER: "challengeTier",
 };
 export const NotificationState = {
