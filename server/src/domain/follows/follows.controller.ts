@@ -49,11 +49,13 @@ export class FollowsController {
     summary: "다른 사용자를 팔로잉 했을때 이를 등록",
   })
   async doFollow(@Body() userIds: FollowUserIdDto) {
-    const myUserIdExist = await this.usersService.isExistUser(userIds.myUserId);
-    const otherUserIdExist = await this.usersService.isExistUser(userIds.otherUserId);
+    const { myUserId, otherUserId } = userIds;
+    const myUserIdExist = await this.usersService.isExistUser(myUserId);
+    const otherUserIdExist = await this.usersService.isExistUser(otherUserId);
     if (!myUserIdExist || !otherUserIdExist) throw new Exception().userNotFound();
-    await this.alarmsService.sendFollowAlarm(userIds.myUserId, userIds.otherUserId);
-    this.eventService.emit([userIds.otherUserId]);
+    if (myUserId === otherUserId) throw new Exception().invalidSubmit();
+    await this.alarmsService.sendFollowAlarm(myUserId, otherUserId);
+    this.eventService.emit([otherUserId]);
     return this.followService.doFollow(userIds);
   }
 
