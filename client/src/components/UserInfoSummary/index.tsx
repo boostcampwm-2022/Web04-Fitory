@@ -1,6 +1,6 @@
 import React from "react";
 import Paper from "@components/design/Paper";
-import { TIER } from "@constants/enums";
+import { TierName } from "@constants/enums";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import useExerciseProfile from "@hooks/query/exercise/useExerciseProfile";
 import useBestChallengeScore from "@hooks/query/challenge/useBestChallengeScore";

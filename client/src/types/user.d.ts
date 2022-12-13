@@ -7,6 +7,7 @@ export type UserGender = Gender;
 export type UserHeight = number;
 export type UserWeight = number;
 export type UserIntroduce = string;
+export type UserTier = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface LoginResponse {
   userId: UserId;
@@ -34,7 +35,7 @@ export interface UserInfo extends JoinUserInfo {
   id: number;
   profileImage: string;
   introduce: string;
-  tier: number;
+  tier: UserTier;
   followerCount: number;
   followingCount: number;
   volumeSum: number;

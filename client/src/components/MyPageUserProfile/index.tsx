@@ -1,7 +1,7 @@
 import React from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import { useNavigate } from "react-router-dom";
-import { PageState, TIER } from "@constants/enums";
+import { PageState, TierName } from "@constants/enums";
 import { getTierColor } from "@utils/getUserTierUtil";
 
 import { UserInfo } from "src/types/user";
@@ -59,7 +59,7 @@ const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
         <s.ContentContainer>
           <s.ContentLabel>티어</s.ContentLabel>
           <s.TierContainer color={getTierColor(userInfo.tier)}>
-            {TIER[userInfo.tier] || "-"}
+            {TierName[userInfo.tier] || "-"}
           </s.TierContainer>
         </s.ContentContainer>
         <s.ContentContainer>

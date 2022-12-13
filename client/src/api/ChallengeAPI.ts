@@ -2,6 +2,7 @@ import { authStorage } from "src/services/ClientStorage";
 import { toast } from "react-toastify";
 import { error } from "@constants/message";
 import HttpClient from "src/services/HttpClient";
+import { UserTier } from "src/types/user";
 import * as ChallengeType from "src/types/challenge";
 
 const ChallengeAPI = {
@@ -26,9 +27,10 @@ const ChallengeAPI = {
         ...SBDWeight,
         userId,
       });
-      return response.response;
+      const { tier } = response.response as { tier: UserTier };
+      return tier;
     } catch {
-      toast.error(error.SUBMIT_CHALLENGE);
+      toast.error(error.SUBMIT_CHALLENGE_EMPTY);
       return null;
     }
   },
