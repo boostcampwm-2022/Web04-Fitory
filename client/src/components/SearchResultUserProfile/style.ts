@@ -16,13 +16,14 @@ export const ProfileContainer = styled.div`
 `;
 
 export const ProfileImgContainer = styled.div`
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
 `;
 
 export const UserInfoContainer = styled.div`
   margin-left: 20px;
-  width: 70%;
+  flex-grow: 1;
+  width: 1px;
 `;
 
 export const UserNameContainer = styled.div`

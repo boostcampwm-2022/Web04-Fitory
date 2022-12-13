@@ -6,8 +6,12 @@ import { UserId, SearchedUserInfo } from "src/types/user";
 
 const useFollowUserList = (userId: UserId, isFollower: boolean) => {
   const { data } = isFollower
-    ? useQuery(QueryKey.FOLLOWERLIST, () => FollowAPI.getFollowerUser(userId))
-    : useQuery(QueryKey.FOLLOWINGLIST, () => FollowAPI.getFollowingUser(userId));
+    ? useQuery([QueryKey.FOLLOWERLIST, userId], () => FollowAPI.getFollowerUser(userId), {
+        staleTime: 10000,
+      })
+    : useQuery([QueryKey.FOLLOWINGLIST, userId], () => FollowAPI.getFollowingUser(userId), {
+        staleTime: 10000,
+      });
 
   return { followList: data?.sort((a, b) => (a.name < b.name ? -1 : 1)) as SearchedUserInfo[] };
 };

@@ -6,6 +6,7 @@ const Wrapper = styled.div`
   gap: 20px;
   display: flex;
   overflow-x: auto;
+  overflow-y: hidden;
 `;
 
 export default { Wrapper };
