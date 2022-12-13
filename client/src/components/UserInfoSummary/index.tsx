@@ -56,11 +56,12 @@ const UserExerciseInfo = () => {
 const AuxiliaryExplanation = () => {
   const { bestChallengeScore } = useBestChallengeScore();
   return (
-    <div>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
       {!bestChallengeScore && (
         <s.ChallengeRequestText>* 3대 챌린지 완료 시 티어가 부여됩니다.</s.ChallengeRequestText>
       )}
-    </div>
+    </>
   );
 };
 
