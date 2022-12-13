@@ -65,7 +65,8 @@ export type TIER = typeof TIER[keyof typeof TIER];
 
 export const DayTypes = {
   TODAY: "today",
-  OTHER_DAYS: "otherDays",
+  PREV_DAYS: "prevDays",
+  NEXT_DAYS: "nextDays",
   THIS_DAYS: "thisDays",
 } as const;
 export type DayTypes = typeof DayTypes[keyof typeof DayTypes];

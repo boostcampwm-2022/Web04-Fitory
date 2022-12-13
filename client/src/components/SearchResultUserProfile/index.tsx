@@ -40,7 +40,7 @@ const SearchResultUserProfile = ({
         </s.UserInfoContainer>
       </s.ProfileContainer>
       <s.ButtonContainer>
-        {profileId !== id && <FollowButton userInfo={userInfo} />}
+        {profileId !== id && <FollowButton userId={userInfo.id} />}
       </s.ButtonContainer>
     </s.Wrapper>
   );

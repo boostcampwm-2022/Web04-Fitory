@@ -12,9 +12,10 @@ interface CalendarBodyProp {
   today: dayjs.Dayjs;
   displayDate?: string;
   setDisplayDate?: Dispatch<SetStateAction<string>>;
+  setDate: Dispatch<SetStateAction<string>>;
 }
 
-const CalendarBody = ({ today, displayDate, setDisplayDate }: CalendarBodyProp) => {
+const CalendarBody = ({ today, displayDate, setDisplayDate, setDate }: CalendarBodyProp) => {
   const { exerciseDateList } = useAllExerciseDate(authStorage.get());
   const exerciseStateList = getExerciseStateForOneYear(today.year(), exerciseDateList);
 
@@ -56,6 +57,7 @@ const CalendarBody = ({ today, displayDate, setDisplayDate }: CalendarBodyProp) 
                   today={today}
                   displayDate={displayDate}
                   setDisplayDate={setDisplayDate}
+                  setDate={setDate}
                 />
               );
             })}

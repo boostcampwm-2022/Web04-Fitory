@@ -19,6 +19,7 @@ export const SearchContainer = styled.div`
   position: absolute;
   padding: 1.3rem 3vw;
   transition: 0.25s linear;
+  z-index: 10;
 `;
 
 export const UserSearchBarContainer = styled.div`

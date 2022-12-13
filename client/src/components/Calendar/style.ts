@@ -82,7 +82,7 @@ export const DayName = styled.div`
 export const DayContainer = styled.td`
   ${({ dayType, hover, theme }: { dayType: DayTypes; hover: boolean; theme: typeof Theme }) => {
     let color: string = theme.COLORS.DEEP_GRAY;
-    if (dayType === DayTypes.OTHER_DAYS) {
+    if (dayType === DayTypes.NEXT_DAYS || dayType === DayTypes.PREV_DAYS) {
       color = theme.COLORS.LIGHT_GRAY;
     } else if (dayType === DayTypes.TODAY) {
       color = theme.COLORS.WHITE;
