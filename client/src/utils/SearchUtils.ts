@@ -48,6 +48,7 @@ const SearchUtils = {
     setSearchedUser: React.Dispatch<React.SetStateAction<SearchedUserInfo[]>>,
   ) => {
     const timer = setTimeout(async () => {
+      if (!searchValue) setSearchedUser([]);
       const userList = await UserAPI.searchUserByKeyword(searchValue);
       if (!userList) return setSearchedUser([]);
       return setSearchedUser(userList);
