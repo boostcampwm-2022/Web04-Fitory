@@ -98,14 +98,14 @@ export const ContentLabel = styled.div`
 `;
 
 export const TierContainer = styled.div`
-  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
   line-height: 30px;
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
   color: ${(props) => props.color};
 `;
 
 export const FollowContainer = styled.div`
-  font-size: ${({ theme }) => theme.FONT_SIZE.MEDIUM};
+  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
   color: ${({ theme }) => theme.COLORS.LIGHT_BLUE};
   line-height: 30px;
 `;
