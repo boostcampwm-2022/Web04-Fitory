@@ -47,8 +47,8 @@ jobs:
         if: ${{steps.cache-frontend.outputs.cache-hit != 'true'}}
         run: cd client && npm install --legacy-peer-deps
 
-      - name: Check Client ESLint
-        run:  cd client && npm run lint
+      - name: Check Frontend ESLint
+        run: cd client && npm run lint
 
       - name: Check Frontend Build
         run: cd client && npm run build
