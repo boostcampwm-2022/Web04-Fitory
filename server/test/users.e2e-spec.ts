@@ -284,4 +284,9 @@ describe("RoutinesController (e2e)", () => {
         .expect(HttpStatus.BAD_REQUEST);
     });
   });
+
+  afterAll((done) => {
+    app.close();
+    done();
+  });
 });
