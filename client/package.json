@@ -8,8 +8,6 @@
     "build": "webpack --mode=production --node-env=production",
     "jest:coverage": "jest --watchAll=false --coverage",
     "cypress:open": "cypress open",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
     "prettier": "prettier --write ./src/**/*.{ts,tsx}"
