@@ -7,16 +7,17 @@ export const PageLabel = styled.label`
 `;
 
 export const UserInfoContainer = styled.div`
-  margin-bottom: 4%;
+  margin-bottom: 25px;
   width: 100%;
   height: 100px;
+  gap: 10px;
   display: flex;
   align-items: center;
 `;
 
 export const UserProfileImgContainer = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,6 +35,8 @@ export const UserInfoRow = styled.div`
   gap: 15px;
   display: flex;
   justify-content: space-around;
+  padding-bottom: 20px;
+  border-bottom: 1px solid ${({ theme }) => theme.COLORS.PLACEHOLDER_GRAY};
 `;
 
 export const UserInformation = styled.div`
@@ -64,6 +67,7 @@ export const UserIntroduceContainer = styled.div`
 `;
 
 export const UserNameWrapper = styled.div`
+  flex-grow: 1;
   border-bottom: 1px solid ${({ theme }) => theme.COLORS.PLACEHOLDER_GRAY};
 `;
 
