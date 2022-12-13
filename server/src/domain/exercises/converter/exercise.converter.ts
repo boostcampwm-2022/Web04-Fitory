@@ -8,6 +8,7 @@ export const exerciseConverter = {
       if (!result.includes(item.date)) {
         result.push(item.date);
       }
+      return result;
     });
     return result;
   },
@@ -15,6 +16,7 @@ export const exerciseConverter = {
   historyOfMonth: (historyList: Exercise[]) => {
     const historyObject: { [key: string]: { name: string; set: ExerciseSet[] }[] } = {};
     historyList.map((history) => {
+      // eslint-disable-next-line no-prototype-builtins
       if (!historyObject.hasOwnProperty(history.date)) {
         historyObject[`${history.date}`] = [];
       }
@@ -22,11 +24,13 @@ export const exerciseConverter = {
       history.exerciseString.split("|").map((setString, index) => {
         const [kg, count, check] = setString.split("/").map((element) => Number(element));
         set.push({ index: index + 1, kg, count, check });
+        return set;
       });
       historyObject[`${history.date}`].push({
         name: history.exerciseName,
         set,
       });
+      return historyObject;
     });
     return historyObject;
   },
@@ -37,7 +41,9 @@ export const exerciseConverter = {
       item.exerciseString.split("|").map((innerItem) => {
         const [kg, count, check] = innerItem.split("/");
         totalVolume += Number(check) * Number(kg) * Number(count);
+        return totalVolume;
       });
+      return totalVolume;
     });
     return totalVolume;
   },

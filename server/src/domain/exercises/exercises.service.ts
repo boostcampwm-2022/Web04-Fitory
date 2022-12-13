@@ -4,10 +4,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Exception } from "@exception/exceptions";
 import { User } from "@user/entities/user.entity";
+import dayjs from "dayjs";
 import { Exercise } from "./entities/exercise.entity";
 import { exerciseConverter } from "./converter/exercise.converter";
 import { ExerciseDataDto } from "./dto/exercise.dto";
-import dayjs from "dayjs";
 
 @Injectable()
 export class ExercisesService {

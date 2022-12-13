@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "SBD_statistics" })
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export class SBD_statistics {
   @PrimaryGeneratedColumn()
   id!: number;

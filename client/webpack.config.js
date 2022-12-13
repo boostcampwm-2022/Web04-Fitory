@@ -3,12 +3,15 @@ const TerserPlugin = require("terser-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const Dotenv = require("dotenv-webpack");
 
 const loadPlugin = () => {
   const plugins = [
     new HtmlWebpackPlugin({
       template: "/public/index.html",
+      hash: true,
+      favicon: "public/appImages/launchericon-64.png",
       minify:
         process.env.NODE_ENV === "production"
           ? {
@@ -18,6 +21,7 @@ const loadPlugin = () => {
           : false,
     }),
     new Dotenv(),
+    new WebpackManifestPlugin(),
   ];
 
   if (process.env.BUNDLE) {

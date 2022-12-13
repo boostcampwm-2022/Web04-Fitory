@@ -20,6 +20,7 @@ export const ProfileImageContainerWrapper = styled.div`
 
 export const UserNameLabel = styled.div`
   margin: 20px 0;
+  cursor: pointer;
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
 `;

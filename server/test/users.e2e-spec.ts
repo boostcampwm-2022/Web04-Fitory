@@ -11,7 +11,6 @@ import { faker } from "@faker-js/faker/locale/ko";
 import { GoogleOauthService } from "../src/domain/oauth/google-oauth/google-oauth.service";
 import { GoogleUserInfoDto } from "../src/domain/oauth/google-oauth/dto/google-user-info.dto";
 import { User } from "../src/domain/users/entities/user.entity";
-import { DataSource, DataSourceOptions } from "typeorm";
 
 const getAccessToken = async (moduleFixture: TestingModule, userId: number): Promise<string> => {
   const jwtService = moduleFixture.get<JwtService>(JwtService);
@@ -30,7 +29,7 @@ const registerUser = async (
   });
 };
 
-describe("RoutinesController (e2e)", () => {
+describe("User Controller (e2e)", () => {
   let app: INestApplication;
   let accessToken: string;
   let userId: number;

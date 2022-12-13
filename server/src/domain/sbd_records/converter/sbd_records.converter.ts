@@ -16,6 +16,7 @@ export const recordConverter = {
           userWeight: record.userWeight,
         },
       });
+      return recordObject;
     });
     return recordObject;
   },

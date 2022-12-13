@@ -68,14 +68,14 @@ export class SbdRecordsService {
         .getOne();
       const recordObject = this.recordsRepository.create(sbdData);
       const { weight } = userObject;
-      const SBD_sum = sbdData.squat + sbdData.benchpress + sbdData.deadlift;
+      const sbdSum = sbdData.squat + sbdData.benchpress + sbdData.deadlift;
       await this.recordsRepository.save({
         ...recordObject,
-        SBD_sum,
+        SBD_sum: sbdSum,
         userWeight: userObject.weight,
         user: { id: sbdData.userId },
       });
-      userObject.tier = classifyToTier(weight, SBD_sum);
+      userObject.tier = classifyToTier(weight, sbdSum);
       await this.userRepository.save(userObject);
       return HttpResponse.success({
         message: "Record Submit Success",

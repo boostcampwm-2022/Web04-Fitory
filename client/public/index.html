@@ -2,11 +2,43 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <link rel="manifest" href="manifest.json" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#698afa" />
+    <meta property="og:title" content="Fitory">
+    <meta property="og:url" content="https://fitory.ga/">
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://fitory.ga/appImages/launchericon-512.png">
+    <meta property="og:description" content="귀찮은 운동을 꾸준하게! 지루한 운동을 더 재밌게! Fitory가 도와드릴게요.">
+    <meta property="og:site_name" content="Fitory" />
+    <meta property="og:locale" content="ko_kr" />
+    <meta property="og:image:width" content="192" />
+    <meta property="og:image:height" content="192" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Fitory" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="appImages/launchericon-192.png"
+    />
+    <link
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+      href="appImages/launchericon-512.png"
+    />
+    <link rel="shortcut icon" type="image/png" href="appImages/launchericon-64.png" />
+    <link rel="icon" type="image/png" href="appImages/launchericon-64.png" />
     <base href="/" />
     <title>Fitory</title>
+    <script type="module">
+      import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+      const el = document.createElement('pwa-update');
+      document.body.appendChild(el);
+   </script>
   </head>
   <body>
     <div id="root"></div>
