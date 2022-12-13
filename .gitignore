@@ -91,3 +91,6 @@ node_modules
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# 이미지 저장 폴더
+server/user_profiles

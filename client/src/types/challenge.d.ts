@@ -18,3 +18,13 @@ export interface ChallengeTimestamp {
   nowTimeStamp: string;
   recentTimeStamp: string;
 }
+
+export interface ChallengeHistory extends ChallengeDetail {
+  timeStamp: Date;
+  userWeight: number;
+}
+
+export interface ChallengeHistoryList {
+  index: number;
+  record: ChallengeHistory;
+}

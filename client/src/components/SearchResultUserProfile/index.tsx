@@ -1,7 +1,6 @@
 import React from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import FollowButton from "@components/FollowButton";
-import useUserInfo from "@hooks/query/user/useUserInfo";
 import { RoutePath } from "@constants/enums";
 import { useNavigate } from "react-router-dom";
 import * as s from "./style";
@@ -11,7 +10,7 @@ export interface SearchResultUserProfileProps {
   profileImgUrl?: string;
   userName: string;
   userMessage?: string;
-  profileId?: number;
+  profileId: number;
 }
 
 const SearchResultUserProfile = ({
@@ -21,11 +20,11 @@ const SearchResultUserProfile = ({
   profileId,
 }: SearchResultUserProfileProps) => {
   const navigate = useNavigate();
-  const { userInfo } = useUserInfo(profileId as number);
   const id = authStorage.get();
   const handleClickEvent = () => {
     navigate(`${RoutePath.PROFILE}/${profileId}`);
   };
+
   return (
     <s.Wrapper>
       <s.ProfileContainer onClick={handleClickEvent}>
@@ -40,7 +39,7 @@ const SearchResultUserProfile = ({
         </s.UserInfoContainer>
       </s.ProfileContainer>
       <s.ButtonContainer>
-        {profileId !== id && <FollowButton userId={userInfo.id} />}
+        {profileId !== id && <FollowButton profileId={profileId} />}
       </s.ButtonContainer>
     </s.Wrapper>
   );

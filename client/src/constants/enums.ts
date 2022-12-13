@@ -138,6 +138,11 @@ export const QueryKey = {
   ROUTINE_INFO: "routineInfo",
   SINGLE_MONTH_EXERCISE_HISTORY: "singleMonthExerciseHistory",
   WEIGHT_CLASS_STATISTICS: "weightClassStatistics",
+  CHALLENGE_HISTORY: "challengeHistory",
+  FOLLOWERLIST: "followerList",
+  FOLLOWINGLIST: "followingList",
+  RECOMMAND_LIST: "recommandList",
+  ALL_USER_LIST: "allUserList",
   NOTIFICATION_COUNT: "notificationCount",
   NOTIFICATION_HISTORY: "notifiactionHistory",
 } as const;

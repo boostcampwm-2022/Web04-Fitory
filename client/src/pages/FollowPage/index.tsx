@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { PageState } from "@constants/enums";
@@ -5,41 +6,35 @@ import PageTemplate from "@pages/PageTemplate";
 import SearchUtils from "@utils/SearchUtils";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchedUserList from "@components/SearchedUserList";
-import UserAPI from "@api/UserAPI";
+import useFollowUserList from "@hooks/query/follow/useFollowUserList";
+import debounce from "@utils/debounce";
 import * as s from "./style";
 import { SearchedUserInfo } from "../../types/user";
 import { authStorage } from "../../services/ClientStorage";
 
 const FollowPage = () => {
   const location = useLocation();
-  const pageState = (location.state as string) || PageState.FOLLOWING;
-  const [userList] = useState<SearchedUserInfo[]>([]);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>(userList);
   const { userId } = useParams();
-  const profileUserId = userId ? parseInt(userId as string, 10) : authStorage.get();
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-  };
 
-  useEffect(() => {
-    (async () => {
-      if (pageState === PageState.FOLLOWER) {
-        const searchedUserList = await UserAPI.getFollowerUser(profileUserId);
-        setSearchedUser(searchedUserList as SearchedUserInfo[]);
-      } else {
-        const searchedUserList = await UserAPI.getFollowingUser(profileUserId);
-        setSearchedUser(searchedUserList as SearchedUserInfo[]);
-      }
-    })();
-  }, []);
+  const pageState = (location.state as string) || PageState.FOLLOWING;
+  const profileUserId = userId ? parseInt(userId as string, 10) : authStorage.get();
+
+  const { followList } = useFollowUserList(profileUserId, pageState === PageState.FOLLOWER);
+
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>(followList);
+
+  const handleChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  }, 250);
 
   useEffect(() => {
     if (searchValue === "") {
-      return setSearchedUser(userList);
+      setSearchedUser(followList);
+      return;
     }
-    return SearchUtils.searchUserDebounce(searchValue, userList, setSearchedUser);
-  }, [searchValue]);
+    SearchUtils.searchEvent(searchValue, followList, setSearchedUser);
+  }, [searchValue, followList]);
 
   return (
     <PageTemplate isRoot={false} title={pageState}>
@@ -54,7 +49,7 @@ const FollowPage = () => {
             />
           </s.UserSearchBarContainer>
         </s.SearchContainer>
-        {SearchedUserList(searchedUser)}
+        <SearchedUserList searchedUser={searchedUser} />
       </s.Wrapper>
     </PageTemplate>
   );

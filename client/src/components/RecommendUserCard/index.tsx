@@ -21,7 +21,7 @@ const RecommendUserCard = ({ user }: { user: SearchedUserInfo }) => {
           </s.ProfileImageContainerWrapper>
           <s.UserNameLabel>{user.name}</s.UserNameLabel>
         </s.UserInfoContainer>
-        <FollowButton userId={user.user_id} />
+        <FollowButton profileId={user.user_id} />
       </s.Wrapper>
     </Paper>
   );

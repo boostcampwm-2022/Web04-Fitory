@@ -3,10 +3,10 @@ import Theme from "@styles/Theme";
 
 export const ProfileButton = styled.button`
   width: 100%;
-  height: 35px;
+  padding: 5px;
   color: ${({ theme }) => theme.COLORS.WHITE};
-  background-color: ${({ theme, followState }: { theme: typeof Theme; followState: boolean }) =>
-    followState ? theme.COLORS.LIGHT_BLUE : theme.COLORS.LIGHT_GRAY};
+  background-color: ${({ theme, isFollowed }: { theme: typeof Theme; isFollowed: boolean }) =>
+    isFollowed ? theme.COLORS.LIGHT_GRAY : theme.COLORS.LIGHT_BLUE};
   border-radius: 50px;
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
