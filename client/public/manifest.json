@@ -9,10 +9,33 @@
   "short_name": "Fitory",
   "start_url": "/",
   "theme_color": "#698afa",
-  "categories": [
-    "health"
+  "categories": ["health", "lifestyle", "social"],
+  "screenshots": [
+    {
+      "src": "appImages/screenshot-home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Fitory 앱의 홈 페이지"
+    },
+    {
+      "src": "appImages/screenshot-statistics.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Fitory 앱의 통계 페이지"
+    },
+    {
+      "src": "appImages/screenshot-search.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Fitory 앱의 검색 페이지"
+    },
+    {
+      "src": "appImages/screenshot-profile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Fitory 앱의 마이 페이지"
+    }
   ],
-  "screenshots": [],
   "icons": [
     {
       "src": "appImages/launchericon-192.png",
