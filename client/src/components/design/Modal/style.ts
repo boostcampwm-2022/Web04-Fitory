@@ -11,7 +11,13 @@ export const Overlay = styled.div`
 
 export const Wrapper = styled(Overlay)`
   justify-content: center;
-  display: ${({ isShow }: { isShow: boolean }) => (isShow ? "flex" : "none")};
+  ${({ isShow, isCenter }: { isShow: boolean; isCenter: boolean }) => {
+    let style = `display: ${isShow ? "flex" : "none"};`;
+    if (isCenter) {
+      style += "align-items: center;";
+    }
+    return style;
+  }}
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
@@ -22,8 +28,9 @@ export const Window = styled.div`
   padding-bottom: 100px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  ${({ isCenter }: { isCenter: boolean }) => isCenter && `border-radius: 20px;  padding: 20px;`};
   position: absolute;
-  bottom: 0;
+  bottom: ${({ isCenter }: { isCenter: boolean }) => !isCenter && 0};
   display: flex;
   flex-direction: column;
   align-items: baseline;
@@ -33,6 +40,7 @@ export const Window = styled.div`
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
     padding: 30px;
     padding-bottom: 70px;
+    ${({ isCenter }: { isCenter: boolean }) => isCenter && `padding: 20px;`};
   }
 
   animation: moveUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;

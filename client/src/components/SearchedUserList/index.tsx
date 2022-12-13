@@ -1,24 +1,22 @@
-import SearchResultUserProfile from "@components/SearchResultUserProfile";
 import React from "react";
+import SearchResultUserProfile from "@components/SearchResultUserProfile";
 import * as s from "./style";
 import { SearchedUserInfo } from "../../types/user";
 
-const SearchedUserList = (searchedUser: SearchedUserInfo[]) => {
-  return searchedUser.map((user: SearchedUserInfo) => {
-    let keyValue = user.user_id;
-    if (user.follower_id) keyValue = user.follower_id;
-    else if (user.followed_id) keyValue = user.followed_id;
-
-    return (
-      <s.UserProfile key={keyValue}>
-        <SearchResultUserProfile
-          userName={user.name}
-          userMessage={user?.introduce}
-          profileId={keyValue}
-        />
-      </s.UserProfile>
-    );
-  });
+const SearchedUserList = ({ searchedUser }: { searchedUser: SearchedUserInfo[] }) => {
+  return (
+    <>
+      {searchedUser.map(({ user_id, follower_id, followed_id, name, introduce }) => (
+        <s.UserProfile key={follower_id || followed_id || user_id}>
+          <SearchResultUserProfile
+            userName={name}
+            userMessage={introduce}
+            profileId={(follower_id || followed_id || user_id) as number}
+          />
+        </s.UserProfile>
+      ))}
+    </>
+  );
 };
 
 export default SearchedUserList;

@@ -13,9 +13,11 @@ import * as s from "./style";
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
+
   const profileUserId = userId ? +userId : authStorage.get();
-  const { userInfo } = useUserInfo(profileUserId);
   const isOwner = profileUserId === authStorage.get();
+
+  const { userInfo } = useUserInfo(profileUserId);
 
   return (
     <PageTemplate isRoot={isOwner} title="프로필">
