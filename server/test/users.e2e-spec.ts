@@ -76,50 +76,58 @@ describe("RoutinesController (e2e)", () => {
     await app.init();
   });
 
-  describe("/api/users/get (GET)", () => {
-    it("GET", () => {
+  describe("Get Of User (GET)", () => {
+    it("Info Of Single User", () => {
       return request(app.getHttpServer())
         .get("/api/users/get")
-        .query({ userId: userId })
+        .query({ userId })
         .set({ access_token: accessToken, user_id: userId })
         .expect(HttpStatus.OK);
     });
-  });
 
-  describe("/api/users/profile/list (GET)", () => {
-    it("GET", () => {
+    it("Profile List Of Every User", () => {
       return request(app.getHttpServer())
         .get(`/api/users/profile/list`)
         .set({ access_token: accessToken, user_id: userId })
         .expect(HttpStatus.OK);
     });
-  });
 
-  describe("/api/users/recommand/list (GET)", () => {
-    it("GET", () => {
+    it("Recommend User List Of User", () => {
       return request(app.getHttpServer())
         .get("/api/users/recommand/list")
-        .query({ userId: userId })
+        .query({ userId })
         .set({ access_token: accessToken, user_id: userId })
         .expect(HttpStatus.OK);
     });
   });
 
-  describe("/api/users/checkName (GET)", () => {
-    it("GET", () => {
+  describe("Check Duplicate User Name (GET)", () => {
+    it("No Duplicate", () => {
+      const randomName = (Math.floor(Math.random() * 899) + 100).toString();
+      return request(app.getHttpServer())
+        .get("/api/users/checkName")
+        .query({ userName: randomName })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          expect(res.body.response.userExists).toBe(false);
+        });
+    });
+
+    it("Duplicate", () => {
       return request(app.getHttpServer())
         .get("/api/users/checkName")
         .query({ userName: "Jest" })
         .set({ access_token: accessToken, user_id: userId })
         .expect(HttpStatus.OK)
         .then((res) => {
-          expect(res.body.userExists === false);
+          expect(res.body.response.userExists).toBe(true);
         });
     });
   });
 
-  describe("/api/users/update (POST)", () => {
-    it("POST", () => {
+  describe("Update User Info (POST)", () => {
+    it("ok", () => {
       const updateUser = {
         userId: Number(userId),
         name: "Jest",
@@ -135,23 +143,8 @@ describe("RoutinesController (e2e)", () => {
         .set({ access_token: accessToken, user_id: userId })
         .expect(HttpStatus.CREATED);
     });
-  });
 
-  describe("/api/users/checkName (GET)", () => {
-    it("GET", () => {
-      return request(app.getHttpServer())
-        .get("/api/users/checkName")
-        .query({ userName: "Jest" })
-        .set({ access_token: accessToken, user_id: userId })
-        .expect(HttpStatus.OK)
-        .then((res) => {
-          expect(res.body.userExists === true);
-        });
-    });
-  });
-
-  describe("/api/users/update (POST)", () => {
-    it("POST", () => {
+    it("Invalid User Id", () => {
       const updateUser = {
         userId: 0,
         name: "Jest",
@@ -168,7 +161,7 @@ describe("RoutinesController (e2e)", () => {
         .expect(HttpStatus.BAD_REQUEST);
     });
 
-    it("POST", () => {
+    it("Invalid Property", () => {
       const updateUser = {
         userId: 0,
         name: "Jest",
@@ -177,6 +170,7 @@ describe("RoutinesController (e2e)", () => {
         height: "height",
         weight: faker.datatype.number({ min: 50, max: 150 }),
         introduce: "Hi! Im from Jest",
+        invalidProperty: "I am Invalid Property",
       };
       return request(app.getHttpServer())
         .post(`/api/users/update`)
@@ -185,96 +179,14 @@ describe("RoutinesController (e2e)", () => {
         .expect(HttpStatus.BAD_REQUEST);
     });
 
-    it("POST", () => {
-      const updateUser = {
-        userId: userId,
-        age: faker.datatype.number({ min: 10, max: 60 }),
-        gender: faker.datatype.number({ min: 0, max: 1 }),
-        height: faker.datatype.number({ min: 150, max: 200 }),
-        weight: faker.datatype.number({ min: 50, max: 150 }),
-        introduce: "Hi! Im from Jest",
-      };
-      return request(app.getHttpServer())
-        .post(`/api/users/update`)
-        .send(updateUser)
-        .set({ access_token: accessToken, user_id: userId })
-        .expect(HttpStatus.BAD_REQUEST);
-    });
-
-    it("POST", () => {
-      const updateUser = {
-        userId: 0,
-        name: "Jest",
-        age: 0,
-        gender: faker.datatype.number({ min: 0, max: 1 }),
-        height: faker.datatype.number({ min: 150, max: 200 }),
-        weight: faker.datatype.number({ min: 50, max: 150 }),
-        introduce: "Hi! Im from Jest",
-      };
-      return request(app.getHttpServer())
-        .post(`/api/users/update`)
-        .send(updateUser)
-        .set({ access_token: accessToken, user_id: userId })
-        .expect(HttpStatus.BAD_REQUEST);
-    });
-
-    it("POST", () => {
-      const updateUser = {
-        userId: 0,
-        name: "Jest",
-        height: faker.datatype.number({ min: 150, max: 200 }),
-        weight: faker.datatype.number({ min: 50, max: 150 }),
-        introduce: "Hi! Im from Jest",
-      };
-      return request(app.getHttpServer())
-        .post(`/api/users/update`)
-        .send(updateUser)
-        .set({ access_token: accessToken, user_id: userId })
-        .expect(HttpStatus.BAD_REQUEST);
-    });
-
-    it("POST", () => {
+    it("Invalid Property Value", () => {
       const updateUser = {
         userId: 0,
         name: "Jest",
         age: faker.datatype.number({ min: 10, max: 60 }),
         gender: faker.datatype.number({ min: 0, max: 1 }),
-        height: 0,
+        height: "height",
         weight: faker.datatype.number({ min: 50, max: 150 }),
-        introduce: "Hi! Im from Jest",
-      };
-      return request(app.getHttpServer())
-        .post(`/api/users/update`)
-        .send(updateUser)
-        .set({ access_token: accessToken, user_id: userId })
-        .expect(HttpStatus.BAD_REQUEST);
-    });
-
-    it("POST", () => {
-      const updateUser = {
-        userId: 0,
-        name: "Jest",
-        age: faker.datatype.number({ min: 10, max: 60 }),
-        gender: faker.datatype.number({ min: 0, max: 1 }),
-        height: faker.datatype.number({ min: 150, max: 200 }),
-        weight: 999,
-        introduce: "Hi! Im from Jest",
-      };
-      return request(app.getHttpServer())
-        .post(`/api/users/update`)
-        .send(updateUser)
-        .set({ access_token: accessToken, user_id: userId })
-        .expect(HttpStatus.BAD_REQUEST);
-    });
-
-    it("POST", () => {
-      const updateUser = {
-        userId: 0,
-        name: "Jest",
-        age: faker.datatype.number({ min: 10, max: 60 }),
-        gender: faker.datatype.number({ min: 0, max: 1 }),
-        height: faker.datatype.number({ min: 150, max: 200 }),
-        weight: "weight",
         introduce: "Hi! Im from Jest",
       };
       return request(app.getHttpServer())
