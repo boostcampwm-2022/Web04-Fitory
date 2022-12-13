@@ -133,7 +133,7 @@ describe("RoutinesController (e2e)", () => {
         .post(`/api/users/update`)
         .send(updateUser)
         .set({ access_token: accessToken, user_id: userId })
-        .expect(HttpStatus.OK);
+        .expect(HttpStatus.CREATED);
     });
   });
 
@@ -285,8 +285,8 @@ describe("RoutinesController (e2e)", () => {
     });
   });
 
-  afterAll(async () => {
+  afterAll(async (done) => {
     await app.close();
-    process.exit();
+    done();
   });
 });
