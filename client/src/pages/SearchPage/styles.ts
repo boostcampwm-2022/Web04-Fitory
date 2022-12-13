@@ -2,27 +2,27 @@ import styled from "styled-components";
 import Theme from "@styles/Theme";
 
 export const Wrapper = styled.div`
-  gap: 20px;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 20px;
+  gap: 50px;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
 `;
 
 export const SearchContainer = styled.div`
-  z-index: 1;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   width: 100%;
   height: ${({ isText }: { isText: boolean }) => {
     return isText ? "800px" : "auto";
   }};
-  position: absolute;
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   transition: 0.25s linear;
-  z-index: 10;
 `;
 
 export const UserSearchBarContainer = styled.div`
@@ -69,14 +69,11 @@ export const SearchResultContainer = styled.div`
 `;
 
 export const RecommendListContainer = styled.div`
-  bottom: 0;
-  position: absolute;
   width: 100%;
-  overflow: hidden;
+  height: fit-content;
   display: flex;
   flex-direction: column;
-  gap: 50px;
-  padding-bottom: 50px;
+  gap: 20px;
 `;
 
 export const RecommendItem = styled.div`

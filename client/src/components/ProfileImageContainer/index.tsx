@@ -1,6 +1,7 @@
 import React, { LegacyRef, useRef, useState } from "react";
 import defaultProfileImage from "@public/images/img_default_profile.svg";
 import editableProfileImage from "@public/images/img_editable_profile.svg";
+import { DEFAULT_IMAGE_SRC } from "@constants/consts";
 import * as s from "./style";
 
 export interface ProfileImageContainerProps {
@@ -17,12 +18,6 @@ const ProfileImageContainer = ({
   const [image, setImage] = useState<string>(profileImgUrl || defaultProfileImage);
   const imgRef = useRef<HTMLInputElement>(null);
 
-  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    if (e.target instanceof HTMLImageElement) {
-      e.target.src = defaultProfileImage;
-    }
-  };
-
   const handleChange = (e: React.ChangeEvent) => {
     const fileReader = new FileReader();
     const file = imgRef.current?.files as FileList;
@@ -35,10 +30,14 @@ const ProfileImageContainer = ({
       }
     };
   };
+
   return (
     <s.Wrapper>
       <s.ProfileImgContainer>
-        <s.ProfileImg src={image} alt="프로필 사진" onError={handleImgError} />
+        <s.ProfileImg
+          src={image === DEFAULT_IMAGE_SRC ? defaultProfileImage : image}
+          alt="프로필 사진"
+        />
         <s.EditProfileImgContainer>
           <s.EditProfileImg
             src={editableProfileImage}

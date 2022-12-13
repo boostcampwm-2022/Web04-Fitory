@@ -13,13 +13,13 @@ export const UserInfoContainer = styled.div`
 `;
 
 export const ProfileImageContainerWrapper = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   margin: auto;
 `;
 
 export const UserNameLabel = styled.div`
-  margin: 10px 0;
+  margin: 20px 0;
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
   font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
 `;
