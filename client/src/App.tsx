@@ -9,12 +9,12 @@ import { DEFAULT_STALE_TIME } from "@constants/consts";
 import Loading from "@components/Loading";
 import ErrorFallback from "@components/ErrorFallback";
 import NotFoundPage from "@pages/NotFountPage";
-import ProfileEditPage from "@pages/ProfileEditPage";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 const ChallengePage = lazy(() => import("@pages/ChallengePage"));
 const RecordPage = lazy(() => import("@pages/RecordPage"));
 const ProfilePage = lazy(() => import("@pages/ProfilePage"));
+const ProfileEditPage = lazy(() => import("@pages/ProfileEditPage"));
 const FollowPage = lazy(() => import("@pages/FollowPage"));
 const LoginPage = lazy(() => import("@pages/LoginPage"));
 const JoinPage = lazy(() => import("@pages/JoinPage"));

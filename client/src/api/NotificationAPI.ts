@@ -8,7 +8,7 @@ const NotificationAPI = {
   getNotificationCount: async () => {
     try {
       const userId = authStorage.get();
-      const path = "alarms/everyDate";
+      const path = "alarms/static/unread";
       const response = await HttpClient.get(path, { userId });
       const { alarmCount } = response.response as { alarmCount: number };
       return alarmCount;

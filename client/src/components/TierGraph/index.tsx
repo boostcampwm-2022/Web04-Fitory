@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Chart, registerables, Plugin } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { judColors } from "@components/TierGraph/utils";
 import { AnyObject } from "immer/dist/types/types-internal";
-import ExerciseAPI from "@api/ExerciseAPI";
-import options from "./option";
+import useUserInfo from "@hooks/query/user/useUserInfo";
+import useChallengeHistory from "@hooks/query/challenge/useChallengeHistory";
+import { ChallengeHistoryList } from "src/types/challenge";
+import { authStorage } from "src/services/ClientStorage";
+import { judColors } from "./utils";
+import drawChartOption from "./option";
 import plugin from "./plugin";
-import { SDBRecordHistoryArray } from "../../types/exercise";
 import * as s from "./style";
 
 Chart.register(...registerables);
@@ -14,16 +16,10 @@ Chart.register(...registerables);
 const backgroundColorArray: string[] = [];
 
 const TierGraph = () => {
+  const { userInfo } = useUserInfo(authStorage.get());
+  const { challengeHistory } = useChallengeHistory();
   const [labelInfo, setLabelInfo] = useState<string[]>([]);
   const [dataInfo, setDataInfo] = useState<number[]>([]);
-  const [userExerciseHistory, setUserExerciseHistory] = useState<SDBRecordHistoryArray[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      const historyList = await ExerciseAPI.getEveryDayHistory();
-      setUserExerciseHistory(historyList);
-    })();
-  }, []);
 
   const graphData = {
     labels: labelInfo,
@@ -44,19 +40,23 @@ const TierGraph = () => {
   useEffect(() => {
     const dates: string[] = [];
     const scores: number[] = [];
-    userExerciseHistory.forEach((item: SDBRecordHistoryArray) => {
-      const { record } = item;
-      const date = new Date(record.timeStamp).toISOString().substring(0, 10).replace(/-/g, "");
+    challengeHistory.forEach((item: ChallengeHistoryList) => {
+      const { timeStamp, userWeight, SBD_sum: SBDSum } = item.record;
+      const date = new Date(timeStamp).toISOString().substring(0, 10).replace(/-/g, "");
       dates.push(date);
-      scores.push(record.SBD_sum);
-      backgroundColorArray.push(judColors(record.SBD_sum));
+      scores.push(SBDSum);
+      backgroundColorArray.push(judColors(SBDSum, userWeight));
     });
     setLabelInfo(dates);
     setDataInfo(scores);
-  }, [userExerciseHistory]);
+  }, [challengeHistory]);
 
-  return userExerciseHistory.length ? (
-    <Line data={graphData} plugins={plugin as Plugin<"line", AnyObject>[]} options={options} />
+  return challengeHistory.length ? (
+    <Line
+      data={graphData}
+      plugins={plugin(userInfo.weight) as Plugin<"line", AnyObject>[]}
+      options={drawChartOption(dataInfo, userInfo.weight)}
+    />
   ) : (
     <s.DefaultContainer> 표시할 티어 정보가 없습니다. </s.DefaultContainer>
   );

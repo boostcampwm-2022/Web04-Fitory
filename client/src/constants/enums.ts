@@ -60,12 +60,21 @@ export const ExerciseState = {
 } as const;
 export type ExerciseState = typeof ExerciseState[keyof typeof ExerciseState];
 
-export const TIER = [null, "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "CHAMPION"] as const;
-export type TIER = typeof TIER[keyof typeof TIER];
+export const TierName = {
+  0: null,
+  1: "BRONZE",
+  2: "SILVER",
+  3: "GOLD",
+  4: "PLATINUM",
+  5: "DIAMOND",
+  6: "CHAMPION",
+} as const;
+export type TierName = typeof TierName[keyof typeof TierName];
 
 export const DayTypes = {
   TODAY: "today",
-  OTHER_DAYS: "otherDays",
+  PREV_DAYS: "prevDays",
+  NEXT_DAYS: "nextDays",
   THIS_DAYS: "thisDays",
 } as const;
 export type DayTypes = typeof DayTypes[keyof typeof DayTypes];
@@ -89,6 +98,11 @@ export const UserName = {
   MAX: 12,
 } as const;
 export type UserName = typeof UserName[keyof typeof UserName];
+
+export const UserIntroduce = {
+  MAX: 500,
+} as const;
+export type UserIntroduce = typeof UserIntroduce[keyof typeof UserIntroduce];
 
 export const UserAge = {
   MIN: 1,
@@ -137,6 +151,11 @@ export const QueryKey = {
   ROUTINE_INFO: "routineInfo",
   SINGLE_MONTH_EXERCISE_HISTORY: "singleMonthExerciseHistory",
   WEIGHT_CLASS_STATISTICS: "weightClassStatistics",
+  CHALLENGE_HISTORY: "challengeHistory",
+  FOLLOWERLIST: "followerList",
+  FOLLOWINGLIST: "followingList",
+  RECOMMAND_LIST: "recommandList",
+  ALL_USER_LIST: "allUserList",
   NOTIFICATION_COUNT: "notificationCount",
   NOTIFICATION_HISTORY: "notifiactionHistory",
 } as const;
@@ -160,6 +179,8 @@ export const ModalKey = {
   SAVE_ROUTINE: "saveRoutine",
   DELETE_ROUTINE: "deleteRoutine",
   LOGOUT: "logout",
+  APP_INSALL: "appInstall",
+  CHALLENGE_TIER: "challengeTier",
 };
 export const NotificationState = {
   EXERCISE: 0,

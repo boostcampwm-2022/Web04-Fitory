@@ -24,7 +24,7 @@ const ExerciseSetContainer = ({ exercise }: { exercise: ExerciseHistory }) => {
         </s.ExerciseHistoryHeader>
         <s.ExerciseInfoWrapper visibleState={visibleState}>
           {visibleState && (
-            <>
+            <s.ExerciseList>
               <s.HeaderRow>
                 <s.AttributeLabel>세트</s.AttributeLabel>
                 <s.AttributeLabel>kg</s.AttributeLabel>
@@ -42,7 +42,7 @@ const ExerciseSetContainer = ({ exercise }: { exercise: ExerciseHistory }) => {
                   )}
                 </s.SetRow>
               ))}
-            </>
+            </s.ExerciseList>
           )}
         </s.ExerciseInfoWrapper>
       </s.Wrapper>

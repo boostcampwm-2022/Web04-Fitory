@@ -2,6 +2,7 @@ import { authStorage } from "src/services/ClientStorage";
 import { toast } from "react-toastify";
 import { error } from "@constants/message";
 import HttpClient from "src/services/HttpClient";
+import { UserTier } from "src/types/user";
 import * as ChallengeType from "src/types/challenge";
 
 const ChallengeAPI = {
@@ -26,9 +27,10 @@ const ChallengeAPI = {
         ...SBDWeight,
         userId,
       });
-      return response.response;
+      const { tier } = response.response as { tier: UserTier };
+      return tier;
     } catch {
-      toast.error(error.SUBMIT_CHALLENGE);
+      toast.error(error.SUBMIT_CHALLENGE_EMPTY);
       return null;
     }
   },
@@ -41,6 +43,21 @@ const ChallengeAPI = {
       return response.response as ChallengeType.ChallengeTimestamp;
     } catch {
       toast.error(error.GET_DATE_INFO);
+      return null;
+    }
+  },
+
+  getEveryDayHistory: async () => {
+    try {
+      const path = `record/every`;
+      const userId = authStorage.get();
+      const response = await HttpClient.get(path, { userId });
+      const { recordList } = response.response as {
+        recordList: ChallengeType.ChallengeHistoryList[];
+      };
+      return recordList;
+    } catch {
+      toast.error(error.GET_CHALLENGE_INFO);
       return null;
     }
   },

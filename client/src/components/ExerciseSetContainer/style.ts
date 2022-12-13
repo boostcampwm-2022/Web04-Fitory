@@ -1,5 +1,14 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
+const boxOpenAnimation = keyframes` 
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -10%, 0);
+  } 
+  to {
+    opacity: 1;transform: translateZ(0);
+  }
+`;
 export const CheckedImg = styled.img`
   width: 30px;
   height: 30px;
@@ -53,7 +62,6 @@ export const Wrapper = styled.div`
   width: 100%;
   padding: 20px;
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
-  transition: 0.25s linear;
 `;
 
 export const ExerciseInfoWrapper = styled.div`
@@ -70,4 +78,8 @@ export const AttributeLabel = styled.div`
   width: 100%;
   height: 100%;
   line-height: 50px;
+`;
+
+export const ExerciseList = styled.div`
+  animation: ${boxOpenAnimation} 1s;
 `;
