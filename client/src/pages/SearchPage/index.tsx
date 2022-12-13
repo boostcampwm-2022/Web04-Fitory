@@ -3,7 +3,6 @@ import PageTemplate from "@pages/PageTemplate";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchedUserList from "@components/SearchedUserList";
 import SearchUtils from "@utils/SearchUtils";
-import useAllUserList from "@hooks/query/user/useAllUserList";
 import { SearchedUserInfo } from "src/types/user";
 import RecommandUserListContianer from "./RecommedUserList";
 import * as s from "./styles";
@@ -20,7 +19,7 @@ const SearchContainer = () => {
   useEffect(() => {
     // return SearchUtils.searchUser(searchValue, allUserList, setSearchedUser);
     return SearchUtils.searchUserByKeyword(searchValue, setSearchedUser);
-  }, [ searchValue ]);
+  }, [searchValue]);
 
   return (
     <s.SearchContainer isText={searchValue.length !== 0}>
