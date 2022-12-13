@@ -32,4 +32,5 @@ export const EditProfileImg = styled.img`
   border-radius: 50%;
   height: 100%;
   width: 100%;
+  opacity: 0.5;
 `;
