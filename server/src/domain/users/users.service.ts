@@ -151,7 +151,7 @@ export class UsersService {
       }
 
       let existFileBuffer: Buffer;
-      if (existFileName) {
+      if (existFileName && existsSync(`${uploadFolder}/${existFileName}`)) {
         existFileBuffer = readFileSync(`${uploadFolder}/${existFileName}`);
       }
 
