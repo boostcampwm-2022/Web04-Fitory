@@ -4,7 +4,7 @@
     "baseUrl": "../node_modules",
     "target": "es5",
     "lib": ["es6", "dom"],
-    "types": ["cypress"]
+    "types": ["cypress", "cypress-react-selector"]
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "integration/home.spec.ts"]
 }

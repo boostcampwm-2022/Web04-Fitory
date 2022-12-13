@@ -12,7 +12,7 @@ interface CalendarBodyProp {
   today: dayjs.Dayjs;
   displayDate?: string;
   setDisplayDate?: Dispatch<SetStateAction<string>>;
-  setDate: Dispatch<SetStateAction<string>>;
+  setDate: Dispatch<SetStateAction<dayjs.Dayjs>>;
 }
 
 const CalendarBody = ({ today, displayDate, setDisplayDate, setDate }: CalendarBodyProp) => {
