@@ -142,7 +142,7 @@ export class UsersService {
   }
 
   async uploadFiles(file: Express.Multer.File, userId: number) {
-    const uploadFolder: string = "user_profiles";
+    const uploadFolder = "user_profiles";
     try {
       const newFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(file.buffer)).toString();
       const existFileName = await this.getExistProfileImageLink(userId);
@@ -152,7 +152,7 @@ export class UsersService {
       }
 
       let existFileBuffer: Buffer;
-      if (existFileName) {
+      if (existFileName && existsSync(`${uploadFolder}/${existFileName}`)) {
         existFileBuffer = readFileSync(`${uploadFolder}/${existFileName}`);
       }
 
@@ -174,7 +174,7 @@ export class UsersService {
 
       let filePath;
       if (newFileName) {
-        const serverAddress: string = "http://localhost:8080";
+        const serverAddress = "http://localhost:8080";
         filePath = `${serverAddress}/user_profiles/${newFileName}`;
       }
       return filePath;
