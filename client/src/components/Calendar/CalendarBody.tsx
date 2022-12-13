@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import CalendarElement from "@components/Calendar/CalendarElement";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
 import { NUMBER_OF_DAYS } from "@constants/consts";
@@ -12,7 +12,7 @@ interface CalendarBodyProp {
   today: dayjs.Dayjs;
   displayDate?: string;
   setDisplayDate?: Dispatch<SetStateAction<string>>;
-  setDate: Dispatch<SetStateAction<string>>;
+  setDate: Dispatch<SetStateAction<Dayjs>>;
 }
 
 const CalendarBody = ({ today, displayDate, setDisplayDate, setDate }: CalendarBodyProp) => {
@@ -56,7 +56,7 @@ const CalendarBody = ({ today, displayDate, setDisplayDate, setDate }: CalendarB
                   day={day}
                   today={today}
                   displayDate={displayDate}
-                  setDisplayDate={setDisplayDate}
+                  setDisplayDate={setDisplayDate as Dispatch<SetStateAction<string>>}
                   setDate={setDate}
                 />
               );

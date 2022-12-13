@@ -15,7 +15,7 @@ const ProfileEditPage = () => {
   const { userInfo } = useUserInfo(authStorage.get());
   const [visibleState, setVisibleState] = useState(false);
   const [profileImage, setProfileImage] = useState<Blob>();
-  const [inputValues, setinputValues] = useState<UpdateUserInfo>({
+  const [inputValues, setInputValues] = useState<UpdateUserInfo>({
     name: userInfo.name,
     introduce: userInfo.introduce,
     age: userInfo.age,
@@ -48,27 +48,27 @@ const ProfileEditPage = () => {
     switch (e.target.name) {
       case "userName":
         if (e.target.value.match(NICKNAME_REGEX) && e.target.value.length <= UserName.MAX) {
-          setinputValues({ ...inputValues, name: e.target.value });
+          setInputValues({ ...inputValues, name: e.target.value });
         }
         break;
       case "introduce":
         if (e.target.value.length <= UserIntroduce.MAX) {
-          setinputValues({ ...inputValues, introduce: e.target.value });
+          setInputValues({ ...inputValues, introduce: e.target.value });
         }
         break;
       case "age":
         if (numberValue <= UserAge.MAX) {
-          setinputValues({ ...inputValues, age: numberValue });
+          setInputValues({ ...inputValues, age: numberValue });
         }
         break;
       case "height":
         if (numberValue <= UserHeight.MAX) {
-          setinputValues({ ...inputValues, height: numberValue });
+          setInputValues({ ...inputValues, height: numberValue });
         }
         break;
       case "weight":
         if (numberValue <= UserWeight.MAX) {
-          setinputValues({ ...inputValues, weight: numberValue });
+          setInputValues({ ...inputValues, weight: numberValue });
         }
         break;
       default:
@@ -77,7 +77,7 @@ const ProfileEditPage = () => {
 
   useEffect(() => {
     if (profileImage && profileImage !== inputValues.profileImage) {
-      setinputValues({ ...inputValues, profileImage });
+      setInputValues({ ...inputValues, profileImage });
     }
   }, [inputValues, profileImage]);
 
@@ -135,14 +135,14 @@ const ProfileEditPage = () => {
                 <s.profileGenderButton
                   type="button"
                   isSelected={inputValues.gender === Gender.MALE}
-                  onClick={() => setinputValues({ ...inputValues, gender: Gender.MALE })}
+                  onClick={() => setInputValues({ ...inputValues, gender: Gender.MALE })}
                 >
                   남
                 </s.profileGenderButton>
                 <s.profileGenderButton
                   type="button"
                   isSelected={inputValues.gender === Gender.FEMALE}
-                  onClick={() => setinputValues({ ...inputValues, gender: Gender.FEMALE })}
+                  onClick={() => setInputValues({ ...inputValues, gender: Gender.FEMALE })}
                 >
                   여
                 </s.profileGenderButton>

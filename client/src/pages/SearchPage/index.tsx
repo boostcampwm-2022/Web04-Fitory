@@ -5,7 +5,7 @@ import SearchedUserList from "@components/SearchedUserList";
 import SearchUtils from "@utils/SearchUtils";
 import useAllUserList from "@hooks/query/user/useAllUserList";
 import { SearchedUserInfo } from "src/types/user";
-import RecommandUserListContianer from "./RecommedUserList";
+import RecommendUserListContainer from "./RecommedUserList";
 import * as s from "./styles";
 
 const SearchContainer = () => {
@@ -44,7 +44,7 @@ const SearchPage = () => {
     <PageTemplate isRoot>
       <s.Wrapper>
         <SearchContainer />
-        <RecommandUserListContianer />
+        <RecommendUserListContainer />
       </s.Wrapper>
     </PageTemplate>
   );
