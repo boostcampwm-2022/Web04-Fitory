@@ -116,11 +116,7 @@ const JoinPage = () => {
   }, [location, navigate, userInfo]);
 
   return (
-    <PageTemplate
-      ignoreException
-      isRoot={false}
-      onClickBackButton={step ? handleClickBackButton : undefined}
-    >
+    <PageTemplate isRoot={false} onClickBackButton={step ? handleClickBackButton : undefined}>
       <s.Wrapper>
         <s.Title>{joinProcess[step].title}</s.Title>
         <s.ContentWrapper>

@@ -20,7 +20,7 @@ export interface JoinResponse {
 }
 
 export interface LoginUserInfo {
-  access_token: string;
+  access_token?: string;
 }
 
 export interface JoinUserInfo extends LoginUserInfo {
@@ -53,4 +53,8 @@ export interface SearchedUserInfo {
 export interface FollowUserInfo {
   myUserId: UserId;
   otherUserId: UserId;
+}
+
+export interface UpdateUserInfo extends JoinUserInfo {
+  introduce: string;
 }

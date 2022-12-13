@@ -99,6 +99,11 @@ export const UserName = {
 } as const;
 export type UserName = typeof UserName[keyof typeof UserName];
 
+export const UserIntroduce = {
+  MAX: 500,
+} as const;
+export type UserIntroduce = typeof UserIntroduce[keyof typeof UserIntroduce];
+
 export const UserAge = {
   MIN: 1,
   MAX: 120,

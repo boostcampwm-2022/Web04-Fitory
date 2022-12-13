@@ -1,43 +1,81 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent, ChangeEvent } from "react";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import PageTemplate from "@pages/PageTemplate";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import toggleBtn from "@public/images/btn_toggle.svg";
-import UserAPI from "@api/UserAPI";
-import { QueryKey } from "@constants/enums";
-import { useQueryClient } from "react-query";
+import { Gender, UserName, UserIntroduce, UserAge, UserHeight, UserWeight } from "@constants/enums";
+import { NICKNAME_REGEX, NUMBER_REGEX } from "@constants/consts";
+import useUserUpdate from "@hooks/query/user/useUserUpdate";
+import { authStorage } from "src/services/ClientStorage";
+import { UpdateUserInfo } from "src/types/user";
 import * as s from "./style";
-import { authStorage } from "../../services/ClientStorage";
 
 const ProfileEditPage = () => {
-  const queryClient = useQueryClient();
+  const { updateUser } = useUserUpdate();
   const { userInfo } = useUserInfo(authStorage.get());
   const [visibleState, setVisibleState] = useState(false);
   const [profileImg, setProfileImg] = useState<Blob>();
+
+  const [inputValues, setinputValues] = useState<UpdateUserInfo>({
+    name: userInfo.name,
+    introduce: userInfo.introduce,
+    age: userInfo.age,
+    gender: userInfo.gender,
+    height: userInfo.height,
+    weight: userInfo.weight,
+  });
 
   const openPrivateInfoEdit = () => {
     setVisibleState((prevState) => !prevState);
   };
 
-  const submitInformation = async (
-    e: React.FormEvent<HTMLFormElement> & { target: HTMLFormElement },
-  ) => {
+  const submitInformation = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (e.target) {
-      const formData = new FormData();
-      formData.append("userId", authStorage.get().toString());
-      formData.append("name", e.target.userName.value);
-      formData.append("age", e.target.age.value);
-      formData.append("gender", e.target.gender.value === "남" ? "0" : "1");
-      formData.append("height", e.target.height.value);
-      formData.append("weight", e.target.weight.value);
-      formData.append("introduce", e.target.introduce.value);
-      if (profileImg) {
-        formData.append("images", profileImg);
-      }
-      await UserAPI.updateUserInfo(formData);
-      await queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
-      alert("수정이 완료되었습니다!");
+    if (profileImg) {
+      formData.append("images", profileImg);
+    }
+    updateUser(inputValues);
+    window.history.back();
+  };
+
+  const checkIsActiveSubmitButton = () => {
+    const { name, introduce, age, gender, height, weight } = userInfo;
+    const originValues = [name, introduce, age, gender, height, weight];
+    const newValues = Object.values(inputValues);
+    return originValues.findIndex((_, i) => originValues[i] !== newValues[i]) > -1;
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const matchedArray = e.target.value.match(NUMBER_REGEX);
+    const numberValue = matchedArray ? +matchedArray[0] : 0;
+
+    switch (e.target.name) {
+      case "userName":
+        if (e.target.value.match(NICKNAME_REGEX) && e.target.value.length <= UserName.MAX) {
+          setinputValues({ ...inputValues, name: e.target.value });
+        }
+        break;
+      case "introduce":
+        if (e.target.value.length <= UserIntroduce.MAX) {
+          setinputValues({ ...inputValues, introduce: e.target.value });
+        }
+        break;
+      case "age":
+        if (numberValue <= UserAge.MAX) {
+          setinputValues({ ...inputValues, age: numberValue });
+        }
+        break;
+      case "height":
+        if (numberValue <= UserHeight.MAX) {
+          setinputValues({ ...inputValues, height: numberValue });
+        }
+        break;
+      case "weight":
+        if (numberValue <= UserWeight.MAX) {
+          setinputValues({ ...inputValues, weight: numberValue });
+        }
+        break;
+      default:
     }
   };
 
@@ -57,7 +95,8 @@ const ProfileEditPage = () => {
             type="text"
             name="userName"
             placeholder="이름을 입력해주세요."
-            defaultValue={userInfo.name}
+            value={inputValues.name}
+            onChange={handleChange}
           />
         </s.ProfileEditInputContainer>
         <s.ProfileEditInputContainer>
@@ -66,7 +105,8 @@ const ProfileEditPage = () => {
             type="text"
             name="introduce"
             placeholder="자기소개를 입력해주세요."
-            defaultValue={userInfo.introduce}
+            value={inputValues.introduce}
+            onChange={handleChange}
           />
         </s.ProfileEditInputContainer>
         <s.PrivateInfoWrapper>
@@ -83,17 +123,28 @@ const ProfileEditPage = () => {
                 type="text"
                 name="age"
                 placeholder="만 나이를 입력해주세요."
-                defaultValue={userInfo.age}
+                value={inputValues.age}
+                onChange={handleChange}
               />
             </s.ProfileEditInputContainer>
             <s.ProfileEditInputContainer>
               <s.ProfileEditLabel>성별</s.ProfileEditLabel>
-              <s.ProfileEditInput
-                type="text"
-                name="gender"
-                placeholder="성별을 입력해주세요."
-                defaultValue={userInfo.gender === 0 ? "남" : "여"}
-              />
+              <s.profileGenderButtonWrapper>
+                <s.profileGenderButton
+                  type="button"
+                  isSelected={inputValues.gender === Gender.MALE}
+                  onClick={() => setinputValues({ ...inputValues, gender: Gender.MALE })}
+                >
+                  남
+                </s.profileGenderButton>
+                <s.profileGenderButton
+                  type="button"
+                  isSelected={inputValues.gender === Gender.FEMALE}
+                  onClick={() => setinputValues({ ...inputValues, gender: Gender.FEMALE })}
+                >
+                  여
+                </s.profileGenderButton>
+              </s.profileGenderButtonWrapper>
             </s.ProfileEditInputContainer>
             <s.ProfileEditInputContainer>
               <s.ProfileEditLabel>신장</s.ProfileEditLabel>
@@ -101,7 +152,8 @@ const ProfileEditPage = () => {
                 type="text"
                 name="height"
                 placeholder="신장을 입력해주세요."
-                defaultValue={userInfo.height}
+                value={inputValues.height}
+                onChange={handleChange}
               />
             </s.ProfileEditInputContainer>
             <s.ProfileEditInputContainer>
@@ -110,12 +162,15 @@ const ProfileEditPage = () => {
                 type="text"
                 name="weight"
                 placeholder="체중을 입력해주세요."
-                defaultValue={userInfo.weight}
+                value={inputValues.weight}
+                onChange={handleChange}
               />
             </s.ProfileEditInputContainer>
           </s.PrivateInfoContainer>
         </s.PrivateInfoWrapper>
-        <s.SubmitButton type="submit"> 수정 완료 </s.SubmitButton>
+        <s.SubmitButton type="submit" disabled={!checkIsActiveSubmitButton()}>
+          수정 완료
+        </s.SubmitButton>
       </s.ProfileEditForm>
     </PageTemplate>
   );
