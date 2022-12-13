@@ -43,14 +43,19 @@ export class UsersService {
     });
   }
 
-  async getEveryUserProfile() {
+  async searchUserByName(userName: string) {
     const userProfileList = await this.userRepository
-      .createQueryBuilder("user")
-      .select("user.user_id", "user_id")
-      .addSelect("user.name", "name")
-      .addSelect("user.introduce", "introduce")
-      .addSelect("user.profile_image", "profile_image")
-      .getRawMany();
+      .createQueryBuilder()
+      .select(["user_id", "name", "introduce", "profile_image"])
+      .where(`MATCH(name) AGAINST ('${userName}' IN NATURAL LANGUAGE MODE`)
+      .getMany();
+    // const userProfileList = await this.userRepository
+    //   .createQueryBuilder("user")
+    //   .select("user.user_id", "user_id")
+    //   .addSelect("user.name", "name")
+    //   .addSelect("user.introduce", "introduce")
+    //   .addSelect("user.profile_image", "profile_image")
+    //   .getRawMany();
 
     return HttpResponse.success({
       userProfileList,

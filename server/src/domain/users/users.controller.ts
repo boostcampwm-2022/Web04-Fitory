@@ -27,12 +27,12 @@ export class UsersController {
     return this.usersService.getUserInfo(userId, followerCount, followingCount);
   }
 
-  @Get("profile/list")
+  @Get("search")
   @ApiOperation({
     summary: "모든 사용자들의 프로필 요약 데이터를 반환",
   })
-  getEveryUserName() {
-    return this.usersService.getEveryUserProfile();
+  getEveryUserName(@Query("userName") userName: string) {
+    return this.usersService.searchUserByName(userName);
   }
 
   @Get("recommand/list")
