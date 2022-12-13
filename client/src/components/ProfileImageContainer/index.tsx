@@ -6,9 +6,14 @@ import * as s from "./style";
 export interface ProfileImageContainerProps {
   isModified: boolean;
   profileImgUrl?: string;
+  setProfileImg?: React.Dispatch<Blob>;
 }
 
-const ProfileImageContainer = ({ isModified, profileImgUrl }: ProfileImageContainerProps) => {
+const ProfileImageContainer = ({
+  isModified,
+  profileImgUrl,
+  setProfileImg,
+}: ProfileImageContainerProps) => {
   const [image, setImage] = useState<string>(profileImgUrl || defaultProfileImage);
   const imgRef = useRef<HTMLInputElement>(null);
 
@@ -18,12 +23,16 @@ const ProfileImageContainer = ({ isModified, profileImgUrl }: ProfileImageContai
     }
   };
 
-  const handleChange = () => {
+  const handleChange = (e: React.ChangeEvent) => {
     const fileReader = new FileReader();
     const file = imgRef.current?.files as FileList;
     fileReader.readAsDataURL(file[0]);
     fileReader.onload = () => {
       setImage(fileReader.result as string);
+      if (setProfileImg) {
+        const target = e.target as HTMLInputElement;
+        if (target.files) setProfileImg(target.files[0]);
+      }
     };
   };
   return (

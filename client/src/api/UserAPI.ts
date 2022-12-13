@@ -119,26 +119,11 @@ const UserAPI = {
     }
   },
 
-  updateUserInfo: async ({
-    userId,
-    name,
-    age,
-    gender,
-    height,
-    weight,
-    introduce,
-  }: UserType.UpdateUserInfo) => {
+  updateUserInfo: async (formData: FormData) => {
     const path = "users/update";
-    const userInfo = {
-      userId,
-      name,
-      age,
-      gender,
-      height,
-      weight,
-      introduce,
-    };
-    const response = await HttpClient.post(path, userInfo);
+    const response = await HttpClient.post(path, formData, {
+      "content-type": "multipart/form-data",
+    });
     return response.response as { message: string };
   },
 };
