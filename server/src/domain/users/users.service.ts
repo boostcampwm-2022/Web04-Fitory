@@ -7,7 +7,6 @@ import { Repository } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { extname } from "path";
 import CryptoJS from "crypto-js";
-import { DEPLOY_HOST } from "@utils/env";
 import { User } from "./entities/user.entity";
 import { UserProfileDto } from "./dto/user_profile.dto";
 
@@ -72,21 +71,18 @@ export class UsersService {
   }
 
   async getRecommandUserList(userId: number) {
-    const weight = await this.userRepository
+    const userObject = await this.userRepository
       .createQueryBuilder("user")
+      .select("user.weight", "weight")
+      .addSelect("user.age", "age")
       .where("user.user_id = :userId", { userId })
-      .select("user.weight")
       .getRawOne();
 
-    const age = await this.userRepository
-      .createQueryBuilder("user")
-      .where("user.user_id = :userId", { userId })
-      .select("user.age")
-      .getRawOne();
+    const { age, weight } = userObject;
 
     const recommendWeight = await this.userRepository
       .createQueryBuilder("user")
-      .where(`user.weight BETWEEN ${weight.user_weight - 5} AND ${weight.user_weight + 5}`)
+      .where(`user.weight BETWEEN ${weight - 5} AND ${weight + 5}`)
       .andWhere("user.user_id != :userId", { userId })
       .select("user.user_id", "user_id")
       .addSelect("user.name", "name")
@@ -97,7 +93,7 @@ export class UsersService {
 
     const recommendAge = await this.userRepository
       .createQueryBuilder("user")
-      .where(`user.age BETWEEN ${age.user_age - 1} AND ${age.user_age + 1}`)
+      .where(`user.age BETWEEN ${age - 1} AND ${age + 1}`)
       .andWhere("user.user_id != :userId", { userId })
       .select("user.user_id", "user_id")
       .addSelect("user.name", "name")
@@ -152,7 +148,7 @@ export class UsersService {
       }
 
       let existFileBuffer: Buffer;
-      if (existFileName) {
+      if (existFileName && existsSync(`${uploadFolder}/${existFileName}`)) {
         existFileBuffer = readFileSync(`${uploadFolder}/${existFileName}`);
       }
 
@@ -176,7 +172,7 @@ export class UsersService {
 
       let filePath;
       if (newFileName) {
-        const serverAddress = DEPLOY_HOST;
+        const serverAddress = "http://localhost:8080";
         filePath = `${serverAddress}/user_profiles/${newFileName}`;
       }
       return filePath;

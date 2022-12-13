@@ -2,7 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest"  href="manifest.json" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,9 +35,11 @@
     <base href="/" />
     <title>Fitory</title>
     <script type="module">
-      import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
-      const el = document.createElement('pwa-update');
-      document.body.appendChild(el);
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.getRegistrations().then(function(registrations) { for(let registration of registrations) { registration.unregister() } })
+        });
+      }
    </script>
   </head>
   <body>

@@ -2,8 +2,8 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const Dotenv = require("dotenv-webpack");
 
 const loadPlugin = () => {
@@ -21,7 +21,13 @@ const loadPlugin = () => {
           : false,
     }),
     new Dotenv(),
-    new WebpackManifestPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "./public/appImages", to: "appImages" },
+        { from: "./public/manifest.json", to: "." },
+        { from: "./public/pwabuilder-sw.js", to: "." },
+      ],
+    }),
   ];
 
   if (process.env.BUNDLE) {
