@@ -4,13 +4,16 @@ import * as s from "./style";
 
 interface MainContainerProps {
   isRoot: boolean;
+  style?: React.CSSProperties;
   children: React.ReactNode;
 }
 
-const MainContainer = ({ isRoot, children }: MainContainerProps) => {
+const MainContainer = ({ isRoot, style, children }: MainContainerProps) => {
   return (
     <s.Background>
-      <s.Wrapper isRoot={isRoot}>{children}</s.Wrapper>
+      <s.Wrapper style={style} isRoot={isRoot}>
+        {children}
+      </s.Wrapper>
       <AppInstallPrompt />
     </s.Background>
   );
