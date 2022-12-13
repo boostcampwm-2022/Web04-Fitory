@@ -12,7 +12,7 @@ export const HttpResponse = {
   failed: (statusCode: number, message: string) => {
     return {
       ok: false,
-      statusCode: statusCode,
+      statusCode,
       response: message,
     };
   },

@@ -4,8 +4,8 @@ import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
-import { FollowUserIdDto } from "./dto/follow.dto";
 import { AlarmsService } from "@alarm/alarms.service";
+import { FollowUserIdDto } from "./dto/follow.dto";
 import { EventService } from "../event/event.service";
 
 @Controller("api/follow")

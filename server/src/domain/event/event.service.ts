@@ -17,7 +17,7 @@ export class EventService {
   emit(userIdList: Array<number>) {
     userIdList.map((userId) => {
       const isUserConnect = this.emitter.listeners(`${userId}ch`).length;
-      if (Boolean(isUserConnect)) {
+      if (isUserConnect) {
         this.emitter.emit(`${userId}ch`, { data: "true" });
       }
     });

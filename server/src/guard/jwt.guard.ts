@@ -8,6 +8,7 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
   constructor(private readonly reflector: Reflector) {
     super();
   }
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const noAuth = this.reflector.get<boolean>("no-auth", context.getHandler());
     if (noAuth) {

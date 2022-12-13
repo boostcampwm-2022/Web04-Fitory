@@ -1,15 +1,16 @@
-import { Follow } from "./../follows/entities/follow.entity";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { UserProfileDto } from "./dto/user_profile.dto";
 import { HttpResponse } from "@converter/response.converter";
 import { Exception } from "@exception/exceptions";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "./entities/user.entity";
-let CryptoJS = require("crypto-js");
 import { v4 as uuid } from "uuid";
 import { extname } from "path";
+import { User } from "./entities/user.entity";
+import { UserProfileDto } from "./dto/user_profile.dto";
+import { Follow } from "../follows/entities/follow.entity";
+
+const CryptoJS = require("crypto-js");
 
 @Injectable()
 export class UsersService {
@@ -142,7 +143,7 @@ export class UsersService {
   }
 
   async uploadFiles(file: Express.Multer.File, userId: number) {
-    const uploadFolder: string = "user_profiles";
+    const uploadFolder = "user_profiles";
     try {
       const newFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(file.buffer)).toString();
       const existFileName = await this.getExistProfileImageLink(userId);
@@ -174,7 +175,7 @@ export class UsersService {
 
       let filePath;
       if (newFileName) {
-        const serverAddress: string = "http://localhost:8080";
+        const serverAddress = "http://localhost:8080";
         filePath = `${serverAddress}/user_profiles/${newFileName}`;
       }
       return filePath;
