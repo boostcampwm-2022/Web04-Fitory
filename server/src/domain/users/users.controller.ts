@@ -29,7 +29,7 @@ export class UsersController {
 
   @Get("search")
   @ApiOperation({
-    summary: "모든 사용자들의 프로필 요약 데이터를 반환",
+    summary: "검색한 내용을 토대로 검색 결과 반환",
   })
   getEveryUserName(@Query("userName") userName: string) {
     return this.usersService.searchUserByName(userName);

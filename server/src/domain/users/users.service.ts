@@ -45,17 +45,10 @@ export class UsersService {
 
   async searchUserByName(userName: string) {
     const userProfileList = await this.userRepository
-      .createQueryBuilder()
-      .select(["user_id", "name", "introduce", "profile_image"])
-      .where(`MATCH(name) AGAINST ('${userName}' IN NATURAL LANGUAGE MODE`)
+      .createQueryBuilder("user")
+      .select(["user.user_id", "user.name", "user.introduce", "user.profileImage"])
+      .where(`MATCH(user.name) AGAINST ("+${userName}" IN BOOLEAN MODE)`)
       .getMany();
-    // const userProfileList = await this.userRepository
-    //   .createQueryBuilder("user")
-    //   .select("user.user_id", "user_id")
-    //   .addSelect("user.name", "name")
-    //   .addSelect("user.introduce", "introduce")
-    //   .addSelect("user.profile_image", "profile_image")
-    //   .getRawMany();
 
     return HttpResponse.success({
       userProfileList,
