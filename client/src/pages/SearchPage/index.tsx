@@ -9,6 +9,7 @@ import SearchedUserList from "@components/SearchedUserList";
 import defaultImg from "@public/images/img_default_profile.png";
 import Paper from "@components/design/Paper";
 import { useNavigate } from "react-router-dom";
+import RecommendUserCard from "@components/RecommendUserCard";
 import * as s from "./styles";
 
 const SearchPage = () => {
@@ -38,14 +39,15 @@ const SearchPage = () => {
       };
       return (
         <Paper key={user.user_id} style={{ padding: "10px", backgroundColor: "transparent" }}>
-          <div onClick={handleClickRecommendProfile} style={{ width: "150px", height: "150px" }}>
-            <img
-              style={{ width: "100%", height: "100%", borderRadius: "20px", objectFit: "fill" }}
-              src={user.profile_image}
-              onError={handleImgError}
-              alt="유저 프로필 사진"
-            />
-          </div>
+          {/* <div onClick={handleClickRecommendProfile} style={{ width: "150px", height: "150px" }}> */}
+          {/*  <img */}
+          {/*    style={{ width: "100%", height: "100%", borderRadius: "20px", objectFit: "fill" }} */}
+          {/*    src={user.profile_image} */}
+          {/*    onError={handleImgError} */}
+          {/*    alt="유저 프로필 사진" */}
+          {/*  /> */}
+          {/* </div> */}
+          <RecommendUserCard user={user} />
         </Paper>
       );
     });
