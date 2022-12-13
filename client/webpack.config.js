@@ -25,7 +25,7 @@ const loadPlugin = () => {
       patterns: [
         { from: "./public/appImages", to: "appImages" },
         { from: "./public/manifest.json", to: "." },
-        { from: "./public/pwabuilder-sw.js", to: "." },
+        { from: "./public/pwaServiceWorker.js", to: "." },
       ],
     }),
   ];
@@ -45,7 +45,7 @@ module.exports = {
   },
 
   output: {
-    filename: "[name].js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
