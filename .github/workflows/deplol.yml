@@ -1,31 +1,14 @@
-name: nCloud Deploy
+name: CD [Naver]
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-jobs:
-  backend-test:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16]
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: cd server && npm install
-      
-    - name: Run Jest:e2e
-      run: npm run test:e2e
-      
+jobs:  
   deploy:
     runs-on: ubuntu-latest
 
@@ -37,8 +20,8 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
-          timeout: 10m
-          command_timeout: 10m
+          timeout: 15m
+          command_timeout: 15m
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh

@@ -1,44 +1,45 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: CI [Test]
 
 on:
-  push:
-    branches: [ "dev" ]
+  pull_request:
+    branches:
+      - main
+      - dev
 
 jobs:
-  check:
-    name: Test
+  paths-filter:
+    name: Path Filter
     runs-on: ubuntu-latest
     outputs:
-        frontend: ${{steps.filter.outputs.frontend}}
-        backend: ${{steps.filter.outputs.backend}}
+      frontend: ${{steps.filter.outputs.frontend}}
+      backend: ${{steps.filter.outputs.backend}}
     steps:
-        - uses: dorny/paths-filter@v2
-          id: filter
-          with:
-              filters: |
-                  frontend:
-                    - 'client/**'
-                  backend:
-                    - 'server/**'
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'client/**'
+            backend:
+              - 'server/**'
 
   backend:
+    name: Test Backend
+    needs: paths-filter
+    if: ${{needs.paths-filter.outputs.backend=='true'}}
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16]
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
       
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Node.js Setup
       uses: actions/setup-node@v3
 
-    - name: Cache backend node modules
+    - name: Cache Backend node_modules
       id: cache-backend
       uses: actions/cache@v3
       with:
@@ -46,13 +47,21 @@ jobs:
         key: npm-packages-server-${{hashFiles('**/package-lock.json')}}
         restore-keys: |
           npm-packages-server-
+
+    - name: Generate Environment Variables File for Server
+      run: |
+        cd server
+        touch .env
+        echo "${{ secrets.ENV_FILE }}" >> .env
+        cat .env
         
-    - name: Install backend dependencies
+    - name: Install Backend Dependencies
       if: ${{steps.cache-backend.outputs.cache-hit != 'true'}}
       run: cd server && npm install
       
     - name: Run Jest:e2e
       run: cd server && npm run test:e2e
+        
       
     
 

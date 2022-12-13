@@ -41,7 +41,7 @@ export interface UserInfo extends JoinUserInfo {
 }
 
 export interface SearchedUserInfo {
-  user_id?: UserId;
+  user_id: UserId;
   name: UserName;
   introduce?: UserIntroduce;
   profile_image?: string;
@@ -52,14 +52,4 @@ export interface SearchedUserInfo {
 export interface FollowUserInfo {
   myUserId: UserId;
   otherUserId: UserId;
-}
-
-export interface UpdateUserInfo {
-  userId: number;
-  introduce: string;
-  name: UserName;
-  age: UserAge;
-  gender: UserGender;
-  height: UserHeight;
-  weight: UserWeight;
 }
