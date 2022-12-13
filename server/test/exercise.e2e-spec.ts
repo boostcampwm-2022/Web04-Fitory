@@ -124,4 +124,18 @@ describe("ExerciseController (e2e)", () => {
     });
   });
 
+  describe("Get Exercise Profile (GET)", () => {
+    it("ok", () => {
+      return request(app.getHttpServer())
+        .get("/api/exercise/profile")
+        .query({ userId })
+        .set({ access_token: accessToken, user_id: userId })
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          const { response } = res.body;
+          expect(response).toHaveProperty("totalVolume");
+          expect(response).toHaveProperty("totalExerciseDate");
+        });
+    });
+  });
 });
