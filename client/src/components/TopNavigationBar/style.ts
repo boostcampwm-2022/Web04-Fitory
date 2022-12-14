@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   position: fixed;
   z-index: 1;
   width: 100%;
-  height: ${({ theme }) => theme.NAVBAR_HEIGHT}px;
+  height: ${({ theme }) => theme.NAVBAR_HEIGHT.TOP}px;
   display: flex;
   justify-content: center;
   background-color: ${({ theme }) => theme.COLORS.WHITE};

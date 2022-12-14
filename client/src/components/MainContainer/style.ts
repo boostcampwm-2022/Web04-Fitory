@@ -10,11 +10,15 @@ export const Wrapper = styled.div`
   margin: auto;
   height: 100%;
   max-width: ${({ theme }) => theme.MAX_WIDTH.DEFAULT};
-  padding: ${({ theme }) => theme.NAVBAR_HEIGHT}px 0;
+  padding-top: ${({ theme }) => theme.NAVBAR_HEIGHT.TOP}px;
+  padding-bottom: ${({ theme }) => theme.NAVBAR_HEIGHT.DEFAULT}px;
   ${({ isRoot }: { isRoot: boolean }) => !isRoot && `padding-bottom: 0;`}
   & > * {
     width: 100%;
     height: 100%;
+  }
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    padding-bottom: ${({ theme }) => theme.NAVBAR_HEIGHT.BOTTOM}px;
   }
 `;
 
