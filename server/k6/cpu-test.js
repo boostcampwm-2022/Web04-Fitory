@@ -1,6 +1,6 @@
 import http from "k6/http";
-import { check, group, sleep, fail } from "k6";
-import { Counter, Rate, Trend } from "k6/metrics";
+import { check, group, sleep } from "k6";
+import { Trend } from "k6/metrics";
 import { randomIntBetween } from "https://jslib.k6.io/k6-utils/1.0.0/index.js";
 import crypto from "k6/crypto";
 import encoding from "k6/encoding";
@@ -26,9 +26,11 @@ export const options = {
 const timeToFirstByte = new Trend("time_to_first_byte", true);
 
 export default function () {
+  const characters = "김이박최강권노백신유오장주조하한허홍";
+  const searchName = characters.charAt(Math.floor(Math.random() * characters.length));
   const userId = 1;
-  const weight = Math.round(randomIntBetween(50, 150));
-  const gender = Math.round(randomIntBetween(0, 1));
+  const weight = 65;
+  const gender = 0;
   // const access_token = sign(__ENV.KEY, { access_token: access_token });
   const access_token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3MDU1MDQ5MCwiZXhwIjoxNzAyMDg2NDkwfQ.vw1Xahf48tloSV9Xfcf0q61iE_3qyUHfOvZSoff2hqo";
@@ -88,12 +90,6 @@ export default function () {
     // Load static assets
     group("Static assets", function () {
       const res = http.batch([
-        {
-          method: "GET",
-          url: "https://fitory.ga/index.js",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
         {
           method: "GET",
           url: "https://fitory.ga/images/mark_arrow_right.svg",
@@ -160,12 +156,6 @@ export default function () {
           body: {},
           params: { tags: { staticAsset: "yes" } },
         },
-        {
-          method: "GET",
-          url: "https://fitory.ga/favicon.ico",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
       ]);
 
       for (let i = 0; i < res.length; i += 1) {
@@ -223,12 +213,6 @@ export default function () {
       const response = http.batch([
         {
           method: "GET",
-          url: "https://fitory.ga/index.js",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
-        {
-          method: "GET",
           url: "https://fitory.ga/images/img_logo_alt.webp",
           body: {},
           params: { tags: { staticAsset: "yes" } },
@@ -275,12 +259,6 @@ export default function () {
           body: {},
           params: { tags: { staticAsset: "yes" } },
         },
-        {
-          method: "GET",
-          url: "https://fitory.ga/favicon.ico",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
       ]);
 
       for (let i = 0; i < response.length; i += 1) {
@@ -309,7 +287,7 @@ export default function () {
         },
         {
           method: "GET",
-          url: "https://fitory.ga/api/users/profile/list",
+          url: `https://fitory.ga/api/users/search?userName=${searchName}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
         },
@@ -333,12 +311,6 @@ export default function () {
     // Load static assets
     group("Static assets", function () {
       const response = http.batch([
-        {
-          method: "GET",
-          url: "https://fitory.ga/index.js",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
         {
           method: "GET",
           url: "https://fitory.ga/images/img_logo_alt.webp",
@@ -384,12 +356,6 @@ export default function () {
         {
           method: "GET",
           url: "https://fitory.ga/6090e6b5524796768e78.woff2",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
-        {
-          method: "GET",
-          url: "https://fitory.ga/favicon.ico",
           body: {},
           params: { tags: { staticAsset: "yes" } },
         },
@@ -453,12 +419,6 @@ export default function () {
       const response = http.batch([
         {
           method: "GET",
-          url: "https://fitory.ga/index.js",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
-        {
-          method: "GET",
           url: "https://fitory.ga/images/img_logo_alt.webp",
           body: {},
           params: { tags: { staticAsset: "yes" } },
@@ -514,12 +474,6 @@ export default function () {
         {
           method: "GET",
           url: "https://fitory.ga/6090e6b5524796768e78.woff2",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
-        {
-          method: "GET",
-          url: "https://fitory.ga/favicon.ico",
           body: {},
           params: { tags: { staticAsset: "yes" } },
         },
