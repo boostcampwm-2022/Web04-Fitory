@@ -31,7 +31,8 @@
     "node_modules",
     ".module.ts",
     "<rootDir>/src/app/main.ts",
-    ".mock.ts"
+    "test",
+    "k6"
   ],
   "coverageDirectory": "test/coverage/",
   "verbose": true
