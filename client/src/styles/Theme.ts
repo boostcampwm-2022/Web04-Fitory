@@ -51,7 +51,11 @@ const TIER_COLOR = {
   CHAMPION: "#ff0062",
 } as const;
 
-const NAVBAR_HEIGHT = 60;
+const NAVBAR_HEIGHT = {
+  DEFAULT: 60,
+  TOP: 60,
+  BOTTOM: 85,
+} as const;
 
 const theme = {
   COLORS,

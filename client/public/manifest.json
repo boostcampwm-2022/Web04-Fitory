@@ -38,6 +38,12 @@
   ],
   "icons": [
     {
+      "src": "appImages/launchericon-64.png",
+      "type": "image/png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "purpose": "any"
+    },
+    {
       "src": "appImages/launchericon-192.png",
       "type": "image/png",
       "sizes": "192x192",
