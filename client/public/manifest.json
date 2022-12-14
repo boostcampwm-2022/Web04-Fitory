@@ -1,0 +1,61 @@
+{
+  "background_color": "#ffffff",
+  "description": "귀찮은 운동을 꾸준하게! 지루한 운동을 더 재밌게!",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Fitory",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "Fitory",
+  "start_url": "/",
+  "theme_color": "#698afa",
+  "categories": ["health", "lifestyle", "social"],
+  "screenshots": [
+    {
+      "src": "appImages/screenshot-home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Fitory 앱의 홈 페이지"
+    },
+    {
+      "src": "appImages/screenshot-statistics.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Fitory 앱의 통계 페이지"
+    },
+    {
+      "src": "appImages/screenshot-search.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Fitory 앱의 검색 페이지"
+    },
+    {
+      "src": "appImages/screenshot-profile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Fitory 앱의 마이 페이지"
+    }
+  ],
+  "icons": [
+    {
+      "src": "appImages/launchericon-64.png",
+      "type": "image/png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "purpose": "any"
+    },
+    {
+      "src": "appImages/launchericon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "appImages/launchericon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [],
+  "lang": "ko"
+}

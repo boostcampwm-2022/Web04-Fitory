@@ -1,4 +1,5 @@
 import React from "react";
+import UserAPI from "@api/UserAPI";
 import { SearchedUserInfo } from "../types/user";
 
 const SearchUtils = {
@@ -38,6 +39,19 @@ const SearchUtils = {
   ) => {
     const timer = setTimeout(() => {
       setSearchedUser(SearchUtils.searchEvent(searchValue, userList, setSearchedUser));
+    }, 500);
+    return () => clearTimeout(timer);
+  },
+
+  searchUserByKeyword: (
+    searchValue: string,
+    setSearchedUser: React.Dispatch<React.SetStateAction<SearchedUserInfo[]>>,
+  ) => {
+    const timer = setTimeout(async () => {
+      if (!searchValue) setSearchedUser([]);
+      const userList = await UserAPI.searchUserByKeyword(searchValue);
+      if (!userList) return setSearchedUser([]);
+      return setSearchedUser(userList);
     }, 500);
     return () => clearTimeout(timer);
   },

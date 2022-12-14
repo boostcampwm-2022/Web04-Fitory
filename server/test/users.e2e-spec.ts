@@ -86,7 +86,8 @@ describe("User Controller (e2e)", () => {
 
     it("Profile List Of Every User", () => {
       return request(app.getHttpServer())
-        .get(`/api/users/profile/list`)
+        .get(`/api/users/search`)
+        .query({ userName: faker.name.lastName() })
         .set({ access_token: accessToken, user_id: userId })
         .expect(HttpStatus.OK);
     });
