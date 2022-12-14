@@ -2,9 +2,9 @@ import React from "react";
 import MainContainer from "@components/MainContainer";
 import GoogleOAuthButton from "@components/GoogleOAuthButton";
 import mainLogoSrc from "@public/images/img_logo_main.webp";
-import screenshotHomeSrc from "@public/images/screenshot-home.webp";
-import screenshotStatisticsSrc from "@public/images/screenshot-statistics.webp";
-import screenshotProfileSrc from "@public/images/screenshot-profile.webp";
+import screenshotHomeSrc from "@public/appImages/screenshot-home.webp";
+import screenshotStatisticsSrc from "@public/appImages/screenshot-statistics.webp";
+import screenshotProfileSrc from "@public/appImages/screenshot-profile.webp";
 import CardsScroller from "@components/design/CardsScroller";
 import * as s from "./style";
 

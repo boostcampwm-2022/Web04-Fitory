@@ -7,6 +7,7 @@ import { Repository } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { extname } from "path";
 import CryptoJS from "crypto-js";
+import { LOCAL_HOST } from "@utils/env";
 import { User } from "./entities/user.entity";
 import { UserProfileDto } from "./dto/user_profile.dto";
 
@@ -46,9 +47,14 @@ export class UsersService {
   async searchUserByName(userName: string) {
     const userProfileList = await this.userRepository
       .createQueryBuilder("user")
-      .select(["user.id", "user.name", "user.introduce", "user.profileImage"])
+      .select([
+        "user.user_id AS user_id",
+        "user.name AS name",
+        "user.introduce AS introduce",
+        "user.profile_image AS profile_image",
+      ])
       .where(`MATCH(user.name) AGAINST ("+${userName}" IN BOOLEAN MODE)`)
-      .getMany();
+      .getRawMany();
 
     return HttpResponse.success({
       userProfileList,
@@ -170,7 +176,7 @@ export class UsersService {
 
       let filePath;
       if (newFileName) {
-        const serverAddress = "http://localhost:8080";
+        const serverAddress = LOCAL_HOST;
         filePath = `${serverAddress}/user_profiles/${newFileName}`;
       }
       return filePath;
