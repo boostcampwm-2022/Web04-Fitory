@@ -13,8 +13,6 @@ export const options = {
     { duration: "1m", target: 90 },
     { duration: "1m", target: 120 },
     { duration: "1m", target: 150 },
-    { duration: "1m", target: 200 },
-    { duration: "1m", target: 250 },
   ],
   thresholds: {
     http_req_failed: ["rate<0.01"], // http 오류는 1% 미만이어야 함
@@ -50,124 +48,108 @@ export default function () {
           method: "GET",
           url: `https://fitory.ga/api/users/get?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/record/recent?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/exercise/everyDate?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/exercise/profile?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/record/best?userId=${Math.round(randomIntBetween(1, 5000))}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
       ]);
-      for (let i = 0; i < response.length; i += 1) {
-        check(response[i], {
-          "main page status was 200": (res) => res.status === 200,
+      response.forEach((res) => {
+        check(res, {
+          "main page status was 200": (r) => r.status === 200,
         });
-
-        // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-        timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
-      }
+      });
+      sleep(1);
     });
 
     // Load static assets
     group("Static assets", function () {
-      const res = http.batch([
+      const response = http.batch([
         {
           method: "GET",
           url: "https://fitory.ga/images/mark_arrow_right.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_arrow_left.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_arrow_right.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_home.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_statics.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_search.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_profile.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/img_logo_alt.webp",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/img_logo_text.webp",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_challenge.webp",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
-        {
-          method: "GET",
-          url: "https://fitory.ga/7e5eaaf650b9e7389913.woff2",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
+        // {
+        //   method: "GET",
+        //   url: "https://fitory.ga/7e5eaaf650b9e7389913.woff2",
+        //   body: {},
+        //
+        // },
       ]);
-
-      for (let i = 0; i < res.length; i += 1) {
-        check(res[i], {
+      response.forEach((res) => {
+        check(res, {
           "main page status was 200": (r) => r.status === 200,
         });
-
-        // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-        timeToFirstByte.add(res[i].timings.waiting, { ttfbURL: res[i].url, staticAsset: "yes" });
-      }
+      });
+      sleep(1);
     });
-    sleep(1);
   });
 
   group("statistics page", function () {
@@ -177,35 +159,33 @@ export default function () {
           method: "GET",
           url: `https://fitory.ga/api/users/get?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/record/best?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/statistics/everyData?range=10&weight=${weight}&gender=${gender}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/record/every?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
       ]);
-      for (let i = 0; i < response.length; i += 1) {
-        check(response[i], {
-          "main page status was 200": (res) => res.status === 200,
+      response.forEach((res) => {
+        check(res, {
+          "main page status was 200": (r) => r.status === 200,
         });
-
-        // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-        timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
-      }
+      });
+      sleep(1);
     });
 
     // Load static assets
@@ -215,65 +195,52 @@ export default function () {
           method: "GET",
           url: "https://fitory.ga/images/img_logo_alt.webp",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/img_logo_text.webp",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_home.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_search.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_profile.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_statics.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
-        {
-          method: "GET",
-          url: "https://fitory.ga/7e5eaaf650b9e7389913.woff2",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
-        {
-          method: "GET",
-          url: "https://fitory.ga/6090e6b5524796768e78.woff2",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
+        // {
+        //   method: "GET",
+        //   url: "https://fitory.ga/7e5eaaf650b9e7389913.woff2",
+        //   body: {},
+        //
+        // },
+        // {
+        //   method: "GET",
+        //   url: "https://fitory.ga/6090e6b5524796768e78.woff2",
+        //   body: {},
+        //
+        // },
       ]);
-
-      for (let i = 0; i < response.length; i += 1) {
-        check(response[i], {
-          "main page status was 200": (res) => res.status === 200,
+      response.forEach((res) => {
+        check(res, {
+          "main page status was 200": (r) => r.status === 200,
         });
-
-        // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-        timeToFirstByte.add(response[i].timings.waiting, {
-          ttfbURL: response[i].url,
-          staticAsset: "yes",
-        });
-      }
+      });
+      sleep(1);
     });
-    sleep(1);
   });
 
   group("search page", function () {
@@ -283,29 +250,28 @@ export default function () {
           method: "GET",
           url: `https://fitory.ga/api/record/recent?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/users/search?userName=${searchName}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/users/recommand/list?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
       ]);
-      for (let i = 0; i < response.length; i += 1) {
-        check(response[i], {
-          "main page status was 200": (res) => res.status === 200,
+      response.forEach((res) => {
+        check(res, {
+          "main page status was 200": (r) => r.status === 200,
         });
+      });
 
-        // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-        timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
-      }
+      sleep(1);
     });
 
     // Load static assets
@@ -315,63 +281,49 @@ export default function () {
           method: "GET",
           url: "https://fitory.ga/images/img_logo_alt.webp",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/img_logo_text.webp",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_home.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_search.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_profile.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_statics.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/img_default_profile.png",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
-        {
-          method: "GET",
-          url: "https://fitory.ga/6090e6b5524796768e78.woff2",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
+        // {
+        //   method: "GET",
+        //   url: "https://fitory.ga/6090e6b5524796768e78.woff2",
+        //   body: {},
+        //
+        // },
       ]);
-
-      for (let i = 0; i < response.length; i += 1) {
-        check(response[i], {
-          "main page status was 200": (res) => res.status === 200,
+      response.forEach((res) => {
+        check(res, {
+          "main page status was 200": (r) => r.status === 200,
         });
-
-        // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-        timeToFirstByte.add(response[i].timings.waiting, {
-          ttfbURL: response[i].url,
-          staticAsset: "yes",
-        });
-      }
+      });
     });
     sleep(1);
   });
@@ -383,35 +335,32 @@ export default function () {
           method: "GET",
           url: `https://fitory.ga/api/users/get?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/api/exercise/everyDate?userId=",
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/routines/list?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/record/recent?userId=${userId}`,
           body: {},
-          params: { headers: { user_id: userId }, tags: { API: "yes" } },
+          params: { headers: { user_id: userId } },
         },
       ]);
-      for (let i = 0; i < response.length; i += 1) {
-        check(response[i], {
-          "main page status was 200": (res) => res.status === 200,
+      response.forEach((res) => {
+        check(res, {
+          "main page status was 200": (r) => r.status === 200,
         });
-
-        // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-        timeToFirstByte.add(response[i].timings.waiting, { ttfbURL: response[i].url, API: "yes" });
-      }
+      });
     });
 
     // Load static assets
@@ -421,92 +370,61 @@ export default function () {
           method: "GET",
           url: "https://fitory.ga/images/img_logo_alt.webp",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/img_logo_text.webp",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_home.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_search.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_profile.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_statics.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/btn_cancel.svg",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
         {
           method: "GET",
           url: "https://fitory.ga/images/img_default_profile.png",
           body: {},
-          params: { tags: { staticAsset: "yes" } },
         },
-        {
-          method: "GET",
-          url: "https://fitory.ga/7e5eaaf650b9e7389913.woff2",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
-        {
-          method: "GET",
-          url: "https://fitory.ga/6090e6b5524796768e78.woff2",
-          body: {},
-          params: { tags: { staticAsset: "yes" } },
-        },
+        // {
+        //   method: "GET",
+        //   url: "https://fitory.ga/7e5eaaf650b9e7389913.woff2",
+        //   body: {},
+        //
+        // },
+        // {
+        //   method: "GET",
+        //   url: "https://fitory.ga/6090e6b5524796768e78.woff2",
+        //   body: {},
+        //
+        // },
       ]);
-
-      for (let i = 0; i < response.length; i += 1) {
-        check(response[i], {
-          "main page status was 200": (res) => res.status === 200,
+      response.forEach((res) => {
+        check(res, {
+          "main page status was 200": (r) => r.status === 200,
         });
-
-        // Record time to first byte and tag it with the URL to be able to filter the results in Insights
-        timeToFirstByte.add(response[i].timings.waiting, {
-          ttfbURL: response[i].url,
-          staticAsset: "yes",
-        });
-      }
+      });
     });
     sleep(1);
   });
 }
-//
-// function sign(data, hashAlg, secret) {
-//   let hasher = crypto.createHMAC(hashAlg, secret);
-//   hasher.update(data);
-//
-//   // Some manual base64 rawurl encoding as `Hasher.digest(encodingType)`
-//   // doesn't support that encoding type yet.
-//   return hasher.digest("base64").replace(/\//g, "_").replace(/\+/g, "-").replace(/=/g, "");
-// }
-//
-// function encode(payload, secret, algorithm) {
-//   let header = encoding.b64encode(JSON.stringify({ typ: "JWT", alg: algorithm }), "rawurl");
-//   payload = encoding.b64encode(JSON.stringify({ payload }), "rawurl");
-//   let sig = sign(header + "." + payload, algorithm, secret);
-//   return [header, payload, sig].join(".");
-// }
