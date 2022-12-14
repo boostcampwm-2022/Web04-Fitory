@@ -33,7 +33,7 @@ const PageTemplate = ({
         <MainContainer isRoot={isRoot}>{children}</MainContainer>
       </Suspense>
       {isRoot && <BottomNavigationBar />}
-      <ToastContainer position="bottom-center" />
+      <ToastContainer position="bottom-center" style={{ bottom: "50px" }} />
     </>
   );
 };
