@@ -13,10 +13,12 @@ export const options = {
     { duration: "1m", target: 90 },
     { duration: "1m", target: 120 },
     { duration: "1m", target: 150 },
+    { duration: "1m", target: 200 },
+    { duration: "1m", target: 250 },
   ],
   thresholds: {
     http_req_failed: ["rate<0.01"], // http 오류는 1% 미만이어야 함
-    http_req_duration: ["p(95)<200"], // 요청의 95%는 200ms 미만으로 응답해야 함
+    http_req_duration: ["p(95)<300"], // 요청의 95%는 300ms 미만으로 응답해야 함
     checks: ["rate>0.99"], // check()의 성공률이 99% 이상이여야 함
   },
 };
@@ -47,40 +49,30 @@ export default function () {
           url: `https://fitory.ga/api/users/get?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/record/recent?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/exercise/everyDate?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/exercise/profile?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/record/best?userId=${Math.round(randomIntBetween(1, 5000))}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-
-          cookies: { access_token },
         },
       ]);
       for (let i = 0; i < response.length; i += 1) {
@@ -196,32 +188,24 @@ export default function () {
           url: `https://fitory.ga/api/users/get?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/record/best?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/statistics/everyData?range=10&weight=${weight}&gender=${gender}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/record/every?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-
-          cookies: { access_token },
         },
       ]);
       for (let i = 0; i < response.length; i += 1) {
@@ -322,21 +306,18 @@ export default function () {
           url: `https://fitory.ga/api/record/recent?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: "https://fitory.ga/api/users/profile/list",
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/users/recommand/list?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-          cookies: { access_token },
         },
       ]);
       for (let i = 0; i < response.length; i += 1) {
@@ -437,28 +418,24 @@ export default function () {
           url: `https://fitory.ga/api/users/get?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: "https://fitory.ga/api/exercise/everyDate?userId=",
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/routines/list?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-          cookies: { access_token },
         },
         {
           method: "GET",
           url: `https://fitory.ga/api/record/recent?userId=${userId}`,
           body: {},
           params: { headers: { user_id: userId }, tags: { API: "yes" } },
-          cookies: { access_token },
         },
       ]);
       for (let i = 0; i < response.length; i += 1) {
