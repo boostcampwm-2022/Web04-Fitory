@@ -12,14 +12,15 @@ export const Wrapper = styled.div`
   max-width: ${({ theme }) => theme.MAX_WIDTH.DEFAULT};
   padding-top: ${({ theme }) => theme.NAVBAR_HEIGHT.TOP}px;
   padding-bottom: ${({ theme }) => theme.NAVBAR_HEIGHT.DEFAULT}px;
-  ${({ isRoot }: { isRoot: boolean }) => !isRoot && `padding-bottom: 0;`}
   & > * {
     width: 100%;
     height: 100%;
   }
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
     padding-bottom: ${({ theme }) => theme.NAVBAR_HEIGHT.BOTTOM}px;
+    ${({ isRoot }: { isRoot: boolean }) => !isRoot && `padding-bottom: 0;`}
   }
+  ${({ isRoot }: { isRoot: boolean }) => !isRoot && `padding-bottom: 0;`}
 `;
 
 export default { Wrapper };
