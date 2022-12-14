@@ -15,13 +15,12 @@ export class SbdStatisticsService {
   async getSBDStatisticsData(gender: number, weight: number, range: number) {
     const betweenWeight = await this.getBetweenWeight(gender, weight);
 
-    const statistics = await this.exerciseRepository.findAndCount({
+    const statistics = await this.exerciseRepository.find({
       where: { gender, weight: betweenWeight },
-      order: { SBD_volume: "ASC" },
     });
 
-    const min = statistics[0][0].SBD_volume;
-    const max = statistics[0][statistics[1] - 1].SBD_volume;
+    const min = statistics[0].SBD_volume;
+    const max = statistics[statistics.length - 1].SBD_volume;
     const len = Math.ceil((max - min) / range);
 
     const loopNum = Array(len)
@@ -55,13 +54,11 @@ export class SbdStatisticsService {
         if (end > max) {
           const count = await this.exerciseRepository.count({
             where: { gender, weight: betweenWeight, SBD_volume: Between(end - range, max) },
-            order: { SBD_volume: "ASC" },
           });
           return responseData.push({ x_start: start, x_end: max, y: count });
         }
         const count = await this.exerciseRepository.count({
           where: { gender, weight: betweenWeight, SBD_volume: Between(start, end) },
-          order: { SBD_volume: "ASC" },
         });
         return responseData.push({ x_start: start, x_end: end, y: count });
       }),
