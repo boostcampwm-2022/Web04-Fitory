@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useQueryClient } from "react-query";
 import PageTemplate from "@pages/PageTemplate";
 import MyPageUserProfile from "@components/MyPageUserProfile";
 import CalendarHeatMap from "@components/CalendarHeatMap";
 import RoutineScroller from "@components/RoutineScroller";
 import LogoutButton from "@components/LogoutButton";
 import useUserInfo from "@hooks/query/user/useUserInfo";
-import { RoutePath } from "@constants/enums";
+import { QueryKey, RoutePath } from "@constants/enums";
 import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
 
 const ProfilePage = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { userId } = useParams();
 
@@ -18,6 +20,12 @@ const ProfilePage = () => {
   const isOwner = profileUserId === authStorage.get();
 
   const { userInfo } = useUserInfo(profileUserId);
+
+  useEffect(() => {
+    if (isOwner) {
+      queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
+    }
+  });
 
   return (
     <PageTemplate isRoot={isOwner} title="프로필">
