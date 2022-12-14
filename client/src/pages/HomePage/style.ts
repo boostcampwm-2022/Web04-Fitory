@@ -39,4 +39,7 @@ export const RecordButton = styled(DefaultButton)`
     box-shadow: rgb(0 0 0 / 35%) 2px 4px 12px;
     transform: scale3d(1.01, 1.01, 1.01);
   }
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    bottom: 100px;
+  }
 `;

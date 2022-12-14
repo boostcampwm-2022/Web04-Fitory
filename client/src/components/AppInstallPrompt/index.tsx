@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Modal from "@components/design/Modal";
 import useAppInstall from "@hooks/useAppInstall";
 import checkIsIOS from "@utils/checkIsIOS";
+import checkIsPWADisplayMode from "@utils/getPWADisplayMode";
 import modalStore from "@stores/modalStore";
 import { ModalKey } from "@constants/enums";
 import { IoShareOutline } from "@react-icons/all-files/io5/IoShareOutline";
@@ -20,7 +21,7 @@ const AppInstallPrompt = () => {
   };
 
   useEffect(() => {
-    if (!appInstallPromptCookie.get() && isShowPrompt) {
+    if (!checkIsPWADisplayMode() && !appInstallPromptCookie.get() && isShowPrompt) {
       openModal(ModalKey.APP_INSALL);
     }
   }, [isShowPrompt, openModal]);
