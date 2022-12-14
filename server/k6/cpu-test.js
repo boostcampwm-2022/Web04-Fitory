@@ -16,7 +16,7 @@ export const options = {
   ],
   thresholds: {
     http_req_failed: ["rate<0.01"], // http 오류는 1% 미만이어야 함
-    http_req_duration: ["p(95)<400", "p(90)<200"], // 요청의 95%는 400ms, 90%는 200ms 미만으로 응답해야 함
+    http_req_duration: ["p(95)<500", "p(90)<200"], // 요청의 95%는 400ms, 90%는 200ms 미만으로 응답해야 함
     checks: ["rate>0.99"], // check()의 성공률이 99% 이상이여야 함
   },
 };
