@@ -1,5 +1,5 @@
 import theme from "@styles/Theme";
-import { Chart, ChartOptions } from "chart.js";
+import { Chart } from "chart.js";
 import { AnyObject } from "immer/dist/types/types-internal";
 import { returnTierStandard } from "@components/TierGraph/utils";
 
@@ -47,6 +47,7 @@ const drawColorGraph = (chart: Chart, weight: number) => {
     gradient.addColorStop(championOffset, theme.TIER_COLOR.DIAMOND);
   }
   gradient.addColorStop(1, theme.TIER_COLOR.BRONZE);
+  // eslint-disable-next-line no-param-reassign
   chart.data.datasets[0].borderColor = gradient;
   ctx.restore();
 };
