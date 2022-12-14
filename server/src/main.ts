@@ -4,20 +4,17 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
-import { DEPLOY_HOST, DEPLOY_HOST_WWW, PORT } from "@utils/env";
+import { LOCAL_HOST, PORT } from "@utils/env";
 import express from "express";
 import path from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { AppModule } from "./app.module";
-import { GlobalService } from "./middleware/zero-downtime-deploy/is-disable-keep-alive.global";
-import { SetResponseHeader } from "./middleware/zero-downtime-deploy/set-response-header.middleware";
 
 declare global {
   // eslint-disable-next-line no-var,vars-on-top
   var alarmBar: Set<number>;
 }
-
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
   // initDatabase();
@@ -31,7 +28,7 @@ async function bootstrap() {
   app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
-    origin: [DEPLOY_HOST, DEPLOY_HOST_WWW],
+    origin: [LOCAL_HOST],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   });
@@ -40,8 +37,10 @@ async function bootstrap() {
 
   app.use(passport.initialize());
 
-  const reflector = app.get(Reflector);
-  app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+  if (!(process.argv[2] === "noguard")) {
+    const reflector = app.get(Reflector);
+    app.useGlobalGuards(new JwtAuthGuard(reflector)); // 전역 user id 검증 가드 적용
+  }
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -59,17 +58,6 @@ async function bootstrap() {
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerDocumentBuilder);
   SwaggerModule.setup("api", app, swaggerDocument);
 
-  GlobalService.isDisableKeepAlive = false;
-
-  app.use(SetResponseHeader);
-
-  // Starts listening to shutdown hooks
-  app.enableShutdownHooks();
-
-  await app.listen(PORT as string, () => {
-    process.send("ready");
-    // eslint-disable-next-line no-console
-    console.log(`application is listening on port ${PORT}`);
-  });
+  await app.listen(PORT as string);
 }
 bootstrap();
