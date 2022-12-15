@@ -17,7 +17,7 @@ export const Label = styled.p`
 export const RoutineButton = styled.button`
   width: 100px;
   height: 100px;
-  padding: 15px;
+  padding: 5px;
   gap: 15px;
   display: flex;
   flex-direction: column;
