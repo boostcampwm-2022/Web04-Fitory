@@ -8,7 +8,7 @@ import * as s from "./styles";
 
 const RecommedUserList = ({ userList }: { userList: SearchedUserInfo[] }) => {
   return userList.length ? (
-    <CardsScroller>
+    <CardsScroller style={{ paddingTop: "5px" }}>
       {userList.map((user: SearchedUserInfo) => (
         <Paper key={user.user_id} style={{ padding: "10px", backgroundColor: "transparent" }}>
           {/* <Link to={`/profile/${user.user_id}`} style={{ width: "100px", height: "100px" }}>

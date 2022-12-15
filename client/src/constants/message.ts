@@ -43,4 +43,5 @@ export const success = {
   RECORD_EXERCISE: "오늘의 운동 완료!",
   SAVE_ROUTINE: "루틴 저장이 완료되었습니다!",
   JOIN: "Fitory 회원이 되신 것을 환영합니다!",
+  UPDATE_USER: "프로필 수정 완료!",
 } as const;

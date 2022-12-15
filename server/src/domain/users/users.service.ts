@@ -179,7 +179,7 @@ export class UsersService {
 
       let filePath;
       if (newFileName) {
-        const serverAddress = DEPLOY_HOST;
+        const serverAddress = LOCAL_HOST;
         filePath = `${serverAddress}/user_profiles/${newFileName}`;
       }
       return filePath;

@@ -47,7 +47,7 @@ const App = () => {
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
         <ErrorBoundary fallback={<ErrorFallback />}>
-          <Suspense fallback={<Loading isLazy />}>
+          <Suspense fallback={<Loading />}>
             <Routes>
               {/* Home */}
               <Route path={RoutePath.HOME} element={<HomePage />} />

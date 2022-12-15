@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import { RoutePath, Gender } from "@constants/enums";
+import { error } from "@constants/message";
 import PageTemplate from "@pages/PageTemplate";
 import NicknameTextField from "@components/NicknameTextField";
 import AgeGenderInputSet from "@components/AgeGenderInputSet";
@@ -34,8 +36,7 @@ const JoinPage = () => {
     if (step === 0) {
       const isExist = await UserAPI.checkExistUserName(userInfo.name);
       if (isExist) {
-        // eslint-disable-next-line no-alert
-        alert("이미 존재하는 닉네임입니다.");
+        toast.error(error.CHECK_USER_NAME);
         return;
       }
     }
