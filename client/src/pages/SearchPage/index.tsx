@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageTemplate from "@pages/PageTemplate";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchedUserList from "@components/SearchedUserList";
+import NotificationButton from "@components/NotificationButton";
 import SearchUtils from "@utils/SearchUtils";
 import { SearchedUserInfo } from "src/types/user";
 import RecommandUserListContianer from "./RecommedUserList";
@@ -41,7 +42,7 @@ const SearchContainer = () => {
 
 const SearchPage = () => {
   return (
-    <PageTemplate isRoot>
+    <PageTemplate isRoot topNavRightItem={<NotificationButton />}>
       <s.Wrapper>
         <SearchContainer />
         <RecommandUserListContianer />

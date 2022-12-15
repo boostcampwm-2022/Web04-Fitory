@@ -6,6 +6,7 @@ import MyPageUserProfile from "@components/MyPageUserProfile";
 import CalendarHeatMap from "@components/CalendarHeatMap";
 import RoutineScroller from "@components/RoutineScroller";
 import LogoutButton from "@components/LogoutButton";
+import NotificationButton from "@components/NotificationButton";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import { QueryKey, RoutePath } from "@constants/enums";
 import { authStorage } from "src/services/ClientStorage";
@@ -28,7 +29,7 @@ const ProfilePage = () => {
   });
 
   return (
-    <PageTemplate isRoot={isOwner} title="프로필">
+    <PageTemplate isRoot={isOwner} title="프로필" topNavRightItem={<NotificationButton />}>
       <s.MyProfileContainer>
         <MyPageUserProfile userInfo={userInfo} />
       </s.MyProfileContainer>
