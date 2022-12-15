@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useQueryClient } from "react-query";
 import ProfileImageContainer from "@components/ProfileImageContainer";
 import { useNavigate } from "react-router-dom";
-import { PageState, TierName } from "@constants/enums";
+import { PageState, TierName, QueryKey } from "@constants/enums";
 import { getTierColor } from "@utils/getUserTierUtil";
 
 import { UserInfo } from "src/types/user";
@@ -11,6 +12,7 @@ import * as s from "./style";
 import { authStorage } from "../../services/ClientStorage";
 
 const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
+  const queryClient = useQueryClient();
   const isOwner = userInfo.id === authStorage.get();
   const navigate = useNavigate();
 
@@ -25,6 +27,13 @@ const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
       state: PageState.FOLLOWING,
     });
   };
+
+  useEffect(() => {
+    if (isOwner) {
+      console.log("test");
+      queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
+    }
+  }, [isOwner, queryClient]);
 
   return (
     <>
