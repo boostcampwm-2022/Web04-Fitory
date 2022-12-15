@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: dev
+          fetch-depth: 0
 
       - name: Nodejs Setup
         uses: actions/setup-node@v2
@@ -64,7 +64,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: dev
+          fetch-depth: 0
+          
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v34
 
       - name: Nodejs Setup
         uses: actions/setup-node@v2
