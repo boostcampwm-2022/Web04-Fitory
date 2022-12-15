@@ -24,10 +24,9 @@ export const UserBestTierContainer = styled.div`
 export const Tier = styled(RecordResult)`
   color: ${({ tier, theme }: { tier: TierName | null; theme: typeof Theme }) =>
     tier && theme.TIER_COLOR[tier]};
-  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+  font-size: ${({ theme }) => theme.FONT_SIZE.LARGE};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
-  margin-top: 8px;
-  margin-bottom: 5px;
+  margin-top: 10px;
 `;
 
 export const TierLabel = styled.p`

@@ -38,20 +38,14 @@
   ],
   "icons": [
     {
-      "src": "appImages/launchericon-64.png",
-      "type": "image/png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "purpose": "any"
-    },
-    {
       "src": "appImages/launchericon-192.svg",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "sizes": "192x192",
       "purpose": "any"
     },
     {
       "src": "appImages/launchericon-512.svg",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "sizes": "512x512",
       "purpose": "any"
     },

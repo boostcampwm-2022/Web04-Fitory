@@ -3,13 +3,15 @@ const CACHE_NAME = "fitory-cache_" + VERSION;
 const IMAGE_CACHE_NAME = "fitory-image_" + VERSION;
 
 const APP_SHELL = [
-  "/appImages/launchericon-64.png",
-  "/appImages/launchericon-192.png",
-  "/appImages/launchericon-512.png",
-  "/appImages/screenshot-home.png",
-  "/appImages/screenshot-profile.png",
-  "/appImages/screenshot-search.png",
-  "/appImages/screenshot-statistics.png",
+  "/appImages/launchericon-192.svg",
+  "/appImages/launchericon-512.svg",
+  "/appImages/launchericon-192-maskable.png",
+  "/appImages/launchericon-512-maskable.png",
+  "/appImages/screenshot-home.webp",
+  "/appImages/screenshot-profile.webp",
+  "/appImages/screenshot-search.webp",
+  "/appImages/screenshot-statistics.webp",
+  "favicon.ico",
   "/manifest.json",
   "/index.html",
 ];
