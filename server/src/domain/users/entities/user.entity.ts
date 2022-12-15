@@ -5,13 +5,14 @@ export class User {
   @PrimaryGeneratedColumn({ name: "user_id" })
   id!: number;
 
+  @Index()
   @Column({ name: "oauth_id", length: 180 })
   oauthId!: string;
 
   @Column({ name: "profile_image", length: 180, default: "http://profile.image" }) // default value 추후 수정 필요
   profileImage!: string;
 
-  @Index({ fulltext: true })
+  @Index({ fulltext: true, parser: "ngram" })
   @Column({ length: 45 })
   name!: string;
 

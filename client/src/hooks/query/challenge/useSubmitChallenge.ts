@@ -15,6 +15,7 @@ const useSubmitChallenge = () => {
       onSuccess: (result) => {
         setChallengeResult(result as UserTier);
         queryClient.invalidateQueries(QueryKey.BEST_CHALLENGE_SCORE);
+        queryClient.invalidateQueries(QueryKey.CHALLENGE_HISTORY);
         queryClient.invalidateQueries(QueryKey.USER_INFO);
       },
     },

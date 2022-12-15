@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import checkIsIOS from "@utils/checkIsIOS";
+import checkIsPWADisplayMode from "@utils/checkIsPWADisplayMode";
 import challengeSrc from "@public/images/btn_challenge.webp";
 import { DefaultButton } from "@styles/Components";
 
@@ -40,6 +42,6 @@ export const RecordButton = styled(DefaultButton)`
     transform: scale3d(1.01, 1.01, 1.01);
   }
   @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
-    bottom: 100px;
+    ${checkIsIOS() && checkIsPWADisplayMode() && `bottom: 100px`};
   }
 `;
