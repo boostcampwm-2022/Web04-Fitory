@@ -38,7 +38,7 @@ const PageTemplate = ({
       <ToastContainer
         theme="colored"
         position="bottom-center"
-        style={{ bottom: `${checkIsIOS() && !checkIsPWADisplayMode() ? "50px" : "0"}` }}
+        style={{ bottom: `${checkIsIOS() && checkIsPWADisplayMode() ? "50px" : "0"}` }}
       />
     </>
   );
