@@ -26,7 +26,7 @@ const ProfilePage = () => {
     if (isOwner) {
       queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
     }
-  });
+  }, [isOwner, queryClient]);
 
   return (
     <PageTemplate isRoot={isOwner} title="프로필" topNavRightItem={<NotificationButton />}>

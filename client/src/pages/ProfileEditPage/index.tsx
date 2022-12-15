@@ -34,11 +34,13 @@ const ProfileEditPage = () => {
 
   const submitInformation = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const isExist = await UserAPI.checkExistUserName(inputValues.name);
-    if (isExist) {
-      setInputValues({ ...inputValues, name: userInfo.name });
-      toast.error(error.CHECK_USER_NAME);
-      return;
+    if (userInfo.name !== inputValues.name) {
+      const isExist = await UserAPI.checkExistUserName(inputValues.name);
+      if (isExist) {
+        setInputValues({ ...inputValues, name: userInfo.name });
+        toast.error(error.CHECK_USER_NAME);
+        return;
+      }
     }
     updateUser(inputValues);
   };
