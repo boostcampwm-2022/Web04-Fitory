@@ -15,7 +15,6 @@ declare global {
   // eslint-disable-next-line no-var,vars-on-top
   var alarmBar: Set<number>;
 }
-
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
   // initDatabase();

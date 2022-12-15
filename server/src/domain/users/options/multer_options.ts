@@ -7,7 +7,7 @@ export const multerOptions = {
     file: { mimetype: string },
     callback: (arg0: null, arg1: boolean) => void,
   ) => {
-    if (file.mimetype.match(/\/(jpg|jpeg|png)$/)) {
+    if (file.mimetype.match(/\/(jpg|jpeg|png|heif)$/i)) {
       callback(null, true);
     } else {
       throw new Exception().invalidFileType();

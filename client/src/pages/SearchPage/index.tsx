@@ -9,7 +9,6 @@ import RecommandUserListContianer from "./RecommedUserList";
 import * as s from "./styles";
 
 const SearchContainer = () => {
-  // const { allUserList } = useAllUserList();
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>([]);
 
@@ -18,7 +17,6 @@ const SearchContainer = () => {
   };
 
   useEffect(() => {
-    // return SearchUtils.searchUser(searchValue, allUserList, setSearchedUser);
     return SearchUtils.searchUserByKeyword(searchValue, setSearchedUser);
   }, [searchValue]);
 
