@@ -21,8 +21,6 @@ export const options = {
   },
 };
 
-const timeToFirstByte = new Trend("time_to_first_byte", true);
-
 export default function () {
   const characters = "김이박최강권노백신유오장주조하한허홍";
   const searchName = characters.charAt(Math.floor(Math.random() * characters.length));
