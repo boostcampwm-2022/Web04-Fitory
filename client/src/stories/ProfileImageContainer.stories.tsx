@@ -1,4 +1,4 @@
-import ProfileImageContainer from "@components/ProfileImageContainer";
+import ProfileImageContainer from "src/common/design/ProfileImageContainer";
 import React from "react";
 import { Story } from "@storybook/react";
 

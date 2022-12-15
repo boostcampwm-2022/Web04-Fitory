@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Modal from "@components/design/Modal";
+import Modal from "src/common/design/Modal";
 import useAppInstall from "@hooks/useAppInstall";
 import checkIsIOS from "@utils/checkIsIOS";
 import checkIsPWADisplayMode from "@utils/checkIsPWADisplayMode";

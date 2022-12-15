@@ -1,8 +1,8 @@
 import React from "react";
-import Paper from "@components/design/Paper";
+import Paper from "src/common/design/Paper";
 import { useNavigate } from "react-router-dom";
 import FollowButton from "@components/FollowButton";
-import ProfileImageContainer from "@components/ProfileImageContainer";
+import ProfileImageContainer from "src/common/design/ProfileImageContainer";
 import { SearchedUserInfo } from "../../types/user";
 import * as s from "./style";
 

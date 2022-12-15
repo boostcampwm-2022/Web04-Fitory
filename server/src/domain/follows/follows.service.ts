@@ -12,8 +12,6 @@ export class FollowsService {
   constructor(
     @InjectRepository(Follow)
     private followRepository: Repository<Follow>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
   ) {}
 
   async getFollowerCount(userId: number) {
@@ -80,7 +78,6 @@ export class FollowsService {
         followRelation.deleted = false;
         await this.followRepository.save(followRelation);
       }
-      global.alarmBar.add(userIds.otherUserId);
 
       return HttpResponse.success({
         message: "Do Follow Request Success",

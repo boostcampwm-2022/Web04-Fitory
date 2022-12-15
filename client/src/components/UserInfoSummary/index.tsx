@@ -1,5 +1,5 @@
 import React from "react";
-import Paper from "@components/design/Paper";
+import Paper from "src/common/design/Paper";
 import { TierName } from "@constants/enums";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import useExerciseProfile from "@hooks/query/exercise/useExerciseProfile";

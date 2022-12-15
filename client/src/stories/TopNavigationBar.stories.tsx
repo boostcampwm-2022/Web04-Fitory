@@ -1,6 +1,6 @@
 import React from "react";
 import { Meta, Story } from "@storybook/react";
-import TopNavigationBar, { TopNavigationBarProps } from "../components/TopNavigationBar";
+import TopNavigationBar, { TopNavigationBarProps } from "../common/layer/TopNavigationBar";
 
 export default {
   title: "components/TopNavigationBar",

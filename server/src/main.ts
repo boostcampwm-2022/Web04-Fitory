@@ -11,15 +11,9 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { AppModule } from "./app.module";
 
-declare global {
-  // eslint-disable-next-line no-var,vars-on-top
-  var alarmBar: Set<number>;
-}
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
   // initDatabase();
-
-  global.alarmBar = new Set();
 
   const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
 

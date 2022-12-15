@@ -1,6 +1,6 @@
 import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { toast } from "react-toastify";
-import ProfileImageContainer from "@components/ProfileImageContainer";
+import ProfileImageContainer from "src/common/design/ProfileImageContainer";
 import PageTemplate from "@pages/PageTemplate";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import useUserUpdate from "@hooks/query/user/useUserUpdate";

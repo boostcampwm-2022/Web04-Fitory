@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useQueryClient } from "react-query";
-import ProfileImageContainer from "@components/ProfileImageContainer";
+import ProfileImageContainer from "src/common/design/ProfileImageContainer";
 import { useNavigate } from "react-router-dom";
 import { PageState, TierName, QueryKey } from "@constants/enums";
 import { getTierColor } from "@utils/getUserTierUtil";

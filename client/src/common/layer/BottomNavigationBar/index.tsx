@@ -3,7 +3,7 @@ import homeIcon from "@public/icons/btn_home.svg";
 import staticsIcon from "@public/icons/btn_statics.svg";
 import searchIcon from "@public/icons/btn_search.svg";
 import profileIcon from "@public/icons/btn_profile.svg";
-import BottomNavigationButton from "@components/BottomNavigationButton";
+import BottomNavigationButton from "src/common/layer/BottomNavigationBar/BottomNavigationButton";
 import { RoutePath } from "@constants/enums";
 import * as s from "./style";
 

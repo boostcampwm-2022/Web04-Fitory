@@ -50,8 +50,6 @@ export class GoogleOauthController {
     const data = await this.googleOauthService.login(accessToken.access_token);
 
     if (!data.needRegister) {
-      global.alarmBar.add(data.userId);
-
       const token = this.jwtService.sign({ userId: data.userId });
 
       req.res.cookie("access_token", token, {

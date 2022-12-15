@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileImageContainer from "@components/ProfileImageContainer";
+import ProfileImageContainer from "src/common/design/ProfileImageContainer";
 import FollowButton from "@components/FollowButton";
 import { RoutePath } from "@constants/enums";
 import { useNavigate } from "react-router-dom";
