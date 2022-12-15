@@ -176,8 +176,7 @@ export class UsersService {
 
       let filePath;
       if (newFileName) {
-        const serverAddress = LOCAL_HOST;
-        filePath = `${serverAddress}/user_profiles/${newFileName}`;
+        filePath = `${LOCAL_HOST}/user_profiles/${newFileName}`;
       }
       return filePath;
     } catch (error) {
