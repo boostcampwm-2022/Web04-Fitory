@@ -36,4 +36,10 @@ export class User {
 
   @Column({ name: "volume_sum", default: 0 })
   volumeSum!: number;
+
+  @Column({ name: "follower_count", default: 0 })
+  followerCount!: number;
+
+  @Column({ name: "following_count", default: 0 })
+  followingCount!: number;
 }
