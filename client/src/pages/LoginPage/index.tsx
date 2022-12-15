@@ -1,11 +1,11 @@
 import React from "react";
-import MainContainer from "@components/MainContainer";
+import MainContainer from "src/common/layer/MainContainer";
 import GoogleOAuthButton from "@components/GoogleOAuthButton";
 import mainLogoSrc from "@public/images/img_logo_main.webp";
 import screenshotHomeSrc from "@public/appImages/screenshot-home.webp";
 import screenshotStatisticsSrc from "@public/appImages/screenshot-statistics.webp";
 import screenshotProfileSrc from "@public/appImages/screenshot-profile.webp";
-import CardsScroller from "@components/design/CardsScroller";
+import CardsScroller from "src/common/design/CardsScroller";
 import * as s from "./style";
 
 const screenshotList = [

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { error } from "@constants/message";
 import PageTemplate from "@pages/PageTemplate";
 import ChallengeItem from "@components/ChallengeItem";
-import Modal from "@components/design/Modal";
+import Modal from "src/common/design/Modal";
 import { Powerlifting, TierName, ModalKey } from "@constants/enums";
 import squatSrc from "@public/images/img_squat.webp";
 import benchpressSrc from "@public/images/img_benchpress.webp";

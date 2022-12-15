@@ -1,6 +1,6 @@
 import React from "react";
 import textLogoSrc from "@public/images/img_logo_text.webp";
-import BackButton from "@components/BackButton";
+import BackButton from "src/common/design/BackButton";
 import * as s from "./style";
 
 export interface TopNavigationBarProps {

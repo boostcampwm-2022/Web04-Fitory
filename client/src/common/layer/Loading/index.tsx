@@ -1,5 +1,5 @@
 import React from "react";
-import MainContainer from "@components/MainContainer";
+import MainContainer from "src/common/layer/MainContainer";
 import * as s from "./style";
 
 const Loading = () => {

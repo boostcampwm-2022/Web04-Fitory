@@ -1,6 +1,6 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import Modal from "@components/design/Modal";
+import Modal from "src/common/design/Modal";
 import Button from "@components/design/Button";
 import modalStore from "@stores/modalStore";
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import toggleBtn from "@public/images/btn_toggle.svg";
 import exerciseCompleteMark from "@public/icons/mark_exercise_complete.svg";
 import exerciseFailMark from "@public/icons/mark_exercise_fail.svg";
-import Paper from "@components/design/Paper";
+import Paper from "src/common/design/Paper";
 import { ExerciseHistory } from "src/types/exercise";
 import * as s from "./style";
 

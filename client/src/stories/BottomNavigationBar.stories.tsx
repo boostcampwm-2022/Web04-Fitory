@@ -1,7 +1,7 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 
-import BottomNavigationBar from "../components/BottomNavigationBar/index";
+import BottomNavigationBar from "../common/layer/BottomNavigationBar/index";
 
 export default {
   title: "components/BottomNavigationBar",

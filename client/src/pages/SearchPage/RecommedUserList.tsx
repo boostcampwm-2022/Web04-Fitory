@@ -1,6 +1,6 @@
 import React from "react";
-import CardsScroller from "@components/design/CardsScroller";
-import Paper from "@components/design/Paper";
+import CardsScroller from "src/common/design/CardsScroller";
+import Paper from "src/common/design/Paper";
 import useRecommendUserList from "@hooks/query/user/useRecommendUserList";
 import RecommendUserCard from "@components/RecommendUserCard";
 import { SearchedUserInfo } from "src/types/user";

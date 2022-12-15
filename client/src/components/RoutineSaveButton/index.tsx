@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { error } from "@constants/message";
 import { ModalKey } from "@constants/enums";
-import Modal from "@components/design/Modal";
+import Modal from "src/common/design/Modal";
 import modalStore from "@stores/modalStore";
 import exerciseStore from "@stores/exerciseStore";
 import useSaveRoutine from "@hooks/query/routine/useSaveRoutine";
