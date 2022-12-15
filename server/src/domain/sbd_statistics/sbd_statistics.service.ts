@@ -19,8 +19,8 @@ export class SbdStatisticsService {
       where: { gender, weight: betweenWeight },
     });
 
-    const min = statistics[0].SBD_volume;
-    const max = statistics[statistics.length - 1].SBD_volume;
+    const max = Math.max(...statistics.map((o) => o.SBD_volume));
+    const min = Math.min(...statistics.map((o) => o.SBD_volume));
     const len = Math.ceil((max - min) / range);
 
     const loopNum = Array(len)
