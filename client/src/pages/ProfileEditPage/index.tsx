@@ -113,7 +113,7 @@ const ProfileEditPage = () => {
           />
         </s.ProfileEditInputContainer>
         <s.ProfileEditInputContainer>
-          <s.ProfileEditLabel>자기소개</s.ProfileEditLabel>
+          <s.ProfileEditLabel>소개</s.ProfileEditLabel>
           <s.ProfileEditInput
             type="text"
             name="introduce"
