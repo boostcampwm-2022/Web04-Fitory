@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import MainContainer from "@components/MainContainer";
+import MainContainer from "src/common/layer/MainContainer";
 import altLogoSrc from "@public/images/img_logo_alt.webp";
 import { RoutePath } from "@constants/enums";
 import * as s from "./style";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta, Story } from "@storybook/react";
-import CardsScroller, { CardsScrollerProps } from "@components/design/CardsScroller";
-import Paper from "@components/design/Paper";
+import CardsScroller, { CardsScrollerProps } from "src/common/design/CardsScroller";
+import Paper from "src/common/design/Paper";
 
 export default {
   title: "components/design/CardsScroller",

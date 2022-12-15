@@ -27,15 +27,13 @@ export class UsersService {
     return !!userExist;
   }
 
-  async getUserInfo(userId: number, followerCount: number, followingCount: number) {
+  async getUserInfo(userId: number) {
     const userObject = await this.userRepository
       .createQueryBuilder("user")
       .where("user.id = :userId", { userId })
       .getOne();
     const user = {
       ...userObject,
-      followerCount,
-      followingCount,
     };
     if (!user) {
       throw new Exception().userNotFound();
@@ -179,8 +177,7 @@ export class UsersService {
 
       let filePath;
       if (newFileName) {
-        const serverAddress = LOCAL_HOST;
-        filePath = `${serverAddress}/user_profiles/${newFileName}`;
+        filePath = `${DEPLOY_HOST}/user_profiles/${newFileName}`;
       }
       return filePath;
     } catch (error) {

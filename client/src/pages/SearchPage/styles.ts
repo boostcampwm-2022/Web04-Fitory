@@ -81,8 +81,8 @@ export const RecommendItem = styled.div`
 `;
 
 export const RecommendLabel = styled.p`
-  padding: 0 35px;
-  font-size: ${({ theme }) => theme.FONT_SIZE.SMALL};
+  padding: 0 20px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.EXTRA_SMALL};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.BOLD};
   color: ${({ theme }) => theme.COLORS.DEEP_BLUE};
 `;

@@ -13,4 +13,8 @@ export const ProfileButton = styled(DefaultButton)`
   @media screen and (max-width: 500px) {
     font-size: ${({ theme }) => theme.FONT_SIZE.TINY_SMALL};
   }
+  &:hover {
+    background-color: ${({ theme, isFollowed }: { theme: typeof Theme; isFollowed: boolean }) =>
+      isFollowed ? theme.COLORS.LIGHT_GRAY : theme.COLORS.LIGHT_BLUE};
+  }
 `;

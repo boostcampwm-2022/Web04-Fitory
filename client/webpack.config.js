@@ -11,7 +11,7 @@ const loadPlugin = () => {
     new HtmlWebpackPlugin({
       template: "/public/index.html",
       hash: true,
-      favicon: "public/appImages/favicon.ico",
+      favicon: "public/favicon.ico",
       minify:
         process.env.NODE_ENV === "production"
           ? {

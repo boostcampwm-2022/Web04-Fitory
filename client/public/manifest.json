@@ -44,13 +44,13 @@
       "purpose": "any"
     },
     {
-      "src": "appImages/launchericon-192.png",
+      "src": "appImages/launchericon-192.svg",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any"
     },
     {
-      "src": "appImages/launchericon-512.png",
+      "src": "appImages/launchericon-512.svg",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any"

@@ -7,6 +7,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "@user/entities/user.entity";
 import { classifyToTier } from "@utils/classify";
+import { SBD_statistics } from "@statistics/entities/sbd_statistics.entity";
 import { SBD_record } from "./entities/sbd_record.entity";
 import { recordConverter } from "./converter/sbd_records.converter";
 import { SingleSBDDataDto } from "./dto/single_sbd_data.dto";
@@ -18,6 +19,8 @@ export class SbdRecordsService {
     private recordsRepository: Repository<SBD_record>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(SBD_statistics)
+    private statisticsRepository: Repository<SBD_statistics>,
   ) {}
 
   async findEverySBDRecord(userId: number) {
@@ -62,24 +65,35 @@ export class SbdRecordsService {
 
   async submitSingleSBDRecord(sbdData: SingleSBDDataDto) {
     try {
-      const userObject = await this.userRepository
+      const { weight, gender } = await this.userRepository
         .createQueryBuilder("user")
+        .select(["user.weight AS weight", "user.gender AS gender"])
         .where("user.user_id = :userId", { userId: sbdData.userId })
-        .getOne();
-      const recordObject = this.recordsRepository.create(sbdData);
-      const { weight } = userObject;
+        .getRawOne();
+
       const sbdSum = sbdData.squat + sbdData.benchpress + sbdData.deadlift;
+      const recordObject = await this.recordsRepository.create(sbdData);
       await this.recordsRepository.save({
         ...recordObject,
         SBD_sum: sbdSum,
-        userWeight: userObject.weight,
+        userWeight: weight,
         user: { id: sbdData.userId },
       });
-      userObject.tier = classifyToTier(weight, sbdSum);
-      await this.userRepository.save(userObject);
+
+      const tier = classifyToTier(weight, sbdSum);
+
+      await this.userRepository
+        .createQueryBuilder("user")
+        .update()
+        .set({ tier })
+        .where("user.user_id = :userId", { userId: sbdData.userId })
+        .execute();
+
+      await this.statisticsRepository.save({ gender, weight, SBD_volume: sbdSum });
+
       return HttpResponse.success({
         message: "Record Submit Success",
-        tier: userObject.tier,
+        tier,
       });
     } catch (error) {
       throw new Exception().invalidSubmit();

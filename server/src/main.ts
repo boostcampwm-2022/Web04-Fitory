@@ -4,22 +4,16 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { ValidationPipe } from "@nestjs/common";
 import { HttpExceptionFilter } from "@exception/http-exception.filter";
-import { LOCAL_HOST, PORT } from "@utils/env";
+import { DEPLOY_HOST, DEPLOY_HOST_WWW, PORT } from "@utils/env";
 import express from "express";
 import path from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { JwtAuthGuard } from "@guard/jwt.guard";
 import { AppModule } from "./app.module";
 
-declare global {
-  // eslint-disable-next-line no-var,vars-on-top
-  var alarmBar: Set<number>;
-}
 async function bootstrap() {
   // typeorm.config.ts의 synchronize: true 설정해야 동작
   // initDatabase();
-
-  global.alarmBar = new Set();
 
   const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
 
@@ -28,7 +22,7 @@ async function bootstrap() {
   app.use("/user_profiles", express.static(path.join(__dirname, "../user_profiles")));
 
   app.enableCors({
-    origin: [LOCAL_HOST],
+    origin: [DEPLOY_HOST, DEPLOY_HOST_WWW],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   });
