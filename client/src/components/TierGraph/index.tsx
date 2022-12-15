@@ -59,16 +59,15 @@ const TierGraph = () => {
     setLabelInfo(dates);
     setDataInfo(scores);
     setBestTierWeight(bestTierWeightStandard);
-  }, [challengeHistory]);
+  }, [challengeHistory, userInfo.weight]);
 
   return challengeHistory.length ? (
     <>
       <s.UserBestTierContainer>
-        <s.TierLabel>나의 최고 티어</s.TierLabel>
+        <s.TierLabel>나의 최고 티어 ({bestTierWeight}kg 기준)</s.TierLabel>
         <s.Tier tier={userInfo.tier ? TierName[userInfo.tier] : null}>
           {userInfo.tier ? TierName[userInfo.tier] : "-"}
         </s.Tier>
-        <s.Caption> {bestTierWeight}kg 기준 </s.Caption>
       </s.UserBestTierContainer>
       <s.ChartArea>
         <s.Caption>현재 체중 {userInfo.weight}kg 기준</s.Caption>
@@ -80,7 +79,7 @@ const TierGraph = () => {
       </s.ChartArea>
     </>
   ) : (
-    <s.DefaultContainer> 표시할 티어 정보가 없습니다. </s.DefaultContainer>
+    <s.DefaultContainer>표시할 티어 정보가 없습니다.</s.DefaultContainer>
   );
 };
 
