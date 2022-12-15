@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Query, Sse } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { AlarmsService } from "./alarms.service";
 
