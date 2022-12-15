@@ -3,6 +3,7 @@ import PageTemplate from "@pages/PageTemplate";
 import ExerciseScoreContainer from "@components/ExerciseScoreContainer";
 import StatisticsUserInfoContainer from "@components/StatisticsUserInfoContainer";
 import StatisticsCarousel from "@components/StatisticsCarousel";
+import NotificationButton from "@components/NotificationButton";
 import useBestChallengeScore from "@hooks/query/challenge/useBestChallengeScore";
 import { Powerlifting } from "@constants/enums";
 import * as s from "./style";
@@ -29,7 +30,7 @@ const ExerciseScoreInfo = () => {
 
 const StatisticsPage = () => {
   return (
-    <PageTemplate isRoot>
+    <PageTemplate isRoot topNavRightItem={<NotificationButton />}>
       <s.Wrapper>
         <s.UserInfoContainer>
           <ExerciseScoreInfo />
