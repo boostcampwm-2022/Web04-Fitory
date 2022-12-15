@@ -27,15 +27,13 @@ export class UsersService {
     return !!userExist;
   }
 
-  async getUserInfo(userId: number, followerCount: number, followingCount: number) {
+  async getUserInfo(userId: number) {
     const userObject = await this.userRepository
       .createQueryBuilder("user")
       .where("user.id = :userId", { userId })
       .getOne();
     const user = {
       ...userObject,
-      followerCount,
-      followingCount,
     };
     if (!user) {
       throw new Exception().userNotFound();
