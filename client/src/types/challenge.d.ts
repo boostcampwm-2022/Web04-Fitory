@@ -21,6 +21,7 @@ export interface ChallengeTimestamp {
 
 export interface ChallegeSubmitResponse {
   tier: UserTier;
+}
 
 export interface ChallengeHistory extends ChallengeDetail {
   timeStamp: Date;
