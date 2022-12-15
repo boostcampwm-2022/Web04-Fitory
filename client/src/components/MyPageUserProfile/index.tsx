@@ -30,7 +30,6 @@ const MyPageUserProfile = ({ userInfo }: { userInfo: UserInfo }) => {
 
   useEffect(() => {
     if (isOwner) {
-      console.log("test");
       queryClient.invalidateQueries([QueryKey.USER_INFO, authStorage.get()]);
     }
   }, [isOwner, queryClient]);
