@@ -4,7 +4,6 @@ import { DefaultButton } from "@styles/Components";
 export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding-bottom: 40px;
 `;
 
 export const AppInstallWrapper = styled.div`

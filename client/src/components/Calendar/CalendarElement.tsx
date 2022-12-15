@@ -36,10 +36,13 @@ const CalendarElement = ({
     if (dayType === DayTypes.PREV_DAYS) {
       const prevDate = today.clone().subtract(1, "month");
       setDate(prevDate);
-    } else if (dayType === DayTypes.NEXT_DAYS) {
+    }
+
+    if (dayType === DayTypes.NEXT_DAYS) {
       const nextDate = today.clone().add(1, "month");
       setDate(nextDate);
     }
+
     if (setDisplayDate) {
       setDisplayDate(day.format("YYMMDD"));
     }

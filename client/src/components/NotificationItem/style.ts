@@ -16,6 +16,9 @@ export const Wrapper = styled.div`
 
 export const ProfileImage = styled.img`
   width: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  height: 60px;
 `;
 
 export const TextWrapper = styled.div`

@@ -13,6 +13,6 @@ const boxOpenAnimation = keyframes`
 export const UserProfile = styled.div`
   padding: 5px 0;
   height: 60px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   animation: ${boxOpenAnimation} 1s;
 `;

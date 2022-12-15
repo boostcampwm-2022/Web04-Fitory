@@ -1,19 +1,17 @@
-import { FollowUserIdDto } from "./dto/follow.dto";
 import { Exception } from "@exception/exceptions";
-import { User } from "./../users/entities/user.entity";
 import { HttpResponse } from "@converter/response.converter";
 import { Follow } from "@follow/entities/follow.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { User } from "../users/entities/user.entity";
+import { FollowUserIdDto } from "./dto/follow.dto";
 
 @Injectable()
 export class FollowsService {
   constructor(
     @InjectRepository(Follow)
     private followRepository: Repository<Follow>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
   ) {}
 
   async getFollowerCount(userId: number) {
@@ -80,7 +78,6 @@ export class FollowsService {
         followRelation.deleted = false;
         await this.followRepository.save(followRelation);
       }
-      global.alarmBar.add(userIds.otherUserId);
 
       return HttpResponse.success({
         message: "Do Follow Request Success",

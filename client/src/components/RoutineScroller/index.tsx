@@ -7,9 +7,9 @@ import routineSrc6 from "@public/images/btn_routine_6.webp";
 import cancelSrc from "@public/icons/btn_cancel.svg";
 
 import React, { useState } from "react";
-import Paper from "@components/design/Paper";
-import Modal from "@components/design/Modal";
-import CardsScroller from "@components/design/CardsScroller";
+import Paper from "src/common/design/Paper";
+import Modal from "src/common/design/Modal";
+import CardsScroller from "src/common/design/CardsScroller";
 import useUserInfo from "@hooks/query/user/useUserInfo";
 import useRoutineList from "@hooks/query/routine/useRoutineList";
 import useDeleteRoutine from "@hooks/query/routine/useDeleteRoutine";

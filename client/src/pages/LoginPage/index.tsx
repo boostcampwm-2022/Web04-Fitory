@@ -1,25 +1,33 @@
 import React from "react";
-import MainContainer from "@components/MainContainer";
-import Paper from "@components/design/Paper";
+import MainContainer from "src/common/layer/MainContainer";
 import GoogleOAuthButton from "@components/GoogleOAuthButton";
 import mainLogoSrc from "@public/images/img_logo_main.webp";
-import textLogoSrc from "@public/images/img_logo_text.webp";
+import screenshotHomeSrc from "@public/appImages/screenshot-home.webp";
+import screenshotStatisticsSrc from "@public/appImages/screenshot-statistics.webp";
+import screenshotProfileSrc from "@public/appImages/screenshot-profile.webp";
+import CardsScroller from "src/common/design/CardsScroller";
 import * as s from "./style";
+
+const screenshotList = [
+  { imageSrc: screenshotHomeSrc, description: "내 운동 기록을 한눈에" },
+  { imageSrc: screenshotStatisticsSrc, description: "내 체급의 통계 확인" },
+  { imageSrc: screenshotProfileSrc, description: "운동을 친구와 함께" },
+];
 
 const LoginPage = () => {
   return (
-    <MainContainer isRoot={false}>
+    <MainContainer isRoot={false} style={{ paddingTop: 0 }}>
       <s.Background>
         <s.Logo src={mainLogoSrc} alt="Fitory 메인 로고" />
-        <Paper style={{ width: "80%" }}>
-          <s.Wrapper>
-            <s.TitleWrapper>
-              <img src={textLogoSrc} alt="Fitory 텍스트 로고" />
-              <s.Title>로그인</s.Title>
-            </s.TitleWrapper>
-            <GoogleOAuthButton />
-          </s.Wrapper>
-        </Paper>
+        <CardsScroller style={{ padding: "30px", marginBottom: "20px" }}>
+          {screenshotList.map(({ imageSrc, description }) => (
+            <s.ExampleWrapper>
+              <s.ExampleDescription>{description}</s.ExampleDescription>
+              <s.ExampleImage src={imageSrc} alt="홈 페이지 스크린샷" />
+            </s.ExampleWrapper>
+          ))}
+        </CardsScroller>
+        <GoogleOAuthButton />
       </s.Background>
     </MainContainer>
   );

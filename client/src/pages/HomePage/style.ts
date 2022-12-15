@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import checkIsIOS from "@utils/checkIsIOS";
+import checkIsPWADisplayMode from "@utils/checkIsPWADisplayMode";
 import challengeSrc from "@public/images/btn_challenge.webp";
 import { DefaultButton } from "@styles/Components";
 
@@ -38,5 +40,8 @@ export const RecordButton = styled(DefaultButton)`
     background-color: ${({ theme }) => theme.COLORS.HOVER_BLUE};
     box-shadow: rgb(0 0 0 / 35%) 2px 4px 12px;
     transform: scale3d(1.01, 1.01, 1.01);
+  }
+  @media screen and (max-width: ${({ theme }) => theme.MAX_WIDTH.MOBILE}) {
+    ${checkIsIOS() && checkIsPWADisplayMode() && `bottom: 100px`};
   }
 `;

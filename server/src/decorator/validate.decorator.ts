@@ -1,5 +1,4 @@
-import { SetMetadata } from "@nestjs/common";
-import { createParamDecorator, ExecutionContext } from "@nestjs/common";
+import { SetMetadata, createParamDecorator, ExecutionContext } from "@nestjs/common";
 import { User } from "@user/entities/user.entity";
 
 export const NoAuth = () => SetMetadata("no-auth", true);

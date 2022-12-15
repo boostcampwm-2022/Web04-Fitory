@@ -1,3 +1,6 @@
+import checkIsIOS from "@utils/checkIsIOS";
+import checkIsPWADisplayMode from "@utils/checkIsPWADisplayMode";
+
 const COLORS = {
   DEEP_GRAY: "#4E5261",
   LIGHT_GRAY: "#C0C0C0",
@@ -51,7 +54,10 @@ const TIER_COLOR = {
   CHAMPION: "#ff0062",
 } as const;
 
-const NAVBAR_HEIGHT = 60;
+const NAVBAR_HEIGHT = {
+  TOP: 60,
+  BOTTOM: checkIsIOS() && checkIsPWADisplayMode() ? 85 : 60,
+} as const;
 
 const theme = {
   COLORS,

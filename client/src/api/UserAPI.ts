@@ -101,6 +101,20 @@ const UserAPI = {
       toast.error(error.UPDATE_USER);
     }
   },
+
+  searchUserByKeyword: async (userName: string) => {
+    try {
+      const path = "users/search";
+      const response = await HttpClient.get(path, { userName });
+      const { userProfileList } = response.response as {
+        userProfileList: UserType.SearchedUserInfo[];
+      };
+      return userProfileList;
+    } catch {
+      toast.error(error.GET_USER_LIST);
+      return null;
+    }
+  },
 };
 
 export default UserAPI;

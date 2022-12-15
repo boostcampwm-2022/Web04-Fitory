@@ -1,6 +1,6 @@
 import React from "react";
-import CardsScroller from "@components/design/CardsScroller";
-import Paper from "@components/design/Paper";
+import CardsScroller from "src/common/design/CardsScroller";
+import Paper from "src/common/design/Paper";
 import useRecommendUserList from "@hooks/query/user/useRecommendUserList";
 import RecommendUserCard from "@components/RecommendUserCard";
 import { SearchedUserInfo } from "src/types/user";
@@ -8,16 +8,9 @@ import * as s from "./styles";
 
 const RecommedUserList = ({ userList }: { userList: SearchedUserInfo[] }) => {
   return userList.length ? (
-    <CardsScroller>
+    <CardsScroller style={{ padding: "5px", gap: 0 }}>
       {userList.map((user: SearchedUserInfo) => (
         <Paper key={user.user_id} style={{ padding: "10px", backgroundColor: "transparent" }}>
-          {/* <Link to={`/profile/${user.user_id}`} style={{ width: "100px", height: "100px" }}>
-            <img
-              style={{ width: "100%", height: "100%", borderRadius: "20px", objectFit: "fill" }}
-              src={user.profile_image === DEFAULT_IMAGE_SRC ? defaultImg : user.profile_image}
-              alt="유저 프로필 사진"
-            />
-          </Link> */}
           <RecommendUserCard user={user} />
         </Paper>
       ))}

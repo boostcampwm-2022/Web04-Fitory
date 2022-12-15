@@ -1,22 +1,12 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Query,
-  UploadedFiles,
-  UseGuards,
-  UseInterceptors,
-} from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { ApiOperation, ApiTags, ApiQuery } from "@nestjs/swagger";
-import { isValidUserId } from "@validation/validation";
 import { Exception } from "@exception/exceptions";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { FollowsService } from "@follow/follows.service";
+import { NoAuth } from "@decorator/validate.decorator";
 import { UsersService } from "./users.service";
 import { UserProfileDto } from "./dto/user_profile.dto";
 import { multerOptions } from "./options/multer_options";
-import { NoAuth } from "../../decorator/validate.decorator";
 
 @Controller("api/users")
 @ApiTags("USER API")
@@ -32,18 +22,15 @@ export class UsersController {
     type: "number",
   })
   async getUserInfo(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
-    const followerCount = await this.followService.getFollowerCount(userId);
-    const followingCount = await this.followService.getFollowingCount(userId);
-    return this.usersService.getUserInfo(userId, followerCount, followingCount);
+    return this.usersService.getUserInfo(userId);
   }
 
-  @Get("profile/list")
+  @Get("search")
   @ApiOperation({
-    summary: "모든 사용자들의 프로필 요약 데이터를 반환",
+    summary: "검색한 내용을 토대로 검색 결과 반환",
   })
-  getEveryUserName() {
-    return this.usersService.getEveryUserProfile();
+  getEveryUserName(@Query("userName") userName: string) {
+    return this.usersService.searchUserByName(userName);
   }
 
   @Get("recommand/list")
@@ -55,7 +42,6 @@ export class UsersController {
     type: "number",
   })
   async getRecommandUserList(@Query("userId") userId: number) {
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
     return this.usersService.getRecommandUserList(userId);
   }
 
@@ -82,7 +68,6 @@ export class UsersController {
     @Body() userProfileData: UserProfileDto,
   ) {
     const { userId } = userProfileData;
-    if (!isValidUserId(userId)) throw new Exception().invalidUserIdError();
 
     const userIdExist = await this.usersService.isExistUser(userId);
     if (!userIdExist) throw new Exception().userNotFound();

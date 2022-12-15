@@ -1,11 +1,11 @@
 import { Exception } from "@exception/exceptions";
 import { Follow } from "@follow/entities/follow.entity";
 import { HttpResponse } from "@converter/response.converter";
-import { Alarm } from "./entities/alram.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "@user/entities/user.entity";
+import { Alarm } from "./entities/alram.entity";
 
 @Injectable()
 export class AlarmsService {
@@ -88,8 +88,6 @@ export class AlarmsService {
       .getRawMany();
     await Promise.all(
       followerList.map(async (row) => {
-        global.alarmBar.add(row.follower_id);
-
         await this.alarmRepository.save({
           senderUserId,
           alarmType: 0,

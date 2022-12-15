@@ -1,15 +1,16 @@
-import { Follow } from "./../follows/entities/follow.entity";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { UserProfileDto } from "./dto/user_profile.dto";
 import { HttpResponse } from "@converter/response.converter";
 import { Exception } from "@exception/exceptions";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "./entities/user.entity";
-let CryptoJS = require("crypto-js");
 import { v4 as uuid } from "uuid";
 import { extname } from "path";
+import CryptoJS from "crypto-js";
+import { LOCAL_HOST } from "@utils/env";
+import sharp from "sharp";
+import { User } from "./entities/user.entity";
+import { UserProfileDto } from "./dto/user_profile.dto";
 
 @Injectable()
 export class UsersService {
@@ -26,15 +27,13 @@ export class UsersService {
     return !!userExist;
   }
 
-  async getUserInfo(userId: number, followerCount: number, followingCount: number) {
+  async getUserInfo(userId: number) {
     const userObject = await this.userRepository
       .createQueryBuilder("user")
       .where("user.id = :userId", { userId })
       .getOne();
     const user = {
       ...userObject,
-      followerCount,
-      followingCount,
     };
     if (!user) {
       throw new Exception().userNotFound();
@@ -44,13 +43,16 @@ export class UsersService {
     });
   }
 
-  async getEveryUserProfile() {
+  async searchUserByName(userName: string) {
     const userProfileList = await this.userRepository
       .createQueryBuilder("user")
-      .select("user.user_id", "user_id")
-      .addSelect("user.name", "name")
-      .addSelect("user.introduce", "introduce")
-      .addSelect("user.profile_image", "profile_image")
+      .select([
+        "user.user_id AS user_id",
+        "user.name AS name",
+        "user.introduce AS introduce",
+        "user.profile_image AS profile_image",
+      ])
+      .where(`MATCH(user.name) AGAINST ("+${userName}" IN BOOLEAN MODE)`)
       .getRawMany();
 
     return HttpResponse.success({
@@ -72,21 +74,18 @@ export class UsersService {
   }
 
   async getRecommandUserList(userId: number) {
-    const weight = await this.userRepository
+    const userObject = await this.userRepository
       .createQueryBuilder("user")
+      .select("user.weight", "weight")
+      .addSelect("user.age", "age")
       .where("user.user_id = :userId", { userId })
-      .select("user.weight")
       .getRawOne();
 
-    const age = await this.userRepository
-      .createQueryBuilder("user")
-      .where("user.user_id = :userId", { userId })
-      .select("user.age")
-      .getRawOne();
+    const { age, weight } = userObject;
 
     const recommendWeight = await this.userRepository
       .createQueryBuilder("user")
-      .where(`user.weight BETWEEN ${weight.user_weight - 5} AND ${weight.user_weight + 5}`)
+      .where(`user.weight BETWEEN ${weight - 5} AND ${weight + 5}`)
       .andWhere("user.user_id != :userId", { userId })
       .select("user.user_id", "user_id")
       .addSelect("user.name", "name")
@@ -97,7 +96,7 @@ export class UsersService {
 
     const recommendAge = await this.userRepository
       .createQueryBuilder("user")
-      .where(`user.age BETWEEN ${age.user_age - 1} AND ${age.user_age + 1}`)
+      .where(`user.age BETWEEN ${age - 1} AND ${age + 1}`)
       .andWhere("user.user_id != :userId", { userId })
       .select("user.user_id", "user_id")
       .addSelect("user.name", "name")
@@ -142,9 +141,9 @@ export class UsersService {
   }
 
   async uploadFiles(file: Express.Multer.File, userId: number) {
-    const uploadFolder: string = "user_profiles";
+    const uploadFolder = "user_profiles";
     try {
-      const newFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(file.buffer)).toString();
+      const newFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(file.buffer.toString())).toString();
       const existFileName = await this.getExistProfileImageLink(userId);
 
       if (!existsSync(uploadFolder)) {
@@ -152,30 +151,33 @@ export class UsersService {
       }
 
       let existFileBuffer: Buffer;
-      if (existFileName) {
+      if (existFileName && existsSync(`${uploadFolder}/${existFileName}`)) {
         existFileBuffer = readFileSync(`${uploadFolder}/${existFileName}`);
       }
 
       let existFileHash: string;
       if (existFileBuffer) {
-        existFileHash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(existFileBuffer)).toString();
+        existFileHash = CryptoJS.MD5(
+          CryptoJS.enc.Utf8.parse(existFileBuffer.toString()),
+        ).toString();
       }
+
+      const sharpedFileBuffer = await sharp(file.buffer).resize(320, 320).toBuffer();
 
       let newFileName;
       if (newFileHash !== existFileHash) {
         if (!existFileName) {
           newFileName = `${uuid()}${extname(file.originalname)}`;
-          writeFileSync(`${uploadFolder}/${newFileName}`, file.buffer);
+          writeFileSync(`${uploadFolder}/${newFileName}`, sharpedFileBuffer);
         } else {
           newFileName = existFileName;
-          writeFileSync(`${uploadFolder}/${newFileName}`, file.buffer);
+          writeFileSync(`${uploadFolder}/${newFileName}`, sharpedFileBuffer);
         }
       }
 
       let filePath;
       if (newFileName) {
-        const serverAddress: string = "http://localhost:8080";
-        filePath = `${serverAddress}/user_profiles/${newFileName}`;
+        filePath = `${LOCAL_HOST}/user_profiles/${newFileName}`;
       }
       return filePath;
     } catch (error) {

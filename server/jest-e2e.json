@@ -1,0 +1,39 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "./",
+  "moduleNameMapper": {
+    "^@utils/(.*)$": "<rootDir>/src/utils/$1",
+    "^@exception/(.*)$": "<rootDir>/src/exception/$1",
+    "^@validation/(.*)$": "<rootDir>/src/validation/$1",
+    "^@type/(.*)$": "<rootDir>/src/types/$1",
+    "^@converter/(.*)$": "<rootDir>/src/converter/$1",
+    "^@alarm/(.*)$": "<rootDir>/src/domain/alarms/$1",
+    "^@exercise/(.*)$": "<rootDir>/src/domain/exercises/$1",
+    "^@follow/(.*)$": "<rootDir>/src/domain/follows/$1",
+    "^@oauth/(.*)$": "<rootDir>/src/domain/oauth/$1",
+    "^@routine/(.*)$": "<rootDir>/src/domain/routines/$1",
+    "^@record/(.*)$": "<rootDir>/src/domain/sbd_records/$1",
+    "^@statistics/(.*)$": "<rootDir>/src/domain/sbd_statistics/$1",
+    "^@user/(.*)$": "<rootDir>/src/domain/users/$1",
+    "^@mock/(.*)$": "<rootDir>/src/domain/mock/$1",
+    "^@guard/(.*)$": "<rootDir>/src/guard/$1",
+    "^@decorator/(.*)$": "<rootDir>/src/decorator/$1"
+  },
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+
+  "collectCoverage": true,
+  "collectCoverageFrom": ["src/**/*.ts"],
+  "coveragePathIgnorePatterns": [
+    "node_modules",
+    ".module.ts",
+    "<rootDir>/src/app/main.ts",
+    "test",
+    "k6"
+  ],
+  "coverageDirectory": "test/coverage/",
+  "verbose": true
+}

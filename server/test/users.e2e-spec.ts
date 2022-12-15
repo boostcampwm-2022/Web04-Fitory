@@ -11,7 +11,6 @@ import { faker } from "@faker-js/faker/locale/ko";
 import { GoogleOauthService } from "../src/domain/oauth/google-oauth/google-oauth.service";
 import { GoogleUserInfoDto } from "../src/domain/oauth/google-oauth/dto/google-user-info.dto";
 import { User } from "../src/domain/users/entities/user.entity";
-import { DataSource, DataSourceOptions } from "typeorm";
 
 const getAccessToken = async (moduleFixture: TestingModule, userId: number): Promise<string> => {
   const jwtService = moduleFixture.get<JwtService>(JwtService);
@@ -30,7 +29,7 @@ const registerUser = async (
   });
 };
 
-describe("RoutinesController (e2e)", () => {
+describe("User Controller (e2e)", () => {
   let app: INestApplication;
   let accessToken: string;
   let userId: number;
@@ -87,17 +86,44 @@ describe("RoutinesController (e2e)", () => {
 
     it("Profile List Of Every User", () => {
       return request(app.getHttpServer())
-        .get(`/api/users/profile/list`)
+        .get(`/api/users/search`)
+        .query({ userName: faker.name.lastName() })
         .set({ access_token: accessToken, user_id: userId })
         .expect(HttpStatus.OK);
     });
 
-    it("Recommend User List Of User", () => {
-      return request(app.getHttpServer())
+    it("Recommend User List Of User", async () => {
+      await request(app.getHttpServer())
         .get("/api/users/recommand/list")
         .query({ userId })
         .set({ access_token: accessToken, user_id: userId })
-        .expect(HttpStatus.OK);
+        .expect(HttpStatus.OK)
+        .then((res) => {
+          const { recommendWeight, recommendAge } = res.body.response;
+          Object.entries(recommendAge).map(async (item) => {
+            const recommendUserId = JSON.parse(JSON.stringify(item[1])).user_id;
+            await request(app.getHttpServer())
+              .get("/api/users/get")
+              .query({ userId: recommendUserId })
+              .set({ access_token: accessToken, user_id: userId })
+              .then((res) => {
+                const recommendedAge = JSON.parse(JSON.stringify(res.body.response.user)).age;
+                expect(Math.abs(userInfo.age - recommendedAge)).toBeLessThanOrEqual(1);
+              });
+          });
+
+          Object.entries(recommendWeight).map(async (item) => {
+            const recommendUserId = JSON.parse(JSON.stringify(item[1])).user_id;
+            await request(app.getHttpServer())
+              .get("/api/users/get")
+              .query({ userId: recommendUserId })
+              .set({ access_token: accessToken, user_id: userId })
+              .then((res) => {
+                const recommendedWeight = JSON.parse(JSON.stringify(res.body.response.user)).weight;
+                expect(Math.abs(userInfo.weight - recommendedWeight)).toBeLessThanOrEqual(5);
+              });
+          });
+        });
     });
   });
 

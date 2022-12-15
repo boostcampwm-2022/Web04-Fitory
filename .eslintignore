@@ -3,3 +3,4 @@ package-lock.json
 node_modules
 webpack.config.js
 client/cypress.config.js
+client/public

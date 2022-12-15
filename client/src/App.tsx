@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ErrorBoundary } from "react-error-boundary";
@@ -6,9 +6,11 @@ import { ErrorBoundary } from "react-error-boundary";
 import GlobalStyle from "@styles/GlobalStyle";
 import { RoutePath } from "@constants/enums";
 import { DEFAULT_STALE_TIME } from "@constants/consts";
-import Loading from "@components/Loading";
-import ErrorFallback from "@components/ErrorFallback";
+import Loading from "src/common/layer/Loading";
+import ErrorFallback from "src/common/layer/ErrorFallback";
 import NotFoundPage from "@pages/NotFountPage";
+import Exception from "./services/Exception";
+import { authStorage } from "./services/ClientStorage";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 const ChallengePage = lazy(() => import("@pages/ChallengePage"));
@@ -34,12 +36,18 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  useEffect(() => {
+    if (!authStorage.has()) {
+      Exception.UserNotFound();
+    }
+  });
+
   return (
     <BrowserRouter>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
         <ErrorBoundary fallback={<ErrorFallback />}>
-          <Suspense fallback={<Loading isLazy />}>
+          <Suspense fallback={<Loading />}>
             <Routes>
               {/* Home */}
               <Route path={RoutePath.HOME} element={<HomePage />} />

@@ -2,13 +2,16 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const Dotenv = require("dotenv-webpack");
 
 const loadPlugin = () => {
   const plugins = [
     new HtmlWebpackPlugin({
       template: "/public/index.html",
+      hash: true,
+      favicon: "public/favicon.ico",
       minify:
         process.env.NODE_ENV === "production"
           ? {
@@ -18,6 +21,14 @@ const loadPlugin = () => {
           : false,
     }),
     new Dotenv(),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "./public/appImages", to: "appImages" },
+        { from: "./public/favicon.ico", to: "." },
+        { from: "./public/manifest.json", to: "." },
+        { from: "./public/pwaServiceWorker.js", to: "." },
+      ],
+    }),
   ];
 
   if (process.env.BUNDLE) {
@@ -35,7 +46,7 @@ module.exports = {
   },
 
   output: {
-    filename: "[name].js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
