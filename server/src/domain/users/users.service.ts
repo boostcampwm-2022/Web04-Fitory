@@ -7,7 +7,7 @@ import { Repository } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { extname } from "path";
 import CryptoJS from "crypto-js";
-import { DEPLOY_HOST } from "@utils/env";
+import { LOCAL_HOST } from "@utils/env";
 import sharp from "sharp";
 import { User } from "./entities/user.entity";
 import { UserProfileDto } from "./dto/user_profile.dto";
