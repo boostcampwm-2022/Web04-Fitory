@@ -55,6 +55,7 @@ const drawColorGraph = (chart: Chart, weight: number) => {
 const drawTierLine = (chart: Chart) => {
   const yAxis = chart.scales.y;
   const { ctx } = chart;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const chartOption = chart.options as any;
   if (chartOption.horizontalLine) {
     for (let index = 0; index < chartOption.horizontalLine.length; index += 1) {
