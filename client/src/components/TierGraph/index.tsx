@@ -23,15 +23,6 @@ const TierGraph = () => {
   const [dataInfo, setDataInfo] = useState<number[]>([]);
   const [bestTierWeight, setBestTierWeight] = useState<number>();
 
-  const changeDataFormat = (date?: string) => {
-    if (!date) return "";
-    const year = date.substring(0, 2);
-    const month = date.substring(2, 4);
-    const day = date.substring(4, 6);
-
-    return `${year}.${month}.${day}.`;
-  };
-
   const graphData = {
     labels: labelInfo,
     datasets: [
@@ -77,9 +68,7 @@ const TierGraph = () => {
         <s.Tier tier={userInfo.tier ? TierName[userInfo.tier] : null}>
           {userInfo.tier ? TierName[userInfo.tier] : "-"}
         </s.Tier>
-        <s.Caption>
-          {bestTierWeight}kg 기준
-        </s.Caption>
+        <s.Caption> {bestTierWeight}kg 기준 </s.Caption>
       </s.UserBestTierContainer>
       <s.ChartArea>
         <s.Caption>현재 체중 {userInfo.weight}kg 기준</s.Caption>
