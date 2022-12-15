@@ -8,7 +8,7 @@ interface CalendarElementProps {
   day: dayjs.Dayjs;
   today: dayjs.Dayjs;
   displayDate?: string;
-  setDisplayDate: Dispatch<SetStateAction<string>>;
+  setDisplayDate?: Dispatch<SetStateAction<string>>;
   setDate: Dispatch<SetStateAction<dayjs.Dayjs>>;
 }
 
@@ -36,11 +36,16 @@ const CalendarElement = ({
     if (dayType === DayTypes.PREV_DAYS) {
       const prevDate = today.clone().subtract(1, "month");
       setDate(prevDate);
-    } else if (dayType === DayTypes.NEXT_DAYS) {
+    }
+
+    if (dayType === DayTypes.NEXT_DAYS) {
       const nextDate = today.clone().add(1, "month");
       setDate(nextDate);
     }
-    setDisplayDate(day.format("YYMMDD"));
+
+    if (setDisplayDate) {
+      setDisplayDate(day.format("YYMMDD"));
+    }
   };
 
   return (
