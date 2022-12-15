@@ -1,5 +1,5 @@
 import theme from "@styles/Theme";
-import { Chart, ChartOptions } from "chart.js";
+import { Chart } from "chart.js";
 import { AnyObject } from "immer/dist/types/types-internal";
 import { returnTierStandard } from "@components/TierGraph/utils";
 
