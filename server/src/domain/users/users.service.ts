@@ -7,7 +7,7 @@ import { Repository } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { extname } from "path";
 import CryptoJS from "crypto-js";
-import { LOCAL_HOST } from "@utils/env";
+import { DEPLOY_HOST } from "@utils/env";
 import sharp from "sharp";
 import { User } from "./entities/user.entity";
 import { UserProfileDto } from "./dto/user_profile.dto";
@@ -177,7 +177,7 @@ export class UsersService {
 
       let filePath;
       if (newFileName) {
-        filePath = `${LOCAL_HOST}/user_profiles/${newFileName}`;
+        filePath = `${DEPLOY_HOST}/user_profiles/${newFileName}`;
       }
       return filePath;
     } catch (error) {
