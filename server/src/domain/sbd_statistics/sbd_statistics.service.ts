@@ -9,13 +9,13 @@ import { SBD_statistics } from "./entities/sbd_statistics.entity";
 export class SbdStatisticsService {
   constructor(
     @InjectRepository(SBD_statistics)
-    private exerciseRepository: Repository<SBD_statistics>,
+    private statisticsRepository: Repository<SBD_statistics>,
   ) {}
 
   async getSBDStatisticsData(gender: number, weight: number, range: number) {
     const betweenWeight = await this.getBetweenWeight(gender, weight);
 
-    const statistics = await this.exerciseRepository.find({
+    const statistics = await this.statisticsRepository.find({
       where: { gender, weight: betweenWeight },
     });
 
@@ -52,12 +52,12 @@ export class SbdStatisticsService {
         const start = n;
         const end = n + range;
         if (end > max) {
-          const count = await this.exerciseRepository.count({
+          const count = await this.statisticsRepository.count({
             where: { gender, weight: betweenWeight, SBD_volume: Between(end - range, max) },
           });
           return responseData.push({ x_start: start, x_end: max, y: count });
         }
-        const count = await this.exerciseRepository.count({
+        const count = await this.statisticsRepository.count({
           where: { gender, weight: betweenWeight, SBD_volume: Between(start, end) },
         });
         return responseData.push({ x_start: start, x_end: end, y: count });

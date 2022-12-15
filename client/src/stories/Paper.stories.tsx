@@ -1,6 +1,6 @@
 import React from "react";
 import { Meta, Story } from "@storybook/react";
-import Paper, { PaperProps } from "../components/design/Paper";
+import Paper, { PaperProps } from "../common/design/Paper";
 
 export default {
   title: "components/design/Paper",
