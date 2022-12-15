@@ -24,6 +24,7 @@ const loadPlugin = () => {
     new CopyWebpackPlugin({
       patterns: [
         { from: "./public/appImages", to: "appImages" },
+        { from: "./public/favicon.ico", to: "." },
         { from: "./public/manifest.json", to: "." },
         { from: "./public/pwaServiceWorker.js", to: "." },
       ],
