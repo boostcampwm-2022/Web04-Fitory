@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileImageContainer from "@components/ProfileImageContainer";
+import ProfileImageContainer from "src/common/design/ProfileImageContainer";
 import { useNavigate } from "react-router-dom";
 import { PageState, TierName } from "@constants/enums";
 import { getTierColor } from "@utils/getUserTierUtil";

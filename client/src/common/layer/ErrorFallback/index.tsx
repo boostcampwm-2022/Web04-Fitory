@@ -1,5 +1,5 @@
 import React from "react";
-import MainContainer from "@components/MainContainer";
+import MainContainer from "src/common/layer/MainContainer";
 import altLogoSrc from "@public/images/img_logo_alt.webp";
 import * as s from "./style";
 

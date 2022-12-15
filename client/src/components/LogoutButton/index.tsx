@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import UserAPI from "@api/UserAPI";
 import { RoutePath, ModalKey } from "@constants/enums";
-import Modal from "@components/design/Modal";
+import Modal from "src/common/design/Modal";
 import modalStore from "@stores/modalStore";
 import { authStorage } from "src/services/ClientStorage";
 import * as s from "./style";
