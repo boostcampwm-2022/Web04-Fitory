@@ -6,11 +6,11 @@ export class SBD_statistics {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Index()
+  @Index("gender_idx")
   @Column({ name: "gender" })
   gender!: number;
 
-  @Index()
+  @Index("weight_idx")
   @Column({ name: "weight" })
   weight!: number;
 
