@@ -1,7 +1,5 @@
 import { Controller, Get, Req, Query, Sse } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { interval, map } from "rxjs";
-import { RequestWithUser } from "@type/request";
 import { AlarmsService } from "./alarms.service";
 
 @Controller("api/alarms")
@@ -19,31 +17,6 @@ export class AlarmsController {
   })
   async getUnreadAlarmCount(@Query("userId") userId: number) {
     return this.alarmService.countUnreadAlarm(userId);
-  }
-
-  // sse
-  @Sse("unread")
-  @ApiOperation({
-    summary: "해당 사용자가 읽지 않은 알림 수를 SSE로 반환",
-  })
-  @ApiQuery({
-    name: "userId",
-    type: "number",
-  })
-  async sse(@Req() req: RequestWithUser) {
-    return interval(1000).pipe(
-      map(() => {
-        const userId = Number(req.user);
-        let fetchAlarmSign = false;
-        if (global.alarmBar.has(userId)) {
-          fetchAlarmSign = true;
-          global.alarmBar.delete(userId);
-        }
-        return {
-          data: { fetchAlarmSign },
-        } as MessageEvent;
-      }),
-    );
   }
 
   @Get("list")
