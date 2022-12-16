@@ -2,6 +2,14 @@
     <img width="100%" alt="image" src="https://user-images.githubusercontent.com/33220404/207527418-eb43212b-5048-4357-9371-d59dc1cfd7ec.png">
 </div>
 
+
+<br/>
+
+# 바로가기
+* [Fitory 서비스 바로가기](https://fitory.ga/)
+* [Fitory 위키 바로가기](https://github.com/boostcampwm-2022/Web04-Fitory/wiki)
+* [Fitory 노션 바로가기](https://essential-2189.notion.site/Fitory-05a212fcd0864fe099facba1a2184af2)
+
 <br />
 
 # 프로젝트 소개
