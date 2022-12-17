@@ -65,6 +65,13 @@
 
 <br />
 
+# 아키텍쳐
+
+![undefined (4)](https://user-images.githubusercontent.com/79911816/208227856-e195826e-6055-4ebe-8320-dd8c55e1c51d.png)
+
+
+<br />
+
 # 프로젝트 관련 문서
 
 ### 💻 Projects
