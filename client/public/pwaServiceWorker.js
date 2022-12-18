@@ -11,7 +11,7 @@ const APP_SHELL = [
   "/appImages/screenshot-profile.webp",
   "/appImages/screenshot-search.webp",
   "/appImages/screenshot-statistics.webp",
-  "/favicon.ico",
+  "/appImages/favicon.ico",
   "/manifest.json",
   "/index.html",
 ];
