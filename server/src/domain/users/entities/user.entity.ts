@@ -9,7 +9,7 @@ export class User {
   @Column({ name: "oauth_id", length: 180 })
   oauthId!: string;
 
-  @Column({ name: "profile_image", length: 180, default: "http://default.image" }) // default value 추후 수정 필요
+  @Column({ name: "profile_image", length: 180, default: "http://default.image" })
   profileImage!: string;
 
   @Index("name_fts_idx", { fulltext: true, parser: "ngram" })
