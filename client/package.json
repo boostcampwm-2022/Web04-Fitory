@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "webpack-dev-server --progress",
     "dev:bundle": "BUNDLE=true webpack-dev-server --mode=production --node-env=production --progress",
+    "prod": "webpack serve",
     "build": "webpack --mode=production --node-env=production",
     "jest:coverage": "jest --watchAll=false --coverage",
     "cypress:open": "cypress open",
