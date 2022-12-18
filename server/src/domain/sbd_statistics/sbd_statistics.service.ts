@@ -80,9 +80,9 @@ export class SbdStatisticsService {
     const womanClass47kg = weight <= 47;
     const womanClass52kg = weight >= 47.01 && weight <= 52.0;
     const womanClass57kg = weight >= 52.01 && weight <= 57.0;
-    const womanClass63kg = weight >= 74.01 && weight <= 63.0;
-    const womanClass72kg = weight >= 83.01 && weight <= 72.0;
-    const womanClass84kg = weight >= 93.01 && weight <= 84.0;
+    const womanClass63kg = weight >= 57.01 && weight <= 63.0;
+    const womanClass72kg = weight >= 63.01 && weight <= 72.0;
+    const womanClass84kg = weight >= 72.01 && weight <= 84.0;
     const womanClass84Pkg = weight >= 84.01;
 
     if (gender === 0) {
