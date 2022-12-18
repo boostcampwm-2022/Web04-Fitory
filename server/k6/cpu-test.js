@@ -1,9 +1,6 @@
 import http from "k6/http";
-import { check, group, sleep } from "k6";
-import { Trend } from "k6/metrics";
+import { check, group, sleep, randomSeed } from "k6";
 import { randomIntBetween } from "https://jslib.k6.io/k6-utils/1.0.0/index.js";
-import crypto from "k6/crypto";
-import encoding from "k6/encoding";
 
 export const options = {
   stages: [
@@ -22,11 +19,12 @@ export const options = {
 };
 
 export default function () {
+  randomSeed(42);
   const characters = "김이박최강권노백신유오장주조하한허홍";
   const searchName = characters.charAt(Math.floor(Math.random() * characters.length));
   const userId = 1;
-  const weight = 65;
-  const gender = 0;
+  const weight = randomIntBetween(50, 130);
+  const gender = randomIntBetween(0, 1);
   // const access_token = sign(__ENV.KEY, { access_token: access_token });
   const access_token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3MDU1MDQ5MCwiZXhwIjoxNzAyMDg2NDkwfQ.vw1Xahf48tloSV9Xfcf0q61iE_3qyUHfOvZSoff2hqo";
@@ -68,7 +66,7 @@ export default function () {
         },
         {
           method: "GET",
-          url: `https://fitory.ga/api/record/best?userId=${Math.round(randomIntBetween(1, 5000))}`,
+          url: `https://fitory.ga/api/record/best?userId=${randomIntBetween(1, 5000)}`,
           body: {},
           params: { headers: { user_id: userId } },
         },
