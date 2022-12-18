@@ -10,7 +10,7 @@
 * [Fitory 위키 바로가기](https://github.com/boostcampwm-2022/Web04-Fitory/wiki)
 * [Fitory 노션 바로가기](https://essential-2189.notion.site/Fitory-05a212fcd0864fe099facba1a2184af2)
 * [Fitory 데모영상 바로가기](https://www.youtube.com/watch?v=Np4XKGe1IKU)
-* [Fitory 발표영상 바로가기 - 피토리의 성능 개선 스토리! 들어보실래요?](https://www.youtube.com/watch?v=XfXs2YoeLd0)
+* [Fitory 발표영상 바로가기 - 피토리의 성능 개선 스토리! 들어보실래요?](https://youtu.be/ZrK7AYh8ZpU)
 
 <br />
 
