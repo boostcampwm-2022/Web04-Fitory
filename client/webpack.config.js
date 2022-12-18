@@ -10,8 +10,6 @@ const loadPlugin = () => {
   const plugins = [
     new HtmlWebpackPlugin({
       template: "/public/index.html",
-      hash: true,
-      favicon: "public/favicon.ico",
       minify:
         process.env.NODE_ENV === "production"
           ? {
@@ -24,7 +22,6 @@ const loadPlugin = () => {
     new CopyWebpackPlugin({
       patterns: [
         { from: "./public/appImages", to: "appImages" },
-        { from: "./public/favicon.ico", to: "." },
         { from: "./public/manifest.json", to: "." },
         { from: "./public/pwaServiceWorker.js", to: "." },
       ],
