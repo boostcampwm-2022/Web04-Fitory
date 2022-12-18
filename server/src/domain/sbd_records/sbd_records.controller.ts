@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { Exception } from "@exception/exceptions";
 import { SingleSBDDataDto } from "./dto/single_sbd_data.dto";
 import { SbdRecordsService } from "./sbd_records.service";
 
@@ -50,6 +51,10 @@ export class SbdRecordsController {
     summary: "해당 사용자의 SBD 측정 기록을 DB에 저장",
   })
   registerUser(@Body() sbdData: SingleSBDDataDto) {
-    return this.recordsService.submitSingleSBDRecord(sbdData);
+    const sbdSum = sbdData.squat + sbdData.benchpress + sbdData.deadlift;
+    if (sbdSum <= 1000) {
+      return this.recordsService.submitSingleSBDRecord(sbdData);
+    }
+    throw new Exception().invalidSubmit();
   }
 }
