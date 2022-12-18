@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": "../node_modules",
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "types": ["cypress", "cypress-react-selector"]
+  },
+  "include": ["**/*.ts", "integration/home.spec.ts"]
+}

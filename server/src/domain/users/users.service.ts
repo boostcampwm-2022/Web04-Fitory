@@ -137,7 +137,7 @@ export class UsersService {
       .where("user.user_id = :userId", { userId })
       .getRawOne();
     const fileName = profileImageLink.split("/").at(-1);
-    return fileName === "default.image" ? undefined : fileName;
+    return fileName === ("default.image" || "profile.image") ? undefined : fileName;
   }
 
   async uploadFiles(file: Express.Multer.File, userId: number) {

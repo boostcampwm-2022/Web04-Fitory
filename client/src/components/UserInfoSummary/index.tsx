@@ -10,7 +10,7 @@ import * as s from "./style";
 
 const UserName = () => {
   const { userInfo } = useUserInfo(authStorage.get());
-  return <s.UserName>{userInfo.name}</s.UserName>;
+  return <s.UserName data-testid="home-name">{userInfo.name}</s.UserName>;
 };
 
 const UserTier = () => {
@@ -18,7 +18,7 @@ const UserTier = () => {
   return (
     <s.RecordInfo>
       <p>티어</p>
-      <s.Tier tier={userInfo.tier ? TierName[userInfo.tier] : null}>
+      <s.Tier tier={userInfo.tier ? TierName[userInfo.tier] : null} data-testid="home-tier">
         {userInfo.tier ? TierName[userInfo.tier] : "-"}
       </s.Tier>
     </s.RecordInfo>
@@ -30,7 +30,7 @@ const UserChallengeInfo = () => {
   return (
     <s.RecordInfo>
       <p>3대 챌린지</p>
-      <s.RecordResult>
+      <s.RecordResult data-testid="home-best-challenge-sum">
         {bestChallengeScore ? convertWeightUnits(bestChallengeScore.SBD_sum) : "-"}
       </s.RecordResult>
     </s.RecordInfo>
@@ -43,11 +43,15 @@ const UserExerciseInfo = () => {
     <>
       <s.RecordInfo>
         <p>누적 중량</p>
-        <s.RecordResult>{convertWeightUnits(exerciseProfile.totalVolume)}</s.RecordResult>
+        <s.RecordResult data-testid="home-total-weight">
+          {convertWeightUnits(exerciseProfile.totalVolume)}
+        </s.RecordResult>
       </s.RecordInfo>
       <s.RecordInfo>
         <p>운동 횟수</p>
-        <s.RecordResult>{exerciseProfile.totalExerciseDate}</s.RecordResult>
+        <s.RecordResult data-testid="home-total-exercise-count">
+          {exerciseProfile.totalExerciseDate}
+        </s.RecordResult>
       </s.RecordInfo>
     </>
   );

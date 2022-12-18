@@ -21,7 +21,7 @@ const LoginPage = () => {
         <s.Logo src={mainLogoSrc} alt="Fitory 메인 로고" />
         <CardsScroller style={{ padding: "30px", marginBottom: "20px" }}>
           {screenshotList.map(({ imageSrc, description }) => (
-            <s.ExampleWrapper>
+            <s.ExampleWrapper key={imageSrc}>
               <s.ExampleDescription>{description}</s.ExampleDescription>
               <s.ExampleImage src={imageSrc} alt="홈 페이지 스크린샷" />
             </s.ExampleWrapper>
