@@ -60,7 +60,7 @@ const CalendarHeatMap = ({ userId }: { userId?: UserId }) => {
 
   return (
     <Paper style={{ width: "100%" }}>
-      <s.Wrapper>
+      <s.Wrapper data-testid="calendar-heatmap">
         {/* <s.Year>{year}</s.Year> */}
         <s.HeatMap ref={scrollRef}>
           <svg
