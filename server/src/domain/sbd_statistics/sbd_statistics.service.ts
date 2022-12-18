@@ -1,7 +1,7 @@
 import { HttpResponse } from "@converter/response.converter";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Between, FindOperator, Repository } from "typeorm";
+import { Between, FindOperator, MoreThan, Repository } from "typeorm";
 import { Exception } from "@exception/exceptions";
 import { SBD_statistics } from "./entities/sbd_statistics.entity";
 
@@ -93,7 +93,7 @@ export class SbdStatisticsService {
       if (manClass93kg) return Between(83.01, 93.0);
       if (manClass105kg) return Between(93.01, 105.0);
       if (manClass120kg) return Between(105.01, 120.0);
-      if (manClass120Pkg) return Between(120.01, 300.0);
+      if (manClass120Pkg) return MoreThan(120);
     } else if (gender === 1) {
       if (womanClass47kg) return Between(0, 47.0);
       if (womanClass52kg) return Between(47.01, 52.0);
@@ -101,7 +101,7 @@ export class SbdStatisticsService {
       if (womanClass63kg) return Between(57.01, 63.0);
       if (womanClass72kg) return Between(63.01, 72.0);
       if (womanClass84kg) return Between(72.01, 84.0);
-      if (womanClass84Pkg) return Between(84.01, 300.0);
+      if (womanClass84Pkg) return MoreThan(84);
     }
     throw new Exception().invalidStatistics();
   }
