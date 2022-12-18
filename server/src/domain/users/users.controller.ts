@@ -22,9 +22,7 @@ export class UsersController {
     type: "number",
   })
   async getUserInfo(@Query("userId") userId: number) {
-    const followerCount = await this.followService.getFollowerCount(userId);
-    const followingCount = await this.followService.getFollowingCount(userId);
-    return this.usersService.getUserInfo(userId, followerCount, followingCount);
+    return this.usersService.getUserInfo(userId);
   }
 
   @Get("search")

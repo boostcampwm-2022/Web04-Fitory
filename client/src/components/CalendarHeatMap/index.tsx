@@ -8,7 +8,7 @@ import {
 import { FormatMonth, ExerciseState } from "@constants/enums";
 import getCalendarHeatMapArray from "@utils/getCalendarHeatMapArray";
 import getExerciseStateForOneYear from "@utils/getExerciseStateForOneYear";
-import Paper from "@components/design/Paper";
+import Paper from "src/common/design/Paper";
 import useAllExerciseDate from "@hooks/query/exercise/useAllExerciseDate";
 import { authStorage } from "src/services/ClientStorage";
 import { UserId } from "src/types/user";
@@ -60,7 +60,7 @@ const CalendarHeatMap = ({ userId }: { userId?: UserId }) => {
 
   return (
     <Paper style={{ width: "100%" }}>
-      <s.Wrapper>
+      <s.Wrapper data-testid="calendar-heatmap">
         {/* <s.Year>{year}</s.Year> */}
         <s.HeatMap ref={scrollRef}>
           <svg

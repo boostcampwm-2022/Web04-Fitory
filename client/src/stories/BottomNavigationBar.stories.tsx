@@ -1,15 +1,16 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
+import { Story } from "@storybook/react";
 
-import BottomNavigationBar from "../components/BottomNavigationBar/index";
+import BottomNavigationBar from "../common/layer/BottomNavigationBar/index";
 
 export default {
   title: "components/BottomNavigationBar",
   component: BottomNavigationBar,
   decorators: [
-    (Story: any) => (
+    (Template: Story) => (
       <MemoryRouter>
-        <Story />
+        <Template />
       </MemoryRouter>
     ),
   ],

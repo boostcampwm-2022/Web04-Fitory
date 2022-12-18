@@ -1,6 +1,16 @@
 <div align="center">
-    <img src="https://user-images.githubusercontent.com/70889358/204248725-d39976f5-238b-4926-8aba-573f061a2141.png" width="100%"/>
+    <img width="100%" alt="image" src="https://user-images.githubusercontent.com/33220404/207527418-eb43212b-5048-4357-9371-d59dc1cfd7ec.png">
 </div>
+
+
+<br/>
+
+# 바로가기
+* [🖥️ Fitory 사이트](https://fitory.ga/)
+* [🥝 Fitory 위키](https://github.com/boostcampwm-2022/Web04-Fitory/wiki)
+* [🧴 Fitory 노션](https://essential-2189.notion.site/Fitory-05a212fcd0864fe099facba1a2184af2)
+* [📺 Fitory 데모영상](https://www.youtube.com/watch?v=Np4XKGe1IKU)
+* [🧨 Fitory 발표영상 - 피토리의 성능 개선 스토리! 들어보실래요?](https://youtu.be/ZrK7AYh8ZpU)
 
 <br />
 
@@ -52,6 +62,13 @@
 > ['Fitory'의 기술 스택 선정 이유](https://github.com/boostcampwm-2022/Web04-Fitory/wiki/%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D-%EC%84%A0%EC%A0%95)도 참고해보세요!
 
 ![FitoryTechStack](https://user-images.githubusercontent.com/33220404/205257348-b4cfc340-d3f5-4d96-8fc3-0e74d1ce27bf.jpeg)
+
+<br />
+
+# 아키텍쳐
+
+![undefined (4)](https://user-images.githubusercontent.com/79911816/208227856-e195826e-6055-4ebe-8320-dd8c55e1c51d.png)
+
 
 <br />
 

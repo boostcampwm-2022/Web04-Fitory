@@ -1,0 +1,15 @@
+{
+  "id": 5001,
+  "oauthId": "114144359285421210910",
+  "profileImage": "http://default.image",
+  "name": "대구사나이김동규",
+  "age": 25,
+  "gender": 0,
+  "height": 175,
+  "weight": 67,
+  "introduce": "hi",
+  "tier": 6,
+  "volumeSum": 0,
+  "followerCount": 1,
+  "followingCount": 3
+}

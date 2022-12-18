@@ -1,5 +1,5 @@
 {
-  "include": ["src"],
+  "include": ["src", ".eslintrc.js"],
   "exclude": ["node_modules"],
 
   "compilerOptions": {
@@ -35,6 +35,7 @@
     "baseUrl": "./", // 모듈이 기본적으로 위치한 디렉토리 설정
     "paths": {
       "@api/*": ["src/api/*"],
+      "@common/*": ["src/common/*"],
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@utils/*": ["src/utils/*"],

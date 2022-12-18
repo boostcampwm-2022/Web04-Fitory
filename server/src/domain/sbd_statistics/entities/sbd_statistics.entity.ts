@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "SBD_statistics" })
+@Index("gender_weight_idx", ["gender", "weight"])
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export class SBD_statistics {
   @PrimaryGeneratedColumn()

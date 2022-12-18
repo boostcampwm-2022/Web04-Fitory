@@ -8,6 +8,7 @@ import { v4 as uuid } from "uuid";
 import { extname } from "path";
 import CryptoJS from "crypto-js";
 import { DEPLOY_HOST } from "@utils/env";
+import sharp from "sharp";
 import { User } from "./entities/user.entity";
 import { UserProfileDto } from "./dto/user_profile.dto";
 
@@ -26,15 +27,13 @@ export class UsersService {
     return !!userExist;
   }
 
-  async getUserInfo(userId: number, followerCount: number, followingCount: number) {
+  async getUserInfo(userId: number) {
     const userObject = await this.userRepository
       .createQueryBuilder("user")
       .where("user.id = :userId", { userId })
       .getOne();
     const user = {
       ...userObject,
-      followerCount,
-      followingCount,
     };
     if (!user) {
       throw new Exception().userNotFound();
@@ -138,7 +137,7 @@ export class UsersService {
       .where("user.user_id = :userId", { userId })
       .getRawOne();
     const fileName = profileImageLink.split("/").at(-1);
-    return fileName === "default.image" ? undefined : fileName;
+    return fileName === ("default.image" || "profile.image") ? undefined : fileName;
   }
 
   async uploadFiles(file: Express.Multer.File, userId: number) {
@@ -163,21 +162,22 @@ export class UsersService {
         ).toString();
       }
 
+      const sharpedFileBuffer = await sharp(file.buffer).resize(320, 320).toBuffer();
+
       let newFileName;
       if (newFileHash !== existFileHash) {
         if (!existFileName) {
           newFileName = `${uuid()}${extname(file.originalname)}`;
-          writeFileSync(`${uploadFolder}/${newFileName}`, file.buffer);
+          writeFileSync(`${uploadFolder}/${newFileName}`, sharpedFileBuffer);
         } else {
           newFileName = existFileName;
-          writeFileSync(`${uploadFolder}/${newFileName}`, file.buffer);
+          writeFileSync(`${uploadFolder}/${newFileName}`, sharpedFileBuffer);
         }
       }
 
       let filePath;
       if (newFileName) {
-        const serverAddress = DEPLOY_HOST;
-        filePath = `${serverAddress}/user_profiles/${newFileName}`;
+        filePath = `${DEPLOY_HOST}/user_profiles/${newFileName}`;
       }
       return filePath;
     } catch (error) {

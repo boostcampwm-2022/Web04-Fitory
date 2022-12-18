@@ -2,7 +2,7 @@ import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import weekOfYear from "dayjs/plugin/weekOfYear";
-import Paper from "@components/design/Paper";
+import Paper from "src/common/design/Paper";
 import CalendarHeader from "@components/Calendar/CalendarHeader";
 import CalendarBody from "@components/Calendar/CalendarBody";
 import { RoutePath } from "@constants/enums";
@@ -29,7 +29,11 @@ const Calendar = ({ isRoot, displayDate, setCalendarMonth, setDisplayDate }: Cal
 
   return (
     <Paper style={{ width: "100%" }}>
-      <s.Wrapper isRoot={isRoot} onClick={() => isRoot && navigate(RoutePath.CALENDAR)}>
+      <s.Wrapper
+        isRoot={isRoot}
+        onClick={() => isRoot && navigate(RoutePath.CALENDAR)}
+        data-testid="calendar"
+      >
         <CalendarHeader date={date} setDate={setDate} />
         <CalendarBody
           today={date}

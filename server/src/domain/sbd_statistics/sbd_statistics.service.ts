@@ -9,19 +9,18 @@ import { SBD_statistics } from "./entities/sbd_statistics.entity";
 export class SbdStatisticsService {
   constructor(
     @InjectRepository(SBD_statistics)
-    private exerciseRepository: Repository<SBD_statistics>,
+    private statisticsRepository: Repository<SBD_statistics>,
   ) {}
 
   async getSBDStatisticsData(gender: number, weight: number, range: number) {
     const betweenWeight = await this.getBetweenWeight(gender, weight);
 
-    const statistics = await this.exerciseRepository.findAndCount({
+    const statistics = await this.statisticsRepository.find({
       where: { gender, weight: betweenWeight },
-      order: { SBD_volume: "ASC" },
     });
 
-    const min = statistics[0][0].SBD_volume;
-    const max = statistics[0][statistics[1] - 1].SBD_volume;
+    const max = Math.max(...statistics.map((o) => o.SBD_volume));
+    const min = Math.min(...statistics.map((o) => o.SBD_volume));
     const len = Math.ceil((max - min) / range);
 
     const loopNum = Array(len)
@@ -53,15 +52,13 @@ export class SbdStatisticsService {
         const start = n;
         const end = n + range;
         if (end > max) {
-          const count = await this.exerciseRepository.count({
+          const count = await this.statisticsRepository.count({
             where: { gender, weight: betweenWeight, SBD_volume: Between(end - range, max) },
-            order: { SBD_volume: "ASC" },
           });
           return responseData.push({ x_start: start, x_end: max, y: count });
         }
-        const count = await this.exerciseRepository.count({
+        const count = await this.statisticsRepository.count({
           where: { gender, weight: betweenWeight, SBD_volume: Between(start, end) },
-          order: { SBD_volume: "ASC" },
         });
         return responseData.push({ x_start: start, x_end: end, y: count });
       }),

@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import Paper from "@components/design/Paper";
+import Paper from "src/common/design/Paper";
 import { Powerlifting } from "@constants/enums";
 import { NUMBER_REGEX } from "@constants/consts";
 import * as s from "./style";

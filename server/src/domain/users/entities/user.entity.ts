@@ -5,13 +5,14 @@ export class User {
   @PrimaryGeneratedColumn({ name: "user_id" })
   id!: number;
 
+  @Index("oauth_id_idx")
   @Column({ name: "oauth_id", length: 180 })
   oauthId!: string;
 
-  @Column({ name: "profile_image", length: 180, default: "http://profile.image" }) // default value 추후 수정 필요
+  @Column({ name: "profile_image", length: 180, default: "http://default.image" }) // default value 추후 수정 필요
   profileImage!: string;
 
-  @Index({ fulltext: true })
+  @Index("name_fts_idx", { fulltext: true, parser: "ngram" })
   @Column({ length: 45 })
   name!: string;
 
@@ -35,4 +36,10 @@ export class User {
 
   @Column({ name: "volume_sum", default: 0 })
   volumeSum!: number;
+
+  @Column({ name: "follower_count", default: 0 })
+  followerCount!: number;
+
+  @Column({ name: "following_count", default: 0 })
+  followingCount!: number;
 }

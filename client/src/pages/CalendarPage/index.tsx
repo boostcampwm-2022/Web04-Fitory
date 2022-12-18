@@ -16,7 +16,7 @@ const ExerciseHistory = ({ month, displayDate }: { month: number; displayDate: s
   return (
     <s.ExerciseHistoryContainer>
       {checkDateOfExercise() ? (
-        exerciseHistoryList[displayDate].map((exercise, index) => (
+        exerciseHistoryList[displayDate].reverse().map((exercise, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <div key={index}>
             <ExerciseSetContainer exercise={exercise} />

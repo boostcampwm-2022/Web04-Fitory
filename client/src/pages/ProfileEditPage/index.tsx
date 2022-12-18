@@ -1,11 +1,14 @@
 import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
-import ProfileImageContainer from "@components/ProfileImageContainer";
+import { toast } from "react-toastify";
+import ProfileImageContainer from "src/common/design/ProfileImageContainer";
 import PageTemplate from "@pages/PageTemplate";
 import useUserInfo from "@hooks/query/user/useUserInfo";
+import useUserUpdate from "@hooks/query/user/useUserUpdate";
 import toggleBtn from "@public/images/btn_toggle.svg";
 import { Gender, UserName, UserIntroduce, UserAge, UserHeight, UserWeight } from "@constants/enums";
 import { NICKNAME_REGEX, NUMBER_REGEX } from "@constants/consts";
-import useUserUpdate from "@hooks/query/user/useUserUpdate";
+import { error } from "@constants/message";
+import UserAPI from "@api/UserAPI";
 import { authStorage } from "src/services/ClientStorage";
 import { UpdateUserInfo } from "src/types/user";
 import * as s from "./style";
@@ -15,7 +18,7 @@ const ProfileEditPage = () => {
   const { userInfo } = useUserInfo(authStorage.get());
   const [visibleState, setVisibleState] = useState(false);
   const [profileImage, setProfileImage] = useState<Blob>();
-  const [inputValues, setinputValues] = useState<UpdateUserInfo>({
+  const [inputValues, setInputValues] = useState<UpdateUserInfo>({
     name: userInfo.name,
     introduce: userInfo.introduce,
     age: userInfo.age,
@@ -31,6 +34,14 @@ const ProfileEditPage = () => {
 
   const submitInformation = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (userInfo.name !== inputValues.name) {
+      const isExist = await UserAPI.checkExistUserName(inputValues.name);
+      if (isExist) {
+        setInputValues({ ...inputValues, name: userInfo.name });
+        toast.error(error.CHECK_USER_NAME);
+        return;
+      }
+    }
     updateUser(inputValues);
   };
 
@@ -48,27 +59,27 @@ const ProfileEditPage = () => {
     switch (e.target.name) {
       case "userName":
         if (e.target.value.match(NICKNAME_REGEX) && e.target.value.length <= UserName.MAX) {
-          setinputValues({ ...inputValues, name: e.target.value });
+          setInputValues({ ...inputValues, name: e.target.value });
         }
         break;
       case "introduce":
         if (e.target.value.length <= UserIntroduce.MAX) {
-          setinputValues({ ...inputValues, introduce: e.target.value });
+          setInputValues({ ...inputValues, introduce: e.target.value });
         }
         break;
       case "age":
         if (numberValue <= UserAge.MAX) {
-          setinputValues({ ...inputValues, age: numberValue });
+          setInputValues({ ...inputValues, age: numberValue });
         }
         break;
       case "height":
         if (numberValue <= UserHeight.MAX) {
-          setinputValues({ ...inputValues, height: numberValue });
+          setInputValues({ ...inputValues, height: numberValue });
         }
         break;
       case "weight":
         if (numberValue <= UserWeight.MAX) {
-          setinputValues({ ...inputValues, weight: numberValue });
+          setInputValues({ ...inputValues, weight: numberValue });
         }
         break;
       default:
@@ -77,7 +88,7 @@ const ProfileEditPage = () => {
 
   useEffect(() => {
     if (profileImage && profileImage !== inputValues.profileImage) {
-      setinputValues({ ...inputValues, profileImage });
+      setInputValues({ ...inputValues, profileImage });
     }
   }, [inputValues, profileImage]);
 
@@ -102,7 +113,7 @@ const ProfileEditPage = () => {
           />
         </s.ProfileEditInputContainer>
         <s.ProfileEditInputContainer>
-          <s.ProfileEditLabel>자기소개</s.ProfileEditLabel>
+          <s.ProfileEditLabel>소개</s.ProfileEditLabel>
           <s.ProfileEditInput
             type="text"
             name="introduce"
@@ -135,14 +146,14 @@ const ProfileEditPage = () => {
                 <s.profileGenderButton
                   type="button"
                   isSelected={inputValues.gender === Gender.MALE}
-                  onClick={() => setinputValues({ ...inputValues, gender: Gender.MALE })}
+                  onClick={() => setInputValues({ ...inputValues, gender: Gender.MALE })}
                 >
                   남
                 </s.profileGenderButton>
                 <s.profileGenderButton
                   type="button"
                   isSelected={inputValues.gender === Gender.FEMALE}
-                  onClick={() => setinputValues({ ...inputValues, gender: Gender.FEMALE })}
+                  onClick={() => setInputValues({ ...inputValues, gender: Gender.FEMALE })}
                 >
                   여
                 </s.profileGenderButton>

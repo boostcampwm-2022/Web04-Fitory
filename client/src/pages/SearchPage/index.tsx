@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import PageTemplate from "@pages/PageTemplate";
 import searchIcon from "@public/icons/btn_search.svg";
 import SearchedUserList from "@components/SearchedUserList";
+import NotificationButton from "@components/NotificationButton";
 import SearchUtils from "@utils/SearchUtils";
 import { SearchedUserInfo } from "src/types/user";
 import RecommandUserListContianer from "./RecommedUserList";
 import * as s from "./styles";
 
 const SearchContainer = () => {
-  // const { allUserList } = useAllUserList();
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchedUser, setSearchedUser] = useState<SearchedUserInfo[]>([]);
 
@@ -17,7 +17,6 @@ const SearchContainer = () => {
   };
 
   useEffect(() => {
-    // return SearchUtils.searchUser(searchValue, allUserList, setSearchedUser);
     return SearchUtils.searchUserByKeyword(searchValue, setSearchedUser);
   }, [searchValue]);
 
@@ -41,7 +40,7 @@ const SearchContainer = () => {
 
 const SearchPage = () => {
   return (
-    <PageTemplate isRoot>
+    <PageTemplate isRoot topNavRightItem={<NotificationButton />}>
       <s.Wrapper>
         <SearchContainer />
         <RecommandUserListContianer />
