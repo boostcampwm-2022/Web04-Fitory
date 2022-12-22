@@ -14,7 +14,5 @@ export const {
   DB_USER,
   DB_PWD,
   DB_NAME,
-  DEPLOY_HOST_WWW,
-  DEPLOY_HOST,
-  LOCAL_HOST,
+  HOST,
 } = process.env;
